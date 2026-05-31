@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerScript | The High-Performance Virtual Machine Language</title>
+    <style>
+        /* Base Theme */
+        body {
+            background-color: #0D0D12;
+            color: #E0E0E0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1 {
+            color: #FFFFFF;
+            font-size: 3.5rem;
+            margin-top: 20px;
+            letter-spacing: -1px;
+        }
+
+        .highlight {
+            color: #00FFFF;
+        }
+
+        .tagline {
+            color: #D100FF;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            padding: 0 20px 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 0 40px 0;
+        }
+
+        .bio-section {
+            background: #16161E;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #2A2A35;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #111118;
+            padding: 25px;
+            border-radius: 8px;
+            border-top: 3px solid #8A2BE2;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-top: 3px solid #00FFFF;
+        }
+
+        .card h3 {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #A0A0B0;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #555;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120">
+                <defs>
+                    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00FFFF" />
+                        <stop offset="100%" stop-color="#0088FF" />
+                    </linearGradient>
+                    <linearGradient id="vmGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#8A2BE2" />
+                        <stop offset="100%" stop-color="#D100FF" />
+                    </linearGradient>
+                </defs>
+                <path d="M 45 50 L 95 140 A 10 10 0 0 0 110 140 L 125 115 L 80 40 A 10 10 0 0 0 50 40 Z" fill="url(#textGrad)" />
+                <path d="M 155 50 L 105 140 A 10 10 0 0 1 90 140 L 75 115 L 120 40 A 10 10 0 0 1 150 40 Z" fill="url(#vmGrad)" opacity="0.9" />
+            </svg>
+
+            <h1>Ver<span class="highlight">Script</span></h1>
+            <div class="tagline">The Bridge Between Text and Virtual Machine</div>
+        </header>
+
+        <div class="bio-section">
+            <p><strong>VerScript</strong> is a high-performance programming language and execution engine designed to bridge the gap between high-level text syntax and robust, low-level Virtual Machine execution. Originally prototyped as a custom kernel for block-based environments, the VerScript ecosystem is now driven by a custom C-compiler targeting standalone binaries and WebAssembly.</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="card">
+                <h3>Trampoline Execution</h3>
+                <p>A completely flat, iterative execution stack guarantees zero recursion limits. Nested code logic is queued and popped asynchronously, completely eliminating stack overflows.</p>
+            </div>
+            <div class="card">
+                <h3>Prefix Tree Routing</h3>
+                <p>Instruction routing is handled via a highly optimized character-Trie, dropping lookup time complexity to O(log N) and enabling lightning-fast bytecode dispatch.</p>
+            </div>
+            <div class="card">
+                <h3>Isolated Memory</h3>
+                <p>Native support for pseudo-multithreading using 16-character alphanumeric thread IDs. Thread-local storage guarantees safe, concurrent execution without memory fragmentation.</p>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2026 VerScript Language Organization. Built in C.
+        </footer>
+    </div>
+
+</body>
+</html>
