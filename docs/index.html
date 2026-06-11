@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerScript | Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #08080C;
+            --surface-color: #111116;
+            --primary: #00FFCC;
+            --secondary: #9D00FF;
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0B0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-decoration: none;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        
+        .code-block {
+            background: #000;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--primary);
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="logo">VerScript</a>
+        <div style="color: var(--text-muted)">Documentation V1.0</div>
+    </nav>
+
+    <div class="container">
+        <h1>VerScript Documentation</h1>
+        <p>Welcome to the VerScript documentation. The language is built on a simple, spaced-function syntax that natively supports console IO, variable assignment, and mathematical evaluation.</p>
+        
+        <h2>1. The <code>display</code> Keyword</h2>
+        <p>Output text, numbers, or variables directly to the terminal.</p>
+        <div class="code-block">
+display "Hello World"
+display 100
+        </div>
+
+        <h2>2. Variables (<code>var: val</code>)</h2>
+        <p>Variables are dynamically typed strings or integers. Assign them using a colon.</p>
+        <div class="code-block">
+name: "Alice"
+age: 25
+display name
+        </div>
+
+        <h2>3. Mathematical Operators</h2>
+        <p>VerScript supports standard arithmetic (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) seamlessly.</p>
+        <div class="code-block">
+score: 10 + 5
+display score
+display 100 / 4
+        </div>
+
+        <h2>4. The <code>prompt</code> Keyword</h2>
+        <p>Make your terminal scripts interactive by asking the user for input.</p>
+        <div class="code-block">
+display "Enter your name: "
+prompt username
+display "Welcome, "
+display username
+        </div>
+    </div>
+
+</body>
+</html>
