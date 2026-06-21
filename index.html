@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VerScript — A lightweight C-based language with a custom neural network AI assistant. Compile, run, and build in the browser.">
     <title>VerScript | The Bridge Between Text and Virtual Machine</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -14,6 +15,8 @@
             --text-main: #FFFFFF;
             --text-muted: #A0A0B0;
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
@@ -27,18 +30,21 @@
                 radial-gradient(circle at 85% 30%, rgba(0, 255, 204, 0.08), transparent 25%);
         }
 
-        /* Glassmorphism Navigation */
+        /* =====================
+           NAVIGATION
+        ===================== */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 40px;
+            padding: 16px 24px;
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(8, 8, 12, 0.6);
+            background: rgba(8, 8, 12, 0.85);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 100;
         }
@@ -50,67 +56,145 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
+        /* Desktop nav links */
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
-            margin-left: 30px;
+            padding: 8px 16px;
             font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s;
+            border-radius: 6px;
         }
-        .nav-links a:hover {
-            color: var(--primary);
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Hamburger button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile drawer */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(8, 8, 12, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            z-index: 150;
+            animation: menuIn 0.2s ease-out;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+        .mobile-menu a:hover { color: var(--primary); }
+        @keyframes menuIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* =====================
+           LAYOUT
+        ===================== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 120px 20px 60px 20px;
+            padding: 100px 24px 60px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
 
-        /* Hero Section */
+        /* =====================
+           HERO
+        ===================== */
         header {
-            margin-top: 50px;
+            margin-top: 30px;
             animation: fadeIn 1s ease-out;
+            width: 100%;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 5rem;
+            font-size: clamp(2.4rem, 8vw, 5rem);
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
+            margin: 0 0 20px 0;
+            letter-spacing: -1px;
         }
-
         h1 span {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .tagline {
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 3vw, 1.4rem);
             color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto 40px auto;
             font-weight: 300;
+            line-height: 1.6;
         }
 
-        /* Call to action */
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            width: 100%;
+        }
+
         .cta-btn {
-            display: inline-block;
-            padding: 18px 40px;
-            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--bg-color);
             background: linear-gradient(90deg, var(--primary), #00d2ff);
@@ -118,34 +202,75 @@
             text-decoration: none;
             box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
             transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            max-width: 260px;
+            min-width: 160px;
         }
-
         .cta-btn:hover {
-            transform: translateY(-3px) scale(1.05);
+            transform: translateY(-3px) scale(1.03);
             box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
         }
+        .cta-btn.outline {
+            background: linear-gradient(90deg, rgba(0, 255, 204, 0.08), rgba(157, 0, 255, 0.08));
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        .cta-btn.outline:hover {
+            background: linear-gradient(90deg, rgba(0, 255, 204, 0.15), rgba(157, 0, 255, 0.15));
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
 
-        /* Features */
+        /* =====================
+           HERO GRAPHIC
+        ===================== */
+        .hero-graphic {
+            margin-top: 50px;
+            position: relative;
+            width: 100%;
+            height: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            animation: pulse 4s infinite linear;
+        }
+        .circle-1 { width: 80px; height: 80px; animation-delay: 0s; }
+        .circle-2 { width: 160px; height: 160px; animation-delay: 1s; }
+        .circle-3 { width: 240px; height: 240px; animation-delay: 2s; border-color: rgba(157, 0, 255, 0.2); }
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(0.8); opacity: 0.8; }
+        }
+
+        /* =====================
+           FEATURES GRID
+        ===================== */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 100px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 80px;
             width: 100%;
         }
 
         .feature-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
-            padding: 40px 30px;
+            padding: 32px 28px;
             text-align: left;
             backdrop-filter: blur(10px);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
-
         .feature-card::before {
             content: '';
             position: absolute;
@@ -156,64 +281,67 @@
             transform-origin: left;
             transition: transform 0.4s ease;
         }
-
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             background: rgba(255, 255, 255, 0.04);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
+        .feature-card:hover::before { transform: scaleX(1); }
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            margin: 0 0 12px 0;
             color: var(--text-main);
         }
-
         .feature-card p {
             color: var(--text-muted);
             line-height: 1.6;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 300;
+            margin: 0;
         }
 
-        /* Graphic Element */
-        .hero-graphic {
-            margin-top: 60px;
-            position: relative;
-            width: 100%;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 255, 204, 0.2);
-            animation: pulse 4s infinite linear;
-        }
-        .circle-1 { width: 100px; height: 100px; animation-delay: 0s; }
-        .circle-2 { width: 200px; height: 200px; animation-delay: 1s; }
-        .circle-3 { width: 300px; height: 300px; animation-delay: 2s; border-color: rgba(157, 0, 255, 0.2); }
-
-        @keyframes pulse {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 0.2; }
-            100% { transform: scale(0.8); opacity: 0.8; }
-        }
-
+        /* =====================
+           FOOTER
+        ===================== */
         footer {
-            margin-top: 100px;
-            padding: 40px;
+            margin-top: 80px;
+            padding: 32px 24px;
             color: var(--text-muted);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             width: 100%;
             font-weight: 300;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* =====================
+           MOBILE BREAKPOINTS
+        ===================== */
+        @media (max-width: 640px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .container { padding: 80px 16px 40px 16px; }
+
+            .hero-graphic {
+                height: 120px;
+                overflow: hidden;
+            }
+            .circle-3 { display: none; }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-top: 50px;
+            }
+            .feature-card { padding: 24px 20px; }
+
+            footer { margin-top: 50px; }
+        }
+
+        @media (max-width: 400px) {
+            .cta-btn { max-width: 100%; }
         }
     </style>
 </head>
@@ -225,23 +353,33 @@
             <a href="https://github.com/VerScript/VerScript">GitHub</a>
             <a href="docs/index.html">Documentation</a>
         </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+
+    <!-- Mobile fullscreen menu -->
+    <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="https://github.com/VerScript/VerScript" id="mobileMenuLink1">GitHub</a>
+        <a href="docs/index.html" id="mobileMenuLink2">Documentation</a>
+        <a href="https://verscript.github.io/IDE/" id="mobileMenuLink3">Open Web IDE</a>
+    </div>
 
     <div class="container">
         <header>
             <h1>Compile the <span>Future</span></h1>
             <p class="tagline">A lightweight C-based parser currently supporting basic string output and syntax evaluation.</p>
-            <div style="display: flex; gap: 15px; justify-content: center;">
-                <a href="docs/index.html" class="cta-btn">Enter Documentation</a>
-                <a href="https://verscript.github.io/IDE/" target="_blank" class="cta-btn" style="background: linear-gradient(90deg, rgba(0, 255, 204, 0.1), rgba(157, 0, 255, 0.1)); border-color: rgba(0, 255, 204, 0.3); color: #00FFCC;">Open Web IDE</a>
+            <div class="cta-group">
+                <a href="docs/index.html" class="cta-btn" id="ctaDocs">Enter Documentation</a>
+                <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener" class="cta-btn outline" id="ctaIDE">Open Web IDE</a>
             </div>
         </header>
 
-        <div class="hero-graphic">
+        <div class="hero-graphic" aria-hidden="true">
             <div class="circle circle-1"></div>
             <div class="circle circle-2"></div>
             <div class="circle circle-3"></div>
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="z-index: 10;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="z-index:10;">
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stop-color="#00FFCC" />
@@ -278,5 +416,26 @@
         </footer>
     </div>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
 </body>
 </html>

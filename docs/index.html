@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VerScript language documentation — display, variables, math operators, prompt keyword, and the VS# LLM assistant.">
     <title>VerScript | Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -15,58 +16,140 @@
             --text-muted: #A0A0B0;
         }
 
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Outfit', sans-serif;
             margin: 0;
             padding: 0;
+            line-height: 1.7;
         }
 
+        /* NAV */
         nav {
-            padding: 20px 40px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            background: rgba(8, 8, 12, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 50;
         }
-
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 900;
             text-decoration: none;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-badge {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 300;
         }
 
+        /* CONTAINER */
         .container {
-            max-width: 900px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 48px 24px 80px;
         }
 
+        /* HEADINGS */
         h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin: 0 0 16px 0;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        h2 {
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
+            margin: 48px 0 12px 0;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            flex-shrink: 0;
         }
 
         p {
-            font-size: 1.2rem;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            line-height: 1.7;
             color: var(--text-muted);
             font-weight: 300;
+            margin: 0 0 16px 0;
         }
-        
+        code {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* CODE BLOCKS */
         .code-block {
             background: #000;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 204, 0.15);
             font-family: 'Courier New', Courier, monospace;
             color: var(--primary);
-            margin-top: 30px;
+            margin: 16px 0 8px 0;
             white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        /* INTRO BADGE */
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 32px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 1; }
+
+        @media (max-width: 600px) {
+            .container { padding: 32px 16px 60px; }
+            nav { padding: 14px 16px; }
+            .code-block { padding: 16px; font-size: 0.85rem; }
+            h2 { margin-top: 36px; }
         }
     </style>
 </head>
@@ -74,54 +157,46 @@
 
     <nav>
         <a href="../index.html" class="logo">VerScript</a>
-        <div style="color: var(--text-muted)">Documentation V1.0</div>
+        <span class="nav-badge">Documentation V1.0</span>
     </nav>
 
     <div class="container">
+        <a href="../index.html" class="back-link" id="backLink">← Back to Home</a>
+
         <h1>VerScript Documentation</h1>
-        <p>Welcome to the VerScript documentation. The language is built on a simple, spaced-function syntax that natively supports console IO, variable assignment, and mathematical evaluation.</p>
-        
+        <p class="intro-text">Welcome to the VerScript documentation. The language is built on a simple, spaced-function syntax that natively supports console IO, variable assignment, and mathematical evaluation.</p>
+
         <h2>1. The <code>display</code> Keyword</h2>
         <p>Output text, numbers, or variables directly to the terminal.</p>
-        <div class="code-block">
-display "Hello World"
-display 100
-        </div>
+        <div class="code-block">display "Hello World"
+display 100</div>
 
         <h2>2. Variables (<code>var: val</code>)</h2>
         <p>Variables are dynamically typed strings or integers. Assign them using a colon.</p>
-        <div class="code-block">
-name: "Alice"
+        <div class="code-block">name: "Alice"
 age: 25
-display name
-        </div>
+display name</div>
 
         <h2>3. Mathematical Operators</h2>
         <p>VerScript supports standard arithmetic (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) seamlessly.</p>
-        <div class="code-block">
-score: 10 + 5
+        <div class="code-block">score: 10 + 5
 display score
-display 100 / 4
-        </div>
+display 100 / 4</div>
 
         <h2>4. The <code>prompt</code> Keyword</h2>
         <p>Make your terminal scripts interactive by asking the user for input.</p>
-        <div class="code-block">
-display "Enter your name: "
+        <div class="code-block">display "Enter your name: "
 prompt username
 display "Welcome, "
-display username
-        </div>
+display username</div>
 
         <h2>5. ✨ VS# Custom LLM</h2>
-        <p>VS# is a fully custom backpropagation neural network helper built entirely from scratch. Press the <strong>✨ VS#</strong> button in the top right to toggle the panel.</p>
+        <p>VS# is a fully custom backpropagation neural network helper built entirely from scratch. Press the <strong>✨ VS#</strong> button in the top right of the IDE to toggle the panel.</p>
         <p>Ask it to write programs (e.g. <code>write addition script</code>) or fix syntax issues (<code>fix my syntax errors</code>). Edits are animated directly in your editor with key-by-key backspacing and typing transitions.</p>
-        <div class="code-block">
-! Try chatting with VS#:
+        <div class="code-block">! Try chatting with VS#:
 ! "explain my code"
 ! "write an interactive prompt program"
-! "fix errors"
-        </div>
+! "fix errors"</div>
     </div>
 
 </body>
