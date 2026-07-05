@@ -197,7 +197,18 @@ display username</div>
 ! "explain my code"
 ! "write an interactive prompt program"
 ! "fix errors"</div>
+
+        <h2>6. 🤖 Google Jules AI Automation</h2>
+        <p>VerScript is fully integrated with <strong>Google Jules</strong>, an autonomous AI coding agent. Jules runs in the background of all repositories in the organization to assist developers with security audits, issue resolution, and code reviews.</p>
+        <p>Jules executes tasks autonomously based on three main triggers:</p>
+        <ul>
+            <li><strong>Daily Bug & Security Scan:</strong> Every midnight, Jules runs a comprehensive scan of the repository. If it detects any bugs, security vulnerabilities, or possible dependency updates, it automatically creates a Pull Request titled <code>Jules: Daily Run</code>.</li>
+            <li><strong>Issue Solver:</strong> When any issue is opened in the repository, Jules automatically triggers to analyze the codebase and submit a Pull Request named <code>Jules: Solution for #[issue]</code>. It then leaves a comment on the issue referencing the resolving PR.</li>
+            <li><strong>Pull Request Reviewer (The Background Observer):</strong> When a Pull Request is submitted by a developer, Jules reviews the changes and writes a detailed CTO-crafted response listing updates, vulnerabilities, and potential logical contradictions. It refers to itself as <code>The Background Observer</code>.</li>
+        </ul>
+        <p>Developers can customize Jules' behavior locally by updating the <code>AGENTS.md</code> file in the root of the repository, providing specific commands, build environments, and guidelines.</p>
     </div>
+
 
 </body>
 </html>
