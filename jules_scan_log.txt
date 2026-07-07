@@ -11,3 +11,15 @@ Actions Taken:
 
 Status:
 - No other bugs or vulnerabilities found.
+
+Date: Tue Jul 7 04:10:00 UTC 2026
+Scope: Repository
+
+Findings:
+- Discovered external links (`https://github.com/VerScript/VerScript`, `https://verscript.github.io/IDE/`) in `index.html` were missing `target="_blank"` and `rel="noopener noreferrer"` attributes.
+
+Actions Taken:
+- Added `target="_blank"` and `rel="noopener noreferrer"` to external links in `index.html` to enhance security and user experience.
+
+Status:
+- No other bugs or vulnerabilities found.
