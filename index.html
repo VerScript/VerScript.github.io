@@ -301,6 +301,55 @@
         }
 
         /* =====================
+           CODE WINDOW PREVIEW
+        ===================== */
+        .code-preview-window {
+            background: rgba(17, 17, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+            text-align: left;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .window-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+        .window-title {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-left: auto;
+            font-family: monospace;
+        }
+        .code-content {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--primary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: transparent;
+        }
+
+        /* =====================
            FOOTER
         ===================== */
         footer {
@@ -368,10 +417,28 @@
     <div class="container">
         <header>
             <h1>Compile the <span>Future</span></h1>
-            <p class="tagline">A lightweight C-based parser supporting strings, booleans, integer variables, and mathematical expressions.</p>
+            <p class="tagline">A lightweight C-based parser supporting strings, booleans, integer variables, mathematical expressions, and dynamic loops.</p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn" id="ctaDocs">Enter Documentation</a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn outline" id="ctaIDE">Open Web IDE</a>
+            </div>
+            
+            <!-- Code Demo Section -->
+            <div class="code-preview-window">
+                <div class="window-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span class="window-title">test_loops.vrs</span>
+                </div>
+                <pre class="code-content"><code>! VerScript Loop & Iteration Demo
+display "--- Count down ---"
+iterate i from 1 to 3
+  display i
+
+display "--- Repeat message ---"
+loop 2
+  display "VerScript loops rock!"</code></pre>
             </div>
         </header>
 
@@ -400,6 +467,10 @@
             <div class="feature-card">
                 <h3>Dynamic Types & Expressions</h3>
                 <p>Enjoy dynamic typing with support for strings, integers, and booleans. Effortlessly concatenate variables and evaluate mathematical expressions directly within the language.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔄 Loops & Iterations</h3>
+                <p>Supports clean Python-like indented loop structures (<code>loop n</code>) and variable iteration bounds (<code>iterate i from x to y</code>) compiled and executed on the fly.</p>
             </div>
             <div class="feature-card">
                 <h3>Spaced Function Syntax</h3>

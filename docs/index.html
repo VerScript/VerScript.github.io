@@ -191,13 +191,21 @@ prompt username
 display "Welcome, "
 display username</div>
 
-        <h2>5. ✨ VS# Custom LLM</h2>
-        <p>VS# is a fully custom backpropagation neural network helper built entirely from scratch. Press the <strong>✨ VS#</strong> button in the top right of the IDE to toggle the panel.</p>
-        <p>Ask it to write programs (e.g. <code>write addition script</code>) or fix syntax issues (<code>fix my syntax errors</code>). Edits are animated directly in your editor with key-by-key backspacing and typing transitions.</p>
-        <div class="code-block">! Try chatting with VS#:
-! "explain my code"
-! "write an interactive prompt program"
-! "fix errors"</div>
+        <h2>5. The <code>loop</code> Keyword</h2>
+        <p>Repeat a block of code <code>n</code> times. The block of code must be indented using standard Python-like spacing (e.g. 2 spaces or a tab).</p>
+        <div class="code-block">loop 3
+  display "This repeats 3 times"</div>
+
+        <h2>6. The <code>iterate</code> Keyword</h2>
+        <p>Iterate an index variable between specified numeric limits. You can customize the iteration index or omit the start limit (which defaults to the variable's current value, or <code>0</code> if undefined).</p>
+        <div class="code-block">! Full syntax (inclusive limits):
+iterate i from 1 to 5
+  display i
+
+! Omitted start limit (starts at current value of variable, or 0 if undefined):
+count: 3
+iterate count to 6
+  display count</div>
 
     </div>
 
