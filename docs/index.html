@@ -207,6 +207,49 @@ count: 3
 iterate count to 6
   display count</div>
 
+        <h2>7. Comparison Operators</h2>
+        <p>VerScript supports standard comparison operators that evaluate to booleans (<code>true</code> / <code>false</code>):</p>
+        <ul>
+            <li><code>=</code> (Equal to, equivalent to <code>==</code>)</li>
+            <li><code>x=</code> (Not equal to, equivalent to <code>!=</code>)</li>
+            <li><code>&gt;</code> (Greater than)</li>
+            <li><code>&lt;</code> (Less than)</li>
+            <li><code>&gt;=</code> (Greater than or equal to)</li>
+            <li><code>&lt;=</code> (Less than or equal to)</li>
+        </ul>
+        <div class="code-block">is_match: 10 = 10
+display is_match  ! Prints true
+
+is_diff: 5 x= 10
+display is_diff   ! Prints true</div>
+
+        <h2>8. Conditionals (<code>if-else</code>)</h2>
+        <p>Control flow using standard conditional statements. Like loops, conditional branches execute indented blocks of code.</p>
+        <div class="code-block">val: 15
+if val = 10 then
+  display "Value is exactly 10"
+else if val &gt; 10 then
+  display "Value is greater than 10"
+else
+  display "Value is less than 10"</div>
+
+        <h2>9. Looping Conditionals (<code>while</code> &amp; <code>until</code>)</h2>
+        <p>Execute statement blocks dynamically based on expression checks:</p>
+        <ul>
+            <li><code>while</code>: Repeatedly runs while the condition evaluates to true.</li>
+            <li><code>until</code>: Repeatedly runs until the condition evaluates to true (i.e. while it is false).</li>
+        </ul>
+        <div class="code-block">! While loop example
+count: 1
+while count &lt;= 3
+  display "count: " + count
+  count: count + 1
+
+! Until loop example (runs until count2 is greater than 3)
+count2: 1
+until count2 &gt; 3
+  display "until count2: " + count2
+  count2: count2 + 1</div>
     </div>
 
 

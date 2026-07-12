@@ -309,11 +309,14 @@
             border-radius: 12px;
             width: 100%;
             max-width: 600px;
+            height: 320px; /* fixed external size */
             margin: 40px auto 0 auto;
             text-align: left;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
             animation: fadeIn 1.2s ease-out;
         }
         .window-header {
@@ -322,6 +325,7 @@
             display: flex;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
         }
         .dot {
             width: 12px;
@@ -347,6 +351,8 @@
             font-size: 0.95rem;
             line-height: 1.5;
             background: transparent;
+            overflow-y: auto; /* make scrollable */
+            flex-grow: 1;
         }
 
         /* =====================
@@ -429,16 +435,42 @@
                     <span class="dot dot-red"></span>
                     <span class="dot dot-yellow"></span>
                     <span class="dot dot-green"></span>
-                    <span class="window-title">test_loops.vrs</span>
+                    <span class="window-title">innovation_showcase.vrs</span>
                 </div>
-                <pre class="code-content"><code>! VerScript Loop & Iteration Demo
-display "--- Count down ---"
-iterate i from 1 to 3
-  display i
+                <pre class="code-content"><code>! VerScript Innovation Showcase
+display "==== Fibonacci & FizzBuzz ===="
 
-display "--- Repeat message ---"
-loop 2
-  display "VerScript loops rock!"</code></pre>
+! Calculate and display first 8 Fibonacci numbers
+prev : 0
+curr : 1
+display "Fibonacci: " + prev
+display "Fibonacci: " + curr
+
+loop 6
+  next : prev + curr
+  display "Fibonacci: " + next
+  prev : curr
+  curr : next
+
+display "==== Conditional Analysis ===="
+val : 15
+if val = 10 then
+  display "Value is exactly 10"
+else if val > 10 then
+  display "Value is " + val + " (which is greater than 10)"
+else
+  display "Value is less than 10"
+
+display "==== FizzBuzz Iteration ===="
+iterate num from 1 to 15
+  if num / 15 * 15 = num then
+    display "Num " + num + ": FizzBuzz"
+  else if num / 3 * 3 = num then
+    display "Num " + num + ": Fizz"
+  else if num / 5 * 5 = num then
+    display "Num " + num + ": Buzz"
+  else
+    display "Num " + num + ": " + num</code></pre>
             </div>
         </header>
 
