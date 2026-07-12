@@ -192,7 +192,7 @@ display "Welcome, "
 display username</div>
 
         <h2>5. The <code>loop</code> Keyword</h2>
-        <p>Repeat a block of code <code>n</code> times. The block of code must be indented using standard Python-like spacing (e.g. 2 spaces or a tab).</p>
+        <p>Repeat a block of code <code>n</code> times. The block of code must be indented using standard spacing (e.g. 2 spaces or a tab).</p>
         <div class="code-block">loop 3
   display "This repeats 3 times"</div>
 
@@ -250,6 +250,31 @@ count2: 1
 until count2 &gt; 3
   display "until count2: " + count2
   count2: count2 + 1</div>
+
+        <h2>10. Exception Handling &amp; Conditional Fallbacks (<code>do-unless</code>)</h2>
+        <p>The <code>do-unless</code> block has two forms of execution:</p>
+        
+        <h3>Exception Handling (Try-Catch)</h3>
+        <p>Catch runtime errors thrown by the compiler/interpreter. Errors can be caught by the generic keyword <code>error</code> or specific error types like <code>DivisionByZeroError</code>, <code>UndefinedVariableError</code>, <code>InvalidOperandError</code>, <code>IndentationError</code>, <code>LoopIterationError</code>, <code>LoopLimitError</code>, <code>LoopDirectionError</code>, or <code>SyntaxError</code>.</p>
+        <div class="code-block">do
+  display "Trying division by zero..."
+  val: 10 / 0
+unless DivisionByZeroError
+  display "Oops, divided by zero!"
+
+do
+  display "Accessing undefined variable..."
+  display missing_val
+unless error
+  display "Caught a general error!"</div>
+
+        <h3>Conditional Execution</h3>
+        <p>Execute fallback logic if a boolean expression evaluates to true, otherwise run the primary block.</p>
+        <div class="code-block">flag: true
+do
+  display "This executes if flag is false"
+unless flag
+  display "This executes if flag is true"</div>
     </div>
 
 
