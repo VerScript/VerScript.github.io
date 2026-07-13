@@ -294,7 +294,56 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
   flag <span class="token-operator">:</span> <span class="token-keyword">true</span>
   <span class="token-keyword">display</span> <span class="token-string">"Statement 2 runs (external watch does not stop it)"</span>
 <span class="token-keyword">unless</span> <span class="token-keyword">external</span> flag
-  <span class="token-keyword">display</span> <span class="token-string">"This won't run because flag was false initially"</span></div></div>
+  <span class="token-keyword">display</span> <span class="token-string">"This won't run because flag was false initially"</span></div>
+
+        <h2>11. System Operators &amp; Error Criticality (Error Points)</h2>
+        <p>VerScript categorizes runtime errors into dynamic "Error Points" out of 10 to define their severity. Certain system block operators control how these errors are handled or skipped:</p>
+        
+        <h3>Error Criticality Levels (Error Points)</h3>
+        <ul>
+            <li><strong>MemoryAllocationError (10 Points) - Critical:</strong> Thrown when dynamic memory allocation fails.</li>
+            <li><strong>SystemError (9 Points) - Critical:</strong> Thrown on engine level limits, e.g. jump stack overflow.</li>
+            <li><strong>SyntaxError (8 Points) - Critical:</strong> Thrown on structurally invalid statement layout.</li>
+            <li><strong>IndentationError (8 Points) - Critical:</strong> Thrown on irregular or invalid statement indentation.</li>
+            <li><strong>DivisionByZeroError (5 Points) - Moderate/Non-Critical:</strong> Thrown on dividing numbers by zero.</li>
+            <li><strong>InvalidOperandError (4 Points) - Moderate/Non-Critical:</strong> Thrown on mismatching expression operand types.</li>
+            <li><strong>LoopIterationError (3 Points) - Low/Non-Critical:</strong> Thrown on non-numeric loop bound arguments.</li>
+            <li><strong>LoopLimitError (3 Points) - Low/Non-Critical:</strong> Thrown on non-numeric loop boundary ranges.</li>
+            <li><strong>LoopDirectionError (3 Points) - Low/Non-Critical:</strong> Thrown when loop start bounds are greater than end limits.</li>
+            <li><strong>UndefinedVariableError (2 Points) - Low/Non-Critical:</strong> Thrown on attempting to retrieve an uninitialized variable.</li>
+        </ul>
+
+        <h3>System Block Operators</h3>
+        <ul>
+            <li><strong><code>ForceErrors</code>:</strong> Disables error suppression and catch blocks inside its scope. Any error occurring within this block displays immediately and exits execution.</li>
+            <li><strong><code>CriticalErrors</code>:</strong> Only triggers halting/displaying for critical errors (8+ Error Points). Non-critical errors (1-7 Error Points) are ignored, and the faulty line is skipped.</li>
+            <li><strong><code>SuppressErrors</code>:</strong> Skips any statement line or block that triggers an error. Execution proceeds cleanly to the next sequential instruction.</li>
+        </ul>
+
+        <p><strong>Example: System Operators Showcase</strong></p>
+        <div class="code-block"><span class="token-comment">! Suppressing all errors</span>
+<span class="token-keyword">SuppressErrors</span>
+  val <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">/</span> <span class="token-number">0</span>   <span class="token-comment">! Error is silently skipped</span>
+  <span class="token-keyword">display</span> <span class="token-string">"This line runs successfully!"</span>
+
+<span class="token-comment">! Restricting to Critical errors</span>
+<span class="token-keyword">CriticalErrors</span>
+  val2 <span class="token-operator">:</span> missing_val <span class="token-comment">! Non-critical UndefinedVariableError (2 Points) is skipped</span>
+  <span class="token-keyword">display</span> <span class="token-string">"CriticalErrors bypassed moderate error!"</span></div>
+
+        <h2>12. The <code>throw</code> Statement</h2>
+        <p>VerScript allows manual triggering of exceptions. The target must be a valid registered error name. If an unregistered name is used, a <code>SyntaxError</code> is raised stating that the error name is invalid. You can also rethrow the active error inside an <code>unless</code> block via <code>throw error</code>.</p>
+        <div class="code-block"><span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Throwing custom exception..."</span>
+  <span class="token-keyword">throw</span> DivisionByZeroError
+<span class="token-keyword">unless</span> DivisionByZeroError
+  <span class="token-keyword">display</span> <span class="token-string">"Caught thrown exception: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span>
+
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Throwing invalid error..."</span>
+  <span class="token-keyword">throw</span> InvalidErrorName
+<span class="token-keyword">unless</span> SyntaxError
+  <span class="token-keyword">display</span> <span class="token-string">"Caught invalid throw: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></div>
     </div>
 
 

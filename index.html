@@ -443,29 +443,24 @@
                     <span class="window-title">sample.vrs</span>
                 </div>
                 <pre class="code-content"><code><span class="token-comment">! Welcome to VerScript</span>
-<span class="token-comment">! Features: Loops, Conditionals, and Exception Handling</span>
+<span class="token-comment">! Showcase: System Operators, Custom Throws, and Watches</span>
 
 <span class="token-keyword">display</span> <span class="token-string">"--- 1. Loop and Iteration Showcase ---"</span>
 <span class="token-keyword">iterate</span> idx <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">5</span>
   <span class="token-keyword">display</span> <span class="token-string">"Iteration: "</span> <span class="token-operator">+</span> idx
 
-<span class="token-keyword">display</span> <span class="token-string">"--- 2. Reactive 'unless internal' Watch ---"</span>
-finished <span class="token-operator">:</span> <span class="token-keyword">false</span>
-counter <span class="token-operator">:</span> <span class="token-number">1</span>
-<span class="token-keyword">do</span>
-  <span class="token-keyword">display</span> <span class="token-string">"counter: "</span> <span class="token-operator">+</span> counter
-  <span class="token-keyword">if</span> counter <span class="token-operator">=</span> <span class="token-number">3</span> <span class="token-keyword">then</span>
-    finished <span class="token-operator">:</span> <span class="token-keyword">true</span>
-  counter <span class="token-operator">:</span> counter <span class="token-operator">+</span> <span class="token-number">1</span>
-<span class="token-keyword">unless</span> <span class="token-keyword">internal</span> finished
-  <span class="token-keyword">display</span> <span class="token-string">"Terminated early since finished became true!"</span>
+<span class="token-keyword">display</span> <span class="token-string">"--- 2. SuppressErrors Block Operator ---"</span>
+<span class="token-keyword">SuppressErrors</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Running division by zero (skipped under SuppressErrors)..."</span>
+  val <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">/</span> <span class="token-number">0</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Division by zero bypassed successfully!"</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"--- 3. Exception Handling with 'error' keyword ---"</span>
+<span class="token-keyword">display</span> <span class="token-string">"--- 3. Custom Throw &amp; Exception Catching ---"</span>
 <span class="token-keyword">do</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Attempting division by zero..."</span>
-  val <span class="token-operator">:</span> <span class="token-number">100</span> <span class="token-operator">/</span> <span class="token-number">0</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Throwing custom DivisionByZeroError..."</span>
+  <span class="token-keyword">throw</span> DivisionByZeroError
 <span class="token-keyword">unless</span> DivisionByZeroError
-  <span class="token-keyword">display</span> <span class="token-string">"Exception caught safely: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></code></pre>
+  <span class="token-keyword">display</span> <span class="token-string">"Safe exception catch of: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></code></pre>
             </div>
         </header>
 
