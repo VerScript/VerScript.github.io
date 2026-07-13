@@ -347,13 +347,18 @@
             margin: 0;
             padding: 20px;
             font-family: 'Courier New', Courier, monospace;
-            color: var(--primary);
+            color: #f8f8f2;
             font-size: 0.95rem;
             line-height: 1.5;
             background: transparent;
             overflow-y: auto; /* make scrollable */
             flex-grow: 1;
         }
+        .token-comment { color: #7f8c8d; font-style: italic; }
+        .token-keyword { color: #ff79c6; font-weight: bold; }
+        .token-string { color: #f1fa8c; }
+        .token-number { color: #bd93f9; }
+        .token-operator { color: #50fa7b; }
 
         /* =====================
            FOOTER
@@ -435,42 +440,32 @@
                     <span class="dot dot-red"></span>
                     <span class="dot dot-yellow"></span>
                     <span class="dot dot-green"></span>
-                    <span class="window-title">innovation_showcase.vrs</span>
+                    <span class="window-title">sample.vrs</span>
                 </div>
-                <pre class="code-content"><code>! VerScript Innovation Showcase
-display "==== Fibonacci & FizzBuzz ===="
+                <pre class="code-content"><code><span class="token-comment">! Welcome to VerScript</span>
+<span class="token-comment">! Features: Loops, Conditionals, and Exception Handling</span>
 
-! Calculate and display first 8 Fibonacci numbers
-prev : 0
-curr : 1
-display "Fibonacci: " + prev
-display "Fibonacci: " + curr
+<span class="token-keyword">display</span> <span class="token-string">"--- 1. Loop and Iteration Showcase ---"</span>
+<span class="token-keyword">iterate</span> idx <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">5</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Iteration: "</span> <span class="token-operator">+</span> idx
 
-loop 6
-  next : prev + curr
-  display "Fibonacci: " + next
-  prev : curr
-  curr : next
+<span class="token-keyword">display</span> <span class="token-string">"--- 2. Reactive 'unless internal' Watch ---"</span>
+finished <span class="token-operator">:</span> <span class="token-keyword">false</span>
+counter <span class="token-operator">:</span> <span class="token-number">1</span>
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"counter: "</span> <span class="token-operator">+</span> counter
+  <span class="token-keyword">if</span> counter <span class="token-operator">=</span> <span class="token-number">3</span> <span class="token-keyword">then</span>
+    finished <span class="token-operator">:</span> <span class="token-keyword">true</span>
+  counter <span class="token-operator">:</span> counter <span class="token-operator">+</span> <span class="token-number">1</span>
+<span class="token-keyword">unless</span> <span class="token-keyword">internal</span> finished
+  <span class="token-keyword">display</span> <span class="token-string">"Terminated early since finished became true!"</span>
 
-display "==== Conditional Analysis ===="
-val : 15
-if val = 10 then
-  display "Value is exactly 10"
-else if val > 10 then
-  display "Value is " + val + " (which is greater than 10)"
-else
-  display "Value is less than 10"
-
-display "==== FizzBuzz Iteration ===="
-iterate num from 1 to 15
-  if num / 15 * 15 = num then
-    display "Num " + num + ": FizzBuzz"
-  else if num / 3 * 3 = num then
-    display "Num " + num + ": Fizz"
-  else if num / 5 * 5 = num then
-    display "Num " + num + ": Buzz"
-  else
-    display "Num " + num + ": " + num</code></pre>
+<span class="token-keyword">display</span> <span class="token-string">"--- 3. Exception Handling with 'error' keyword ---"</span>
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Attempting division by zero..."</span>
+  val <span class="token-operator">:</span> <span class="token-number">100</span> <span class="token-operator">/</span> <span class="token-number">0</span>
+<span class="token-keyword">unless</span> DivisionByZeroError
+  <span class="token-keyword">display</span> <span class="token-string">"Exception caught safely: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></code></pre>
             </div>
         </header>
 

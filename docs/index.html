@@ -112,7 +112,7 @@
             border-radius: 12px;
             border: 1px solid rgba(0, 255, 204, 0.15);
             font-family: 'Courier New', Courier, monospace;
-            color: var(--primary);
+            color: #f8f8f2;
             margin: 16px 0 8px 0;
             white-space: pre-wrap;
             word-break: break-word;
@@ -120,6 +120,11 @@
             line-height: 1.6;
             overflow-x: auto;
         }
+        .token-comment { color: #7f8c8d; font-style: italic; }
+        .token-keyword { color: #ff79c6; font-weight: bold; }
+        .token-string { color: #f1fa8c; }
+        .token-number { color: #bd93f9; }
+        .token-operator { color: #50fa7b; }
 
         /* INTRO BADGE */
         .intro-text {
@@ -161,77 +166,75 @@
     </nav>
 
     <div class="container">
-        <a href="../index.html" class="back-link" id="backLink">← Back to Home</a>
-
-        <h1>VerScript Documentation</h1>
+        <a href="../index.html" class="back-link" id="backLink">← Back to Home</a>        <h1>VerScript Documentation</h1>
         <p class="intro-text">Welcome to the VerScript documentation. The language is built on a simple, spaced-function syntax that natively supports console IO, variable assignment, and mathematical evaluation.</p>
 
         <h2>1. The <code>display</code> Keyword</h2>
         <p>Output text, numbers, or variables directly to the terminal.</p>
-        <div class="code-block">display "Hello World"
-display 100</div>
+        <div class="code-block"><span class="token-keyword">display</span> <span class="token-string">"Hello World"</span>
+<span class="token-keyword">display</span> <span class="token-number">100</span></div>
 
-        <h2>2. Variables (<code>var: val</code>)</h2>
+        <h2>2. Variables (<code>var : val</code>)</h2>
         <p>Variables are dynamically typed strings, integers, or booleans. Assign them using a colon.</p>
-        <div class="code-block">name: "Alice"
-age: 25
-is_active: true
-display name</div>
+        <div class="code-block">name <span class="token-operator">:</span> <span class="token-string">"Alice"</span>
+age <span class="token-operator">:</span> <span class="token-number">25</span>
+is_active <span class="token-operator">:</span> <span class="token-keyword">true</span>
+<span class="token-keyword">display</span> name</div>
 
         <h2>3. Mathematical Operators & String Concatenation</h2>
         <p>VerScript supports standard arithmetic (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) seamlessly, as well as negative numbers and string concatenation.</p>
-        <div class="code-block">score: 10 + -5
-display "Score: " + score
-display 100 / 4</div>
+        <div class="code-block">score <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">+</span> <span class="token-number">-5</span>
+<span class="token-keyword">display</span> <span class="token-string">"Score: "</span> <span class="token-operator">+</span> score
+<span class="token-keyword">display</span> <span class="token-number">100</span> <span class="token-operator">/</span> <span class="token-number">4</span></div>
 
         <h2>4. The <code>prompt</code> Keyword</h2>
         <p>Make your terminal scripts interactive by asking the user for input.</p>
-        <div class="code-block">display "Enter your name: "
-prompt username
-display "Welcome, "
-display username</div>
+        <div class="code-block"><span class="token-keyword">display</span> <span class="token-string">"Enter your name: "</span>
+<span class="token-keyword">prompt</span> username
+<span class="token-keyword">display</span> <span class="token-string">"Welcome, "</span>
+<span class="token-keyword">display</span> username</div>
 
         <h2>5. The <code>loop</code> Keyword</h2>
         <p>Repeat a block of code <code>n</code> times. The block of code must be indented using standard spacing (e.g. 2 spaces or a tab).</p>
-        <div class="code-block">loop 3
-  display "This repeats 3 times"</div>
+        <div class="code-block"><span class="token-keyword">loop</span> <span class="token-number">3</span>
+  <span class="token-keyword">display</span> <span class="token-string">"This repeats 3 times"</span></div>
 
         <h2>6. The <code>iterate</code> Keyword</h2>
         <p>Iterate an index variable between specified numeric limits. You can customize the iteration index or omit the start limit (which defaults to the variable's current value, or <code>0</code> if undefined).</p>
-        <div class="code-block">! Full syntax (inclusive limits):
-iterate i from 1 to 5
-  display i
+        <div class="code-block"><span class="token-comment">! Full syntax (inclusive limits):</span>
+<span class="token-keyword">iterate</span> i <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">5</span>
+  <span class="token-keyword">display</span> i
 
-! Omitted start limit (starts at current value of variable, or 0 if undefined):
-count: 3
-iterate count to 6
-  display count</div>
+<span class="token-comment">! Omitted start limit (starts at current value of variable, or 0 if undefined):</span>
+count <span class="token-operator">:</span> <span class="token-number">3</span>
+<span class="token-keyword">iterate</span> count <span class="token-keyword">to</span> <span class="token-number">6</span>
+  <span class="token-keyword">display</span> count</div>
 
         <h2>7. Comparison Operators</h2>
         <p>VerScript supports standard comparison operators that evaluate to booleans (<code>true</code> / <code>false</code>):</p>
         <ul>
-            <li><code>=</code> (Equal to, equivalent to <code>==</code>)</li>
-            <li><code>x=</code> (Not equal to, equivalent to <code>!=</code>)</li>
+            <li><code>=</code> (Checks if values are equal)</li>
+            <li><code>x=</code> (Checks if values are not equal)</li>
             <li><code>&gt;</code> (Greater than)</li>
             <li><code>&lt;</code> (Less than)</li>
             <li><code>&gt;=</code> (Greater than or equal to)</li>
             <li><code>&lt;=</code> (Less than or equal to)</li>
         </ul>
-        <div class="code-block">is_match: 10 = 10
-display is_match  ! Prints true
+        <div class="code-block">is_match <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">=</span> <span class="token-number">10</span>
+<span class="token-keyword">display</span> is_match  <span class="token-comment">! Prints true</span>
 
-is_diff: 5 x= 10
-display is_diff   ! Prints true</div>
+is_diff <span class="token-operator">:</span> <span class="token-number">5</span> <span class="token-operator">x=</span> <span class="token-number">10</span>
+<span class="token-keyword">display</span> is_diff   <span class="token-comment">! Prints true</span></div>
 
         <h2>8. Conditionals (<code>if-else</code>)</h2>
         <p>Control flow using standard conditional statements. Like loops, conditional branches execute indented blocks of code.</p>
-        <div class="code-block">val: 15
-if val = 10 then
-  display "Value is exactly 10"
-else if val &gt; 10 then
-  display "Value is greater than 10"
-else
-  display "Value is less than 10"</div>
+        <div class="code-block">val <span class="token-operator">:</span> <span class="token-number">15</span>
+<span class="token-keyword">if</span> val <span class="token-operator">=</span> <span class="token-number">10</span> <span class="token-keyword">then</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Value is exactly 10"</span>
+<span class="token-keyword">else if</span> val <span class="token-operator">&gt;</span> <span class="token-number">10</span> <span class="token-keyword">then</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Value is greater than 10"</span>
+<span class="token-keyword">else</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Value is less than 10"</span></div>
 
         <h2>9. Looping Conditionals (<code>while</code> &amp; <code>until</code>)</h2>
         <p>Execute statement blocks dynamically based on expression checks:</p>
@@ -239,42 +242,59 @@ else
             <li><code>while</code>: Repeatedly runs while the condition evaluates to true.</li>
             <li><code>until</code>: Repeatedly runs until the condition evaluates to true (i.e. while it is false).</li>
         </ul>
-        <div class="code-block">! While loop example
-count: 1
-while count &lt;= 3
-  display "count: " + count
-  count: count + 1
+        <div class="code-block"><span class="token-comment">! While loop example</span>
+count <span class="token-operator">:</span> <span class="token-number">1</span>
+<span class="token-keyword">while</span> count <span class="token-operator">&lt;=</span> <span class="token-number">3</span>
+  <span class="token-keyword">display</span> <span class="token-string">"count: "</span> <span class="token-operator">+</span> count
+  count <span class="token-operator">:</span> count <span class="token-operator">+</span> <span class="token-number">1</span>
 
-! Until loop example (runs until count2 is greater than 3)
-count2: 1
-until count2 &gt; 3
-  display "until count2: " + count2
-  count2: count2 + 1</div>
+<span class="token-comment">! Until loop example (runs until count2 is greater than 3)</span>
+count2 <span class="token-operator">:</span> <span class="token-number">1</span>
+<span class="token-keyword">until</span> count2 <span class="token-operator">&gt;</span> <span class="token-number">3</span>
+  <span class="token-keyword">display</span> <span class="token-string">"until count2: "</span> <span class="token-operator">+</span> count2
+  count2 <span class="token-operator">:</span> count2 <span class="token-operator">+</span> <span class="token-number">1</span></div>
 
         <h2>10. Exception Handling &amp; Conditional Fallbacks (<code>do-unless</code>)</h2>
-        <p>The <code>do-unless</code> block has two forms of execution:</p>
+        <p>The <code>do-unless</code> block supports both exception handling and conditional/watch execution.</p>
+
+        <h3>Exception Handling</h3>
+        <p>Catch runtime errors thrown by the compiler or interpreter. Errors can be caught by the generic keyword <code>error</code> or specific error types (such as <code>DivisionByZeroError</code>, <code>UndefinedVariableError</code>, <code>InvalidOperandError</code>, <code>IndentationError</code>, <code>LoopIterationError</code>, <code>LoopLimitError</code>, <code>LoopDirectionError</code>, or <code>SyntaxError</code>). Inside the <code>unless</code> block, the <code>error</code> keyword holds the name of the caught error.</p>
+        <div class="code-block"><span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Trying division by zero..."</span>
+  val <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">/</span> <span class="token-number">0</span>
+<span class="token-keyword">unless</span> DivisionByZeroError
+  <span class="token-keyword">display</span> <span class="token-string">"Caught error: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span>
+
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Accessing undefined variable..."</span>
+  <span class="token-keyword">display</span> missing_val
+<span class="token-keyword">unless</span> <span class="token-keyword">error</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Caught a general error: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></div>
+
+        <h3>Conditional &amp; Reactive Watch Execution</h3>
+        <p>The condition block supports two execution modes: <code>internal</code> and <code>external</code>.</p>
+        <ul>
+            <li><strong><code>unless external [bool]</code> (Default for booleans):</strong> Checks the condition beforehand. Once the <code>do</code> block starts, it runs to completion even if the condition is modified. If the condition was true initially, only the <code>unless</code> block is executed.</li>
+            <li><strong><code>unless internal [bool]</code> (Default for errors):</strong> Acts as a reactive watch. The condition is monitored after every statement inside the <code>do</code> block. If the condition becomes true at any point, execution of the <code>do</code> block stops immediately, and the <code>unless</code> block runs.</li>
+        </ul>
         
-        <h3>Exception Handling (Try-Catch)</h3>
-        <p>Catch runtime errors thrown by the compiler/interpreter. Errors can be caught by the generic keyword <code>error</code> or specific error types like <code>DivisionByZeroError</code>, <code>UndefinedVariableError</code>, <code>InvalidOperandError</code>, <code>IndentationError</code>, <code>LoopIterationError</code>, <code>LoopLimitError</code>, <code>LoopDirectionError</code>, or <code>SyntaxError</code>.</p>
-        <div class="code-block">do
-  display "Trying division by zero..."
-  val: 10 / 0
-unless DivisionByZeroError
-  display "Oops, divided by zero!"
+        <p><strong>Example: Reactive Internal Watch</strong></p>
+        <div class="code-block">flag <span class="token-operator">:</span> <span class="token-keyword">false</span>
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Statement 1 runs"</span>
+  flag <span class="token-operator">:</span> <span class="token-keyword">true</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Statement 2 does NOT run"</span>
+<span class="token-keyword">unless</span> <span class="token-keyword">internal</span> flag
+  <span class="token-keyword">display</span> <span class="token-string">"Watch triggered and unless block ran!"</span></div>
 
-do
-  display "Accessing undefined variable..."
-  display missing_val
-unless error
-  display "Caught a general error!"</div>
-
-        <h3>Conditional Execution</h3>
-        <p>Execute fallback logic if a boolean expression evaluates to true, otherwise run the primary block.</p>
-        <div class="code-block">flag: true
-do
-  display "This executes if flag is false"
-unless flag
-  display "This executes if flag is true"</div>
+        <p><strong>Example: External Pre-check</strong></p>
+        <div class="code-block">flag <span class="token-operator">:</span> <span class="token-keyword">false</span>
+<span class="token-keyword">do</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Statement 1 runs"</span>
+  flag <span class="token-operator">:</span> <span class="token-keyword">true</span>
+  <span class="token-keyword">display</span> <span class="token-string">"Statement 2 runs (external watch does not stop it)"</span>
+<span class="token-keyword">unless</span> <span class="token-keyword">external</span> flag
+  <span class="token-keyword">display</span> <span class="token-string">"This won't run because flag was false initially"</span></div></div>
     </div>
 
 
