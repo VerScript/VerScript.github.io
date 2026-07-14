@@ -1,2 +1,2 @@
 # VerScript.github.io
-The documentation for the VerScript language
+The official page for the VerScript language
