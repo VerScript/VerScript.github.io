@@ -234,6 +234,17 @@ count <span class="token-operator">:</span> <span class="token-number">3</span>
 <span class="token-keyword">iterate</span> count <span class="token-keyword">to</span> <span class="token-number">6</span>
   <span class="token-keyword">display</span> count</div>
 
+        <h3>Loop Step Constraint (<code>step s</code>)</h3>
+        <p>Customize the iteration increment step size across all loop types (<code>loop</code>, <code>iterate</code>, <code>while</code>, <code>until</code>) using the <code>step</code> keyword. The step value must be a positive integer greater than 0 and less than or equal to the loop size; otherwise a <code>LoopStepError</code> is thrown.</p>
+        <div class="code-block"><span class="token-comment">! Stepped iteration</span>
+<span class="token-keyword">iterate</span> i <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">10</span> <span class="token-keyword">step</span> <span class="token-number">2</span>
+  <span class="token-keyword">display</span> i  <span class="token-comment">! Prints 1, 3, 5, 7, 9</span>
+
+<span class="token-comment">! Stepped while loop</span>
+val <span class="token-operator">:</span> <span class="token-number">0</span>
+<span class="token-keyword">while</span> val <span class="token-operator">&lt;</span> <span class="token-number">10</span> <span class="token-keyword">step</span> <span class="token-number">3</span>
+  val <span class="token-operator">:</span> val <span class="token-operator">+</span> <span class="token-number">1</span></div>
+
         <h2>7. Comparison Operators</h2>
         <p>VerScript supports standard comparison operators that evaluate to booleans (<code>true</code> / <code>false</code>):</p>
         <ul>
@@ -334,6 +345,7 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
             <li><strong>LoopIterationError (3 Points) - Low/Non-Critical:</strong> Thrown on non-numeric loop bound arguments.</li>
             <li><strong>LoopLimitError (3 Points) - Low/Non-Critical:</strong> Thrown on non-numeric loop boundary ranges.</li>
             <li><strong>LoopDirectionError (3 Points) - Low/Non-Critical:</strong> Thrown when loop start bounds are greater than end limits.</li>
+            <li><strong>LoopStepError (3 Points) - Low/Non-Critical:</strong> Thrown on invalid step arguments (non-numeric, &lt;= 0, or larger than loop size).</li>
             <li><strong>UndefinedVariableError (2 Points) - Low/Non-Critical:</strong> Thrown on attempting to retrieve an uninitialized variable.</li>
         </ul>
 
