@@ -388,6 +388,75 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
             <li><strong>Parameter Scale:</strong> 1,000,000,000 (1.0 Billion Parameters).</li>
             <li><strong>Capabilities:</strong> Auto-indentation, syntax repair, inline line-by-line comment generation, and interactive logic synthesis.</li>
         </ul>
+
+        <h2>14. Multiline Comments (<code>!! ... !!</code>)</h2>
+        <p>VerScript supports block multiline comments delimited by <code>!!</code>. Any code or text enclosed between opening <code>!!</code> and closing <code>!!</code> is ignored by the compiler across multiple lines.</p>
+        <div class="code-block"><span class="token-comment">!!
+  VerScript Multiline Comment Block
+  Line 1: Documentation notes
+  Line 2: Temporary code block disabled
+!!</span>
+<span class="token-keyword">display</span> <span class="token-string">"Code execution continues after block comment!"</span></div>
+
+        <h2>15. Command Attributes &amp; Keyword Arguments (<code>?attr</code>, <code>kwargs</code>)</h2>
+        <p>Commands in VerScript support optional modifiers and key-value attributes attached using the <code>?</code> operator or direct <code>kwarg=value</code> syntax.</p>
+        
+        <h3>Attribute Format Syntax</h3>
+        <ul>
+            <li><strong>Boolean Flags (<code>?flag</code>):</strong> Specifying a flag toggles it to <code>true</code> (non-default behavior).</li>
+            <li><strong>Key-Value Attributes (<code>?key=val</code> / <code>?key="val"</code>):</strong> Passes custom parameters and settings to statements.</li>
+        </ul>
+
+        <h3>Supported Command Attributes Table</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Attribute / Kwarg</th>
+                    <th>Description &amp; Allowed Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>display</code></td>
+                    <td><code>?color="green"|"red"|"yellow"|"blue"|"purple"|"cyan"</code></td>
+                    <td>ANSI colorized terminal output.</td>
+                </tr>
+                <tr>
+                    <td><code>display</code></td>
+                    <td><code>?newline=false</code> (or <code>?inline</code>)</td>
+                    <td>Suppresses trailing newline character for inline printing.</td>
+                </tr>
+                <tr>
+                    <td><code>prompt</code></td>
+                    <td><code>?default="value"</code></td>
+                    <td>Provides a fallback default value if user enters empty input.</td>
+                </tr>
+                <tr>
+                    <td><code>iterate</code> / <code>loop</code></td>
+                    <td><code>?step=n</code>, <code>?reverse</code></td>
+                    <td>Custom step increment and reverse iteration direction.</td>
+                </tr>
+                <tr>
+                    <td><code>throw</code></td>
+                    <td><code>?msg="custom message"</code></td>
+                    <td>Attaches a custom error message to thrown exceptions.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Example Showcase: Attributes &amp; Multiline Comments</strong></p>
+        <div class="code-block"><span class="token-comment">!! Multiline comment block showcase !!</span>
+<span class="token-keyword">display</span> <span class="token-string">"ANSI Colorized Display"</span> <span class="token-operator">?color="cyan"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Inline Segment A, "</span> <span class="token-operator">?newline=false</span> <span class="token-operator">?color="yellow"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Segment B (Done!)"</span> <span class="token-operator">?color="green"</span>
+
+<span class="token-keyword">prompt</span> username <span class="token-operator">?default="guest_user"</span>
+
+<span class="token-keyword">do</span>
+  <span class="token-keyword">throw</span> DivisionByZeroError <span class="token-operator">?msg="Custom math exception triggered!"</span>
+<span class="token-keyword">unless</span> DivisionByZeroError
+  <span class="token-keyword">display</span> <span class="token-string">"Caught error: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span> <span class="token-operator">?color="red"</span></div>
     </div>
 
 
