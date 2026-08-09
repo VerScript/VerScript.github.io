@@ -475,25 +475,27 @@
                     <span class="dot dot-green"></span>
                     <span class="window-title">sample.vrs</span>
                 </div>
-                <pre class="code-content"><code><span class="token-comment">! Welcome to VerScript</span>
-<span class="token-comment">! Showcase: System Operators, Custom Throws, and Watches</span>
+                <pre class="code-content"><code><span class="token-comment">!!
+  VerScript Language Showcase — v1.2.0
+  Featuring: Multiline Comments (!!...!!), Command Attributes (?color, ?newline=false)
+!!</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"--- 1. Loop and Iteration with Step Showcase ---"</span>
-<span class="token-keyword">iterate</span> idx <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">10</span> <span class="token-keyword">step</span> <span class="token-number">2</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Stepped Iteration: "</span> <span class="token-operator">+</span> idx
+<span class="token-keyword">display</span> <span class="token-string">"=== 1. ANSI Colorized Terminal Output ==="</span> <span class="token-operator">?color="cyan"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Success: VerScript Engine Active!"</span> <span class="token-operator">?color="green"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Warning: Memory optimization recommended."</span> <span class="token-operator">?color="yellow"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Error: DivisionByZero handled gracefully."</span> <span class="token-operator">?color="red"</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"--- 2. SuppressErrors Block Operator ---"</span>
-<span class="token-keyword">SuppressErrors</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Running division by zero (skipped under SuppressErrors)..."</span>
-  val <span class="token-operator">:</span> <span class="token-number">10</span> <span class="token-operator">/</span> <span class="token-number">0</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Division by zero bypassed successfully!"</span>
+<span class="token-keyword">display</span> <span class="token-string">"=== 2. Inline Printing with ?newline=false ==="</span> <span class="token-operator">?color="purple"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Loading modules: ["</span> <span class="token-operator">?newline=false</span> <span class="token-operator">?color="cyan"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Core, Lexer, VS#-1B Engine] "</span> <span class="token-operator">?newline=false</span> <span class="token-operator">?color="yellow"</span>
+<span class="token-keyword">display</span> <span class="token-string">"Done!"</span> <span class="token-operator">?color="green"</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"--- 3. Custom Throw &amp; Exception Catching ---"</span>
+<span class="token-keyword">display</span> <span class="token-string">"=== 3. Custom Throw with ?msg Attribute ==="</span> <span class="token-operator">?color="purple"</span>
 <span class="token-keyword">do</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Throwing custom DivisionByZeroError..."</span>
-  <span class="token-keyword">throw</span> DivisionByZeroError
+  <span class="token-keyword">display</span> <span class="token-string">"Triggering custom exception with ?msg attribute..."</span> <span class="token-operator">?color="yellow"</span>
+  <span class="token-keyword">throw</span> DivisionByZeroError <span class="token-operator">?msg="Division by zero in calculate_ratio()"</span>
 <span class="token-keyword">unless</span> DivisionByZeroError
-  <span class="token-keyword">display</span> <span class="token-string">"Safe exception catch of: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span></code></pre>
+  <span class="token-keyword">display</span> <span class="token-string">"Caught Exception: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span> <span class="token-operator">?color="green"</span></code></pre>
             </div>
         </header>
 
