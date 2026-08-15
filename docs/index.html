@@ -126,6 +126,30 @@
         .token-number { color: #bd93f9; }
         .token-operator { color: #50fa7b; }
 
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        th {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            font-weight: 700;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
         /* INTRO BADGE */
         .intro-text {
             font-size: 1.1rem;
