@@ -437,6 +437,54 @@
             text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
         }
     </style>
+
+    <!-- Canvas Animation Styling -->
+    <style>
+        .canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hero { position: relative; }
+        .code-preview-window { position: relative; z-index: 10; }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.025) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px) !important;
+            border-color: rgba(0, 255, 204, 0.4) !important;
+            box-shadow: 0 12px 40px rgba(0, 255, 204, 0.15) !important;
+        }
+        .feature-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #00FFCC;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+            .feature-card {
+                padding: 18px !important;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
@@ -468,7 +516,8 @@
             </div>
             
             <!-- Code Demo Section -->
-            <div class="code-preview-window">
+            <canvas id="codeFunnelCanvas" class="canvas-container"></canvas>
+<div class="code-preview-window">
                 <div class="window-header">
                     <span class="dot dot-red"></span>
                     <span class="dot dot-yellow"></span>
@@ -476,26 +525,25 @@
                     <span class="window-title">sample.vrs</span>
                 </div>
                 <pre class="code-content"><code><span class="token-comment">!!
-  VerScript Language Showcase — v1.2.0
-  Featuring: Multiline Comments (!!...!!), Command Attributes (?color, ?newline=false)
+  VerScript Polyglot Language Showcase — v1.2.0
+  Featuring: Polyglot Code Injection (inject [lang]) & Command Attributes
 !!</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"=== 1. ANSI Colorized Terminal Output ==="</span> <span class="token-operator">?color="cyan"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Success: VerScript Engine Active!"</span> <span class="token-operator">?color="green"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Warning: Memory optimization recommended."</span> <span class="token-operator">?color="yellow"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Error: DivisionByZero handled gracefully."</span> <span class="token-operator">?color="red"</span>
+<span class="token-keyword">display</span> <span class="token-string">"=== Polyglot Engine Online ==="</span> <span class="token-operator">?color="cyan"</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"=== 2. Inline Printing with ?newline=false ==="</span> <span class="token-operator">?color="purple"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Loading modules: ["</span> <span class="token-operator">?newline=false</span> <span class="token-operator">?color="cyan"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Core, Lexer, VS#-1B Engine] "</span> <span class="token-operator">?newline=false</span> <span class="token-operator">?color="yellow"</span>
-<span class="token-keyword">display</span> <span class="token-string">"Done!"</span> <span class="token-operator">?color="green"</span>
+<span class="token-keyword">inject</span> python
+  print("Python snippet executing inside VerScript!")
+  val = [x**2 for x in range(5)]
+  print("Squares:", val)
 
-<span class="token-keyword">display</span> <span class="token-string">"=== 3. Custom Throw with ?msg Attribute ==="</span> <span class="token-operator">?color="purple"</span>
-<span class="token-keyword">do</span>
-  <span class="token-keyword">display</span> <span class="token-string">"Triggering custom exception with ?msg attribute..."</span> <span class="token-operator">?color="yellow"</span>
-  <span class="token-keyword">throw</span> DivisionByZeroError <span class="token-operator">?msg="Division by zero in calculate_ratio()"</span>
-<span class="token-keyword">unless</span> DivisionByZeroError
-  <span class="token-keyword">display</span> <span class="token-string">"Caught Exception: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span> <span class="token-operator">?color="green"</span></code></pre>
+<span class="token-keyword">inject</span> javascript
+  const languages = ["Rust", "Go", "C++", "Python", "VerScript"];
+  console.log("Unified stack:", languages.join(" -> "));
+
+<span class="token-keyword">inject</span> verscript
+  <span class="token-keyword">display</span> <span class="token-string">"Nested VerScript dynamic evaluation!"</span> <span class="token-operator">?color="green"</span>
+  <span class="token-keyword">iterate</span> i <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">3</span>
+    <span class="token-keyword">display</span> <span class="token-string">"Step: "</span> <span class="token-operator">+</span> i <span class="token-operator">?color="yellow"</span></code></pre>
             </div>
         </header>
 
@@ -516,36 +564,37 @@
             </svg>
         </div>
 
-        <div class="features-grid">
+                <div class="features-grid">
             <div class="feature-card">
                 <h2>Lightweight C Core</h2>
-                <p>VerScript is built on a minimal C foundation. It includes a custom lexer and interpreter designed for fast tokenization.</p>
+                <p>VerScript is built on a minimal C foundation. It includes a custom lexer and interpreter designed for fast tokenization and zero-overhead execution.</p>
             </div>
             <div class="feature-card">
-                <h2>Dynamic Types & Expressions</h2>
-                <p>Enjoy dynamic typing with support for strings, integers, and booleans. Effortlessly concatenate variables and evaluate mathematical expressions directly within the language.</p>
+                <h2>Dynamic Types &amp; Expressions</h2>
+                <p>Enjoy dynamic typing with support for strings, integers, and booleans. Effortlessly concatenate variables and evaluate mathematical expressions directly.</p>
             </div>
             <div class="feature-card">
-                <h2>🔄 Loops & Iterations</h2>
-                <p>Supports clean indented loop structures (<code>loop n</code>) and variable iteration bounds (<code>iterate i from x to y</code>) compiled and executed on the fly.</p>
+                <h2>Indented Loops &amp; Iteration</h2>
+                <p>Supports clean indented loop structures (<code>loop n</code>) and variable iteration bounds (<code>iterate i from x to y step z</code>) compiled on the fly.</p>
             </div>
             <div class="feature-card">
-                <h2>🛡️ Exception Handling &amp; Fallbacks</h2>
+                <h2>Exception Handling &amp; Fallbacks</h2>
                 <p>Supports robust try-catch mechanisms with named compiler errors via <code>do-unless [error]</code>, as well as condition fallbacks <code>do-unless [bool]</code>.</p>
             </div>
             <div class="feature-card">
-                <h2>✨ VS#-1B Neural AI Engine</h2>
-                <p>Powered by <strong>VS#-1B</strong>, a custom 1-Billion Parameter neural architecture designed for real-time code synthesis, automated error repair, and interactive logic explanation.</p>
+                <h2>Polyglot Code Injection</h2>
+                <p>Embed and execute code snippets from <strong>100+ major languages</strong> (Python, JS, C++, Rust, Go, Java, SQL...) directly inside VerScript using <code>inject [lang]</code>.</p>
             </div>
             <div class="feature-card">
-                <h2>💬 Multiline Comments (<code>!! ... !!</code>)</h2>
+                <h2>Multiline Comments</h2>
                 <p>Support for block multiline comment structures (<code>!! ... !!</code>) to comment out large code blocks or documentation notes across lines.</p>
             </div>
             <div class="feature-card">
-                <h2>⚙️ Command Attributes &amp; Kwargs</h2>
+                <h2>Command Attributes &amp; Kwargs</h2>
                 <p>Attach optional modifiers and keyword arguments directly to commands using <code>?attribute</code> (e.g. <code>?color="green"</code>, <code>?newline=false</code>, <code>?default="val"</code>).</p>
             </div>
         </div>
+
 
 
         <footer>
@@ -574,5 +623,77 @@
             });
         });
     </script>
+
+    <script>
+        // Polyglot Code Lines Funnel Canvas Animation
+        const canvas = document.getElementById('codeFunnelCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const snippets = [
+            'def main(): print("python")', 'fn calculate() -> i32', 'function process() { js }',
+            'import std.stdio;', 'class Container<T>', 'SELECT * FROM users',
+            'func NewServer() *Server', 'val list = listOf("kt")', 'printf("C language");',
+            '#include <iostream>', '<?php echo "PHP"; ?>', 'pub fn rust_fun()',
+            'package main', 'import SwiftUI', 'def elixir_fun do', 'puts "Ruby snippet"'
+        ];
+
+        const colors = ['#00FFCC', '#9D00FF', '#FF79C6', '#BD93F9', '#F1FA8C', '#8BE9FD'];
+
+        class CodeParticle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.text = snippets[Math.floor(Math.random() * snippets.length)];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * (canvas.height * 0.3);
+                this.speedY = 1 + Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 1.5;
+                this.alpha = 0.8;
+                this.fontSize = 11 + Math.floor(Math.random() * 4);
+            }
+            update() {
+                // Funnel towards center bottom where code window is
+                const targetX = canvas.width / 2;
+                const targetY = canvas.height * 0.7;
+                this.x += (targetX - this.x) * 0.015 + this.speedX;
+                this.y += this.speedY;
+                this.alpha -= 0.005;
+
+                if (this.y > targetY || this.alpha <= 0) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.fontSize}px 'Courier New', monospace`;
+                ctx.fillText(this.text, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        const particles = Array.from({ length: 28 }, () => new CodeParticle());
+
+        function animateFunnel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateFunnel);
+        }
+        animateFunnel();
+    </script>
+
 </body>
 </html>
