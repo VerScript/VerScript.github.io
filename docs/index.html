@@ -407,7 +407,7 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
 
         
 
-        <h2>14. Multiline Comments (<code>!! ... !!</code>)</h2>
+        <h2>13. Multiline Comments (<code>!! ... !!</code>)</h2>
         <p>VerScript supports block multiline comments delimited by <code>!!</code>. Any code or text enclosed between opening <code>!!</code> and closing <code>!!</code> is ignored by the compiler across multiple lines.</p>
         <div class="code-block"><span class="token-comment">!!
   VerScript Multiline Comment Block
@@ -416,7 +416,7 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
 !!</span>
 <span class="token-keyword">display</span> <span class="token-string">"Code execution continues after block comment!"</span></div>
 
-        <h2>15. Command Attributes &amp; Keyword Arguments (<code>?attr</code>, <code>kwargs</code>)</h2>
+        <h2>14. Command Attributes &amp; Keyword Arguments (<code>?attr</code>, <code>kwargs</code>)</h2>
         <p>Commands in VerScript support optional modifiers and key-value attributes attached using the <code>?</code> operator or direct <code>kwarg=value</code> syntax.</p>
         
         <h3>Attribute Format Syntax</h3>
@@ -475,6 +475,17 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
   <span class="token-keyword">throw</span> DivisionByZeroError <span class="token-operator">?msg="Custom math exception triggered!"</span>
 <span class="token-keyword">unless</span> DivisionByZeroError
   <span class="token-keyword">display</span> <span class="token-string">"Caught error: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span> <span class="token-operator">?color="red"</span></div>
+
+        <h2>15. Polyglot Code Injection (<code>inject [lang]</code>)</h2>
+        <p>VerScript allows embedding and executing code snippets from <strong>100+ major languages</strong> (Python, JS, C++, Rust, Go, Java, SQL, etc.) directly inside your scripts using the <code>inject [lang]</code> keyword.</p>
+        <div class="code-block"><span class="token-keyword">inject</span> python
+  print("Python snippet executing inside VerScript!")
+  val = [x**2 for x in range(5)]
+  print("Squares:", val)
+
+<span class="token-keyword">inject</span> javascript
+  const languages = ["Rust", "Go", "C++", "Python", "VerScript"];
+  console.log("Unified stack:", languages.join(" -&gt; "));</div>
     </div>
 
 
