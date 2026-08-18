@@ -475,8 +475,38 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
   <span class="token-keyword">throw</span> DivisionByZeroError <span class="token-operator">?msg="Custom math exception triggered!"</span>
 <span class="token-keyword">unless</span> DivisionByZeroError
   <span class="token-keyword">display</span> <span class="token-string">"Caught error: "</span> <span class="token-operator">+</span> <span class="token-keyword">error</span> <span class="token-operator">?color="red"</span></div>
-    </div>
 
+        <h2>16. Polyglot Code Injection (<code>inject [lang]</code>) &amp; Dynamic Evaluation</h2>
+        <p>VerScript features native multi-language polyglot injection via the <code>inject [lang]</code> statement block. This allows you to embed and execute code written in over 100 programming languages seamlessly inside your VerScript programs.</p>
+
+        <h3>Syntax</h3>
+        <div class="code-block"><span class="token-keyword">inject</span> [language]
+    [source code goes here]</div>
+
+        <p>Additionally, passing <code>verscript</code>, <code>vrs</code>, or <code>eval</code> as the language target evaluates nested VerScript source dynamically at runtime (equivalent to the <code>eval()</code> function in JavaScript).</p>
+
+        <h3>Example: Python Injection</h3>
+        <div class="code-block"><span class="token-keyword">display</span> <span class="token-string">"Running Python code inside VerScript:"</span> <span class="token-operator">?color="cyan"</span>
+<span class="token-keyword">inject</span> python
+    import sys
+    print(f"Hello from Python {sys.version.split()[0]} runtime!")</div>
+
+        <h3>Example: JavaScript Injection</h3>
+        <div class="code-block"><span class="token-keyword">display</span> <span class="token-string">"Executing JavaScript runtime logic:"</span> <span class="token-operator">?color="purple"</span>
+<span class="token-keyword">inject</span> javascript
+    const numbers = [1, 2, 3, 4, 5];
+    const sum = numbers.reduce((a, b) => a + b, 0);
+    console.log("Calculated sum in JS:", sum);</div>
+
+        <h3>Example: Dynamic VerScript Evaluation (<code>inject verscript</code>)</h3>
+        <div class="code-block"><span class="token-keyword">display</span> <span class="token-string">"Dynamic nested VerScript eval:"</span> <span class="token-operator">?color="yellow"</span>
+<span class="token-keyword">inject</span> verscript
+    display "Dynamically evaluated VerScript code block!" ?color="green"</div>
+
+        <h3>Supported Runtimes (100+ Languages)</h3>
+        <p>VerScript's polyglot runner supports 100+ languages including: <code>python</code>, <code>javascript</code> (node/js), <code>typescript</code> (ts), <code>rust</code>, <code>cpp</code> (c++), <code>c</code>, <code>go</code> (golang), <code>ruby</code>, <code>php</code>, <code>java</code>, <code>kotlin</code>, <code>swift</code>, <code>bash</code> (sh/shell), <code>powershell</code>, <code>perl</code>, <code>lua</code>, <code>r</code>, <code>julia</code>, <code>scala</code>, <code>elixir</code>, <code>clojure</code>, <code>haskell</code>, <code>dart</code>, <code>zig</code>, <code>nim</code>, <code>sql</code>, <code>csharp</code> (c#), <code>fsharp</code> (f#), <code>ocaml</code>, <code>fortran</code>, and more.</p>
+    </div>
 
 </body>
 </html>
+
