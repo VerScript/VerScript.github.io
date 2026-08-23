@@ -505,6 +505,40 @@ count2 <span class="token-operator">:</span> <span class="token-number">1</span>
 
         <h3>Supported Runtimes (100+ Languages)</h3>
         <p>VerScript's polyglot runner supports 100+ languages including: <code>python</code>, <code>javascript</code> (node/js), <code>typescript</code> (ts), <code>rust</code>, <code>cpp</code> (c++), <code>c</code>, <code>go</code> (golang), <code>ruby</code>, <code>php</code>, <code>java</code>, <code>kotlin</code>, <code>swift</code>, <code>bash</code> (sh/shell), <code>powershell</code>, <code>perl</code>, <code>lua</code>, <code>r</code>, <code>julia</code>, <code>scala</code>, <code>elixir</code>, <code>clojure</code>, <code>haskell</code>, <code>dart</code>, <code>zig</code>, <code>nim</code>, <code>sql</code>, <code>csharp</code> (c#), <code>fsharp</code> (f#), <code>ocaml</code>, <code>fortran</code>, and more.</p>
+
+        <h2>17. Command Aliases (<code>alias</code>) &amp; Attribute Mapping</h2>
+        <p>VerScript allows renaming commands and mapping attribute / argument names dynamically with the <code>alias</code> keyword. This enables custom language dialects, abbreviations, and ergonomic aliases.</p>
+
+        <h3>Single-Line Alias</h3>
+        <div class="code-block"><span class="token-keyword">alias</span> [target_cmd]: [new_alias_name]</div>
+        <p>Example: Rebinding <code>display</code> to <code>print</code>:</p>
+        <div class="code-block"><span class="token-keyword">alias</span> display: print
+<span class="token-keyword">print</span> <span class="token-string">"Hello from aliased print command!"</span> <span class="token-operator">?color="green"</span></div>
+
+        <h3>Attribute / Argument Mapping</h3>
+        <p>You can also map argument and attribute names so caller-provided attributes automatically resolve to canonical command attributes:</p>
+        <div class="code-block"><span class="token-comment">! Positional / direct attribute forwarding</span>
+<span class="token-keyword">alias</span> cmd: cmd2 <span class="token-operator">?</span> arg3 arg4
+
+<span class="token-comment">! Key-value attribute mapping (target_arg=alias_arg)</span>
+<span class="token-keyword">alias</span> display: echo <span class="token-operator">?</span> color=tint newline=inline</div>
+        <p>Example: Using <code>echo</code> with mapped <code>?tint</code> and <code>?inline</code> attributes:</p>
+        <div class="code-block"><span class="token-keyword">alias</span> display: echo <span class="token-operator">?</span> color=tint newline=inline
+<span class="token-keyword">echo</span> <span class="token-string">"Echoed with mapped attributes: "</span> <span class="token-operator">?tint="cyan"</span> <span class="token-operator">?inline=true</span>
+<span class="token-keyword">echo</span> <span class="token-string">"Done!"</span> <span class="token-operator">?tint="yellow"</span></div>
+
+        <h3>Multi-Line Alias Block</h3>
+        <p>Define multiple aliases cleanly within an indented <code>alias:</code> block:</p>
+        <div class="code-block"><span class="token-keyword">alias:</span>
+    display: print
+    loop: repeat
+    iterate: for <span class="token-operator">?</span> step=by
+
+<span class="token-keyword">repeat</span> 3
+    <span class="token-keyword">print</span> <span class="token-string">"Repeated iteration"</span> <span class="token-operator">?color="purple"</span>
+
+<span class="token-keyword">for</span> i from 1 to 5 <span class="token-operator">?by=2</span>
+    <span class="token-keyword">print</span> <span class="token-string">"Step iteration index: "</span> <span class="token-operator">+</span> i <span class="token-operator">?color="cyan"</span></div>
     </div>
 
 </body>
