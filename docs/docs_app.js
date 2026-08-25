@@ -129,24 +129,26 @@ function loadArticle(index) {
     `;
 
     mainContentEl.innerHTML = `
-        <article>
-            <div class="article-header">
-                <div class="article-meta">
-                    <span class="meta-pill">Chapter ${article.number}</span>
-                    <span class="meta-pill">${escapeHTML(article.category)}</span>
-                    <span class="read-time">⏱️ ${escapeHTML(article.readTime)}</span>
+        <div class="article-view-wrapper">
+            <article>
+                <div class="article-header">
+                    <div class="article-meta">
+                        <span class="meta-pill">Chapter ${article.number}</span>
+                        <span class="meta-pill">${escapeHTML(article.category)}</span>
+                        <span class="read-time">⏱️ ${escapeHTML(article.readTime)}</span>
+                    </div>
+                    <h1 class="article-title">${escapeHTML(article.title)}</h1>
+                    <p class="article-summary">${escapeHTML(article.summary)}</p>
                 </div>
-                <h1 class="article-title">${escapeHTML(article.title)}</h1>
-                <p class="article-summary">${escapeHTML(article.summary)}</p>
-            </div>
 
-            <div class="article-body">
-                ${article.body}
-                ${codeBlocksHTML}
-                ${exercisesHTML}
-                ${paginationHTML}
-            </div>
-        </article>
+                <div class="article-body">
+                    ${article.body}
+                    ${codeBlocksHTML}
+                    ${exercisesHTML}
+                    ${paginationHTML}
+                </div>
+            </article>
+        </div>
     `;
 }
 
@@ -546,16 +548,36 @@ function setupEventListeners() {
         renderSidebarList(filtered);
     });
 
+    const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
+
+    function toggleSidebar(open) {
+        const isOpen = typeof open === 'boolean' ? open : !sidebarEl.classList.contains('open');
+        sidebarEl.classList.toggle('open', isOpen);
+        if (sidebarBackdropEl) {
+            sidebarBackdropEl.classList.toggle('active', isOpen);
+        }
+        document.body.style.overflow = isOpen && window.innerWidth <= 900 ? 'hidden' : '';
+    }
+
+    sidebarToggleEl.addEventListener('click', () => {
+        toggleSidebar();
+    });
+
+    if (sidebarBackdropEl) {
+        sidebarBackdropEl.addEventListener('click', () => {
+            toggleSidebar(false);
+        });
+    }
+
     articleListEl.addEventListener('click', (e) => {
         const btn = e.target.closest('.article-item-btn');
         if (btn) {
             const idx = parseInt(btn.getAttribute('data-idx'));
             loadArticle(idx);
+            if (window.innerWidth <= 900) {
+                toggleSidebar(false);
+            }
         }
-    });
-
-    sidebarToggleEl.addEventListener('click', () => {
-        sidebarEl.classList.toggle('open');
     });
 
     window.addEventListener('hashchange', () => {
@@ -563,6 +585,9 @@ function setupEventListeners() {
         const foundIdx = ARTICLES.findIndex(a => a.id === hash || `article-${a.number}` === hash);
         if (foundIdx !== -1 && foundIdx !== currentArticleIndex) {
             loadArticle(foundIdx);
+            if (window.innerWidth <= 900) {
+                toggleSidebar(false);
+            }
         }
     });
 }

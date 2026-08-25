@@ -68,8 +68,8 @@ display "VerScript VM v1.2.0 initialized cleanly." ?color="green"`
                 id: "ex_intro_1",
                 title: "Exercise 1.1: Your First Output",
                 prompt: "Write a VerScript program that displays <code>\"Hello from VerScript!\"</code> in green color.",
-                starterCode: `! Write your code below:
-display "Change this text" ?color="green"`,
+                starterCode: `! TODO: Use the 'display' keyword to output "Hello from VerScript!" with ?color="green"
+`,
                 hint: "Use the `display` keyword followed by your string and the `?color=\"green\"` attribute.",
                 solution: `display "Hello from VerScript!" ?color="green"`,
                 expectedMatch: /Hello from VerScript!/i
@@ -78,7 +78,9 @@ display "Change this text" ?color="green"`,
                 id: "ex_intro_2",
                 title: "Exercise 1.2: Two-line Status Report",
                 prompt: "Display two consecutive lines: first display <code>\"System Online\"</code> in cyan, then display <code>\"Ready\"</code> in yellow.",
-                starterCode: `! Display System Online (cyan) and Ready (yellow)
+                starterCode: `! TODO: Write two display statements:
+! 1. "System Online" in cyan
+! 2. "Ready" in yellow
 `,
                 hint: "Write two separate `display` statements on individual lines.",
                 solution: `display "System Online" ?color="cyan"
@@ -89,9 +91,9 @@ display "Ready" ?color="yellow"`,
                 id: "ex_intro_3",
                 title: "Exercise 1.3: Inline Printing",
                 prompt: "Use the <code>?newline=false</code> (or <code>?inline</code>) attribute to print <code>\"Loading... \"</code> without a newline, followed by <code>\"Done!\"</code> on the same line.",
-                starterCode: `! Print on the same line
-display "Loading... " ?newline=false ?color="yellow"
-display "Done!" ?color="green"`,
+                starterCode: `! TODO: Print "Loading... " with ?newline=false and ?color="yellow"
+! Then print "Done!" with ?color="green" on the next line
+`,
                 hint: "The first `display` uses `?newline=false`, and the second one finishes the line.",
                 solution: `display "Loading... " ?newline=false ?color="yellow"
 display "Done!" ?color="green"`,
@@ -140,8 +142,8 @@ display "Comments demo active" ?color="cyan"`
             {
                 id: "ex_comments_1",
                 title: "Exercise 2.1: Add Single-Line Comments",
-                prompt: "Add a single-line comment above the display command describing what it prints.",
-                starterCode: `! Add comment here
+                prompt: "Add a single-line comment above the display command describing what it prints, then print <code>\"Calculation active\"</code> in green.",
+                starterCode: `! TODO: Add a single-line comment here starting with !
 display "Calculation active" ?color="green"`,
                 hint: "Prefix your comment line with `!`.",
                 solution: `! Print calculation status
@@ -152,10 +154,10 @@ display "Calculation active" ?color="green"`,
                 id: "ex_comments_2",
                 title: "Exercise 2.2: Wrap Documentation in Block Comments",
                 prompt: "Wrap lines describing a module in a multiline <code>!!</code> comment block and print <code>\"Docs OK\"</code>.",
-                starterCode: `!!
+                starterCode: `! TODO: Convert these 3 lines into a block comment using !! at start and !! at end
 Header Notes
 Version 1.0
-!!
+
 display "Docs OK" ?color="cyan"`,
                 hint: "Enclose your notes between `!!` at start and `!!` at end.",
                 solution: `!!
@@ -168,8 +170,9 @@ display "Docs OK" ?color="cyan"`,
             {
                 id: "ex_comments_3",
                 title: "Exercise 2.3: Inline Commenting",
-                prompt: "Place a comment at the end of a line after a statement.",
-                starterCode: `display "Server Started" ?color="green" ! Initial boot display`,
+                prompt: "Place an inline comment at the end of the line after displaying <code>\"Server Started\"</code>.",
+                starterCode: `! TODO: Display "Server Started" in green and append an inline comment starting with !
+`,
                 hint: "Place `! comment text` after the command attributes.",
                 solution: `display "Server Started" ?color="green" ! Initial boot display`,
                 expectedMatch: /Server Started/i
@@ -238,9 +241,9 @@ display "Status: " + unlocked ?color="green"`
                 id: "ex_vars_1",
                 title: "Exercise 3.1: Declare Player Stats",
                 prompt: "Create a variable <code>playerName : \"Atlas\"</code> and <code>health : 100</code>, then display <code>\"Player: \" + playerName</code>.",
-                starterCode: `playerName : "Atlas"
-health : 100
-display "Player: " + playerName ?color="cyan"`,
+                starterCode: `! TODO: Declare playerName and health
+! Then display "Player: " + playerName
+`,
                 hint: "Use `name : value` syntax for assignments.",
                 solution: `playerName : "Atlas"
 health : 100
@@ -252,8 +255,8 @@ display "Player: " + playerName ?color="cyan"`,
                 title: "Exercise 3.2: Reassign a Variable",
                 prompt: "Initialize <code>status : \"offline\"</code>, then reassign it to <code>\"online\"</code> and display <code>\"Status: \" + status</code>.",
                 starterCode: `status : "offline"
-status : "online"
-display "Status: " + status ?color="green"`,
+! TODO: Reassign status to "online" and display "Status: " + status in green
+`,
                 hint: "Reassign the variable on the next line using `status : \"online\"`.",
                 solution: `status : "offline"
 status : "online"
@@ -264,8 +267,8 @@ display "Status: " + status ?color="green"`,
                 id: "ex_vars_3",
                 title: "Exercise 3.3: Boolean Flags",
                 prompt: "Create a boolean variable <code>ready : true</code> and display <code>\"Ready: \" + ready</code>.",
-                starterCode: `ready : true
-display "Ready: " + ready ?color="purple"`,
+                starterCode: `! TODO: Declare boolean ready : true and display "Ready: " + ready
+`,
                 hint: "Set `ready : true` and concatenate with string.",
                 solution: `ready : true
 display "Ready: " + ready ?color="purple"`,
@@ -313,8 +316,8 @@ display "Division: " + (a / b) ?color="green"`
                 prompt: "Calculate the area of a rectangle with <code>width : 8</code> and <code>height : 6</code>. Display <code>\"Area: \" + (width * height)</code>.",
                 starterCode: `width : 8
 height : 6
-area : width * height
-display "Area: " + area ?color="green"`,
+! TODO: Calculate area : width * height and display "Area: " + area
+`,
                 hint: "Multiply `width * height` and display.",
                 solution: `width : 8
 height : 6
@@ -328,8 +331,8 @@ display "Area: " + area ?color="green"`,
                 prompt: "Compute the average of <code>score1 : 80</code> and <code>score2 : 100</code>. Display <code>\"Average: \" + ((score1 + score2) / 2)</code>.",
                 starterCode: `score1 : 80
 score2 : 100
-avg : (score1 + score2) / 2
-display "Average: " + avg ?color="cyan"`,
+! TODO: Calculate average of score1 and score2, then display "Average: " + avg
+`,
                 hint: "Enclose the sum in parentheses before dividing by 2.",
                 solution: `score1 : 80
 score2 : 100
@@ -344,8 +347,8 @@ display "Average: " + avg ?color="cyan"`,
                 starterCode: `prefix : "ID-"
 num : 77
 suffix : "-X"
-code : prefix + num + suffix
-display "Code: " + code ?color="yellow"`,
+! TODO: Concatenate prefix, num, and suffix into a variable 'code' and display "Code: " + code
+`,
                 hint: "Use the `+` operator across all three variables.",
                 solution: `prefix : "ID-"
 num : 77
@@ -386,8 +389,9 @@ display "Welcome back, " + username + "!" ?color="green"`
                 id: "ex_io_1",
                 title: "Exercise 5.1: Interactive Prompt",
                 prompt: "Prompt for a variable <code>city</code> with default <code>\"Tokyo\"</code> and display <code>\"Location: \" + city</code>.",
-                starterCode: `prompt city ?default="Tokyo"
-display "Location: " + city ?color="cyan"`,
+                starterCode: `! TODO: Prompt for 'city' with ?default="Tokyo"
+! Then display "Location: " + city in cyan
+`,
                 hint: "Use `prompt city ?default=\"Tokyo\"`.",
                 solution: `prompt city ?default="Tokyo"
 display "Location: " + city ?color="cyan"`,
@@ -397,8 +401,8 @@ display "Location: " + city ?color="cyan"`,
                 id: "ex_io_2",
                 title: "Exercise 5.2: Numeric Prompt Handling",
                 prompt: "Prompt for <code>userAge</code> with default <code>\"21\"</code> and display <code>\"Next year age: \" + (userAge + 1)</code>.",
-                starterCode: `prompt userAge ?default="21"
-display "Next year age: " + (userAge + 1) ?color="yellow"`,
+                starterCode: `! TODO: Prompt userAge with default="21" and display the incremented age
+`,
                 hint: "VerScript automatically parses numeric strings from prompts into integers for math.",
                 solution: `prompt userAge ?default="21"
 display "Next year age: " + (userAge + 1) ?color="yellow"`,
@@ -408,9 +412,8 @@ display "Next year age: " + (userAge + 1) ?color="yellow"`,
                 id: "ex_io_3",
                 title: "Exercise 5.3: Multi-Segment Output",
                 prompt: "Print three segments on the same line using <code>?newline=false</code>, ending with <code>\"COMPLETE\"</code> in green.",
-                starterCode: `display "[1/3] Init, " ?newline=false ?color="yellow"
-display "[2/3] Sync, " ?newline=false ?color="cyan"
-display "[3/3] COMPLETE" ?color="green"`,
+                starterCode: `! TODO: Print "[1/3] Init, ", "[2/3] Sync, ", and "[3/3] COMPLETE" on one line
+`,
                 hint: "Use `?newline=false` on first two displays.",
                 solution: `display "[1/3] Init, " ?newline=false ?color="yellow"
 display "[2/3] Sync, " ?newline=false ?color="cyan"
@@ -455,8 +458,8 @@ else
                 title: "Exercise 6.1: Check Passing Score",
                 prompt: "Check if <code>score : 72</code> is greater than or equal to <code>50</code>. If so, display <code>\"Passed!\"</code> in green.",
                 starterCode: `score : 72
-if score >= 50 then
-    display "Passed!" ?color="green"`,
+! TODO: Write an if condition checking if score >= 50, and display "Passed!" in green
+`,
                 hint: "Use `if score >= 50 then` followed by indented display.",
                 solution: `score : 72
 if score >= 50 then
@@ -468,12 +471,8 @@ if score >= 50 then
                 title: "Exercise 6.2: Three-Way Branching",
                 prompt: "Check <code>temp : 32</code>. If temp > 30 print \"Hot\", else if temp > 15 print \"Warm\", else print \"Cold\".",
                 starterCode: `temp : 32
-if temp > 30 then
-    display "Hot" ?color="red"
-else if temp > 15 then
-    display "Warm" ?color="yellow"
-else
-    display "Cold" ?color="cyan"`,
+! TODO: Implement 3-way if/else if/else branches checking temperature thresholds
+`,
                 hint: "Chain `if ... then`, `else if ... then`, and `else`.",
                 solution: `temp : 32
 if temp > 30 then
@@ -489,8 +488,8 @@ else
                 title: "Exercise 6.3: Equality Check",
                 prompt: "Given <code>code : \"VIP\"</code>, check if <code>code == \"VIP\"</code> and display <code>\"Access Granted\"</code> in green.",
                 starterCode: `code : "VIP"
-if code == "VIP" then
-    display "Access Granted" ?color="green"`,
+! TODO: If code is "VIP", display "Access Granted" in green
+`,
                 hint: "Use `==` operator for comparison.",
                 solution: `code : "VIP"
 if code == "VIP" then
@@ -536,8 +535,8 @@ iterate val from 2 to 8 step 2
                 id: "ex_loop_1",
                 title: "Exercise 7.1: Repeat a Notification",
                 prompt: "Use <code>loop 4</code> to display <code>\"Ping!\"</code> 4 times in yellow.",
-                starterCode: `loop 4
-    display "Ping!" ?color="yellow"`,
+                starterCode: `! TODO: Write a loop repeating 4 times to output "Ping!" in yellow
+`,
                 hint: "Write `loop 4` and indent the display statement.",
                 solution: `loop 4
     display "Ping!" ?color="yellow"`,
@@ -547,8 +546,8 @@ iterate val from 2 to 8 step 2
                 id: "ex_loop_2",
                 title: "Exercise 7.2: Count from 1 to 5",
                 prompt: "Use <code>iterate n from 1 to 5</code> to display <code>\"Count: \" + n</code>.",
-                starterCode: `iterate n from 1 to 5
-    display "Count: " + n ?color="cyan"`,
+                starterCode: `! TODO: Use iterate to count from 1 to 5 and display "Count: " + n
+`,
                 hint: "Use `iterate n from 1 to 5`.",
                 solution: `iterate n from 1 to 5
     display "Count: " + n ?color="cyan"`,
@@ -558,8 +557,8 @@ iterate val from 2 to 8 step 2
                 id: "ex_loop_3",
                 title: "Exercise 7.3: Stepped Odd Numbers",
                 prompt: "Iterate <code>odd from 1 to 7 step 2</code> and display each odd number.",
-                starterCode: `iterate odd from 1 to 7 step 2
-    display "Odd: " + odd ?color="green"`,
+                starterCode: `! TODO: Iterate odd numbers from 1 to 7 with step 2
+`,
                 hint: "Add `step 2` to the iterate statement.",
                 solution: `iterate odd from 1 to 7 step 2
     display "Odd: " + odd ?color="green"`,
@@ -611,9 +610,8 @@ until limit >= 4
                 title: "Exercise 8.1: While Countdown",
                 prompt: "Initialize <code>timer : 3</code> and use <code>while timer > 0</code> to display <code>\"T-minus: \" + timer</code> and decrement timer.",
                 starterCode: `timer : 3
-while timer > 0
-    display "T-minus: " + timer ?color="red"
-    timer : timer - 1`,
+! TODO: Write while loop checking timer > 0, display "T-minus: " + timer in red, and decrement timer
+`,
                 hint: "Decrement `timer : timer - 1` inside the loop body.",
                 solution: `timer : 3
 while timer > 0
@@ -626,9 +624,8 @@ while timer > 0
                 title: "Exercise 8.2: Until Target Reached",
                 prompt: "Initialize <code>val : 1</code> and loop with <code>until val >= 5</code>, doubling <code>val</code> on each iteration.",
                 starterCode: `val : 1
-until val >= 5
-    display "Val: " + val ?color="green"
-    val : val * 2`,
+! TODO: Write until loop terminating when val >= 5, displaying "Val: " + val and doubling val
+`,
                 hint: "Use `val : val * 2` inside the until loop.",
                 solution: `val : 1
 until val >= 5
@@ -641,9 +638,8 @@ until val >= 5
                 title: "Exercise 8.3: Stepped While Loop",
                 prompt: "Use <code>while idx < 6 step 2</code> to step by 2 on each loop iteration.",
                 starterCode: `idx : 0
-while idx < 6 step 2
-    display "Stepped: " + idx ?color="purple"
-    idx : idx + 1`,
+! TODO: Write while loop with step 2 modifier
+`,
                 hint: "Add `step 2` after the while condition.",
                 solution: `idx : 0
 while idx < 6 step 2
@@ -692,10 +688,8 @@ unless DivisionByZeroError
                 id: "ex_except_1",
                 title: "Exercise 9.1: Catch a Named Error",
                 prompt: "Throw <code>NetworkTimeoutError</code> inside a <code>do</code> block and catch it with <code>unless NetworkTimeoutError</code>.",
-                starterCode: `do
-    throw NetworkTimeoutError ?msg="Connection timed out"
-unless NetworkTimeoutError
-    display "Handled: " + error ?color="green"`,
+                starterCode: `! TODO: Write a do block that throws NetworkTimeoutError, and catch it in an unless block
+`,
                 hint: "Match the error name in `throw` and `unless`.",
                 solution: `do
     throw NetworkTimeoutError ?msg="Connection timed out"
@@ -707,10 +701,8 @@ unless NetworkTimeoutError
                 id: "ex_except_2",
                 title: "Exercise 9.2: Catch Generic Error",
                 prompt: "Use <code>unless error</code> to catch any thrown exception as a wildcard catch-all.",
-                starterCode: `do
-    throw InvalidKeyError ?msg="Bad auth key"
-unless error
-    display "Generic error catcher caught: " + error ?color="yellow"`,
+                starterCode: `! TODO: Throw InvalidKeyError in do block, and catch with wildcard 'unless error'
+`,
                 hint: "`unless error` acts as a universal exception catcher.",
                 solution: `do
     throw InvalidKeyError ?msg="Bad auth key"
@@ -722,10 +714,8 @@ unless error
                 id: "ex_except_3",
                 title: "Exercise 9.3: Error with Custom Message",
                 prompt: "Throw an error with <code>?msg=\"File missing\"</code> and display the success recovery message.",
-                starterCode: `do
-    throw FileNotFound ?msg="File missing"
-unless FileNotFound
-    display "Recovered from missing file" ?color="cyan"`,
+                starterCode: `! TODO: Throw FileNotFound with ?msg="File missing" in a do block, and catch it
+`,
                 hint: "Add `?msg=\"...\"` to the `throw` statement.",
                 solution: `do
     throw FileNotFound ?msg="File missing"
@@ -778,12 +768,8 @@ unless internal alarm == true
                 title: "Exercise 10.1: Reactive Threshold Trigger",
                 prompt: "Set <code>fuel : 100</code>. In a <code>do</code> block, reduce fuel to <code>10</code>. Use <code>unless internal fuel < 20</code> to catch the low fuel state.",
                 starterCode: `fuel : 100
-do
-    display "Consuming fuel..." ?color="cyan"
-    fuel : 10
-    display "This line will not run" ?color="red"
-unless internal fuel < 20
-    display "Warning: Low Fuel Detected!" ?color="yellow"`,
+! TODO: Create do block modifying fuel to 10, with 'unless internal fuel < 20' guard
+`,
                 hint: "Set `fuel : 10` inside the do block.",
                 solution: `fuel : 100
 do
@@ -799,10 +785,8 @@ unless internal fuel < 20
                 title: "Exercise 10.2: External Guard Check",
                 prompt: "Use <code>unless external isLocked == true</code> to check a locked flag beforehand.",
                 starterCode: `isLocked : true
-do
-    display "Opening door..." ?color="green"
-unless external isLocked == true
-    display "Door is locked! Cannot open." ?color="red"`,
+! TODO: Create do block with 'unless external isLocked == true'
+`,
                 hint: "Because `isLocked` is true, the `unless` block executes directly.",
                 solution: `isLocked : true
 do
@@ -816,11 +800,8 @@ unless external isLocked == true
                 title: "Exercise 10.3: Multi-step Watch",
                 prompt: "Create an internal watch that halts when <code>voltage > 240</code>.",
                 starterCode: `voltage : 120
-do
-    voltage : 200
-    voltage : 250
-unless internal voltage > 240
-    display "Surge protector engaged!" ?color="green"`,
+! TODO: Write a do block that increments voltage to 250 with 'unless internal voltage > 240'
+`,
                 hint: "Setting voltage to 250 trips the watch condition immediately.",
                 solution: `voltage : 120
 do
@@ -883,9 +864,8 @@ SuppressErrors
                 id: "ex_modes_1",
                 title: "Exercise 11.1: Suppress an Error",
                 prompt: "Wrap a throw in <code>SuppressErrors</code> block and display <code>\"Completed gracefully\"</code> after the block.",
-                starterCode: `SuppressErrors
-    throw MinorWarning
-display "Completed gracefully" ?color="green"`,
+                starterCode: `! TODO: Write SuppressErrors block containing a throw, then display "Completed gracefully"
+`,
                 hint: "Indent the throw statement under `SuppressErrors`.",
                 solution: `SuppressErrors
     throw MinorWarning
@@ -896,8 +876,8 @@ display "Completed gracefully" ?color="green"`,
                 id: "ex_modes_2",
                 title: "Exercise 11.2: Force Errors Scope",
                 prompt: "Display <code>\"ForceErrors active\"</code> inside a <code>ForceErrors</code> block.",
-                starterCode: `ForceErrors
-    display "ForceErrors active" ?color="cyan"`,
+                starterCode: `! TODO: Use ForceErrors block to wrap a display statement
+`,
                 hint: "Use `ForceErrors` as the block header.",
                 solution: `ForceErrors
     display "ForceErrors active" ?color="cyan"`,
@@ -907,9 +887,8 @@ display "Completed gracefully" ?color="green"`,
                 id: "ex_modes_3",
                 title: "Exercise 11.3: Critical Errors Scope",
                 prompt: "Execute a calculation inside a <code>CriticalErrors</code> block.",
-                starterCode: `CriticalErrors
-    val : 100 * 2
-    display "Calculated: " + val ?color="yellow"`,
+                starterCode: `! TODO: Perform val : 100 * 2 inside CriticalErrors and display "Calculated: " + val
+`,
                 hint: "Indent statements under `CriticalErrors`.",
                 solution: `CriticalErrors
     val : 100 * 2
@@ -977,8 +956,8 @@ display "Segment B (End)" ?color="cyan"`
                 id: "ex_attr_1",
                 title: "Exercise 12.1: Rainbow Output",
                 prompt: "Display <code>\"Cyan Text\"</code> in cyan and <code>\"Red Text\"</code> in red.",
-                starterCode: `display "Cyan Text" ?color="cyan"
-display "Red Text" ?color="red"`,
+                starterCode: `! TODO: Write two display lines: "Cyan Text" with ?color="cyan", "Red Text" with ?color="red"
+`,
                 hint: "Use `?color=\"cyan\"` and `?color=\"red\"`.",
                 solution: `display "Cyan Text" ?color="cyan"
 display "Red Text" ?color="red"`,
@@ -988,9 +967,8 @@ display "Red Text" ?color="red"`,
                 id: "ex_attr_2",
                 title: "Exercise 12.2: Inline Progress Bar",
                 prompt: "Print <code>\"[====\"</code>, <code>\"====] \"</code>, and <code>\"100%\"</code> on one line using <code>?newline=false</code>.",
-                starterCode: `display "[====" ?newline=false ?color="yellow"
-display "====] " ?newline=false ?color="yellow"
-display "100%" ?color="green"`,
+                starterCode: `! TODO: Assemble an inline progress bar on one line with ?newline=false
+`,
                 hint: "Use `?newline=false` on first two displays.",
                 solution: `display "[====" ?newline=false ?color="yellow"
 display "====] " ?newline=false ?color="yellow"
@@ -1001,8 +979,8 @@ display "100%" ?color="green"`,
                 id: "ex_attr_3",
                 title: "Exercise 12.3: Prompt with Custom Default",
                 prompt: "Prompt for <code>serverPort</code> with default <code>\"8080\"</code> and display it.",
-                starterCode: `prompt serverPort ?default="8080"
-display "Port: " + serverPort ?color="purple"`,
+                starterCode: `! TODO: Prompt serverPort with ?default="8080" and display "Port: " + serverPort
+`,
                 hint: "Use `?default=\"8080\"`.",
                 solution: `prompt serverPort ?default="8080"
 display "Port: " + serverPort ?color="purple"`,
@@ -1050,8 +1028,8 @@ inject verscript
                 id: "ex_inj_1",
                 title: "Exercise 13.1: Python Injection",
                 prompt: "Use <code>inject python</code> to print <code>\"Hello from Python VM\"</code>.",
-                starterCode: `inject python
-    print("Hello from Python VM")`,
+                starterCode: `! TODO: Write an 'inject python' block printing "Hello from Python VM"
+`,
                 hint: "Indent the python code block under `inject python`.",
                 solution: `inject python
     print("Hello from Python VM")`,
@@ -1061,8 +1039,8 @@ inject verscript
                 id: "ex_inj_2",
                 title: "Exercise 13.2: Dynamic VerScript Eval",
                 prompt: "Use <code>inject verscript</code> to dynamically run a <code>display \"Nested dynamic code\"</code> statement.",
-                starterCode: `inject verscript
-    display "Nested dynamic code" ?color="green"`,
+                starterCode: `! TODO: Use inject verscript to dynamically execute a display command
+`,
                 hint: "Use `inject verscript` followed by indented VerScript commands.",
                 solution: `inject verscript
     display "Nested dynamic code" ?color="green"`,
@@ -1072,8 +1050,8 @@ inject verscript
                 id: "ex_inj_3",
                 title: "Exercise 13.3: JavaScript Injection",
                 prompt: "Inject a JavaScript block that calculates <code>5 * 5</code>.",
-                starterCode: `inject javascript
-    console.log("Result: " + (5 * 5));`,
+                starterCode: `! TODO: Use inject javascript to log the result of 5 * 5
+`,
                 hint: "Write `inject javascript` and indent the JS code.",
                 solution: `inject javascript
     console.log("Result: " + (5 * 5));`,
@@ -1132,8 +1110,8 @@ repeat 2
                 id: "ex_alias_1",
                 title: "Exercise 14.1: Simple Command Alias",
                 prompt: "Alias <code>display</code> to <code>log</code> and print <code>\"Log message\"</code> in green.",
-                starterCode: `alias display: log
-log "Log message" ?color="green"`,
+                starterCode: `! TODO: Alias display to log, then call log "Log message" ?color="green"
+`,
                 hint: "Use `alias display: log` then use `log \"...\"`.",
                 solution: `alias display: log
 log "Log message" ?color="green"`,
@@ -1143,8 +1121,8 @@ log "Log message" ?color="green"`,
                 id: "ex_alias_2",
                 title: "Exercise 14.2: Attribute Remapping",
                 prompt: "Alias <code>display: echo ? color=tint</code> and call <code>echo \"Tinted\" ?tint=\"cyan\"</code>.",
-                starterCode: `alias display: echo ? color=tint
-echo "Tinted" ?tint="cyan"`,
+                starterCode: `! TODO: Rebind display: echo with ?color=tint mapping, and execute echo "Tinted" ?tint="cyan"
+`,
                 hint: "The alias maps `?tint` to `?color`.",
                 solution: `alias display: echo ? color=tint
 echo "Tinted" ?tint="cyan"`,
@@ -1154,11 +1132,8 @@ echo "Tinted" ?tint="cyan"`,
                 id: "ex_alias_3",
                 title: "Exercise 14.3: Multi-Line Alias Block",
                 prompt: "Define a multi-line <code>alias:</code> block aliasing <code>loop: repeat</code> and run a 2-iteration loop.",
-                starterCode: `alias:
-    loop: repeat
-
-repeat 2
-    display "Repetition" ?color="yellow"`,
+                starterCode: `! TODO: Define multi-line alias: block aliasing loop to repeat, then run repeat 2
+`,
                 hint: "Use `alias:` followed by indented `loop: repeat`.",
                 solution: `alias:
     loop: repeat
@@ -1217,11 +1192,9 @@ display "Ready to analyze VerScript AST." ?color="green"`
             {
                 id: "ex_ai_1",
                 title: "Exercise 15.1: Write Self-Documenting Code",
-                prompt: "Write a short script with header comments, variable assignments, and a styled display output.",
-                starterCode: `! Player initialization
-player : "Agent-01"
-score : 500
-display "Agent: " + player + " | Score: " + score ?color="cyan"`,
+                prompt: "Write a short script with header comments, variable assignments, and a styled display output for <code>\"Agent: \" + player + \" | Score: \" + score</code>.",
+                starterCode: `! TODO: Initialize player : "Agent-01", score : 500, and display formatted stats
+`,
                 hint: "Assemble variables into a clean display message.",
                 solution: `! Player initialization
 player : "Agent-01"
@@ -1232,11 +1205,9 @@ display "Agent: " + player + " | Score: " + score ?color="cyan"`,
             {
                 id: "ex_ai_2",
                 title: "Exercise 15.2: Safe Execution Wrapper",
-                prompt: "Combine <code>do-unless</code> with colorized output for a robust execution routine.",
-                starterCode: `do
-    display "Routine started" ?color="green"
-unless error
-    display "Error handled" ?color="red"`,
+                prompt: "Combine <code>do-unless</code> with colorized output for a robust execution routine displaying <code>\"Routine started\"</code>.",
+                starterCode: `! TODO: Wrap display "Routine started" in a do-unless error block
+`,
                 hint: "Use `do` and `unless error`.",
                 solution: `do
     display "Routine started" ?color="green"
@@ -1247,10 +1218,9 @@ unless error
             {
                 id: "ex_ai_3",
                 title: "Exercise 15.3: Complete Pipeline",
-                prompt: "Create an alias, iterate across 3 items, and display the result in purple.",
-                starterCode: `alias display: print
-iterate i from 1 to 3
-    print "Item #" + i ?color="purple"`,
+                prompt: "Create an alias <code>display: print</code>, iterate across 3 items, and display <code>\"Item #\" + i</code> in purple.",
+                starterCode: `! TODO: Create alias display: print and iterate i from 1 to 3 displaying "Item #" + i
+`,
                 hint: "Alias display to print then iterate.",
                 solution: `alias display: print
 iterate i from 1 to 3
@@ -1313,10 +1283,9 @@ print "All systems operational!" ?tint="yellow"`
             {
                 id: "ex_ref_1",
                 title: "Exercise 16.1: Comprehensive Test Script",
-                prompt: "Write a script combining <code>alias</code>, <code>iterate</code>, and color attributes.",
-                starterCode: `alias display: print
-iterate k from 1 to 3
-    print "Step " + k ?color="cyan"`,
+                prompt: "Write a script combining <code>alias display: print</code>, <code>iterate k from 1 to 3</code>, and display <code>\"Step \" + k</code>.",
+                starterCode: `! TODO: Combine alias display: print with iterate k from 1 to 3
+`,
                 hint: "Use `alias display: print` then iterate.",
                 solution: `alias display: print
 iterate k from 1 to 3
@@ -1326,11 +1295,9 @@ iterate k from 1 to 3
             {
                 id: "ex_ref_2",
                 title: "Exercise 16.2: Exception & Fallback Test",
-                prompt: "Implement a <code>do-unless</code> block with <code>?msg</code> attribute.",
-                starterCode: `do
-    throw RecoveryTest ?msg="Testing fallback"
-unless RecoveryTest
-    display "Recovery Test Succeeded" ?color="green"`,
+                prompt: "Implement a <code>do-unless</code> block with <code>?msg</code> attribute and print <code>\"Recovery Test Succeeded\"</code> in green.",
+                starterCode: `! TODO: Throw RecoveryTest error and handle it in unless block
+`,
                 hint: "Catch `RecoveryTest` and display success.",
                 solution: `do
     throw RecoveryTest ?msg="Testing fallback"
@@ -1342,10 +1309,281 @@ unless RecoveryTest
                 id: "ex_ref_3",
                 title: "Exercise 16.3: Master Certification Script",
                 prompt: "Display <code>\"VerScript Certification Completed!\"</code> in green.",
-                starterCode: `display "VerScript Certification Completed!" ?color="green"`,
+                starterCode: `! TODO: Display "VerScript Certification Completed!" in green
+`,
                 hint: "Display the certification text in green.",
                 solution: `display "VerScript Certification Completed!" ?color="green"`,
                 expectedMatch: /VerScript Certification Completed!/i
+            }
+        ]
+    },
+
+    {
+        id: "grandmaster-capstone",
+        number: 17,
+        title: "Grandmaster Capstone: Complex Systems & Pipelines",
+        category: "Expert Capstone",
+        readTime: "12 min read",
+        summary: "Build complex multi-stage architectures: state machines, reactive memory caches, autonomous retry engines, and polyglot streaming pipelines.",
+        body: `
+            <h2>The Grandmaster Challenge</h2>
+            <p>Welcome to the final capstone chapter of the VerScript Academy. In this section, you will write complex real-world programs combining all advanced features of VerScript: multi-tier state machines, reactive watch guards, nested polyglot pipelines, custom error scopes, and dynamic command aliases.</p>
+
+            <div class="callout-box warn">
+                <div class="callout-title">⚔️ High Complexity Warning</div>
+                <p>These exercises require multi-statement algorithmic coordination, nested scopes, error interception, and dynamic attribute translations. No pre-written answers are given — you must build the systems from specifications!</p>
+            </div>
+
+            <h2>Architecture Matrix</h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>System Pattern</th>
+                        <th>VerScript Mechanisms</th>
+                        <th>Real-world Analog</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Reactive State Machine</strong></td>
+                        <td><code>do ... unless internal [condition]</code> + multi-line <code>alias:</code></td>
+                        <td>Circuit Breaker / Watchdog Timer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polyglot Stream Pipeline</strong></td>
+                        <td><code>inject python</code> + <code>inject javascript</code> + <code>inject verscript</code></td>
+                        <td>Multi-language Microservice Bus</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autonomous Retry Orchestrator</strong></td>
+                        <td><code>SuppressErrors</code> + <code>while ... step</code> + <code>throw ?msg</code></td>
+                        <td>Exponential Backoff Network Client</td>
+                    </tr>
+                </tbody>
+            </table>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_capstone_1",
+                title: "reactor_orchestrator.vrs",
+                code: `! Grandmaster Capstone: Reactor Multi-Tier Orchestrator
+alias:
+    display: log ? color=tint newline=inline
+    loop: repeat
+
+log "=== Reactor System Boot ===" ?tint="cyan"
+log "\n"
+
+core_temp : 120
+containment_breach : false
+
+do
+    log "[Stage 1] Initializing coolant flow... " ?tint="yellow" ?inline=true
+    core_temp : core_temp + 80
+    log "Temp: " + core_temp + "C\n" ?tint="cyan"
+    
+    log "[Stage 2] Power surge injection... " ?tint="yellow" ?inline=true
+    core_temp : core_temp + 150
+    log "Temp: " + core_temp + "C\n" ?tint="red"
+unless internal core_temp > 300
+    log "[ALARM] Emergency Cryo-Vent Engaged! Reactor Stabilized.\n" ?tint="green"
+    core_temp : 95
+    log "Stabilized Temp: " + core_temp + "C\n" ?tint="cyan"`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_capstone_1",
+                title: "Challenge 17.1: Multi-tier Reactor Core Watchdog",
+                prompt: `Build an industrial reactor watchdog system:
+1. Define a multi-line <code>alias:</code> block aliasing <code>display: log ? color=tint</code>.
+2. Initialize <code>pressure : 50</code> and <code>critical_alert : false</code>.
+3. In a <code>do</code> block, increment pressure to <code>120</code>, then <code>220</code>, then <code>320</code>.
+4. Set a reactive guard <code>unless internal pressure > 300</code> that halts the core and outputs <code>"[VENT-OPEN] Pressure Dropped! Core Safe."</code> in green.`,
+                starterCode: `! Grandmaster Challenge 17.1: Multi-tier Reactor Core Watchdog
+! TODO: Implement the reactor state machine as specified in the prompt:
+`,
+                hint: "Set up the multi-line alias block first, then use `unless internal pressure > 300` on the do block.",
+                solution: `alias:
+    display: log ? color=tint
+
+pressure : 50
+critical_alert : false
+
+do
+    log "Normal: " + pressure ?tint="cyan"
+    pressure : 120
+    pressure : 220
+    pressure : 320
+unless internal pressure > 300
+    log "[VENT-OPEN] Pressure Dropped! Core Safe." ?tint="green"`,
+                expectedMatch: /VENT-OPEN.*Pressure Dropped! Core Safe/i
+            },
+            {
+                id: "ex_capstone_2",
+                title: "Challenge 17.2: Polyglot Matrix Data Bus",
+                prompt: `Create an interconnected polyglot processing pipeline:
+1. Alias <code>display: emit ? color=hue</code>.
+2. <code>inject python</code> to calculate squares <code>[1, 4, 9, 16]</code>.
+3. <code>inject javascript</code> to process a timestamp.
+4. <code>inject verscript</code> to output <code>"[VERIFIED] Polyglot Bus Clean"</code> in cyan.`,
+                starterCode: `! Grandmaster Challenge 17.2: Polyglot Matrix Data Bus
+! TODO: Build the multi-language injected pipeline
+`,
+                hint: "Use alias, then `inject python`, `inject javascript`, and `inject verscript` sequentially.",
+                solution: `alias display: emit ? color=hue
+
+emit "Starting Polyglot Pipeline..." ?hue="yellow"
+
+inject python
+    data = [x**2 for x in [1, 2, 3, 4]]
+    print("Python computed:", data)
+
+inject javascript
+    console.log("JavaScript timestamp verified.");
+
+inject verscript
+    display "[VERIFIED] Polyglot Bus Clean" ?color="cyan"`,
+                expectedMatch: /VERIFIED.*Polyglot Bus Clean/i
+            },
+            {
+                id: "ex_capstone_3",
+                title: "Challenge 17.3: Stepped Sieve Calculation Engine",
+                prompt: `Build a stepped calculation algorithm:
+1. Initialize <code>accumulator : 0</code> and <code>checksum : 1</code>.
+2. Use <code>iterate step_idx from 10 to 50 step 10</code>.
+3. On each iteration, add <code>step_idx</code> to <code>accumulator</code> and multiply <code>checksum : checksum * 2</code>.
+4. After iteration finishes, display <code>"Accumulator: " + accumulator + " | Checksum: " + checksum</code> in purple.`,
+                starterCode: `! Grandmaster Challenge 17.3: Stepped Sieve Calculation Engine
+! TODO: Implement the iterative accumulator and checksum algorithm
+`,
+                hint: "Iterate from 10 to 50 with step 10 (will run for 10, 20, 30, 40, 50). Accumulator will equal 150, Checksum will equal 32.",
+                solution: `accumulator : 0
+checksum : 1
+
+iterate step_idx from 10 to 50 step 10
+    accumulator : accumulator + step_idx
+    checksum : checksum * 2
+
+display "Accumulator: " + accumulator + " | Checksum: " + checksum ?color="purple"`,
+                expectedMatch: /Accumulator: 150 \| Checksum: 32/i
+            },
+            {
+                id: "ex_capstone_4",
+                title: "Challenge 17.4: Autonomous Network Retry Engine",
+                prompt: `Build an autonomous retry loop:
+1. Initialize <code>attempts : 0</code> and <code>max_retries : 3</code> and <code>connected : false</code>.
+2. Inside <code>SuppressErrors</code>, use a <code>while attempts < max_retries</code> loop.
+3. Increment <code>attempts</code> by 1, display <code>"Connecting attempt " + attempts</code>.
+4. If attempts == 3, set <code>connected : true</code>.
+5. After the loop, if connected is true, display <code>"[ESTABLISHED] Session Secured"</code> in green.`,
+                starterCode: `! Grandmaster Challenge 17.4: Autonomous Network Retry Engine
+! TODO: Build the retry orchestrator with SuppressErrors and while loop
+`,
+                hint: "Use `attempts : attempts + 1` inside while loop and set `connected : true` when attempts reaches 3.",
+                solution: `attempts : 0
+max_retries : 3
+connected : false
+
+SuppressErrors
+    while attempts < max_retries
+        attempts : attempts + 1
+        display "Connecting attempt " + attempts ?color="yellow"
+        if attempts == 3 then
+            connected : true
+
+if connected == true then
+    display "[ESTABLISHED] Session Secured" ?color="green"`,
+                expectedMatch: /ESTABLISHED.*Session Secured/i
+            },
+            {
+                id: "ex_capstone_5",
+                title: "Challenge 17.5: Cascading Custom Error Hierarchy",
+                prompt: `Build a multi-level fallback error recovery system:
+1. Outer <code>do</code> block throws <code>HardwareFault</code> with <code>?msg="Sensor Failure"</code>.
+2. The <code>unless HardwareFault</code> catches it and logs <code>"Sensor Fault Recovered"</code> in yellow, then re-runs backup check.
+3. Display final state <code>"[RESTORED] System operational"</code> in green.`,
+                starterCode: `! Grandmaster Challenge 17.5: Cascading Custom Error Hierarchy
+! TODO: Write the nested exception recovery pipeline
+`,
+                hint: "Use `do` with `throw HardwareFault ?msg=\"Sensor Failure\"` and catch with `unless HardwareFault`.",
+                solution: `do
+    display "Starting sensor diagnostics..." ?color="cyan"
+    throw HardwareFault ?msg="Sensor Failure"
+unless HardwareFault
+    display "Sensor Fault Recovered: " + error ?color="yellow"
+    display "[RESTORED] System operational" ?color="green"`,
+                expectedMatch: /RESTORED.*System operational/i
+            },
+            {
+                id: "ex_capstone_6",
+                title: "Challenge 17.6: Self-Healing Memory Cache Eviction",
+                prompt: `Simulate a LRU memory cache eviction engine:
+1. Set <code>cache_size : 0</code> and <code>max_capacity : 3</code>.
+2. In a <code>do</code> block, add items: <code>cache_size : cache_size + 1</code>, then <code>+ 2</code>, then <code>+ 2</code> (total 5).
+3. Set guard <code>unless internal cache_size > max_capacity</code>.
+4. In the handler, evict items (<code>cache_size : 2</code>) and display <code>"[EVICTION] Evicted excess entries. Cache size: " + cache_size</code> in cyan.`,
+                starterCode: `! Grandmaster Challenge 17.6: Self-Healing Memory Cache Eviction
+! TODO: Implement the memory cache monitor and eviction handler
+`,
+                hint: "The internal watch condition `cache_size > max_capacity` trips as soon as capacity exceeds 3.",
+                solution: `cache_size : 0
+max_capacity : 3
+
+do
+    cache_size : cache_size + 1
+    cache_size : cache_size + 2
+    cache_size : cache_size + 2
+unless internal cache_size > max_capacity
+    cache_size : 2
+    display "[EVICTION] Evicted excess entries. Cache size: " + cache_size ?color="cyan"`,
+                expectedMatch: /EVICTION.*Cache size: 2/i
+            },
+            {
+                id: "ex_capstone_7",
+                title: "Challenge 17.7: Microservice Dynamic Route Matrix",
+                prompt: `Build an aliased microservice command router:
+1. Multi-line <code>alias:</code> remapping <code>display: route_get</code> and <code>prompt: route_post</code>.
+2. Call <code>route_post endpoint ?default="/api/v1/auth"</code>.
+3. Call <code>route_get "[DISPATCH:GET] Endpoint mapped to: " + endpoint</code> in purple.`,
+                starterCode: `! Grandmaster Challenge 17.7: Microservice Dynamic Route Matrix
+! TODO: Set up the routing aliases and dispatch routine
+`,
+                hint: "Use multi-line `alias:` block with `display: route_get` and `prompt: route_post`.",
+                solution: `alias:
+    display: route_get
+    prompt: route_post
+
+route_post endpoint ?default="/api/v1/auth"
+route_get "[DISPATCH:GET] Endpoint mapped to: " + endpoint ?color="purple"`,
+                expectedMatch: /DISPATCH:GET.*Endpoint mapped to: \/api\/v1\/auth/i
+            },
+            {
+                id: "ex_capstone_8",
+                title: "Challenge 17.8: Grandmaster Final Proof of Mastery",
+                prompt: `Write a comprehensive master pipeline integrating:
+- A multi-line <code>alias:</code> block (remapping display to log and loop to repeat)
+- A 3-iteration repeat loop
+- An internal exception catch with custom <code>?msg</code>
+- A final certification display <code>"=== [GRANDMASTER CERTIFIED: VERIFIED] ==="</code> in green.`,
+                starterCode: `! Grandmaster Challenge 17.8: Final Proof of Mastery
+! TODO: Write the complete master integration pipeline
+`,
+                hint: "Combine all VerScript language capabilities into a single cohesive script.",
+                solution: `alias:
+    display: log ? color=tint
+    loop: repeat
+
+log "Initiating Grandmaster Proof Matrix..." ?tint="cyan"
+
+repeat 3
+    log "Processing cluster node..." ?tint="yellow"
+
+do
+    throw ValidationPass ?msg="All assertions verified"
+unless ValidationPass
+    log "=== [GRANDMASTER CERTIFIED: VERIFIED] ===" ?tint="green"`,
+                expectedMatch: /GRANDMASTER CERTIFIED: VERIFIED/i
             }
         ]
     }
