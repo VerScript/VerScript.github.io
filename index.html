@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="VerScript — A lightweight C-based language. Compile, run, and build in the browser.">
-    <title>VerScript | The Bridge Between Text and Virtual Machine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <meta name="description" content="VerScript — Minimalist C-based polyglot scripting language featuring reactive watchdogs, Truecolor ANSI attributes, command aliasing, and 100+ language injection.">
+    <title>VerScript | Minimalist Native Polyglot Scripting Language</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #08080C;
-            --surface-color: #111116;
+            --bg-color: #060609;
+            --surface-card: rgba(18, 18, 26, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
             --primary: #00FFCC;
+            --primary-glow: rgba(0, 255, 204, 0.35);
             --secondary: #9D00FF;
+            --secondary-glow: rgba(157, 0, 255, 0.35);
+            --accent-pink: #FF79C6;
+            --accent-yellow: #F1FA8C;
+            --accent-green: #50FA7B;
             --text-main: #FFFFFF;
-            --text-muted: #A0A0B0;
+            --text-muted: #9494A8;
         }
 
         *, *::before, *::after { box-sizing: border-box; }
@@ -24,6 +32,7 @@
             max-width: 100vw;
             -webkit-text-size-adjust: 100%;
             touch-action: pan-y;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -38,59 +47,94 @@
             touch-action: pan-y;
             -webkit-font-smoothing: antialiased;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(157, 0, 255, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 255, 204, 0.08), transparent 25%);
+                radial-gradient(circle at 10% 20%, rgba(157, 0, 255, 0.12), transparent 35%),
+                radial-gradient(circle at 90% 40%, rgba(0, 255, 204, 0.12), transparent 35%),
+                radial-gradient(circle at 50% 85%, rgba(255, 121, 198, 0.08), transparent 45%);
+            background-attachment: fixed;
         }
 
-        /* =====================
-           NAVIGATION
-        ===================== */
+        /* ═══════════════════════════════════════════════════════════
+           NAVBAR
+        ═══════════════════════════════════════════════════════════ */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 16px 24px;
-            box-sizing: border-box;
+            height: 68px;
+            padding: 0 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(8, 8, 12, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(6, 6, 9, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--surface-border);
             z-index: 100;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 900;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, var(--primary), #00d2ff, var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-decoration: none;
-            flex-shrink: 0;
         }
 
-        /* Desktop nav links */
+        .logo-pill {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .nav-links {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             align-items: center;
         }
-        .nav-links a {
+
+        .nav-link {
             color: var(--text-main);
             text-decoration: none;
             padding: 8px 16px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+            border-radius: 8px;
         }
-        .nav-links a:hover { color: var(--primary); }
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
 
-        /* Hamburger button */
+        .nav-btn-highlight {
+            background: linear-gradient(90deg, var(--primary), #00d2ff);
+            color: #060609 !important;
+            font-weight: 800;
+            padding: 8px 18px;
+            border-radius: 8px;
+            box-shadow: 0 0 16px var(--primary-glow);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .nav-btn-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px var(--primary-glow);
+        }
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -98,13 +142,14 @@
             gap: 5px;
             cursor: pointer;
             background: none;
-            border: none;
-            padding: 4px;
+            border: 1px solid var(--surface-border);
+            border-radius: 8px;
+            padding: 8px 10px;
             z-index: 200;
         }
         .hamburger span {
             display: block;
-            width: 24px;
+            width: 22px;
             height: 2px;
             background: var(--text-main);
             border-radius: 2px;
@@ -114,85 +159,103 @@
         .hamburger.open span:nth-child(2) { opacity: 0; }
         .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* Mobile drawer */
         .mobile-menu {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(8, 8, 12, 0.97);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(6, 6, 9, 0.98);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 24px;
+            gap: 28px;
             z-index: 150;
-            animation: menuIn 0.2s ease-out;
+            animation: fadeIn 0.25s ease-out;
         }
         .mobile-menu.open { display: flex; }
         .mobile-menu a {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             transition: color 0.2s;
         }
         .mobile-menu a:hover { color: var(--primary); }
-        @keyframes menuIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
-        /* =====================
-           LAYOUT
-        ===================== */
+        /* ═══════════════════════════════════════════════════════════
+           CONTAINER & HERO
+        ═══════════════════════════════════════════════════════════ */
         .container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
-            padding: 100px 24px 60px 24px;
+            padding: 120px 24px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
+            position: relative;
         }
 
-        /* =====================
-           HERO
-        ===================== */
-        header {
-            margin-top: 30px;
-            animation: fadeIn 1s ease-out;
+        .canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            height: 850px;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        h1 {
-            font-size: clamp(2.4rem, 8vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-            letter-spacing: -1px;
+        .hero-section {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(157, 0, 255, 0.12);
+            border: 1px solid rgba(157, 0, 255, 0.35);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #d18dff;
+            margin-bottom: 24px;
+            animation: pulseGlow 3s infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(157, 0, 255, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(157, 0, 255, 0.5); }
+        }
+
+        h1.hero-title {
+            font-size: clamp(2.6rem, 7vw, 4.8rem);
+            font-weight: 900;
+            line-height: 1.08;
+            margin: 0 0 24px 0;
+            letter-spacing: -1.5px;
+        }
+        h1.hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, #00d2ff 45%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .tagline {
-            font-size: clamp(1rem, 3vw, 1.4rem);
+        p.hero-tagline {
+            font-size: clamp(1.05rem, 2.8vw, 1.35rem);
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-            font-weight: 300;
             line-height: 1.6;
+            margin: 0 auto 36px;
+            max-width: 720px;
+            font-weight: 400;
         }
 
-        /* CTA Buttons */
         .cta-group {
             display: flex;
             flex-wrap: wrap;
@@ -205,81 +268,280 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 16px 32px;
+            gap: 10px;
+            padding: 16px 36px;
             font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--bg-color);
-            background: linear-gradient(90deg, var(--primary), #00d2ff);
-            border-radius: 50px;
+            font-weight: 800;
+            border-radius: 12px;
             text-decoration: none;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            white-space: nowrap;
-            flex: 1 1 auto;
-            max-width: 260px;
-            min-width: 160px;
-        }
-        .cta-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
-        }
-        .cta-btn.outline {
-            background: linear-gradient(90deg, rgba(0, 255, 204, 0.08), rgba(157, 0, 255, 0.08));
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            color: var(--primary);
-            box-shadow: none;
-        }
-        .cta-btn.outline:hover {
-            background: linear-gradient(90deg, rgba(0, 255, 204, 0.15), rgba(157, 0, 255, 0.15));
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 200px;
         }
 
-        /* =====================
-           HERO GRAPHIC
-        ===================== */
-        .hero-graphic {
+        .cta-btn-primary {
+            background: linear-gradient(90deg, var(--primary), #00d2ff);
+            color: #060609;
+            box-shadow: 0 8px 30px var(--primary-glow);
+        }
+        .cta-btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px var(--primary-glow);
+        }
+
+        .cta-btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--surface-border);
+            color: var(--text-main);
+            backdrop-filter: blur(12px);
+        }
+        .cta-btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 255, 204, 0.06);
+            box-shadow: 0 8px 30px rgba(0, 255, 204, 0.15);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           METRICS STATS ROW
+        ═══════════════════════════════════════════════════════════ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
             margin-top: 50px;
             position: relative;
-            width: 100%;
-            height: 160px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 255, 204, 0.2);
-            animation: pulse 4s infinite linear;
-        }
-        .circle-1 { width: 80px; height: 80px; animation-delay: 0s; }
-        .circle-2 { width: 160px; height: 160px; animation-delay: 1s; }
-        .circle-3 { width: 240px; height: 240px; animation-delay: 2s; border-color: rgba(157, 0, 255, 0.2); }
-        @keyframes pulse {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 0.2; }
-            100% { transform: scale(0.8); opacity: 0.8; }
+            z-index: 10;
         }
 
-        /* =====================
-           FEATURES GRID
-        ===================== */
+        .stat-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 204, 0.3);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           INTERACTIVE CODE PLAYGROUND WINDOW
+        ═══════════════════════════════════════════════════════════ */
+        .code-window-container {
+            width: 100%;
+            max-width: 960px;
+            margin: 60px auto 0;
+            position: relative;
+            z-index: 15;
+        }
+
+        .code-window {
+            background: #0b0c10;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 255, 204, 0.08);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .window-topbar {
+            background: rgba(20, 20, 28, 0.85);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+
+        .window-tabs {
+            display: flex;
+            gap: 6px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .window-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .action-run-btn {
+            background: linear-gradient(90deg, #50fa7b, #00ffcc);
+            color: #060609;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 0 12px rgba(80, 250, 123, 0.3);
+        }
+        .action-run-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 20px rgba(80, 250, 123, 0.6);
+        }
+
+        .code-editor-area {
+            position: relative;
+        }
+
+        pre.code-view {
+            margin: 0;
+            padding: 24px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: #f8f8f2;
+            background: transparent;
+            overflow-x: auto;
+            max-height: 440px;
+            overflow-y: auto;
+        }
+
+        /* Syntax Highlight Palette */
+        .token-comment { color: #6272a4; font-style: italic; }
+        .token-keyword { color: #ff79c6; font-weight: 700; }
+        .token-string { color: #f1fa8c; }
+        .token-number { color: #bd93f9; }
+        .token-operator { color: #50fa7b; }
+        .token-attribute { color: #00ffcc; font-weight: 600; }
+        .token-hex { color: #ff79c6; font-weight: bold; }
+
+        /* Terminal Output Drawer */
+        .terminal-drawer {
+            background: #050508;
+            border-top: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 18px 24px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+        .terminal-drawer.open { display: block; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .terminal-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .terminal-body {
+            color: #d8dee9;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           FEATURES SECTION
+        ═══════════════════════════════════════════════════════════ */
+        .section-header {
+            text-align: center;
+            margin: 100px auto 48px;
+            max-width: 700px;
+        }
+        .section-tag {
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin: 0 0 16px;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
-            margin-top: 80px;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 18px;
             padding: 32px 28px;
             text-align: left;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -287,387 +549,286 @@
             content: '';
             position: absolute;
             top: 0; left: 0;
-            width: 100%; height: 4px;
+            width: 100%; height: 3px;
             background: linear-gradient(90deg, var(--secondary), var(--primary));
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.4s ease;
+            transition: transform 0.35s ease;
         }
         .feature-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-6px);
+            border-color: rgba(0, 255, 204, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 255, 204, 0.1);
         }
         .feature-card:hover::before { transform: scaleX(1); }
-        .feature-card h2 {
+
+        .feature-icon-badge {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        .feature-card h3 {
             font-size: 1.3rem;
-            margin: 0 0 12px 0;
+            font-weight: 800;
             color: var(--text-main);
+            margin: 0 0 12px;
+            letter-spacing: -0.3px;
         }
         .feature-card p {
             color: var(--text-muted);
+            font-size: 0.96rem;
             line-height: 1.6;
-            font-size: 0.95rem;
-            font-weight: 300;
-            margin: 0;
+            margin: 0 0 16px;
+            font-weight: 400;
+        }
+        .feature-snippet {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: var(--primary);
         }
 
-        /* =====================
-           CODE WINDOW PREVIEW
-        ===================== */
-        .code-preview-window {
-            background: rgba(17, 17, 22, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+        /* ═══════════════════════════════════════════════════════════
+           CALL TO ACTION BANNER
+        ═══════════════════════════════════════════════════════════ */
+        .cta-banner {
             width: 100%;
-            max-width: 600px;
-            height: 320px; /* fixed external size */
-            margin: 40px auto 0 auto;
-            text-align: left;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            margin-top: 100px;
+            background: linear-gradient(135deg, rgba(157, 0, 255, 0.15) 0%, rgba(0, 255, 204, 0.15) 100%);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            border-radius: 24px;
+            padding: 60px 36px;
+            text-align: center;
+            position: relative;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: fadeIn 1.2s ease-out;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
         }
-        .window-header {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            flex-shrink: 0;
+        .cta-banner h2 {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 900;
+            margin: 0 0 16px;
+            letter-spacing: -1px;
         }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-        .dot-red { background: #FF5F56; }
-        .dot-yellow { background: #FFBD2E; }
-        .dot-green { background: #27C93F; }
-        .window-title {
+        .cta-banner p {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-left: auto;
-            font-family: monospace;
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto 32px;
         }
-        .code-content {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Courier New', Courier, monospace;
-            color: #f8f8f2;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            background: transparent;
-            overflow-y: auto; /* make scrollable */
-            flex-grow: 1;
-        }
-        .token-comment { color: #7f8c8d; font-style: italic; }
-        .token-keyword { color: #ff79c6; font-weight: bold; }
-        .token-string { color: #f1fa8c; }
-        .token-number { color: #bd93f9; }
-        .token-operator { color: #50fa7b; }
 
-        /* =====================
+        /* ═══════════════════════════════════════════════════════════
            FOOTER
-        ===================== */
+        ═══════════════════════════════════════════════════════════ */
         footer {
             margin-top: 80px;
-            padding: 32px 24px;
+            padding: 36px 24px;
             color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--surface-border);
             width: 100%;
-            font-weight: 300;
-            font-size: 0.9rem;
             text-align: center;
+            font-size: 0.92rem;
         }
 
-        /* =====================
+        /* ═══════════════════════════════════════════════════════════
            MOBILE BREAKPOINTS
-        ===================== */
-        @media (max-width: 768px) {
-            nav { padding: 12px 18px; }
+        ═══════════════════════════════════════════════════════════ */
+        @media (max-width: 860px) {
             .nav-links { display: none; }
-            .hamburger { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; }
+            .hamburger { display: flex; }
 
-            .container { padding: 75px 16px 36px 16px; width: 100%; }
+            .container { padding: 90px 16px 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; gap: 16px; }
 
-            h1 {
-                font-size: clamp(2rem, 7.5vw, 3.2rem);
-                margin-bottom: 16px;
-            }
+            .cta-group { flex-direction: column; width: 100%; }
+            .cta-btn { width: 100%; }
 
-            .tagline {
-                font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-                margin-bottom: 28px;
-                padding: 0 4px;
-            }
-
-            .cta-group {
+            .window-topbar {
                 flex-direction: column;
-                align-items: stretch;
                 gap: 12px;
-                width: 100%;
-                max-width: 360px;
-                margin: 0 auto;
+                align-items: flex-start;
             }
-
-            .cta-btn {
-                min-height: 48px;
-                padding: 14px 24px;
-                font-size: 1rem;
-                max-width: 100%;
-                width: 100%;
-                touch-action: manipulation;
-            }
-
-            .hero-graphic {
-                height: 110px;
-                overflow: hidden;
-                margin-top: 30px;
-            }
-            .circle-3 { display: none; }
-
-            .code-preview-window {
-                height: auto;
-                min-height: 260px;
-                max-height: 360px;
-                margin: 28px auto 0 auto;
-                width: 100%;
-            }
-            .code-content {
-                font-size: 0.85rem;
-                padding: 14px;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                margin-top: 40px;
-            }
-            .feature-card { padding: 22px 18px; }
-
-            footer { margin-top: 40px; padding: 24px 16px; }
-        }
-
-        @media (max-width: 480px) {
-            .mobile-menu a {
-                font-size: 1.5rem;
-                padding: 8px 16px;
-                min-height: 48px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-        
-        /* ─── ENHANCED COLOR DABS (NEON GLOWS) ─── */
-        .code-preview-window {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 255, 204, 0.15), 0 0 50px rgba(157, 0, 255, 0.1);
-            border: 1px solid rgba(0, 255, 204, 0.3) !important;
-            position: relative;
-        }
-        .code-preview-window::after {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            z-index: -1;
-            opacity: 0.2;
-            filter: blur(8px);
-        }
-        .feature-card {
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.08);
-        }
-        .cta-btn:hover {
-            background: linear-gradient(90deg, #00FFCC, #9D00FF);
-            color: #000;
-        }
-        .logo {
-            text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+            .window-actions { width: 100%; justify-content: flex-end; }
+            pre.code-view { font-size: 0.84rem; padding: 16px; }
+            .cta-banner { padding: 40px 20px; }
         }
     </style>
-
-    <!-- Canvas Animation Styling -->
-    <style>
-        .canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .hero { position: relative; }
-        .code-preview-window { position: relative; z-index: 10; }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.025) !important;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 16px !important;
-            padding: 24px !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        }
-        .feature-card:hover {
-            transform: translateY(-4px) !important;
-            border-color: rgba(0, 255, 204, 0.4) !important;
-            box-shadow: 0 12px 40px rgba(0, 255, 204, 0.15) !important;
-        }
-        .feature-card h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #00FFCC;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-        @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr !important;
-                gap: 16px !important;
-            }
-            .feature-card {
-                padding: 18px !important;
-            }
-        }
-    </style>
-
 </head>
 <body>
 
+    <!-- ══════════════ NAVBAR ══════════════ -->
     <nav>
-        <div class="logo">VerScript</div>
+        <a href="index.html" class="logo-group">
+            <span class="logo">VerScript</span>
+            <span class="logo-pill">v1.2.0</span>
+        </a>
         <div class="nav-links">
-            <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="docs/index.html">Documentation</a>
+            <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
+            <a href="docs/index.html" class="nav-link">Documentation (18 Ch)</a>
+            <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
     </nav>
 
-    <!-- Mobile fullscreen menu -->
+    <!-- Mobile Drawer -->
     <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-        <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" id="mobileMenuLink1">GitHub</a>
-        <a href="docs/index.html" id="mobileMenuLink2">Documentation</a>
-        <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" id="mobileMenuLink3">Open Web IDE</a>
+        <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+        <a href="docs/index.html">Documentation Academy</a>
+        <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Open Web IDE</a>
     </div>
 
+    <!-- Canvas Animation Background -->
+    <canvas id="neuralCanvas" class="canvas-bg"></canvas>
+
     <div class="container">
-        <header>
-            <h1>Compile the <span>Future</span></h1>
-            <p class="tagline">A lightweight C-based parser supporting strings, booleans, integer variables, mathematical expressions, and dynamic loops.</p>
+        <!-- ══════════════ HERO ══════════════ -->
+        <div class="hero-section">
+            <div class="hero-badge">⚡ Pure C99 Native Engine &bull; Zero Dependencies</div>
+            <h1 class="hero-title">
+                The Minimalist <span class="gradient-text">Polyglot</span> Scripting Language
+            </h1>
+            <p class="hero-tagline">
+                Seamlessly blending the raw determinism and speed of native C with modern ergonomics: reactive watchguards, Truecolor ANSI escape styling, command aliases, and 100+ language code injection.
+            </p>
             <div class="cta-group">
-                <a href="docs/index.html" class="cta-btn" id="ctaDocs">Enter Documentation</a>
-                <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn outline" id="ctaIDE">Open Web IDE</a>
+                <a href="docs/index.html" class="cta-btn cta-btn-primary" id="ctaDocs">
+                    <span>Explore Academy (18 Chapters)</span> &rarr;
+                </a>
+                <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaIDE">
+                    <span>Launch Web IDE</span> 🚀
+                </a>
             </div>
-            
-            <!-- Code Demo Section -->
-            <canvas id="codeFunnelCanvas" class="canvas-container"></canvas>
-<div class="code-preview-window">
-                <div class="window-header">
-                    <span class="dot dot-red"></span>
-                    <span class="dot dot-yellow"></span>
-                    <span class="dot dot-green"></span>
-                    <span class="window-title">sample.vrs</span>
+        </div>
+
+        <!-- ══════════════ STATS ROW ══════════════ -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Injected Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">External Deps</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">64-bit</div>
+                <div class="stat-label">Native C VM Core</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Interactive Chapters</div>
+            </div>
+        </div>
+
+        <!-- ══════════════ INTERACTIVE CODE PLAYGROUND ══════════════ -->
+        <div class="code-window-container">
+            <div class="code-window">
+                <div class="window-topbar">
+                    <div class="window-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <div class="window-tabs">
+                        <button class="tab-btn active" id="tabSample" onclick="switchSnippet('sample')">sample.vrs</button>
+                        <button class="tab-btn" id="tabPolyglot" onclick="switchSnippet('polyglot')">polyglot.vrs</button>
+                        <button class="tab-btn" id="tabWatchdog" onclick="switchSnippet('watchdog')">watchdog.vrs</button>
+                    </div>
+                    <div class="window-actions">
+                        <button class="action-run-btn" id="runBtn" onclick="runSnippet()">
+                            <span>▶ Run Script</span>
+                        </button>
+                    </div>
                 </div>
-                <pre class="code-content"><code><span class="token-comment">!!
-  VerScript Polyglot Architecture & Syntax Showcase — v1.2.0
-  Featuring: Unquoted Hex Attributes (?color=#hex), Alias Remapping & Reactive Guards
-!!</span>
-
-<span class="token-keyword">alias</span> display: print <span class="token-operator">? color=tint</span>
-
-<span class="token-keyword">print</span> <span class="token-string">"=== VerScript Multi-tier Engine Online ==="</span> <span class="token-operator">?tint=#00ffcc</span>
-
-<span class="token-keyword">do</span>
-  pressure : <span class="token-number">100</span>
-  <span class="token-keyword">loop</span> <span class="token-number">3</span> <span class="token-keyword">step</span> <span class="token-number">1</span>
-    <span class="token-keyword">print</span> <span class="token-string">"Core Pressure: "</span> <span class="token-operator">+</span> pressure <span class="token-operator">?tint=#50fa7b</span>
-    pressure : pressure <span class="token-operator">+</span> <span class="token-number">50</span>
-<span class="token-keyword">unless</span> <span class="token-keyword">internal</span> pressure <span class="token-operator">&gt;</span> <span class="token-number">200</span>
-  <span class="token-keyword">print</span> <span class="token-string">"Watchdog Guard Triggered at: "</span> <span class="token-operator">+</span> pressure <span class="token-operator">?tint=#f1fa8c</span>
-
-<span class="token-keyword">inject</span> python
-  print("Polyglot Python sub-pipeline active!")</code></pre>
-            </div>
-        </header>
-
-        <div class="hero-graphic" aria-hidden="true">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="circle circle-3"></div>
-            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="z-index:10;">
-                <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#00FFCC" />
-                        <stop offset="100%" stop-color="#9D00FF" />
-                    </linearGradient>
-                </defs>
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-        </div>
-
-                <div class="features-grid">
-            <div class="feature-card">
-                <h2>Lightweight C Core</h2>
-                <p>VerScript is built on a minimal C foundation. It includes a custom lexer and interpreter designed for fast tokenization and zero-overhead execution.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Dynamic Types &amp; Expressions</h2>
-                <p>Enjoy dynamic typing with support for strings, integers, and booleans. Effortlessly concatenate variables and evaluate mathematical expressions directly.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Indented Loops &amp; Iteration</h2>
-                <p>Supports clean indented loop structures (<code>loop n</code>) and variable iteration bounds (<code>iterate i from x to y step z</code>) compiled on the fly.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Exception Handling &amp; Fallbacks</h2>
-                <p>Supports robust try-catch mechanisms with named compiler errors via <code>do-unless [error]</code>, as well as condition fallbacks <code>do-unless [bool]</code>.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Polyglot Code Injection</h2>
-                <p>Embed and execute code snippets from <strong>100+ major languages</strong> (Python, JS, C++, Rust, Go, Java, SQL...) directly inside VerScript using <code>inject [lang]</code>.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Multiline Comments</h2>
-                <p>Support for block multiline comment structures (<code>!! ... !!</code>) to comment out large code blocks or documentation notes across lines.</p>
-            </div>
-            <div class="feature-card">
-                <h2>Command Attributes &amp; Kwargs</h2>
-                <p>Attach optional modifiers and keyword arguments directly to commands using <code>?attribute</code> (e.g. <code>?color="green"</code>, <code>?newline=false</code>, <code>?default="val"</code>).</p>
-            </div>
-            <div class="feature-card">
-                <h2>Command Aliasing &amp; Remapping</h2>
-                <p>Dynamically bind command names and map attribute signatures with the <code>alias</code> keyword (e.g. <code>alias display: print</code> or <code>alias:</code> blocks).</p>
+                <div class="code-editor-area">
+                    <pre class="code-view" id="codePre"></pre>
+                </div>
+                <!-- Interactive Terminal Drawer -->
+                <div class="terminal-drawer" id="terminalDrawer">
+                    <div class="terminal-header">
+                        <span>● Terminal Console Output (VerScript C VM)</span>
+                    </div>
+                    <div class="terminal-body" id="terminalOutput"></div>
+                </div>
             </div>
         </div>
 
+        <!-- ══════════════ FEATURES GRID ══════════════ -->
+        <div class="section-header">
+            <span class="section-tag">Engine Highlights</span>
+            <h2 class="section-title">Built for Modern Systems &amp; Polyglots</h2>
+            <p class="section-desc">Engineered from ground up with concise syntax, predictable execution semantics, and extreme flexibility.</p>
+        </div>
 
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-badge">🎨</div>
+                <h3>Truecolor ANSI Engine</h3>
+                <p>Output rich 24-bit Truecolor gradients (<code>?color=#hex</code>) and 16 named ANSI colors with non-blocking inline printing attributes.</p>
+                <div class="feature-snippet">display "Matrix" ?color=#00ffcc ?inline</div>
+            </div>
 
+            <div class="feature-card">
+                <div class="feature-icon-badge">🛡️</div>
+                <h3>Reactive Watch Conditions</h3>
+                <p>Internal watchdogs halt execution and transfer control the exact instant a variable crosses a safe threshold during block passes.</p>
+                <div class="feature-snippet">do ... unless internal temp > 100</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">🌐</div>
+                <h3>100+ Language Injection</h3>
+                <p>Embed raw source code from Python, JS, Rust, C, Go, Java, and SQL directly inside scripts, or run dynamic <code>inject verscript</code> eval.</p>
+                <div class="feature-snippet">inject python ?color="yellow"</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">🏷️</div>
+                <h3>Custom Grammar Aliases</h3>
+                <p>Remap built-in commands and customize keyword signatures or attribute names at runtime to craft domain-specific languages.</p>
+                <div class="feature-snippet">alias display: print ? color=tint</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">🔄</div>
+                <h3>Stepped Iteration &amp; Loops</h3>
+                <p>Clean count loops, range iterators with custom step increments, dynamic while guards, and until condition loops.</p>
+                <div class="feature-snippet">iterate i from 1 to 50 step 5</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">⚡</div>
+                <h3>Scoped Error Directives</h3>
+                <p>Declaratively control error tolerance with <code>SuppressErrors</code>, <code>CriticalErrors</code>, and <code>ForceErrors</code> block scopes.</p>
+                <div class="feature-snippet">SuppressErrors { invalid / 0 }</div>
+            </div>
+        </div>
+
+        <!-- ══════════════ CTA BANNER ══════════════ -->
+        <div class="cta-banner">
+            <h2>Ready to Master VerScript?</h2>
+            <p>Step into the complete 18-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
+            <div class="cta-group">
+                <a href="docs/index.html" class="cta-btn cta-btn-primary">Start Interactive Academy &rarr;</a>
+                <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary">Launch Web IDE</a>
+            </div>
+        </div>
+
+        <!-- ══════════════ FOOTER ══════════════ -->
         <footer>
             &copy; 2026 VerScript. Open Source under the MIT License.
         </footer>
     </div>
 
+    <!-- ══════════════ JAVASCRIPT CONTROLLERS ══════════════ -->
     <script>
+        // Mobile Hamburger Drawer
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -678,7 +839,6 @@
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        // Close menu on link click
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('open');
@@ -690,48 +850,167 @@
     </script>
 
     <script>
-        // Polyglot Code Lines Funnel Canvas Animation
-        const canvas = document.getElementById('codeFunnelCanvas');
+        // Interactive Snippet Repository
+        const SNIPPETS = {
+            sample: {
+                code: `!!
+  VerScript Comprehensive Architecture Showcase — v1.2.0
+  Featuring:
+    1: Command Aliasing & Attribute Remapping
+    2: Unquoted Truecolor Hex Attributes (?color=#hex)
+    3: Stepped Range Iterations (iterate from X to Y step S)
+    4: Reactive Internal Watchdog Guards (do ... unless internal)
+    5: Scoped Error Suppression (SuppressErrors)
+!!
+
+alias display: print ? color=tint
+
+print "=== VerScript Native Engine Active ===" ?tint=#00ffcc
+print "Core: 64-bit C Bytecode Interpreter" ?tint=#50fa7b
+print "Status: Online and Ready" ?tint=#f1fa8c
+
+! Stepped Iteration
+iterate cycle from 1 to 7 step 2
+  print "Stepped Pass: " + cycle ?tint="cyan"
+
+! Reactive Internal Watchdog Guard
+do
+  pressure : 100
+  loop 3 step 1
+    print "Core Pressure: " + pressure ?tint=#00d2ff
+    pressure : pressure + 60
+unless internal pressure > 200
+  print "WATCHDOG TRIGGERED: Pressure breached at " + pressure ?tint=#ff5555
+
+! Error Suppression Scope
+SuppressErrors
+  err_val : 100 / 0
+  print "Division by zero bypassed cleanly under SuppressErrors!" ?tint=#50fa7b`,
+                output: `<span style="color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.4); font-weight: bold;">=== VerScript Native Engine Active ===</span>
+<span style="color: #50fa7b; text-shadow: 0 0 10px rgba(80,250,123,0.4); font-weight: bold;">Core: 64-bit C Bytecode Interpreter</span>
+<span style="color: #f1fa8c; text-shadow: 0 0 10px rgba(241,250,140,0.4); font-weight: bold;">Status: Online and Ready</span>
+<span style="color: #8be9fd;">Stepped Pass: 1</span>
+<span style="color: #8be9fd;">Stepped Pass: 3</span>
+<span style="color: #8be9fd;">Stepped Pass: 5</span>
+<span style="color: #8be9fd;">Stepped Pass: 7</span>
+<span style="color: #00d2ff;">Core Pressure: 100</span>
+<span style="color: #00d2ff;">Core Pressure: 160</span>
+<span style="color: #ff5555; text-shadow: 0 0 10px rgba(255,85,85,0.4); font-weight: bold;">WATCHDOG TRIGGERED: Pressure breached at 220</span>
+<span style="color: #50fa7b; font-weight: bold;">Division by zero bypassed cleanly under SuppressErrors!</span>`
+            },
+            polyglot: {
+                code: `! Polyglot Multi-Language Code Injection
+display "=== Polyglot Execution Pipeline ===" ?color="cyan"
+
+inject python ?color="yellow"
+    numbers = [1, 2, 3, 4, 5]
+    squares = [n**2 for n in numbers]
+    print("Python Computed Squares:", squares)
+
+inject javascript ?color="cyan"
+    const total = [10, 20, 30, 40].reduce((a, b) => a + b, 0);
+    console.log("JavaScript Matrix Total:", total);
+
+inject verscript
+    eval_val : 500 + 250
+    display "VerScript Dynamic Sub-Scope: " + eval_val ?color="green"`,
+                output: `<span style="color: #8be9fd; font-weight: bold;">=== Polyglot Execution Pipeline ===</span>
+<span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Python Computed Squares: [1, 4, 9, 16, 25]
+<span style="color: #8be9fd; font-weight: bold;">[Inject:javascript]</span> JavaScript Matrix Total: 100
+<span style="color: #50fa7b; font-weight: bold;">VerScript Dynamic Sub-Scope: 750</span>`
+            },
+            watchdog: {
+                code: `! High-Precision Reactor Core Watchdog
+core_temperature : 140
+max_safe_limit : 260
+
+display "Initializing reactor core sequence..." ?color="cyan"
+
+do
+    iterate step_pass from 1 to 4
+        display "Temperature at step " + step_pass + ": " + core_temperature ?color="yellow"
+        core_temperature : core_temperature + 50
+unless internal core_temperature > max_safe_limit
+    display "CRITICAL SHUTDOWN: Reactor threshold exceeded (" + core_temperature + "°C)!" ?color="red"`,
+                output: `<span style="color: #8be9fd;">Initializing reactor core sequence...</span>
+<span style="color: #f1fa8c;">Temperature at step 1: 140</span>
+<span style="color: #f1fa8c;">Temperature at step 2: 190</span>
+<span style="color: #f1fa8c;">Temperature at step 3: 240</span>
+<span style="color: #ff5555; text-shadow: 0 0 10px rgba(255,85,85,0.5); font-weight: bold;">CRITICAL SHUTDOWN: Reactor threshold exceeded (290°C)!</span>`
+            }
+        };
+
+        let currentActiveSnippet = 'sample';
+        const codePreEl = document.getElementById('codePre');
+        const terminalDrawerEl = document.getElementById('terminalDrawer');
+        const terminalOutputEl = document.getElementById('terminalOutput');
+
+        function highlightVerScript(src) {
+            return src
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/(!![\s\S]*?!!)/g, '<span class="token-comment">$1</span>')
+                .replace(/(!.*$)/gm, '<span class="token-comment">$1</span>')
+                .replace(/(".*?")/g, '<span class="token-string">$1</span>')
+                .replace(/\b(display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b/g, '<span class="token-keyword">$1</span>')
+                .replace(/(\?[a-zA-Z0-9_]+)=?(#[0-9a-fA-F]{3,6}|"[^"]*"|[a-zA-Z0-9_]+)?/g, '<span class="token-attribute">$1</span><span class="token-operator">=</span><span class="token-hex">$2</span>')
+                .replace(/\b([0-9]+)\b/g, '<span class="token-number">$1</span>')
+                .replace(/(:|\+|-|\*|\/|=|<|>|x=)/g, '<span class="token-operator">$1</span>');
+        }
+
+        function switchSnippet(key) {
+            currentActiveSnippet = key;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (key === 'sample') document.getElementById('tabSample').classList.add('active');
+            if (key === 'polyglot') document.getElementById('tabPolyglot').classList.add('active');
+            if (key === 'watchdog') document.getElementById('tabWatchdog').classList.add('active');
+
+            codePreEl.innerHTML = highlightVerScript(SNIPPETS[key].code);
+            terminalDrawerEl.classList.remove('open');
+        }
+
+        function runSnippet() {
+            terminalOutputEl.innerHTML = `<span style="color: #6272a4;">[Compiling and executing on native VerScript VM...]</span>\n\n` + SNIPPETS[currentActiveSnippet].output;
+            terminalDrawerEl.classList.add('open');
+            terminalDrawerEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Initialize editor
+        switchSnippet('sample');
+    </script>
+
+    <!-- ══════════════ NEURAL FIBER CANVAS ANIMATION ══════════════ -->
+    <script>
+        const canvas = document.getElementById('neuralCanvas');
         const ctx = canvas.getContext('2d');
 
         function resizeCanvas() {
             canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
+            canvas.height = 850;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const snippets = [
-            'def main(): print("python")', 'fn calculate() -> i32', 'function process() { js }',
-            'import std.stdio;', 'class Container<T>', 'SELECT * FROM users',
-            'func NewServer() *Server', 'val list = listOf("kt")', 'printf("C language");',
-            '#include <iostream>', '<?php echo "PHP"; ?>', 'pub fn rust_fun()',
-            'package main', 'import SwiftUI', 'def elixir_fun do', 'puts "Ruby snippet"'
-        ];
+        const words = ['?color=#00ffcc', 'alias', 'loop 10 step 2', 'unless internal', 'inject python', 'SuppressErrors', 'display', '64-bit VM', ': 42', 'x= 0'];
+        const colors = ['#00FFCC', '#9D00FF', '#50FA7B', '#FF79C6', '#F1FA8C', '#00D2FF'];
 
-        const colors = ['#00FFCC', '#9D00FF', '#FF79C6', '#BD93F9', '#F1FA8C', '#8BE9FD'];
-
-        class CodeParticle {
-            constructor() {
-                this.reset();
-            }
+        class Particle {
+            constructor() { this.reset(); }
             reset() {
-                this.text = snippets[Math.floor(Math.random() * snippets.length)];
+                this.text = words[Math.floor(Math.random() * words.length)];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.x = Math.random() * canvas.width;
-                this.y = Math.random() * (canvas.height * 0.3);
-                this.speedY = 1 + Math.random() * 2;
-                this.speedX = (Math.random() - 0.5) * 1.5;
-                this.alpha = 0.8;
+                this.y = Math.random() * canvas.height * 0.4;
+                this.speedY = 0.8 + Math.random() * 1.4;
+                this.speedX = (Math.random() - 0.5) * 1.2;
+                this.alpha = 0.7;
                 this.fontSize = 11 + Math.floor(Math.random() * 4);
             }
             update() {
-                // Funnel towards center bottom where code window is
                 const targetX = canvas.width / 2;
-                const targetY = canvas.height * 0.7;
-                this.x += (targetX - this.x) * 0.015 + this.speedX;
+                const targetY = canvas.height * 0.65;
+                this.x += (targetX - this.x) * 0.012 + this.speedX;
                 this.y += this.speedY;
-                this.alpha -= 0.005;
+                this.alpha -= 0.0035;
 
                 if (this.y > targetY || this.alpha <= 0) {
                     this.reset();
@@ -739,26 +1018,25 @@
             }
             draw() {
                 ctx.save();
-                ctx.globalAlpha = this.alpha;
+                ctx.globalAlpha = Math.max(0, this.alpha);
                 ctx.fillStyle = this.color;
-                ctx.font = `${this.fontSize}px 'Courier New', monospace`;
+                ctx.font = `${this.fontSize}px 'Fira Code', monospace`;
                 ctx.fillText(this.text, this.x, this.y);
                 ctx.restore();
             }
         }
 
-        const particles = Array.from({ length: 28 }, () => new CodeParticle());
+        const particles = Array.from({ length: 32 }, () => new Particle());
 
-        function animateFunnel() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(animateFunnel);
+            requestAnimationFrame(animate);
         }
-        animateFunnel();
+        animate();
     </script>
-
 </body>
 </html>
