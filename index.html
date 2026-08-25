@@ -810,6 +810,54 @@
             </div>
         </div>
 
+        <!-- ══════════════ EXHAUSTIVE 100+ LANGUAGE DIRECTORY ══════════════ -->
+        <div class="section-header" style="margin-top: 80px;">
+            <span class="section-tag">Polyglot Matrix</span>
+            <h2 class="section-title">100+ Supported Injected Languages</h2>
+            <p class="section-desc">VerScript can execute and orchestrate raw code blocks from virtually any language ecosystem directly via <code>inject [lang]</code>.</p>
+        </div>
+
+        <div class="feature-card" style="width: 100%; margin-bottom: 24px; padding: 32px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                <div>
+                    <h4 style="color: var(--primary); margin: 0 0 8px; font-size: 1.05rem;">⚙️ Systems &amp; Native</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>c</code>, <code>cpp</code>, <code>rust</code>, <code>zig</code>, <code>go</code>, <code>d</code>, <code>nim</code>, <code>fortran</code>, <code>ada</code>, <code>asm</code>, <code>v</code>, <code>odin</code>, <code>pascal</code>, <code>modula</code>
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-pink); margin: 0 0 8px; font-size: 1.05rem;">🌐 Web &amp; Fullstack</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>javascript</code>, <code>typescript</code>, <code>html</code>, <code>css</code>, <code>scss</code>, <code>sass</code>, <code>less</code>, <code>jsx</code>, <code>tsx</code>, <code>json</code>, <code>yaml</code>, <code>toml</code>, <code>graphql</code>, <code>wasm</code>
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-yellow); margin: 0 0 8px; font-size: 1.05rem;">🧠 AI, Data &amp; Math</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>python</code>, <code>r</code>, <code>julia</code>, <code>matlab</code>, <code>octave</code>, <code>sql</code>, <code>pgsql</code>, <code>mysql</code>, <code>sqlite</code>, <code>sas</code>, <code>stata</code>, <code>sparql</code>
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-green); margin: 0 0 8px; font-size: 1.05rem;">🏢 Enterprise &amp; JVM / .NET</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>java</code>, <code>csharp</code>, <code>kotlin</code>, <code>scala</code>, <code>groovy</code>, <code>fsharp</code>, <code>vb</code>, <code>clojure</code>, <code>swift</code>, <code>objective-c</code>
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: #00d2ff; margin: 0 0 8px; font-size: 1.05rem;">📜 Scripting &amp; Automation</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>ruby</code>, <code>php</code>, <code>perl</code>, <code>lua</code>, <code>bash</code>, <code>sh</code>, <code>powershell</code>, <code>zsh</code>, <code>awk</code>, <code>sed</code>, <code>tcl</code>, <code>fish</code>, <code>bat</code>
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: #bd93f9; margin: 0 0 8px; font-size: 1.05rem;">🧬 Functional, Web3 &amp; DSLs</h4>
+                    <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
+                        <code>haskell</code>, <code>elixir</code>, <code>erlang</code>, <code>ocaml</code>, <code>scheme</code>, <code>lisp</code>, <code>solidity</code>, <code>vyper</code>, <code>verilog</code>, <code>vhdl</code>, <code>latex</code>, <code>markdown</code>, <code>dockerfile</code>, <code>verscript</code>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- ══════════════ CTA BANNER ══════════════ -->
         <div class="cta-banner">
             <h2>Ready to Master VerScript?</h2>
@@ -946,15 +994,23 @@ unless internal core_temperature > max_safe_limit
         const terminalOutputEl = document.getElementById('terminalOutput');
 
         function highlightVerScript(src) {
-            return src
-                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                .replace(/(!![\s\S]*?!!)/g, '<span class="token-comment">$1</span>')
-                .replace(/(!.*$)/gm, '<span class="token-comment">$1</span>')
-                .replace(/(".*?")/g, '<span class="token-string">$1</span>')
-                .replace(/\b(display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b/g, '<span class="token-keyword">$1</span>')
-                .replace(/(\?[a-zA-Z0-9_]+)=?(#[0-9a-fA-F]{3,6}|"[^"]*"|[a-zA-Z0-9_]+)?/g, '<span class="token-attribute">$1</span><span class="token-operator">=</span><span class="token-hex">$2</span>')
-                .replace(/\b([0-9]+)\b/g, '<span class="token-number">$1</span>')
-                .replace(/(:|\+|-|\*|\/|=|<|>|x=)/g, '<span class="token-operator">$1</span>');
+            function esc(s) {
+                return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            }
+
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>)|(\n|[^\s\w]+|\w+|\s+)/g;
+
+            return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
+                if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;
+                if (lineComment) return `<span class="token-comment">${esc(lineComment)}</span>`;
+                if (str) return `<span class="token-string">${esc(str)}</span>`;
+                if (attr) return `<span class="token-attribute">${esc(attr)}</span>`;
+                if (hex) return `<span class="token-hex">${esc(hex)}</span>`;
+                if (keyword) return `<span class="token-keyword">${esc(keyword)}</span>`;
+                if (num) return `<span class="token-number">${esc(num)}</span>`;
+                if (op) return `<span class="token-operator">${esc(op)}</span>`;
+                return esc(match);
+            });
         }
 
         function switchSnippet(key) {
@@ -978,65 +1034,179 @@ unless internal core_temperature > max_safe_limit
         switchSnippet('sample');
     </script>
 
-    <!-- ══════════════ NEURAL FIBER CANVAS ANIMATION ══════════════ -->
+    <!-- ══════════════ HOURGLASS CONDUIT CANVAS ANIMATION ══════════════ -->
     <script>
         const canvas = document.getElementById('neuralCanvas');
         const ctx = canvas.getContext('2d');
 
         function resizeCanvas() {
             canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = 850;
+            canvas.height = 950;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const words = ['?color=#00ffcc', 'alias', 'loop 10 step 2', 'unless internal', 'inject python', 'SuppressErrors', 'display', '64-bit VM', ': 42', 'x= 0'];
-        const colors = ['#00FFCC', '#9D00FF', '#50FA7B', '#FF79C6', '#F1FA8C', '#00D2FF'];
+        // Top Chamber: Hundreds of Foreign Language Snippets
+        const foreignSnippets = [
+            'def calculate(x):', 'fn main() -> Result<()>', 'public static void main(String[] args)',
+            '#include <stdio.h>', 'SELECT * FROM users WHERE active = 1;', 'const app = express()',
+            'func NewServer() *Server', 'import torch.nn as nn', 'template<typename T> class Matrix',
+            'std::vector<int> numbers;', 'puts "Ruby polyglot"', 'guard let user = auth()',
+            'use std::collections::HashMap;', 'type Config struct { Port int }', 'echo "PHP script"',
+            'val dataset = listOf(1, 2, 3)', 'match expr with | Some(v) -> v', 'BEGIN TRANSACTION;',
+            'pragma solidity ^0.8.20;', 'async function queryAsync()', 'package main',
+            'interface Repository<T>', 'class Transformer(nn.Module):', 'import SwiftUI',
+            'defmodule Pipeline do', 'auto ptr = std::make_shared<Node>();', 'println!("Rust macro");'
+        ];
 
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.text = words[Math.floor(Math.random() * words.length)];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height * 0.4;
-                this.speedY = 0.8 + Math.random() * 1.4;
-                this.speedX = (Math.random() - 0.5) * 1.2;
-                this.alpha = 0.7;
-                this.fontSize = 11 + Math.floor(Math.random() * 4);
+        // Bottom Chamber: Pure VerScript Transmuted Output
+        const verscriptSnippets = [
+            'display "Online" ?color=#00ffcc', 'alias display: print ? color=tint',
+            'iterate idx from 1 to 50 step 5', 'do ... unless internal temp > 100',
+            'SuppressErrors', 'loop 10 step 2', 'inject python ?color="yellow"',
+            'prompt user ?default="Admin"', 'power : 9000', 'score : score + 10',
+            'status x= 0', '?inline', 'throw HardwareFault ?msg="Low V"',
+            'CriticalErrors', '!! ... !!', '! active watchdog guard', 'print "Core: 64-bit C VM" ?tint=#50fa7b'
+        ];
+
+        const foreignColors = ['#6272a4', '#8be9fd', '#bd93f9', '#ffb86c', '#ff79c6', '#e06c75', '#abb2bf'];
+        const verscriptColors = ['#00FFCC', '#50FA7B', '#00D2FF', '#F1FA8C', '#FF79C6', '#D18DFF'];
+
+        class HourglassParticle {
+            constructor() {
+                this.init();
             }
-            update() {
-                const targetX = canvas.width / 2;
-                const targetY = canvas.height * 0.65;
-                this.x += (targetX - this.x) * 0.012 + this.speedX;
-                this.y += this.speedY;
-                this.alpha -= 0.0035;
 
-                if (this.y > targetY || this.alpha <= 0) {
-                    this.reset();
+            init() {
+                // Determine whether particle is currently in Top (incoming foreign) or Bottom (transmuted VerScript)
+                this.stage = Math.random() > 0.45 ? 'top' : 'bottom';
+                const cx = canvas.width / 2;
+                const cy = 440; // Focal Choke Point Nexus
+
+                if (this.stage === 'top') {
+                    this.text = foreignSnippets[Math.floor(Math.random() * foreignSnippets.length)];
+                    this.color = foreignColors[Math.floor(Math.random() * foreignColors.length)];
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * 250;
+                    this.vx = (cx - this.x) * 0.008 + (Math.random() - 0.5) * 0.8;
+                    this.vy = 1.0 + Math.random() * 1.5;
+                    this.alpha = 0.2 + Math.random() * 0.6;
+                    this.fontSize = 11 + Math.floor(Math.random() * 3);
+                } else {
+                    this.text = verscriptSnippets[Math.floor(Math.random() * verscriptSnippets.length)];
+                    this.color = verscriptColors[Math.floor(Math.random() * verscriptColors.length)];
+                    this.x = cx + (Math.random() - 0.5) * 60;
+                    this.y = cy + Math.random() * 50;
+                    this.spreadAngle = (Math.random() - 0.5) * 1.8;
+                    this.vx = Math.sin(this.spreadAngle) * (1.2 + Math.random() * 2.2);
+                    this.vy = 1.2 + Math.random() * 1.8;
+                    this.alpha = 0.8;
+                    this.fontSize = 12 + Math.floor(Math.random() * 4);
                 }
             }
+
+            update() {
+                const cx = canvas.width / 2;
+                const cy = 440;
+
+                if (this.stage === 'top') {
+                    // Converge towards nexus (cx, cy)
+                    this.x += (cx - this.x) * 0.025 + (Math.random() - 0.5) * 0.4;
+                    this.y += this.vy;
+                    this.vy += 0.03; // Accelerate as it funnels down
+
+                    // Transmutation at nexus!
+                    if (this.y >= cy - 10) {
+                        this.stage = 'bottom';
+                        this.text = verscriptSnippets[Math.floor(Math.random() * verscriptSnippets.length)];
+                        this.color = verscriptColors[Math.floor(Math.random() * verscriptColors.length)];
+                        this.x = cx + (Math.random() - 0.5) * 40;
+                        this.y = cy + 10;
+                        this.spreadAngle = (Math.random() - 0.5) * 2.0;
+                        this.vx = Math.sin(this.spreadAngle) * (1.5 + Math.random() * 2.5);
+                        this.vy = 1.5 + Math.random() * 2.0;
+                        this.alpha = 0.95;
+                        this.fontSize = 12 + Math.floor(Math.random() * 4);
+                    }
+                } else {
+                    // Diverge outwards and downwards into the lower chamber
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.alpha -= 0.004;
+
+                    if (this.y > canvas.height || this.alpha <= 0) {
+                        this.init();
+                        this.stage = 'top';
+                        this.y = -20;
+                    }
+                }
+            }
+
             draw() {
                 ctx.save();
-                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
                 ctx.fillStyle = this.color;
                 ctx.font = `${this.fontSize}px 'Fira Code', monospace`;
+                
+                // Add glow to VerScript particles
+                if (this.stage === 'bottom') {
+                    ctx.shadowColor = this.color;
+                    ctx.shadowBlur = 10;
+                }
+
                 ctx.fillText(this.text, this.x, this.y);
                 ctx.restore();
             }
         }
 
-        const particles = Array.from({ length: 32 }, () => new Particle());
+        const particleCount = 42;
+        const particles = Array.from({ length: particleCount }, () => new HourglassParticle());
 
-        function animate() {
+        let nexusPulse = 0;
+
+        function animateHourglass() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = 440;
+            nexusPulse += 0.04;
+
+            // Draw Nexus Fusion Rings
+            ctx.save();
+            const ringRadius = 38 + Math.sin(nexusPulse) * 8;
+            const grad = ctx.createRadialGradient(cx, cy, 5, cx, cy, ringRadius * 1.6);
+            grad.addColorStop(0, 'rgba(0, 255, 204, 0.4)');
+            grad.addColorStop(0.5, 'rgba(157, 0, 255, 0.25)');
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, ringRadius * 1.6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Concentric rotating energy rings
+            ctx.strokeStyle = 'rgba(0, 255, 204, 0.35)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([8, 6]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = 'rgba(157, 0, 255, 0.4)';
+            ctx.beginPath();
+            ctx.arc(cx, cy, ringRadius * 0.65, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            // Update & draw particles
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(animate);
+
+            requestAnimationFrame(animateHourglass);
         }
-        animate();
+
+        animateHourglass();
     </script>
 </body>
 </html>

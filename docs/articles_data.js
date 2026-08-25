@@ -1383,16 +1383,13 @@ unless AuthError
         ]
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 5: POLYGLOT & METAPROGRAMMING
-    // ═══════════════════════════════════════════════════════════════
     {
         id: "ch15-inject",
         number: 15,
         section: "Section 5: Polyglot & Metaprogramming",
         title: "Polyglot Code Injection (100+ Languages)",
         category: "Metaprogramming",
-        readTime: "6 min read",
+        readTime: "7 min read",
         summary: "Embed and execute source code from over 100 major languages directly inside VerScript scripts.",
         body: `
             <h2>The <code>inject</code> Keyword</h2>
