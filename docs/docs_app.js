@@ -244,6 +244,126 @@ async function executeCode(code) {
     return simulateVerScript(code);
 }
 
+// ─── ANSI TO HTML CONVERTER ─────────────────────────────────────────
+function ansiToHtml(str) {
+    if (!str) return '';
+    let text = str
+        .replace(/\\033\[/g, '\x1b[')
+        .replace(/\\x1b\[/gi, '\x1b[')
+        .replace(/\\u001b\[/gi, '\x1b[');
+
+    const standardColors = {
+        '30': '#6272a4',
+        '31': '#ff5555',
+        '32': '#50fa7b',
+        '33': '#f1fa8c',
+        '34': '#8be9fd',
+        '35': '#ff79c6',
+        '36': '#00ffcc',
+        '37': '#f8f8f2',
+        '90': '#6272a4',
+        '91': '#ff6e6e',
+        '92': '#69ff94',
+        '93': '#ffffa5',
+        '94': '#d6acff',
+        '95': '#ff92df',
+        '96': '#a4ffff',
+        '97': '#ffffff'
+    };
+
+    let result = '';
+    let spanOpen = false;
+    const regex = /\x1b\[([\d;]+)m/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+        result += escapeHTML(text.substring(lastIndex, match.index));
+        lastIndex = regex.lastIndex;
+        const codeSeq = match[1];
+        if (codeSeq === '0') {
+            if (spanOpen) {
+                result += '</span>';
+                spanOpen = false;
+            }
+        } else if (codeSeq.startsWith('38;2;')) {
+            const parts = codeSeq.split(';');
+            if (parts.length >= 5) {
+                const r = parseInt(parts[2], 10);
+                const g = parseInt(parts[3], 10);
+                const b = parseInt(parts[4], 10);
+                if (spanOpen) result += '</span>';
+                result += `<span style="color: rgb(${r}, ${g}, ${b}); font-weight: bold; text-shadow: 0 0 6px rgba(${r},${g},${b},0.35);">`;
+                spanOpen = true;
+            }
+        } else {
+            const parts = codeSeq.split(';');
+            let colorHex = null;
+            for (const p of parts) {
+                if (standardColors[p]) {
+                    colorHex = standardColors[p];
+                    break;
+                }
+            }
+            if (colorHex) {
+                if (spanOpen) result += '</span>';
+                result += `<span style="color: ${colorHex}; font-weight: bold; text-shadow: 0 0 6px ${colorHex}55;">`;
+                spanOpen = true;
+            }
+        }
+    }
+    result += escapeHTML(text.substring(lastIndex));
+    if (spanOpen) result += '</span>';
+    return result;
+}
+
+function registerAlias(spec, aliases) {
+    if (!spec) return;
+    let s = spec.trim();
+    if (s.startsWith('alias')) s = s.substring(5).trim();
+    if (s.startsWith(':')) s = s.substring(1).trim();
+    if (!s) return;
+    
+    const colonIdx = s.indexOf(':');
+    if (colonIdx === -1) return;
+    const cmd1 = s.substring(0, colonIdx).trim();
+    let rest = s.substring(colonIdx + 1).trim();
+    let qIdx = rest.indexOf('?');
+    let cmd2 = qIdx !== -1 ? rest.substring(0, qIdx).trim() : rest.trim();
+    let argMap = {};
+    if (qIdx !== -1) {
+        let attrPart = rest.substring(qIdx + 1);
+        let pairs = attrPart.split(/[\s,]+/);
+        for (let p of pairs) {
+            if (!p) continue;
+            if (p.includes('=')) {
+                let [toA, fromA] = p.split('=');
+                if (toA && fromA) argMap[fromA.trim()] = toA.trim();
+            } else {
+                argMap[p.trim()] = (cmd1 === 'display' ? 'color' : p.trim());
+            }
+        }
+    }
+    aliases[cmd2] = { target: cmd1, argMap };
+}
+
+function resolveLineAlias(line, aliases) {
+    if (!line) return line;
+    let trimmed = line.trim();
+    let firstWord = trimmed.split(/[\s:?]/)[0];
+    if (aliases[firstWord]) {
+        const { target, argMap } = aliases[firstWord];
+        let replaced = target + trimmed.substring(firstWord.length);
+        if (argMap) {
+            for (let [fromA, toA] of Object.entries(argMap)) {
+                replaced = replaced.replace(new RegExp(`\\?${fromA}(?=[=\\s]|$)`, 'g'), `?${toA}`);
+            }
+        }
+        return replaced;
+    }
+    return line;
+}
+
 function simulateVerScript(code) {
     const lines = code.split('\n');
     let output = '';
@@ -260,46 +380,65 @@ function simulateVerScript(code) {
                 continue;
             }
 
-            // Alias resolution
+            // Alias block & line resolution
             if (line.startsWith('alias:')) {
                 i++;
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
                     const aliasLine = lines[i].trim();
                     if (aliasLine && !aliasLine.startsWith('!')) {
-                        const parts = aliasLine.split(':');
-                        if (parts.length >= 2) {
-                            const from = parts[0].trim();
-                            const to = parts[1].trim().split(' ')[0];
-                            aliases[to] = from;
-                        }
+                        registerAlias(aliasLine, aliases);
                     }
                     i++;
                 }
                 continue;
             } else if (line.startsWith('alias ')) {
-                const parts = line.substring(6).split(':');
-                if (parts.length >= 2) {
-                    const from = parts[0].trim();
-                    const to = parts[1].trim().split(' ')[0];
-                    aliases[to] = from;
-                }
+                registerAlias(line, aliases);
                 i++;
                 continue;
             }
 
-            // Command aliasing check
-            const firstWord = line.split(' ')[0];
-            if (aliases[firstWord]) {
-                line = aliases[firstWord] + line.substring(firstWord.length);
-            }
+            // Resolve aliased command and attributes
+            line = resolveLineAlias(line, aliases);
 
-            // Display
-            if (line.startsWith('display ')) {
-                let expr = line.substring(8).trim();
-                // strip attributes
-                expr = expr.replace(/\?[a-zA-Z_]+(=("[^"]*"|[^\s]+))?/g, '').trim();
+            // Display with full ANSI colors (named + unquoted/quoted hex)
+            if (line.startsWith('display ') || line === 'display') {
+                let colMatch = line.match(/\?color=(?:#([0-9a-fA-F]{3,8})|"([^"]*)"|'([^']*)'|([a-zA-Z0-9_#]+))/);
+                let colorVal = colMatch ? (colMatch[1] ? ('#' + colMatch[1]) : (colMatch[2] || colMatch[3] || colMatch[4])) : null;
+                let isInline = line.includes('?inline') || /\?newline=(?:false|0|"false")/.test(line);
+                let expr = line.length > 8 ? line.substring(8).trim() : '';
+                expr = expr.replace(/\?[a-zA-Z_]+(?:=(?:"[^"]*"|'[^']*'|[^\s]+))?/g, '').trim();
                 let evaluated = evalSimpleExpr(expr, vars);
-                output += evaluated + '\n';
+
+                if (colorVal) {
+                    if (colorVal.startsWith('#')) {
+                        let hex = colorVal.substring(1);
+                        let r = 0, g = 0, b = 0;
+                        if (hex.length === 6) {
+                            r = parseInt(hex.substring(0, 2), 16);
+                            g = parseInt(hex.substring(2, 4), 16);
+                            b = parseInt(hex.substring(4, 6), 16);
+                        } else if (hex.length === 3) {
+                            r = parseInt(hex[0] + hex[0], 16);
+                            g = parseInt(hex[1] + hex[1], 16);
+                            b = parseInt(hex[2] + hex[2], 16);
+                        }
+                        output += `\x1b[38;2;${r};${g};${b}m${evaluated}\x1b[0m` + (isInline ? '' : '\n');
+                    } else {
+                        const namedCodes = {
+                            'red': '31',
+                            'green': '32',
+                            'yellow': '33',
+                            'blue': '34',
+                            'purple': '35',
+                            'cyan': '36',
+                            'white': '37'
+                        };
+                        let code = namedCodes[colorVal.toLowerCase()] || '37';
+                        output += `\x1b[${code}m${evaluated}\x1b[0m` + (isInline ? '' : '\n');
+                    }
+                } else {
+                    output += evaluated + (isInline ? '' : '\n');
+                }
                 i++;
             }
             // Prompt
@@ -450,7 +589,8 @@ window.executeRunBox = async function(id) {
     try {
         const res = await executeCode(code);
         outputEl.className = "console-output" + (res.error ? " error" : " success");
-        outputEl.textContent = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
+        const fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
+        outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
         statEl.textContent = res.source === 'cloud' ? "✅ Cloud VM" : "⚡ Instant VM";
     } catch (err) {
         outputEl.className = "console-output error";
