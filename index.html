@@ -587,25 +587,24 @@
                     <span class="window-title">sample.vrs</span>
                 </div>
                 <pre class="code-content"><code><span class="token-comment">!!
-  VerScript Polyglot Language Showcase — v1.2.0
-  Featuring: Polyglot Code Injection (inject [lang]) & Command Attributes
+  VerScript Polyglot Architecture & Syntax Showcase — v1.2.0
+  Featuring: Unquoted Hex Attributes (?color=#hex), Alias Remapping & Reactive Guards
 !!</span>
 
-<span class="token-keyword">display</span> <span class="token-string">"=== Polyglot Engine Online ==="</span> <span class="token-operator">?color="cyan"</span>
+<span class="token-keyword">alias</span> display: print <span class="token-operator">? color=tint</span>
+
+<span class="token-keyword">print</span> <span class="token-string">"=== VerScript Multi-tier Engine Online ==="</span> <span class="token-operator">?tint=#00ffcc</span>
+
+<span class="token-keyword">do</span>
+  pressure : <span class="token-number">100</span>
+  <span class="token-keyword">loop</span> <span class="token-number">3</span> <span class="token-keyword">step</span> <span class="token-number">1</span>
+    <span class="token-keyword">print</span> <span class="token-string">"Core Pressure: "</span> <span class="token-operator">+</span> pressure <span class="token-operator">?tint=#50fa7b</span>
+    pressure : pressure <span class="token-operator">+</span> <span class="token-number">50</span>
+<span class="token-keyword">unless</span> <span class="token-keyword">internal</span> pressure <span class="token-operator">&gt;</span> <span class="token-number">200</span>
+  <span class="token-keyword">print</span> <span class="token-string">"Watchdog Guard Triggered at: "</span> <span class="token-operator">+</span> pressure <span class="token-operator">?tint=#f1fa8c</span>
 
 <span class="token-keyword">inject</span> python
-  print("Python snippet executing inside VerScript!")
-  val = [x**2 for x in range(5)]
-  print("Squares:", val)
-
-<span class="token-keyword">inject</span> javascript
-  const languages = ["Rust", "Go", "C++", "Python", "VerScript"];
-  console.log("Unified stack:", languages.join(" -&gt; "));
-
-<span class="token-keyword">inject</span> verscript
-  <span class="token-keyword">display</span> <span class="token-string">"Nested VerScript dynamic evaluation!"</span> <span class="token-operator">?color="green"</span>
-  <span class="token-keyword">iterate</span> i <span class="token-keyword">from</span> <span class="token-number">1</span> <span class="token-keyword">to</span> <span class="token-number">3</span>
-    <span class="token-keyword">display</span> <span class="token-string">"Step: "</span> <span class="token-operator">+</span> i <span class="token-operator">?color="yellow"</span></code></pre>
+  print("Polyglot Python sub-pipeline active!")</code></pre>
             </div>
         </header>
 

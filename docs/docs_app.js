@@ -36,10 +36,20 @@ function initDocsApp() {
 // ─── SIDEBAR RENDERING ─────────────────────────────────────────────
 function renderSidebarList(articlesToRender) {
     articleListEl.innerHTML = '';
-    articlesToRender.forEach((article, idx) => {
+    let currentSection = null;
+
+    articlesToRender.forEach((article) => {
         const originalIndex = ARTICLES.findIndex(a => a.id === article.id);
+
+        if (article.section && article.section !== currentSection) {
+            currentSection = article.section;
+            const sectionDivider = document.createElement('li');
+            sectionDivider.className = 'sidebar-section-divider';
+            sectionDivider.innerHTML = `<span>${escapeHTML(currentSection)}</span>`;
+            articleListEl.appendChild(sectionDivider);
+        }
+
         const li = document.createElement('li');
-        
         const isDone = isArticleCompleted(article);
         
         li.innerHTML = `
@@ -134,7 +144,7 @@ function loadArticle(index) {
                 <div class="article-header">
                     <div class="article-meta">
                         <span class="meta-pill">Chapter ${article.number}</span>
-                        <span class="meta-pill">${escapeHTML(article.category)}</span>
+                        <span class="meta-pill">${escapeHTML(article.section || article.category)}</span>
                         <span class="read-time">⏱️ ${escapeHTML(article.readTime)}</span>
                     </div>
                     <h1 class="article-title">${escapeHTML(article.title)}</h1>

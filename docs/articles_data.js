@@ -1,58 +1,67 @@
 // ═══════════════════════════════════════════════════════════════════
 //  VerScript Academy — Complete Interactive Documentation Articles
+//  Divided into 6 Rigorous Skill Tiers / Sections:
+//   1. Fundamentals (Ch 1-5)
+//   2. Input & Output Mastery (Ch 6-7)
+//   3. Control Flow & Iteration (Ch 8-11)
+//   4. Advanced Exception Architecture (Ch 12-14)
+//   5. Polyglot & Metaprogramming (Ch 15-16)
+//   6. Applied Systems & Reference (Ch 17-18)
 // ═══════════════════════════════════════════════════════════════════
 
 const ARTICLES = [
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 1: FUNDAMENTALS
+    // ═══════════════════════════════════════════════════════════════
     {
-        id: "intro-overview",
+        id: "ch1-intro",
         number: 1,
+        section: "Section 1: Fundamentals",
         title: "Introduction & Language Architecture",
         category: "Getting Started",
         readTime: "4 min read",
-        summary: "Discover VerScript's origin, design principles, lightweight C architecture, and modern VM capabilities.",
+        summary: "Discover VerScript's origin, design principles, lightweight native C virtual machine, and execution lifecycle.",
         body: `
             <h2>What is VerScript?</h2>
-            <p><strong>VerScript</strong> is a minimal, elegant scripting language designed from the ground up to offer the performance and predictability of native C with the ergonomics of modern high-level dynamic languages.</p>
-            <p>Originally designed for clean embedded scripting, algorithmic exploration, and polyglot integration, VerScript eliminates standard syntactic baggage (such as semicolons and excessive curly braces) in favor of clean indentation and declarative statement structures.</p>
+            <p><strong>VerScript</strong> is an ultra-fast, minimalist scripting language engineered to blend the deterministic execution and speed of native C with the high-level ergonomics of modern dynamic programming languages.</p>
+            <p>VerScript eliminates boilerplate punctuation (such as semicolons and excessive curly braces) in favor of indentation-scoped blocks and declarative statement structures.</p>
 
             <div class="callout-box tip">
-                <div class="callout-title">💡 Key Design Goals</div>
-                <p>Zero dependencies beyond standard C, dynamic typing with string concatenation, native reactive watch condition guards, polyglot code injection, and runtime command aliases.</p>
+                <div class="callout-title">💡 Core Architecture Pillars</div>
+                <p>Zero external runtime dependencies beyond standard C99, dynamic typing, integrated attribute system with <code>?key=value</code>, reactive watch conditions, polyglot code injection, and runtime command aliasing.</p>
             </div>
 
-            <h2>Architecture Overview</h2>
-            <p>VerScript's runtime is structured across two primary layers:</p>
-            <ul>
-                <li><strong>Lexer &amp; Parser (Compiler Engine):</strong> Tokenizes source scripts line by line, resolves indentation levels, and strips comments before execution.</li>
-                <li><strong>Dynamic Virtual Machine &amp; Symbol Table:</strong> Manages runtime variables, dynamic expressions, call frames, error suppression scopes, and command dispatching.</li>
-            </ul>
-
+            <h2>Compilation &amp; VM Pipeline</h2>
+            <p>The VerScript runtime processes source code through a clean two-stage pipeline:</p>
             <table class="doc-table">
                 <thead>
                     <tr>
+                        <th>Layer</th>
                         <th>Component</th>
-                        <th>Function</th>
-                        <th>Implementation</th>
+                        <th>Responsibility</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td><strong>Frontend</strong></td>
                         <td><code>lexer.c</code></td>
-                        <td>Tokenizer &amp; Scanner</td>
-                        <td>Lookahead scanner converting text to <code>Token</code> structs.</td>
+                        <td>Tokenizes source code, strips comments, computes line indentation depths, and tokenizes command attributes.</td>
                     </tr>
                     <tr>
+                        <td><strong>Backend</strong></td>
                         <td><code>main.c</code></td>
-                        <td>VM &amp; Evaluator</td>
-                        <td>Block evaluation, expression parser, variable hashmap.</td>
+                        <td>Executes bytecode instructions, evaluates dynamic expressions, manages symbol tables, and dispatches runtime error scopes.</td>
                     </tr>
                     <tr>
+                        <td><strong>Cloud VM</strong></td>
                         <td><code>PolyServer</code></td>
-                        <td>Remote Cloud Runner</td>
-                        <td>Express backend orchestrating C VM binaries &amp; VS#-1B AI.</td>
+                        <td>Unified Express microservice hosting the C compiler engine and VS#-1B neural language synthesis assistant.</td>
                     </tr>
                 </tbody>
             </table>
+
+            <h2>Attribute Syntax Overview</h2>
+            <p>Commands in VerScript accept optional attributes prefixed with a question mark <code>?</code> (e.g. <code>?color="green"</code> or unquoted <code>?color=#00ffcc</code>). Attributes configure command execution parameters dynamically without altering expression syntax.</p>
         `,
         codeBlocks: [
             {
@@ -60,24 +69,24 @@ const ARTICLES = [
                 title: "sample_intro.vrs",
                 code: `! Welcome to VerScript!
 display "Hello, Polyglot World!" ?color="cyan"
-display "VerScript VM v1.2.0 initialized cleanly." ?color="green"`
+display "VerScript VM initialized cleanly." ?color="green"`
             }
         ],
         exercises: [
             {
                 id: "ex_intro_1",
                 title: "Exercise 1.1: Your First Output",
-                prompt: "Write a VerScript program that displays <code>\"Hello from VerScript!\"</code> in green color.",
-                starterCode: `! TODO: Use the 'display' keyword to output "Hello from VerScript!" with ?color="green"
+                prompt: "Write a program that outputs <code>\"Hello from VerScript!\"</code> with <code>?color=\"green\"</code>.",
+                starterCode: `! TODO: Use 'display' to output "Hello from VerScript!" in green
 `,
-                hint: "Use the `display` keyword followed by your string and the `?color=\"green\"` attribute.",
+                hint: "Use `display \"Hello from VerScript!\" ?color=\"green\"`.",
                 solution: `display "Hello from VerScript!" ?color="green"`,
                 expectedMatch: /Hello from VerScript!/i
             },
             {
                 id: "ex_intro_2",
                 title: "Exercise 1.2: Two-line Status Report",
-                prompt: "Display two consecutive lines: first display <code>\"System Online\"</code> in cyan, then display <code>\"Ready\"</code> in yellow.",
+                prompt: "Display two consecutive lines: first <code>\"System Online\"</code> in cyan, then <code>\"Ready\"</code> in yellow.",
                 starterCode: `! TODO: Write two display statements:
 ! 1. "System Online" in cyan
 ! 2. "Ready" in yellow
@@ -89,107 +98,105 @@ display "Ready" ?color="yellow"`,
             },
             {
                 id: "ex_intro_3",
-                title: "Exercise 1.3: Inline Printing",
-                prompt: "Use the <code>?newline=false</code> (or <code>?inline</code>) attribute to print <code>\"Loading... \"</code> without a newline, followed by <code>\"Done!\"</code> on the same line.",
-                starterCode: `! TODO: Print "Loading... " with ?newline=false and ?color="yellow"
-! Then print "Done!" with ?color="green" on the next line
+                title: "Exercise 1.3: Unquoted Hex Attribute",
+                prompt: "Display <code>\"Hex Color Glow\"</code> using unquoted hex color <code>?color=#00ffcc</code>.",
+                starterCode: `! TODO: Display "Hex Color Glow" with ?color=#00ffcc without quotes
 `,
-                hint: "The first `display` uses `?newline=false`, and the second one finishes the line.",
-                solution: `display "Loading... " ?newline=false ?color="yellow"
-display "Done!" ?color="green"`,
-                expectedMatch: /Loading\.\.\. Done!/i
+                hint: "Attributes like `?color=#00ffcc` do not require quotes.",
+                solution: `display "Hex Color Glow" ?color=#00ffcc`,
+                expectedMatch: /Hex Color Glow/i
             }
         ]
     },
 
     {
-        id: "syntax-comments",
+        id: "ch2-lexical",
         number: 2,
-        title: "Comments & Lexical Structure",
+        section: "Section 1: Fundamentals",
+        title: "Lexical Structure & Comments",
         category: "Fundamentals",
         readTime: "3 min read",
-        summary: "Master single-line and multi-line block comments, whitespace rules, and indentation guidelines.",
+        summary: "Understand single-line and multi-line comments, indentation rules, and token boundaries.",
         body: `
             <h2>Comments in VerScript</h2>
-            <p>VerScript provides two forms of comments for documenting your codebase:</p>
+            <p>VerScript provides two clean comment forms for documenting code:</p>
 
             <h3>1. Single-Line Comments (<code>!</code>)</h3>
-            <p>Any line or trailing segment beginning with an exclamation mark <code>!</code> is ignored by the parser up to the end of that line.</p>
+            <p>Any statement or inline text starting with an exclamation mark <code>!</code> is ignored by the parser up to the newline.</p>
 
-            <h3>2. Multiline Block Comments (<code>!! ... !!</code>)</h3>
-            <p>For extensive module documentation, function descriptions, or temporarily disabling code blocks, enclose lines between double exclamation marks <code>!!</code>.</p>
+            <h3>2. Multi-line Block Comments (<code>!! ... !!</code>)</h3>
+            <p>Enclose long documentation blocks between double exclamation marks <code>!!</code>.</p>
 
             <div class="callout-box note">
                 <div class="callout-title">📝 Indentation Sensitivity</div>
-                <p>VerScript uses clean indentation (2 or 4 spaces) for scoping blocks (such as <code>loop</code>, <code>iterate</code>, <code>if</code>, and <code>alias:</code>). Mixing inconsistent indentation levels triggers an <code>IndentationError</code>.</p>
+                <p>VerScript uses 2 or 4 spaces to define nested blocks (for <code>loop</code>, <code>iterate</code>, <code>if</code>, <code>unless</code>, and <code>alias:</code>). Mixing indentation depths triggers an <code>IndentationError</code>.</p>
             </div>
         `,
         codeBlocks: [
             {
                 id: "cb_comments_1",
-                title: "comments_demo.vrs",
+                title: "comments.vrs",
                 code: `!!
-  Module: Application Configuration
-  Author: VerScript Developer
+  VerScript Architecture Config
   Version: 1.2
 !!
-
-! Display welcome message
-display "Comments demo active" ?color="cyan"`
+! Main execution entrypoint
+display "Lexical validation active." ?color="cyan"`
             }
         ],
         exercises: [
             {
                 id: "ex_comments_1",
-                title: "Exercise 2.1: Add Single-Line Comments",
-                prompt: "Add a single-line comment above the display command describing what it prints, then print <code>\"Calculation active\"</code> in green.",
-                starterCode: `! TODO: Add a single-line comment here starting with !
-display "Calculation active" ?color="green"`,
-                hint: "Prefix your comment line with `!`.",
-                solution: `! Print calculation status
-display "Calculation active" ?color="green"`,
-                expectedMatch: /Calculation active/i
+                title: "Exercise 2.1: Documenting with Single-Line Comments",
+                prompt: "Add a single-line comment above a display statement that outputs <code>\"Calculation Active\"</code> in green.",
+                starterCode: `! TODO: Add a descriptive comment starting with !
+display "Calculation Active" ?color="green"`,
+                hint: "Prefix the first line with `!`.",
+                solution: `! Process status calculation
+display "Calculation Active" ?color="green"`,
+                expectedMatch: /Calculation Active/i
             },
             {
                 id: "ex_comments_2",
-                title: "Exercise 2.2: Wrap Documentation in Block Comments",
-                prompt: "Wrap lines describing a module in a multiline <code>!!</code> comment block and print <code>\"Docs OK\"</code>.",
-                starterCode: `! TODO: Convert these 3 lines into a block comment using !! at start and !! at end
-Header Notes
+                title: "Exercise 2.2: Multi-line Block Comment",
+                prompt: "Enclose notes within <code>!!</code> and display <code>\"Module Loaded\"</code> in yellow.",
+                starterCode: `! TODO: Wrap these comments in !! ... !!
+Module Header
 Version 1.0
 
-display "Docs OK" ?color="cyan"`,
-                hint: "Enclose your notes between `!!` at start and `!!` at end.",
+display "Module Loaded" ?color="yellow"`,
+                hint: "Place `!!` at start and `!!` at end.",
                 solution: `!!
-Header Notes
+Module Header
 Version 1.0
 !!
-display "Docs OK" ?color="cyan"`,
-                expectedMatch: /Docs OK/i
+display "Module Loaded" ?color="yellow"`,
+                expectedMatch: /Module Loaded/i
             },
             {
                 id: "ex_comments_3",
-                title: "Exercise 2.3: Inline Commenting",
-                prompt: "Place an inline comment at the end of the line after displaying <code>\"Server Started\"</code>.",
-                starterCode: `! TODO: Display "Server Started" in green and append an inline comment starting with !
+                title: "Exercise 2.3: Inline Trailing Comments",
+                prompt: "Write a display command printing <code>\"Server Online\"</code> in cyan followed by an inline comment <code>! boot log</code>.",
+                starterCode: `! TODO: Write display "Server Online" ?color="cyan" with an inline comment
 `,
-                hint: "Place `! comment text` after the command attributes.",
-                solution: `display "Server Started" ?color="green" ! Initial boot display`,
-                expectedMatch: /Server Started/i
+                hint: "Place `! comment` after the attributes.",
+                solution: `display "Server Online" ?color="cyan" ! boot log`,
+                expectedMatch: /Server Online/i
             }
         ]
     },
 
     {
-        id: "variables-types",
+        id: "ch3-variables",
         number: 3,
-        title: "Variables & Dynamic Typing",
+        section: "Section 1: Fundamentals",
+        title: "Variables, Dynamic Typing & Scope",
         category: "Fundamentals",
         readTime: "5 min read",
-        summary: "Understand variable declarations, dynamic typing across strings, integers, booleans, and mutation.",
+        summary: "Master variable assignment with the colon operator, dynamic typing, and memory semantics.",
         body: `
-            <h2>Variable Declarations (<code>name : value</code>)</h2>
-            <p>In VerScript, variables are assigned and updated using the colon operator <code>:</code>. You do not need keyword declarations like <code>var</code> or <code>let</code>.</p>
+            <h2>Variable Assignment (<code>identifier : expression</code>)</h2>
+            <p>In VerScript, variables are declared and mutated using the colon operator <code>:</code>. Keywords like <code>var</code>, <code>let</code>, or <code>const</code> are unnecessary.</p>
 
             <table class="doc-table">
                 <thead>
@@ -203,1387 +210,1748 @@ display "Docs OK" ?color="cyan"`,
                     <tr>
                         <td><strong>Integer</strong></td>
                         <td><code>score : 100</code></td>
-                        <td>64-bit signed numeric integers.</td>
+                        <td>64-bit signed integer numeric values.</td>
                     </tr>
                     <tr>
                         <td><strong>String</strong></td>
-                        <td><code>name : "Nova"</code></td>
+                        <td><code>user : "Nova"</code></td>
                         <td>UTF-8 text wrapped in double quotes.</td>
                     </tr>
                     <tr>
                         <td><strong>Boolean</strong></td>
-                        <td><code>isActive : true</code></td>
+                        <td><code>isReady : true</code></td>
                         <td>Literal <code>true</code> or <code>false</code>.</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2>Dynamic Reassignment</h2>
-            <p>Variables are dynamically typed and can be assigned different types over their lifecycle:</p>
+            <h2>Dynamic Re-typing</h2>
+            <p>Variables hold dynamic types and can transition seamlessly across types during execution:</p>
             <div class="code-block">data : 42
-data : "Forty-two"</div>
+data : "Forty-Two"
+data : true</div>
         `,
         codeBlocks: [
             {
                 id: "cb_vars_1",
-                title: "variables.vrs",
-                code: `user : "Alice"
-level : 10
-unlocked : true
+                title: "variables_demo.vrs",
+                code: `hero : "Atlas"
+power : 9000
+active : true
 
-display "User: " + user ?color="cyan"
-display "Level: " + level ?color="yellow"
-display "Status: " + unlocked ?color="green"`
+display "Hero: " + hero ?color="cyan"
+display "Power Level: " + power ?color="yellow"
+display "Active State: " + active ?color="green"`
             }
         ],
         exercises: [
             {
                 id: "ex_vars_1",
-                title: "Exercise 3.1: Declare Player Stats",
-                prompt: "Create a variable <code>playerName : \"Atlas\"</code> and <code>health : 100</code>, then display <code>\"Player: \" + playerName</code>.",
-                starterCode: `! TODO: Declare playerName and health
-! Then display "Player: " + playerName
+                title: "Exercise 3.1: Declare Player Profile",
+                prompt: "Declare <code>playerName : \"Atlas\"</code> and <code>score : 250</code>, then display <code>\"Player: \" + playerName</code> in cyan.",
+                starterCode: `! TODO: Declare playerName and score
+! Display "Player: " + playerName with ?color="cyan"
 `,
-                hint: "Use `name : value` syntax for assignments.",
+                hint: "Use `name : \"Atlas\"` and `display \"Player: \" + playerName ?color=\"cyan\"`.",
                 solution: `playerName : "Atlas"
-health : 100
+score : 250
 display "Player: " + playerName ?color="cyan"`,
                 expectedMatch: /Player: Atlas/i
             },
             {
                 id: "ex_vars_2",
-                title: "Exercise 3.2: Reassign a Variable",
-                prompt: "Initialize <code>status : \"offline\"</code>, then reassign it to <code>\"online\"</code> and display <code>\"Status: \" + status</code>.",
-                starterCode: `status : "offline"
-! TODO: Reassign status to "online" and display "Status: " + status in green
+                title: "Exercise 3.2: Dynamic Reassignment",
+                prompt: "Assign <code>status : 1</code>, display it, then reassign <code>status : \"Online\"</code> and display it in green.",
+                starterCode: `! TODO: Assign status : 1, display it, reassign status : "Online", display in green
 `,
-                hint: "Reassign the variable on the next line using `status : \"online\"`.",
-                solution: `status : "offline"
-status : "online"
-display "Status: " + status ?color="green"`,
-                expectedMatch: /Status: online/i
+                hint: "Assign `status : 1`, display, then `status : \"Online\"`.",
+                solution: `status : 1
+display "Initial Status: " + status
+status : "Online"
+display "Updated Status: " + status ?color="green"`,
+                expectedMatch: /Initial Status: 1[\s\S]*Updated Status: Online/i
             },
             {
                 id: "ex_vars_3",
                 title: "Exercise 3.3: Boolean Flags",
-                prompt: "Create a boolean variable <code>ready : true</code> and display <code>\"Ready: \" + ready</code>.",
-                starterCode: `! TODO: Declare boolean ready : true and display "Ready: " + ready
+                prompt: "Create a boolean variable <code>isOperational : true</code> and display <code>\"System Operational: \" + isOperational</code> in purple.",
+                starterCode: `! TODO: Declare isOperational : true and display in purple
 `,
-                hint: "Set `ready : true` and concatenate with string.",
-                solution: `ready : true
-display "Ready: " + ready ?color="purple"`,
-                expectedMatch: /Ready: true/i
+                hint: "Booleans stringify directly to `\"true\"` or `\"false\"`.",
+                solution: `isOperational : true
+display "System Operational: " + isOperational ?color="purple"`,
+                expectedMatch: /System Operational: true/i
             }
         ]
     },
 
     {
-        id: "arithmetic-operators",
+        id: "ch4-expressions",
         number: 4,
-        title: "Arithmetic & String Operators",
+        section: "Section 1: Fundamentals",
+        title: "Arithmetic, Expressions & Operators",
         category: "Fundamentals",
-        readTime: "5 min read",
-        summary: "Perform addition, subtraction, multiplication, division, and automatic string concatenation.",
+        readTime: "4 min read",
+        summary: "Understand binary arithmetic operators, unary minus, precedence rules, and automatic string concatenation.",
         body: `
-            <h2>Mathematical Operators</h2>
-            <p>VerScript supports standard math operators with standard arithmetic precedence rules:</p>
-            <ul>
-                <li><code>+</code> (Addition &amp; String Concatenation)</li>
-                <li><code>-</code> (Subtraction)</li>
-                <li><code>*</code> (Multiplication)</li>
-                <li><code>/</code> (Integer Division)</li>
-            </ul>
+            <h2>Operators &amp; Arithmetic</h2>
+            <p>VerScript supports standard mathematical arithmetic:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Operation</th>
+                        <th>Example</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>+</code></td>
+                        <td>Addition / Concatenation</td>
+                        <td><code>10 + 20</code> / <code>"Score: " + 99</code></td>
+                        <td><code>30</code> / <code>"Score: 99"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>-</code></td>
+                        <td>Subtraction / Unary Negation</td>
+                        <td><code>50 - 15</code> / <code>-5</code></td>
+                        <td><code>35</code> / <code>-5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Multiplication</td>
+                        <td><code>6 * 7</code></td>
+                        <td><code>42</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>/</code></td>
+                        <td>Integer Division</td>
+                        <td><code>100 / 4</code></td>
+                        <td><code>25</code></td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <h2>Heterogeneous Concatenation</h2>
-            <p>When using the <code>+</code> operator with a string and an integer or boolean, VerScript automatically stringifies the operand for seamless concatenation.</p>
+            <h2>Automatic String Concatenation</h2>
+            <p>Using the <code>+</code> operator with a string automatically converts numbers and booleans to strings:</p>
+            <div class="code-block">msg : "Result is: " + (20 + 22)  ! "Result is: 42"</div>
         `,
         codeBlocks: [
             {
-                id: "cb_arith_1",
-                title: "math_demo.vrs",
+                id: "cb_expr_1",
+                title: "expressions.vrs",
                 code: `a : 15
-b : 5
+b : 4
+sum : a + b
+product : a * b
+ratio : a / b
 
-display "Sum: " + (a + b) ?color="cyan"
-display "Product: " + (a * b) ?color="yellow"
-display "Division: " + (a / b) ?color="green"`
+display "Sum: " + sum ?color="cyan"
+display "Product: " + product ?color="yellow"
+display "Ratio: " + ratio ?color="green"`
             }
         ],
         exercises: [
             {
-                id: "ex_arith_1",
-                title: "Exercise 4.1: Compute Rectangle Area",
-                prompt: "Calculate the area of a rectangle with <code>width : 8</code> and <code>height : 6</code>. Display <code>\"Area: \" + (width * height)</code>.",
-                starterCode: `width : 8
-height : 6
-! TODO: Calculate area : width * height and display "Area: " + area
+                id: "ex_expr_1",
+                title: "Exercise 4.1: Compute Total Price",
+                prompt: "Given <code>price : 45</code> and <code>qty : 3</code>, calculate <code>total : price * qty</code> and display <code>\"Total: $\" + total</code> in green.",
+                starterCode: `price : 45
+qty : 3
+! TODO: Calculate total and display "Total: $" + total in green
 `,
-                hint: "Multiply `width * height` and display.",
-                solution: `width : 8
-height : 6
-area : width * height
-display "Area: " + area ?color="green"`,
-                expectedMatch: /Area: 48/i
+                hint: "Assign `total : price * qty`.",
+                solution: `price : 45
+qty : 3
+total : price * qty
+display "Total: $" + total ?color="green"`,
+                expectedMatch: /Total: \$135/i
             },
             {
-                id: "ex_arith_2",
-                title: "Exercise 4.2: Average Calculation",
-                prompt: "Compute the average of <code>score1 : 80</code> and <code>score2 : 100</code>. Display <code>\"Average: \" + ((score1 + score2) / 2)</code>.",
-                starterCode: `score1 : 80
-score2 : 100
-! TODO: Calculate average of score1 and score2, then display "Average: " + avg
+                id: "ex_expr_2",
+                title: "Exercise 4.2: Unary Negation",
+                prompt: "Create a negative number <code>delta : -25</code>, compute <code>final : 100 + delta</code>, and display <code>\"Final: \" + final</code> in yellow.",
+                starterCode: `! TODO: Declare delta : -25, compute final : 100 + delta, and display in yellow
 `,
-                hint: "Enclose the sum in parentheses before dividing by 2.",
-                solution: `score1 : 80
-score2 : 100
-avg : (score1 + score2) / 2
-display "Average: " + avg ?color="cyan"`,
-                expectedMatch: /Average: 90/i
+                hint: "Use `-25` for unary negation.",
+                solution: `delta : -25
+final : 100 + delta
+display "Final: " + final ?color="yellow"`,
+                expectedMatch: /Final: 75/i
             },
             {
-                id: "ex_arith_3",
-                title: "Exercise 4.3: Compound String Assembly",
-                prompt: "Join three variables (<code>prefix : \"ID-\"</code>, <code>num : 77</code>, <code>suffix : \"-X\"</code>) into a single code string.",
-                starterCode: `prefix : "ID-"
-num : 77
-suffix : "-X"
-! TODO: Concatenate prefix, num, and suffix into a variable 'code' and display "Code: " + code
+                id: "ex_expr_3",
+                title: "Exercise 4.3: Multi-term Concatenation",
+                prompt: "Display <code>\"Result: \" + (10 * 5 + 8)</code> in cyan.",
+                starterCode: `! TODO: Output "Result: " + (10 * 5 + 8) in cyan
 `,
-                hint: "Use the `+` operator across all three variables.",
-                solution: `prefix : "ID-"
-num : 77
-suffix : "-X"
-code : prefix + num + suffix
-display "Code: " + code ?color="yellow"`,
-                expectedMatch: /Code: ID-77-X/i
+                hint: "Compute arithmetic and concatenate in a single display command.",
+                solution: `display "Result: " + (10 * 5 + 8) ?color="cyan"`,
+                expectedMatch: /Result: 58/i
             }
         ]
     },
 
     {
-        id: "io-prompt",
+        id: "ch5-comparisons",
         number: 5,
-        title: "Standard I/O & Prompting",
+        section: "Section 1: Fundamentals",
+        title: "Comparisons & Logical Guards",
+        category: "Fundamentals",
+        readTime: "4 min read",
+        summary: "Master equality, inequality, inequality symbol x=, and numeric comparisons.",
+        body: `
+            <h2>Comparison Operators</h2>
+            <p>VerScript provides clean comparison operators:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Comparison</th>
+                        <th>Example</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>=</code></td>
+                        <td>Equality</td>
+                        <td><code>10 = 10</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>x=</code></td>
+                        <td>Inequality (Not Equal)</td>
+                        <td><code>5 x= 10</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;</code></td>
+                        <td>Greater Than</td>
+                        <td><code>20 &gt; 10</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;</code></td>
+                        <td>Less Than</td>
+                        <td><code>5 &lt; 15</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;=</code></td>
+                        <td>Greater Than or Equal</td>
+                        <td><code>10 &gt;= 10</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;=</code></td>
+                        <td>Less Than or Equal</td>
+                        <td><code>9 &lt;= 10</code></td>
+                        <td><code>true</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_comp_1",
+                title: "comparisons.vrs",
+                code: `score : 85
+passing : 70
+
+isPassing : score >= passing
+isPerfect : score = 100
+isNotZero : score x= 0
+
+display "Passed: " + isPassing ?color="green"
+display "Perfect Score: " + isPerfect ?color="yellow"
+display "Non-Zero Score: " + isNotZero ?color="cyan"`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_comp_1",
+                title: "Exercise 5.1: Inequality Guard",
+                prompt: "Check if <code>val : 42</code> is not equal to 0 using the <code>x=</code> operator and display the boolean result in cyan.",
+                starterCode: `val : 42
+! TODO: Check if val x= 0 and display result in cyan
+`,
+                hint: "Use `result : val x= 0` and display it.",
+                solution: `val : 42
+result : val x= 0
+display "Not Zero: " + result ?color="cyan"`,
+                expectedMatch: /Not Zero: true/i
+            },
+            {
+                id: "ex_comp_2",
+                title: "Exercise 5.2: Threshold Check",
+                prompt: "Given <code>temp : 105</code> and <code>threshold : 100</code>, check if <code>temp > threshold</code> and display <code>\"Overheated: \" + isOver</code> in red.",
+                starterCode: `temp : 105
+threshold : 100
+! TODO: Check temp > threshold and display in red
+`,
+                hint: "Assign `isOver : temp > threshold`.",
+                solution: `temp : 105
+threshold : 100
+isOver : temp > threshold
+display "Overheated: " + isOver ?color="red"`,
+                expectedMatch: /Overheated: true/i
+            },
+            {
+                id: "ex_comp_3",
+                title: "Exercise 5.3: String Equality",
+                prompt: "Compare <code>role : \"admin\"</code> with <code>\"admin\"</code> using <code>=</code> and display <code>\"Is Admin: \" + (role = \"admin\")</code> in green.",
+                starterCode: `role : "admin"
+! TODO: Compare role = "admin" and display in green
+`,
+                hint: "Use `role = \"admin\"`.",
+                solution: `role : "admin"
+display "Is Admin: " + (role = "admin") ?color="green"`,
+                expectedMatch: /Is Admin: true/i
+            }
+        ]
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 2: INPUT & OUTPUT MASTERY
+    // ═══════════════════════════════════════════════════════════════
+    {
+        id: "ch6-display-command",
+        number: 6,
+        section: "Section 2: Input & Output Mastery",
+        title: "The Display Command & Formatting Engine",
+        category: "Input & Output",
+        readTime: "6 min read",
+        summary: "Dedicated guide to the display command, named ANSI colors, unquoted/quoted hex colors, Truecolor RGB output, and inline formatting.",
+        body: `
+            <h2>The <code>display</code> Command</h2>
+            <p>The <code>display</code> keyword is VerScript's primary output statement. It evaluates expressions and writes them to standard output with optional formatting attributes.</p>
+
+            <h2>Master Attributes for <code>display</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type / Values</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>?color</code></td>
+                        <td><code>"name"</code> or <code>#hex</code></td>
+                        <td>Colors output via ANSI escapes or Truecolor RGB. Supported names: <code>red</code>, <code>green</code>, <code>yellow</code>, <code>blue</code>, <code>purple</code>, <code>cyan</code>, <code>white</code>.</td>
+                        <td><code>display "Hi" ?color="green"</code><br><code>display "Neon" ?color=#00ffcc</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>?newline</code></td>
+                        <td><code>true</code> | <code>false</code></td>
+                        <td>Whether to append a newline <code>\\n</code> after printing. Defaults to <code>true</code>.</td>
+                        <td><code>display "Loading..." ?newline=false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>?inline</code></td>
+                        <td>Flag (no value)</td>
+                        <td>Shorthand for <code>?newline=false</code> to keep cursor on current line.</td>
+                        <td><code>display "Connecting: " ?inline ?color="yellow"</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Hex Color Values (Quoted &amp; Unquoted)</h2>
+            <p>Hex attributes can be passed with or without quotation marks:</p>
+            <div class="code-block">display "Pink text" ?color=#ff007f
+display "Cyan text" ?color="#00ffff"
+display "Short hex" ?color=#0fc</div>
+            <p>When executed in native C or cloud environments, the engine translates hex values into 24-bit Truecolor escape sequences (<code>\\033[38;2;R;G;Bm</code>), rendering rich gradients across terminals and IDE output windows.</p>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_display_1",
+                title: "display_showcase.vrs",
+                code: `! Named ANSI Colors
+display "Status: Red Alert" ?color="red"
+display "Status: Online" ?color="green"
+display "Status: Warning" ?color="yellow"
+display "Status: Info" ?color="cyan"
+
+! Truecolor Hex Attributes (No quotes required)
+display "Neon Magenta Text" ?color=#ff00aa
+display "Cyberpunk Lime Text" ?color=#39ff14
+display "Electric Blue Text" ?color=#00d2ff
+
+! Inline printing on the same line
+display "Progress: [" ?inline ?color="yellow"
+display "====>" ?inline ?color="cyan"
+display "] Done!" ?color="green"`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_disp_1",
+                title: "Exercise 6.1: Hex Color Styling",
+                prompt: "Display <code>\"Cyberpunk Matrix Active\"</code> using unquoted hex color <code>?color=#00ffcc</code>.",
+                starterCode: `! TODO: Display "Cyberpunk Matrix Active" with ?color=#00ffcc
+`,
+                hint: "Use `display \"Cyberpunk Matrix Active\" ?color=#00ffcc`.",
+                solution: `display "Cyberpunk Matrix Active" ?color=#00ffcc`,
+                expectedMatch: /Cyberpunk Matrix Active/i
+            },
+            {
+                id: "ex_disp_2",
+                title: "Exercise 6.2: Segmented Inline Progress",
+                prompt: "Print <code>\"Step 1... \"</code> in yellow using <code>?inline</code>, followed by <code>\"Step 2... \"</code> in cyan using <code>?inline</code>, and finish with <code>\"Complete!\"</code> in green.",
+                starterCode: `! TODO: Print 3 inline segments:
+! 1. "Step 1... " (yellow, ?inline)
+! 2. "Step 2... " (cyan, ?inline)
+! 3. "Complete!" (green)
+`,
+                hint: "Use `?inline` on the first two display statements.",
+                solution: `display "Step 1... " ?inline ?color="yellow"
+display "Step 2... " ?inline ?color="cyan"
+display "Complete!" ?color="green"`,
+                expectedMatch: /Step 1\.\.\. Step 2\.\.\. Complete!/i
+            },
+            {
+                id: "ex_disp_3",
+                title: "Exercise 6.3: Multi-color Banner",
+                prompt: "Create a 2-line header: line 1 <code>\"=== SYSTEM REPORT ===\"</code> in purple, line 2 <code>\"Core Status: 100%\"</code> in unquoted hex <code>?color=#50fa7b</code>.",
+                starterCode: `! TODO: Create the 2-line header as specified
+`,
+                hint: "Write two display commands with purple and hex colors.",
+                solution: `display "=== SYSTEM REPORT ===" ?color="purple"
+display "Core Status: 100%" ?color=#50fa7b`,
+                expectedMatch: /=== SYSTEM REPORT ===[\s\S]*Core Status: 100%/i
+            }
+        ]
+    },
+
+    {
+        id: "ch7-prompt",
+        number: 7,
+        section: "Section 2: Input & Output Mastery",
+        title: "Interactive Input & Prompt Attributes",
         category: "Input & Output",
         readTime: "4 min read",
-        summary: "Read user input with prompt, configure fallback defaults, and format colored terminal output.",
+        summary: "Capture interactive user input from standard input with dynamic fallback default attributes.",
         body: `
-            <h2>Reading Input with <code>prompt</code></h2>
-            <p>Use <code>prompt [varName]</code> to read a line of input from standard input (stdin). If numeric text is entered, it is automatically parsed into an integer; otherwise, it remains a string.</p>
+            <h2>The <code>prompt</code> Keyword</h2>
+            <p>The <code>prompt</code> keyword pauses script execution and reads a line from standard input into a target variable.</p>
 
-            <h3>Default Fallback Attributes (<code>?default="val"</code>)</h3>
-            <p>You can supply a default fallback value if the user submits an empty line:</p>
-            <div class="code-block"><span class="token-keyword">prompt</span> username <span class="token-operator">?default="Guest"</span></div>
+            <h2>Attributes for <code>prompt</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>?default</code></td>
+                        <td>String / Number</td>
+                        <td>Provides a default fallback value if the user provides empty input (presses Enter without typing).</td>
+                        <td><code>prompt username ?default="Guest"</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Automatic Type Coercion</h2>
+            <p>If the user enters digits (e.g. <code>42</code>), the runtime automatically parses the value as an <code>Integer</code>. If non-numeric characters are present, it stores a <code>String</code>.</p>
         `,
         codeBlocks: [
             {
-                id: "cb_io_1",
-                title: "io_sample.vrs",
-                code: `display "=== User Login Portal ===" ?color="cyan"
-prompt username ?default="GuestCoder"
-display "Welcome back, " + username + "!" ?color="green"`
+                id: "cb_prompt_1",
+                title: "prompt_demo.vrs",
+                code: `! Prompt with default fallback
+prompt username ?default="Operator"
+display "Welcome, " + username ?color="cyan"
+
+prompt level ?default="1"
+display "User Level: " + level ?color="yellow"`
             }
         ],
         exercises: [
             {
-                id: "ex_io_1",
-                title: "Exercise 5.1: Interactive Prompt",
-                prompt: "Prompt for a variable <code>city</code> with default <code>\"Tokyo\"</code> and display <code>\"Location: \" + city</code>.",
-                starterCode: `! TODO: Prompt for 'city' with ?default="Tokyo"
-! Then display "Location: " + city in cyan
+                id: "ex_prompt_1",
+                title: "Exercise 7.1: User Prompt with Default",
+                prompt: "Prompt for <code>heroName</code> with default <code>?default=\"Anonymous\"</code>, then display <code>\"Hero: \" + heroName</code> in green.",
+                starterCode: `! TODO: Prompt heroName with ?default="Anonymous" and display in green
 `,
-                hint: "Use `prompt city ?default=\"Tokyo\"`.",
-                solution: `prompt city ?default="Tokyo"
-display "Location: " + city ?color="cyan"`,
-                expectedMatch: /Location: Tokyo/i
+                hint: "Use `prompt heroName ?default=\"Anonymous\"`.",
+                solution: `prompt heroName ?default="Anonymous"
+display "Hero: " + heroName ?color="green"`,
+                expectedMatch: /Hero:/i
             },
             {
-                id: "ex_io_2",
-                title: "Exercise 5.2: Numeric Prompt Handling",
-                prompt: "Prompt for <code>userAge</code> with default <code>\"21\"</code> and display <code>\"Next year age: \" + (userAge + 1)</code>.",
-                starterCode: `! TODO: Prompt userAge with default="21" and display the incremented age
+                id: "ex_prompt_2",
+                title: "Exercise 7.2: Numeric Config Prompt",
+                prompt: "Prompt for <code>port</code> with default <code>?default=\"8080\"</code>, and display <code>\"Listening on port: \" + port</code> in cyan.",
+                starterCode: `! TODO: Prompt port with default 8080 and display
 `,
-                hint: "VerScript automatically parses numeric strings from prompts into integers for math.",
-                solution: `prompt userAge ?default="21"
-display "Next year age: " + (userAge + 1) ?color="yellow"`,
-                expectedMatch: /Next year age: 22/i
+                hint: "Use `prompt port ?default=\"8080\"`.",
+                solution: `prompt port ?default="8080"
+display "Listening on port: " + port ?color="cyan"`,
+                expectedMatch: /Listening on port:/i
             },
             {
-                id: "ex_io_3",
-                title: "Exercise 5.3: Multi-Segment Output",
-                prompt: "Print three segments on the same line using <code>?newline=false</code>, ending with <code>\"COMPLETE\"</code> in green.",
-                starterCode: `! TODO: Print "[1/3] Init, ", "[2/3] Sync, ", and "[3/3] COMPLETE" on one line
+                id: "ex_prompt_3",
+                title: "Exercise 7.3: Interactive Greeting Pipeline",
+                prompt: "Prompt for <code>city</code> with default <code>\"Neo-Tokyo\"</code>, and display <code>\"Connected to: \" + city</code> with hex color <code>?color=#00e5ff</code>.",
+                starterCode: `! TODO: Prompt city ?default="Neo-Tokyo" and display with ?color=#00e5ff
 `,
-                hint: "Use `?newline=false` on first two displays.",
-                solution: `display "[1/3] Init, " ?newline=false ?color="yellow"
-display "[2/3] Sync, " ?newline=false ?color="cyan"
-display "[3/3] COMPLETE" ?color="green"`,
-                expectedMatch: /Init,.*Sync,.*COMPLETE/i
+                hint: "Use `prompt city ?default=\"Neo-Tokyo\"` and display.",
+                solution: `prompt city ?default="Neo-Tokyo"
+display "Connected to: " + city ?color=#00e5ff`,
+                expectedMatch: /Connected to:/i
             }
         ]
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 3: CONTROL FLOW & ITERATION
+    // ═══════════════════════════════════════════════════════════════
     {
-        id: "control-flow-conditionals",
-        number: 6,
-        title: "Conditionals (<code>if / else if / else</code>)",
+        id: "ch8-conditionals",
+        number: 8,
+        section: "Section 3: Control Flow & Iteration",
+        title: "Conditional Branching & Guards",
         category: "Control Flow",
         readTime: "5 min read",
-        summary: "Construct conditional branches using if-then, else-if-then, and else fallback blocks.",
+        summary: "Master multi-branch logic using if-then, else-if-then, and else blocks.",
         body: `
             <h2>Conditional Syntax</h2>
-            <p>VerScript uses clear, expressive <code>if [condition] then</code> syntax followed by an indented statement block.</p>
-            <div class="code-block"><span class="token-keyword">if</span> score &gt; 90 <span class="token-keyword">then</span>
-    <span class="token-keyword">display</span> <span class="token-string">"Grade A"</span>
-<span class="token-keyword">else if</span> score &gt; 75 <span class="token-keyword">then</span>
-    <span class="token-keyword">display</span> <span class="token-string">"Grade B"</span>
-<span class="token-keyword">else</span>
-    <span class="token-keyword">display</span> <span class="token-string">"Keep Practicing"</span></div>
+            <p>VerScript uses declarative <code>if ... then</code> statements scoped by indentation:</p>
+            <div class="code-block">if score >= 90 then
+    display "Grade: A" ?color="green"
+else if score >= 80 then
+    display "Grade: B" ?color="yellow"
+else
+    display "Grade: C" ?color="red"</div>
+
+            <div class="callout-box tip">
+                <div class="callout-title">💡 Indentation Rule</div>
+                <p>All statements inside the <code>then</code> or <code>else</code> branch must be indented by 2 or 4 spaces relative to the <code>if</code> keyword.</p>
+            </div>
         `,
         codeBlocks: [
             {
                 id: "cb_cond_1",
-                title: "conditions.vrs",
-                code: `points : 85
+                title: "conditionals.vrs",
+                code: `health : 35
 
-if points >= 80 then
-    display "Achievement Unlocked: Gold Badge!" ?color="yellow"
+if health > 70 then
+    display "Condition: Healthy" ?color="green"
+else if health > 30 then
+    display "Condition: Caution (Injured)" ?color="yellow"
 else
-    display "Keep working toward your badge." ?color="cyan"`
+    display "Condition: Critical!" ?color="red"`
             }
         ],
         exercises: [
             {
                 id: "ex_cond_1",
-                title: "Exercise 6.1: Check Passing Score",
-                prompt: "Check if <code>score : 72</code> is greater than or equal to <code>50</code>. If so, display <code>\"Passed!\"</code> in green.",
-                starterCode: `score : 72
-! TODO: Write an if condition checking if score >= 50, and display "Passed!" in green
+                title: "Exercise 8.1: Access Gatekeeper",
+                prompt: "Given <code>accessLevel : 5</code>, write an <code>if accessLevel >= 5 then</code> block to display <code>\"Access Granted\"</code> in green, otherwise display <code>\"Access Denied\"</code> in red.",
+                starterCode: `accessLevel : 5
+! TODO: Write if accessLevel >= 5 then ... else ...
 `,
-                hint: "Use `if score >= 50 then` followed by indented display.",
-                solution: `score : 72
-if score >= 50 then
-    display "Passed!" ?color="green"`,
-                expectedMatch: /Passed!/i
+                hint: "Indent the display command inside the `if` block.",
+                solution: `accessLevel : 5
+if accessLevel >= 5 then
+    display "Access Granted" ?color="green"
+else
+    display "Access Denied" ?color="red"`,
+                expectedMatch: /Access Granted/i
             },
             {
                 id: "ex_cond_2",
-                title: "Exercise 6.2: Three-Way Branching",
-                prompt: "Check <code>temp : 32</code>. If temp > 30 print \"Hot\", else if temp > 15 print \"Warm\", else print \"Cold\".",
-                starterCode: `temp : 32
-! TODO: Implement 3-way if/else if/else branches checking temperature thresholds
+                title: "Exercise 8.2: Multi-tier Score Evaluation",
+                prompt: "Evaluate <code>points : 88</code>: if points >= 90 print <code>\"Gold\"</code> in yellow, else if points >= 75 print <code>\"Silver\"</code> in cyan, else print <code>\"Bronze\"</code> in red.",
+                starterCode: `points : 88
+! TODO: Implement 3-tier branch
 `,
-                hint: "Chain `if ... then`, `else if ... then`, and `else`.",
-                solution: `temp : 32
-if temp > 30 then
-    display "Hot" ?color="red"
-else if temp > 15 then
-    display "Warm" ?color="yellow"
+                hint: "Use `else if points >= 75 then`.",
+                solution: `points : 88
+if points >= 90 then
+    display "Gold" ?color="yellow"
+else if points >= 75 then
+    display "Silver" ?color="cyan"
 else
-    display "Cold" ?color="cyan"`,
-                expectedMatch: /Hot/i
+    display "Bronze" ?color="red"`,
+                expectedMatch: /Silver/i
             },
             {
                 id: "ex_cond_3",
-                title: "Exercise 6.3: Equality Check",
-                prompt: "Given <code>code : \"VIP\"</code>, check if <code>code == \"VIP\"</code> and display <code>\"Access Granted\"</code> in green.",
-                starterCode: `code : "VIP"
-! TODO: If code is "VIP", display "Access Granted" in green
+                title: "Exercise 8.3: Boolean Condition Evaluation",
+                prompt: "Given <code>isServerActive : true</code>, test <code>if isServerActive then</code> and display <code>\"Online\"</code> in green.",
+                starterCode: `isServerActive : true
+! TODO: Check boolean condition and display "Online"
 `,
-                hint: "Use `==` operator for comparison.",
-                solution: `code : "VIP"
-if code == "VIP" then
-    display "Access Granted" ?color="green"`,
-                expectedMatch: /Access Granted/i
+                hint: "Use `if isServerActive then` directly.",
+                solution: `isServerActive : true
+if isServerActive then
+    display "Online" ?color="green"`,
+                expectedMatch: /Online/i
             }
         ]
     },
 
     {
-        id: "loops-iterations",
-        number: 7,
-        title: "Loop & Iteration Constructs",
+        id: "ch9-loops",
+        number: 9,
+        section: "Section 3: Control Flow & Iteration",
+        title: "Count Loops & Stepped Repetition",
         category: "Control Flow",
-        readTime: "6 min read",
-        summary: "Execute fixed count loops, stepped bounds iterations, and loop step overrides.",
+        readTime: "5 min read",
+        summary: "Execute fixed count repetitions with the loop keyword and step size constraints.",
         body: `
-            <h2>Fixed Count Loops (<code>loop n</code>)</h2>
-            <p>Repeats the indented block <code>n</code> times:</p>
-            <div class="code-block"><span class="token-keyword">loop</span> 3
-    <span class="token-keyword">display</span> <span class="token-string">"Pulse tick"</span></div>
+            <h2>The <code>loop</code> Keyword</h2>
+            <p>The <code>loop</code> keyword repeats an indented block a specified number of times.</p>
 
-            <h2>Variable Iteration (<code>iterate i from x to y step z</code>)</h2>
-            <p>Iterates with a named loop index variable across bounds:</p>
-            <div class="code-block"><span class="token-keyword">iterate</span> i <span class="token-keyword">from</span> 1 <span class="token-keyword">to</span> 10 <span class="token-keyword">step</span> 2
-    <span class="token-keyword">display</span> <span class="token-string">"Step: "</span> + i</div>
+            <h2>Attributes &amp; Modifiers for <code>loop</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Modifier / Attribute</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>step N</code></td>
+                        <td>Integer</td>
+                        <td>Advances the loop counter by <code>N</code> units per iteration instead of 1.</td>
+                        <td><code>loop 10 step 2</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">loop 4
+    display "Pinging node..." ?color="cyan"</div>
         `,
         codeBlocks: [
             {
-                id: "cb_loops_1",
-                title: "loop_sample.vrs",
-                code: `display "=== 3-count loop ===" ?color="cyan"
-loop 3
-    display "Tick..." ?color="green"
+                id: "cb_loop_1",
+                title: "loop_demo.vrs",
+                code: `display "=== Pulse Loop (4 Cycles) ===" ?color="purple"
+loop 4
+    display "Heartbeat tick" ?color="green"
 
-display "=== Stepped Iteration ===" ?color="purple"
-iterate val from 2 to 8 step 2
-    display "Even: " + val ?color="yellow"`
+display "=== Stepped Loop (Step 2) ===" ?color="yellow"
+loop 6 step 2
+    display "Stepped tick (+2)" ?color="cyan"`
             }
         ],
         exercises: [
             {
                 id: "ex_loop_1",
-                title: "Exercise 7.1: Repeat a Notification",
-                prompt: "Use <code>loop 4</code> to display <code>\"Ping!\"</code> 4 times in yellow.",
-                starterCode: `! TODO: Write a loop repeating 4 times to output "Ping!" in yellow
+                title: "Exercise 9.1: Basic Count Loop",
+                prompt: "Write a loop that prints <code>\"Repeating action\"</code> 3 times in yellow.",
+                starterCode: `! TODO: Write loop 3 and print "Repeating action" in yellow
 `,
-                hint: "Write `loop 4` and indent the display statement.",
-                solution: `loop 4
-    display "Ping!" ?color="yellow"`,
-                expectedMatch: /Ping![\s\S]*Ping!/i
+                hint: "Use `loop 3` followed by indented display.",
+                solution: `loop 3
+    display "Repeating action" ?color="yellow"`,
+                expectedMatch: /(Repeating action[\s\S]*){3}/i
             },
             {
                 id: "ex_loop_2",
-                title: "Exercise 7.2: Count from 1 to 5",
-                prompt: "Use <code>iterate n from 1 to 5</code> to display <code>\"Count: \" + n</code>.",
-                starterCode: `! TODO: Use iterate to count from 1 to 5 and display "Count: " + n
+                title: "Exercise 9.2: Stepped Count Loop",
+                prompt: "Write a loop <code>loop 10 step 3</code> that displays <code>\"Step pulse\"</code> in cyan.",
+                starterCode: `! TODO: Write loop 10 step 3
 `,
-                hint: "Use `iterate n from 1 to 5`.",
-                solution: `iterate n from 1 to 5
-    display "Count: " + n ?color="cyan"`,
-                expectedMatch: /Count: 1[\s\S]*Count: 5/i
+                hint: "Use `loop 10 step 3`.",
+                solution: `loop 10 step 3
+    display "Step pulse" ?color="cyan"`,
+                expectedMatch: /Step pulse/i
             },
             {
                 id: "ex_loop_3",
-                title: "Exercise 7.3: Stepped Odd Numbers",
-                prompt: "Iterate <code>odd from 1 to 7 step 2</code> and display each odd number.",
-                starterCode: `! TODO: Iterate odd numbers from 1 to 7 with step 2
+                title: "Exercise 9.3: Nested Loops",
+                prompt: "Write an outer <code>loop 2</code> and an inner <code>loop 2</code> displaying <code>\"Grid cell\"</code> in green.",
+                starterCode: `! TODO: Create nested loop 2 inside loop 2
 `,
-                hint: "Add `step 2` to the iterate statement.",
-                solution: `iterate odd from 1 to 7 step 2
-    display "Odd: " + odd ?color="green"`,
-                expectedMatch: /Odd: 1[\s\S]*Odd: 7/i
+                hint: "Indent the inner loop by 2 or 4 spaces, and its body further.",
+                solution: `loop 2
+    loop 2
+        display "Grid cell" ?color="green"`,
+                expectedMatch: /(Grid cell[\s\S]*){4}/i
             }
         ]
     },
 
     {
-        id: "while-until-loops",
-        number: 8,
-        title: "Conditional Loops (<code>while</code> &amp; <code>until</code>)",
+        id: "ch10-iterate",
+        number: 10,
+        section: "Section 3: Control Flow & Iteration",
+        title: "Range Iterations & Variable Sequences",
         category: "Control Flow",
         readTime: "5 min read",
-        summary: "Master while-true execution loops, until-true termination guards, and loop step controls.",
+        summary: "Iterate across numerical ranges with automatic index binding and step modifiers.",
         body: `
-            <h2>While Loops (<code>while [condition]</code>)</h2>
-            <p>Executes as long as the condition evaluates to true:</p>
-            <div class="code-block">count : 1
-<span class="token-keyword">while</span> count &lt;= 3
-    <span class="token-keyword">display</span> <span class="token-string">"Count: "</span> + count
-    count : count + 1</div>
+            <h2>The <code>iterate</code> Keyword</h2>
+            <p>The <code>iterate</code> keyword binds an iterator variable across an inclusive integer range from start to end:</p>
+            <div class="code-block">iterate idx from 1 to 5
+    display "Index: " + idx ?color="cyan"</div>
 
-            <h2>Until Loops (<code>until [condition]</code>)</h2>
-            <p>Executes repeatedly <em>until</em> the condition becomes true (inverse condition loop):</p>
-            <div class="code-block">power : 1
-<span class="token-keyword">until</span> power &gt; 10
-    <span class="token-keyword">display</span> <span class="token-string">"Power: "</span> + power
-    power : power * 2</div>
+            <h2>Modifiers for <code>iterate</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Modifier / Attribute</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>from X to Y</code></td>
+                        <td>Integers</td>
+                        <td>Defines inclusive lower and upper numeric boundaries.</td>
+                        <td><code>iterate i from 10 to 50</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>step S</code></td>
+                        <td>Integer</td>
+                        <td>Increments iterator variable by <code>S</code> after each pass.</td>
+                        <td><code>iterate i from 0 to 100 step 20</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_iter_1",
+                title: "iterate_demo.vrs",
+                code: `display "=== Sequential Counting ===" ?color="purple"
+iterate i from 1 to 4
+    display "Count: " + i ?color="green"
+
+display "=== Stepped Sequence (+5) ===" ?color="yellow"
+iterate x from 10 to 30 step 5
+    display "Value at step: " + x ?color="cyan"`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_iter_1",
+                title: "Exercise 10.1: Standard Range Iteration",
+                prompt: "Iterate <code>i</code> from 1 to 4 and display <code>\"Iteration: \" + i</code> in cyan.",
+                starterCode: `! TODO: Write iterate i from 1 to 4
+`,
+                hint: "Use `iterate i from 1 to 4`.",
+                solution: `iterate i from 1 to 4
+    display "Iteration: " + i ?color="cyan"`,
+                expectedMatch: /Iteration: 1[\s\S]*Iteration: 4/i
+            },
+            {
+                id: "ex_iter_2",
+                title: "Exercise 10.2: Stepped Range Sequence",
+                prompt: "Iterate <code>val</code> from 10 to 40 step 10 and display <code>\"Val: \" + val</code> in yellow.",
+                starterCode: `! TODO: Write iterate val from 10 to 40 step 10
+`,
+                hint: "Use `step 10` after the `to 40` bound.",
+                solution: `iterate val from 10 to 40 step 10
+    display "Val: " + val ?color="yellow"`,
+                expectedMatch: /Val: 10[\s\S]*Val: 40/i
+            },
+            {
+                id: "ex_iter_3",
+                title: "Exercise 10.3: Accumulating Sum",
+                prompt: "Declare <code>sum : 0</code>. Iterate <code>n</code> from 1 to 5, accumulating <code>sum : sum + n</code>, and display <code>\"Final Sum: \" + sum</code> in green.",
+                starterCode: `sum : 0
+! TODO: Iterate n from 1 to 5, add to sum, and display final sum
+`,
+                hint: "Inside loop: `sum : sum + n`.",
+                solution: `sum : 0
+iterate n from 1 to 5
+    sum : sum + n
+display "Final Sum: " + sum ?color="green"`,
+                expectedMatch: /Final Sum: 15/i
+            }
+        ]
+    },
+
+    {
+        id: "ch11-while-until",
+        number: 11,
+        section: "Section 3: Control Flow & Iteration",
+        title: "Dynamic Guard Loops: While & Until",
+        category: "Control Flow",
+        readTime: "5 min read",
+        summary: "Execute dynamic condition-driven loops with while and until statements.",
+        body: `
+            <h2><code>while</code> vs <code>until</code> Loops</h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Condition Rule</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>while</code></td>
+                        <td>Executes repeatedly as long as the condition evaluates to <code>true</code>.</td>
+                        <td><code>while count &lt; 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>until</code></td>
+                        <td>Executes repeatedly until the condition becomes <code>true</code> (runs while false).</td>
+                        <td><code>until energy &gt;= 100</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Step Modifier on While / Until</h2>
+            <p>Both <code>while</code> and <code>until</code> accept an optional <code>step N</code> modifier to gate execution cadence.</p>
         `,
         codeBlocks: [
             {
                 id: "cb_while_1",
-                title: "while_until.vrs",
-                code: `num : 0
-while num < 3
-    display "While cycle: " + num ?color="cyan"
-    num : num + 1
+                title: "while_until_demo.vrs",
+                code: `! While loop
+count : 1
+while count <= 3
+    display "While tick: " + count ?color="cyan"
+    count : count + 1
 
-limit : 1
-until limit >= 4
-    display "Until limit: " + limit ?color="yellow"
-    limit : limit + 1`
+! Until loop
+energy : 10
+until energy >= 40
+    display "Charging: " + energy ?color="yellow"
+    energy : energy + 15
+display "Fully charged!" ?color="green"`
             }
         ],
         exercises: [
             {
                 id: "ex_while_1",
-                title: "Exercise 8.1: While Countdown",
-                prompt: "Initialize <code>timer : 3</code> and use <code>while timer > 0</code> to display <code>\"T-minus: \" + timer</code> and decrement timer.",
-                starterCode: `timer : 3
-! TODO: Write while loop checking timer > 0, display "T-minus: " + timer in red, and decrement timer
+                title: "Exercise 11.1: While Loop Counter",
+                prompt: "Declare <code>k : 1</code>. Run <code>while k <= 3</code>, display <code>\"K: \" + k</code> in cyan, and increment <code>k : k + 1</code>.",
+                starterCode: `k : 1
+! TODO: Write while loop up to k <= 3
 `,
-                hint: "Decrement `timer : timer - 1` inside the loop body.",
-                solution: `timer : 3
-while timer > 0
-    display "T-minus: " + timer ?color="red"
-    timer : timer - 1`,
-                expectedMatch: /T-minus: 3[\s\S]*T-minus: 1/i
+                hint: "Remember to increment `k : k + 1` inside the loop body.",
+                solution: `k : 1
+while k <= 3
+    display "K: " + k ?color="cyan"
+    k : k + 1`,
+                expectedMatch: /K: 1[\s\S]*K: 3/i
             },
             {
                 id: "ex_while_2",
-                title: "Exercise 8.2: Until Target Reached",
-                prompt: "Initialize <code>val : 1</code> and loop with <code>until val >= 5</code>, doubling <code>val</code> on each iteration.",
-                starterCode: `val : 1
-! TODO: Write until loop terminating when val >= 5, displaying "Val: " + val and doubling val
+                title: "Exercise 11.2: Until Loop Battery Charge",
+                prompt: "Declare <code>power : 20</code>. Run <code>until power >= 60</code>, incrementing <code>power : power + 20</code> and displaying <code>\"Power: \" + power</code> in yellow.",
+                starterCode: `power : 20
+! TODO: Write until power >= 60 loop
 `,
-                hint: "Use `val : val * 2` inside the until loop.",
-                solution: `val : 1
-until val >= 5
-    display "Val: " + val ?color="green"
-    val : val * 2`,
-                expectedMatch: /Val: 1[\s\S]*Val: 4/i
+                hint: "Use `until power >= 60`.",
+                solution: `power : 20
+until power >= 60
+    display "Power: " + power ?color="yellow"
+    power : power + 20`,
+                expectedMatch: /Power: 20[\s\S]*Power: 40/i
             },
             {
                 id: "ex_while_3",
-                title: "Exercise 8.3: Stepped While Loop",
-                prompt: "Use <code>while idx < 6 step 2</code> to step by 2 on each loop iteration.",
-                starterCode: `idx : 0
-! TODO: Write while loop with step 2 modifier
+                title: "Exercise 11.3: Convergence Loop",
+                prompt: "Declare <code>n : 64</code>. While <code>n > 8</code>, divide <code>n : n / 2</code> and display <code>\"n: \" + n</code> in green.",
+                starterCode: `n : 64
+! TODO: While n > 8 divide by 2
 `,
-                hint: "Add `step 2` after the while condition.",
-                solution: `idx : 0
-while idx < 6 step 2
-    display "Stepped: " + idx ?color="purple"
-    idx : idx + 1`,
-                expectedMatch: /Stepped:/i
+                hint: "Use `while n > 8` and `n : n / 2`.",
+                solution: `n : 64
+while n > 8
+    n : n / 2
+    display "n: " + n ?color="green"`,
+                expectedMatch: /n: 32[\s\S]*n: 8/i
             }
         ]
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 4: ADVANCED EXCEPTION ARCHITECTURE
+    // ═══════════════════════════════════════════════════════════════
     {
-        id: "exception-handling",
-        number: 9,
-        title: "Exceptions (<code>do-unless [error]</code>)",
-        category: "Error Handling",
-        readTime: "5 min read",
-        summary: "Handle runtime exceptions gracefully with named error catching and custom throw attributes.",
+        id: "ch12-do-unless",
+        number: 12,
+        section: "Section 4: Advanced Exception Architecture",
+        title: "Try-Unless Architecture & Watch Guards",
+        category: "Exception Handling",
+        readTime: "6 min read",
+        summary: "Harness VerScript's signature do-unless construct, internal reactive line-by-line watch guards, and external condition gates.",
         body: `
-            <h2>Try-Catch via <code>do-unless</code></h2>
-            <p>VerScript introduces structured exception management using the <code>do</code> block paired with a matching <code>unless [ErrorName]</code> handler.</p>
+            <h2>The <code>do ... unless</code> Paradigm</h2>
+            <p>In VerScript, exception handling and condition-gated execution are unified in the <code>do ... unless</code> statement.</p>
 
-            <div class="code-block"><span class="token-keyword">do</span>
-    <span class="token-keyword">throw</span> CustomCalculationError <span class="token-operator">?msg="Divide by zero detected"</span>
-<span class="token-keyword">unless</span> CustomCalculationError
-    <span class="token-keyword">display</span> <span class="token-string">"Intercepted error: "</span> + <span class="token-keyword">error</span> ?color="green"</div>
-
-            <h2>Rethrowing and Error Symbols</h2>
-            <p>Inside an <code>unless</code> block, the special variable <code>error</code> holds the caught error's name as a string.</p>
+            <h2>Mode Modifiers for <code>unless</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Modifier</th>
+                        <th>Execution Model</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>internal</code></td>
+                        <td>Reactive Watch Guard</td>
+                        <td>Monitors expression line-by-line. If condition becomes true after ANY line, execution of <code>do</code> immediately halts and transfers to <code>unless</code>.</td>
+                        <td><code>do<br>&nbsp;&nbsp;...<br>unless internal pressure &gt; 100</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>external</code></td>
+                        <td>Gatekeeper Guard</td>
+                        <td>Evaluates expression once beforehand. If true, runs <code>unless</code> block; if false, runs <code>do</code> block.</td>
+                        <td><code>do<br>&nbsp;&nbsp;...<br>unless external isLocked = true</code></td>
+                    </tr>
+                    <tr>
+                        <td><em>(Default Error)</em></td>
+                        <td>Error Catch Guard</td>
+                        <td>Catches exceptions thrown inside the <code>do</code> block matching an error name or universal <code>error</code>.</td>
+                        <td><code>do<br>&nbsp;&nbsp;...<br>unless DivisionByZeroError</code></td>
+                    </tr>
+                </tbody>
+            </table>
         `,
         codeBlocks: [
             {
-                id: "cb_except_1",
-                title: "exceptions.vrs",
-                code: `display "=== Exception Catching Demo ===" ?color="cyan"
-
+                id: "cb_dounless_1",
+                title: "do_unless_demo.vrs",
+                code: `! 1. Reactive Internal Watch Condition
+temp : 80
 do
-    display "Attempting critical calculation..." ?color="yellow"
-    throw DivisionByZeroError ?msg="Math division failure in module"
+    display "Checking reactor core..." ?color="cyan"
+    temp : temp + 40
+    display "This line will NOT execute because temp exceeded 100!" ?color="red"
+unless internal temp > 100
+    display "WATCHDOG TRIGGERED: Temperature reached " + temp ?color="yellow"
+
+! 2. Error Catching
+do
+    display "Dividing by zero..." ?color="cyan"
+    bad_val : 100 / 0
 unless DivisionByZeroError
-    display "Caught expected error: " + error ?color="green"
-    display "Fallback routine engaged." ?color="cyan"`
+    display "Safely caught DivisionByZeroError!" ?color="green"`
             }
         ],
         exercises: [
             {
-                id: "ex_except_1",
-                title: "Exercise 9.1: Catch a Named Error",
-                prompt: "Throw <code>NetworkTimeoutError</code> inside a <code>do</code> block and catch it with <code>unless NetworkTimeoutError</code>.",
-                starterCode: `! TODO: Write a do block that throws NetworkTimeoutError, and catch it in an unless block
+                id: "ex_dounless_1",
+                title: "Exercise 12.1: Catch Division by Zero",
+                prompt: "Wrap a division by zero in <code>do ... unless DivisionByZeroError</code> and display <code>\"Bypassed Zero Error\"</code> in green.",
+                starterCode: `! TODO: Write do ... unless DivisionByZeroError
+do
+    x : 10 / 0
+unless DivisionByZeroError
 `,
-                hint: "Match the error name in `throw` and `unless`.",
+                hint: "Add `display \"Bypassed Zero Error\" ?color=\"green\"` inside the `unless` block.",
                 solution: `do
-    throw NetworkTimeoutError ?msg="Connection timed out"
-unless NetworkTimeoutError
-    display "Handled: " + error ?color="green"`,
-                expectedMatch: /Handled: NetworkTimeoutError/i
+    x : 10 / 0
+unless DivisionByZeroError
+    display "Bypassed Zero Error" ?color="green"`,
+                expectedMatch: /Bypassed Zero Error/i
             },
             {
-                id: "ex_except_2",
-                title: "Exercise 9.2: Catch Generic Error",
-                prompt: "Use <code>unless error</code> to catch any thrown exception as a wildcard catch-all.",
-                starterCode: `! TODO: Throw InvalidKeyError in do block, and catch with wildcard 'unless error'
+                id: "ex_dounless_2",
+                title: "Exercise 12.2: Reactive Internal Watchdog",
+                prompt: "Declare <code>fuel : 50</code>. Write a <code>do</code> block that subtracts <code>fuel : fuel - 40</code>, with <code>unless internal fuel < 20</code> displaying <code>\"Low Fuel Warning\"</code> in yellow.",
+                starterCode: `fuel : 50
+! TODO: Implement do ... unless internal fuel < 20
 `,
-                hint: "`unless error` acts as a universal exception catcher.",
-                solution: `do
-    throw InvalidKeyError ?msg="Bad auth key"
-unless error
-    display "Generic error catcher caught: " + error ?color="yellow"`,
-                expectedMatch: /Generic error catcher/i
-            },
-            {
-                id: "ex_except_3",
-                title: "Exercise 9.3: Error with Custom Message",
-                prompt: "Throw an error with <code>?msg=\"File missing\"</code> and display the success recovery message.",
-                starterCode: `! TODO: Throw FileNotFound with ?msg="File missing" in a do block, and catch it
-`,
-                hint: "Add `?msg=\"...\"` to the `throw` statement.",
-                solution: `do
-    throw FileNotFound ?msg="File missing"
-unless FileNotFound
-    display "Recovered from missing file" ?color="cyan"`,
-                expectedMatch: /Recovered from missing file/i
-            }
-        ]
-    },
-
-    {
-        id: "reactive-watch-guards",
-        number: 10,
-        title: "Reactive Condition Watch Guards",
-        category: "Advanced Features",
-        readTime: "5 min read",
-        summary: "Monitor reactive variable changes with do-unless internal and external condition watch modes.",
-        body: `
-            <h2>Reactive Internal Watch (<code>unless internal [condition]</code>)</h2>
-            <p>An <code>internal</code> condition guard continuously tests a boolean condition <em>after every single statement</em> executed inside the <code>do</code> block. The instant the condition becomes true, execution abruptly breaks from the <code>do</code> block and branches to the <code>unless</code> handler!</p>
-
-            <div class="code-block"><span class="token-keyword">do</span>
-    count : 0
-    count : count + 10
-    count : count + 50
-<span class="token-keyword">unless internal</span> count &gt; 25
-    <span class="token-keyword">display</span> <span class="token-string">"Triggered immediately when count exceeded 25!"</span></div>
-
-            <h2>External Guard Mode (<code>unless external [condition]</code>)</h2>
-            <p>Tests the condition strictly beforehand like a classic guard fallback.</p>
-        `,
-        codeBlocks: [
-            {
-                id: "cb_watch_1",
-                title: "watch_guard.vrs",
-                code: `display "=== Reactive Watch Demo ===" ?color="cyan"
-
-alarm : false
+                hint: "Use `unless internal fuel < 20`.",
+                solution: `fuel : 50
 do
-    display "Step 1: Normal" ?color="green"
-    alarm : true
-    display "Step 2: This will be intercepted!" ?color="red"
-unless internal alarm == true
-    display "Reactive watch triggered! Handled alarm state." ?color="yellow"`
-            }
-        ],
-        exercises: [
-            {
-                id: "ex_watch_1",
-                title: "Exercise 10.1: Reactive Threshold Trigger",
-                prompt: "Set <code>fuel : 100</code>. In a <code>do</code> block, reduce fuel to <code>10</code>. Use <code>unless internal fuel < 20</code> to catch the low fuel state.",
-                starterCode: `fuel : 100
-! TODO: Create do block modifying fuel to 10, with 'unless internal fuel < 20' guard
-`,
-                hint: "Set `fuel : 10` inside the do block.",
-                solution: `fuel : 100
-do
-    display "Consuming fuel..." ?color="cyan"
-    fuel : 10
-    display "This line will not run" ?color="red"
+    fuel : fuel - 40
+    display "Should not reach here"
 unless internal fuel < 20
-    display "Warning: Low Fuel Detected!" ?color="yellow"`,
-                expectedMatch: /Low Fuel Detected!/i
+    display "Low Fuel Warning" ?color="yellow"`,
+                expectedMatch: /Low Fuel Warning/i
             },
             {
-                id: "ex_watch_2",
-                title: "Exercise 10.2: External Guard Check",
-                prompt: "Use <code>unless external isLocked == true</code> to check a locked flag beforehand.",
-                starterCode: `isLocked : true
-! TODO: Create do block with 'unless external isLocked == true'
+                id: "ex_dounless_3",
+                title: "Exercise 12.3: External Condition Gate",
+                prompt: "Declare <code>isMaintenanceMode : true</code>. Write <code>do ... unless external isMaintenanceMode = true</code> displaying <code>\"System In Maintenance\"</code> in red.",
+                starterCode: `isMaintenanceMode : true
+! TODO: Write do ... unless external isMaintenanceMode = true
 `,
-                hint: "Because `isLocked` is true, the `unless` block executes directly.",
-                solution: `isLocked : true
+                hint: "Use `unless external isMaintenanceMode = true`.",
+                solution: `isMaintenanceMode : true
 do
-    display "Opening door..." ?color="green"
-unless external isLocked == true
-    display "Door is locked! Cannot open." ?color="red"`,
-                expectedMatch: /Door is locked!/i
-            },
-            {
-                id: "ex_watch_3",
-                title: "Exercise 10.3: Multi-step Watch",
-                prompt: "Create an internal watch that halts when <code>voltage > 240</code>.",
-                starterCode: `voltage : 120
-! TODO: Write a do block that increments voltage to 250 with 'unless internal voltage > 240'
-`,
-                hint: "Setting voltage to 250 trips the watch condition immediately.",
-                solution: `voltage : 120
-do
-    voltage : 200
-    voltage : 250
-unless internal voltage > 240
-    display "Surge protector engaged!" ?color="green"`,
-                expectedMatch: /Surge protector engaged!/i
+    display "Normal system operation"
+unless external isMaintenanceMode = true
+    display "System In Maintenance" ?color="red"`,
+                expectedMatch: /System In Maintenance/i
             }
         ]
     },
 
     {
-        id: "error-modes",
-        number: 11,
-        title: "Error Modes Scopes",
-        category: "Error Handling",
-        readTime: "4 min read",
-        summary: "Control runtime error strictness with ForceErrors, CriticalErrors, and SuppressErrors.",
+        id: "ch13-error-scopes",
+        number: 13,
+        section: "Section 4: Advanced Exception Architecture",
+        title: "Error Scopes & Suppression Blocks",
+        category: "Exception Handling",
+        readTime: "5 min read",
+        summary: "Control system tolerance with SuppressErrors, CriticalErrors, and ForceErrors scopes.",
         body: `
             <h2>Scoped Error Directives</h2>
-            <p>VerScript allows changing error handling behavior across specific code scopes:</p>
+            <p>VerScript provides 3 declarative scoped error directives to control how the runtime treats errors:</p>
 
             <table class="doc-table">
                 <thead>
                     <tr>
-                        <th>Block Directive</th>
+                        <th>Scope Directive</th>
                         <th>Behavior</th>
+                        <th>Use Case</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><code>SuppressErrors</code></td>
-                        <td>Ignores runtime errors and skips failed statements without crashing.</td>
+                        <td>Silently catches all non-critical exceptions; script execution skips the failing instruction and continues uninterrupted.</td>
+                        <td>Resilient batch pipelines, network fallbacks, best-effort evaluations.</td>
                     </tr>
                     <tr>
                         <td><code>CriticalErrors</code></td>
-                        <td>Halts only on severe system faults; ignores minor warnings.</td>
+                        <td>Allows standard exceptions to proceed to <code>unless</code> catch handlers, but immediately crashes on fatal memory or system errors.</td>
+                        <td>Production backend services.</td>
                     </tr>
                     <tr>
                         <td><code>ForceErrors</code></td>
-                        <td>Strict mode: halts immediately on any error or ambiguity.</td>
+                        <td>Disables all error bypasses; any runtime issue halts immediately with full diagnostics.</td>
+                        <td>Test suites, validation pipelines, strict debugging.</td>
                     </tr>
                 </tbody>
             </table>
         `,
         codeBlocks: [
             {
-                id: "cb_modes_1",
-                title: "error_modes.vrs",
-                code: `display "=== Suppress Errors Demo ===" ?color="cyan"
-
+                id: "cb_scopes_1",
+                title: "error_scopes.vrs",
+                code: `display "=== 1. SuppressErrors Scope ===" ?color="purple"
 SuppressErrors
-    throw IgnoredError ?msg="This error will be silently skipped"
-    display "Executing safely inside SuppressErrors scope." ?color="green"`
+    display "Attempting division by zero under SuppressErrors..." ?color="yellow"
+    bad_val : 50 / 0
+    display "Notice: Error was suppressed, script continued!" ?color="green"
+
+display "=== Pipeline Continues Smoothly ===" ?color="cyan"`
             }
         ],
         exercises: [
             {
-                id: "ex_modes_1",
-                title: "Exercise 11.1: Suppress an Error",
-                prompt: "Wrap a throw in <code>SuppressErrors</code> block and display <code>\"Completed gracefully\"</code> after the block.",
-                starterCode: `! TODO: Write SuppressErrors block containing a throw, then display "Completed gracefully"
+                id: "ex_scopes_1",
+                title: "Exercise 13.1: Suppress Dangerous Calculations",
+                prompt: "Execute an invalid operation inside a <code>SuppressErrors</code> block and display <code>\"Safe continuation\"</code> in green after it.",
+                starterCode: `! TODO: Write SuppressErrors block containing 10 / 0 and display message
 `,
-                hint: "Indent the throw statement under `SuppressErrors`.",
+                hint: "Indent the failing calculation under `SuppressErrors`.",
                 solution: `SuppressErrors
-    throw MinorWarning
-display "Completed gracefully" ?color="green"`,
-                expectedMatch: /Completed gracefully/i
+    bad : 10 / 0
+display "Safe continuation" ?color="green"`,
+                expectedMatch: /Safe continuation/i
             },
             {
-                id: "ex_modes_2",
-                title: "Exercise 11.2: Force Errors Scope",
-                prompt: "Display <code>\"ForceErrors active\"</code> inside a <code>ForceErrors</code> block.",
-                starterCode: `! TODO: Use ForceErrors block to wrap a display statement
+                id: "ex_scopes_2",
+                title: "Exercise 13.2: Multi-step Suppressed Pipeline",
+                prompt: "Inside <code>SuppressErrors</code>, perform two undefined operations, followed by displaying <code>\"Pipeline Finished\"</code> in cyan.",
+                starterCode: `! TODO: Perform 2 failing calculations in SuppressErrors
 `,
-                hint: "Use `ForceErrors` as the block header.",
+                hint: "All failures inside `SuppressErrors` are safely bypassed.",
+                solution: `SuppressErrors
+    x : 10 / 0
+    y : 20 / 0
+display "Pipeline Finished" ?color="cyan"`,
+                expectedMatch: /Pipeline Finished/i
+            },
+            {
+                id: "ex_scopes_3",
+                title: "Exercise 13.3: ForceErrors Validation",
+                prompt: "Write a safe calculation under <code>ForceErrors</code> and display <code>\"Strict Verification Passed\"</code> in green.",
+                starterCode: `! TODO: Write a ForceErrors block with valid code
+`,
+                hint: "Under `ForceErrors`, valid code runs normally.",
                 solution: `ForceErrors
-    display "ForceErrors active" ?color="cyan"`,
-                expectedMatch: /ForceErrors active/i
-            },
-            {
-                id: "ex_modes_3",
-                title: "Exercise 11.3: Critical Errors Scope",
-                prompt: "Execute a calculation inside a <code>CriticalErrors</code> block.",
-                starterCode: `! TODO: Perform val : 100 * 2 inside CriticalErrors and display "Calculated: " + val
-`,
-                hint: "Indent statements under `CriticalErrors`.",
-                solution: `CriticalErrors
-    val : 100 * 2
-    display "Calculated: " + val ?color="yellow"`,
-                expectedMatch: /Calculated: 200/i
+    valid : 100 * 2
+display "Strict Verification Passed" ?color="green"`,
+                expectedMatch: /Strict Verification Passed/i
             }
         ]
     },
 
     {
-        id: "command-attributes",
-        number: 12,
-        title: "Command Attributes & Kwargs",
-        category: "Language Features",
+        id: "ch14-custom-exceptions",
+        number: 14,
+        section: "Section 4: Advanced Exception Architecture",
+        title: "Custom Exceptions, Signals & Attributes",
+        category: "Exception Handling",
         readTime: "5 min read",
-        summary: "Attach keyword arguments to commands with ?key=value for ANSI colors, prompt fallbacks, and step overrides.",
+        summary: "Throw custom named exceptions with message attributes and catch or rethrow errors.",
         body: `
-            <h2>Command Attributes Syntax (<code>?key=val</code>)</h2>
-            <p>Commands in VerScript accept optional modifiers and keyword arguments using the <code>?</code> prefix.</p>
+            <h2>The <code>throw</code> Statement</h2>
+            <p>Use <code>throw</code> to emit custom exception signals.</p>
 
+            <h2>Attributes for <code>throw</code></h2>
             <table class="doc-table">
                 <thead>
                     <tr>
-                        <th>Command</th>
                         <th>Attribute</th>
+                        <th>Type</th>
                         <th>Description</th>
+                        <th>Syntax Example</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>display</code></td>
-                        <td><code>?color="green"|"red"|"yellow"|"cyan"|"purple"|"blue"</code></td>
-                        <td>ANSI color output styling.</td>
-                    </tr>
-                    <tr>
-                        <td><code>display</code></td>
-                        <td><code>?newline=false</code> (or <code>?inline</code>)</td>
-                        <td>Suppresses newline for segment printing.</td>
-                    </tr>
-                    <tr>
-                        <td><code>prompt</code></td>
-                        <td><code>?default="value"</code></td>
-                        <td>Fallback input value if empty.</td>
-                    </tr>
-                    <tr>
-                        <td><code>throw</code></td>
-                        <td><code>?msg="custom error text"</code></td>
-                        <td>Attaches error explanation.</td>
+                        <td><code>?msg</code></td>
+                        <td>String</td>
+                        <td>Attaches a descriptive custom error payload to the exception.</td>
+                        <td><code>throw HardwareFault ?msg="Sensor timeout"</code></td>
                     </tr>
                 </tbody>
             </table>
+
+            <h2>Rethrowing Errors (<code>throw error</code>)</h2>
+            <p>Inside an <code>unless</code> catch handler, calling <code>throw error</code> re-propagates the currently active exception up the call stack.</p>
         `,
         codeBlocks: [
             {
-                id: "cb_attr_1",
-                title: "attributes.vrs",
-                code: `display "ANSI Green Output" ?color="green"
-display "ANSI Purple Output" ?color="purple"
-display "Segment A, " ?newline=false ?color="yellow"
-display "Segment B (End)" ?color="cyan"`
+                id: "cb_throw_1",
+                title: "custom_throw.vrs",
+                code: `do
+    display "Verifying sensor reading..." ?color="cyan"
+    throw SensorFailure ?msg="Voltage dropped below 3.3V"
+unless SensorFailure
+    display "Caught custom exception: " + error ?color="yellow"`
             }
         ],
         exercises: [
             {
-                id: "ex_attr_1",
-                title: "Exercise 12.1: Rainbow Output",
-                prompt: "Display <code>\"Cyan Text\"</code> in cyan and <code>\"Red Text\"</code> in red.",
-                starterCode: `! TODO: Write two display lines: "Cyan Text" with ?color="cyan", "Red Text" with ?color="red"
+                id: "ex_throw_1",
+                title: "Exercise 14.1: Throw Custom Exception",
+                prompt: "Throw a <code>NetworkTimeout</code> exception with <code>?msg=\"Connection lost\"</code> inside a <code>do ... unless NetworkTimeout</code> block and print <code>\"Recovered from Timeout\"</code> in green.",
+                starterCode: `! TODO: Throw NetworkTimeout ?msg="Connection lost" and catch it
 `,
-                hint: "Use `?color=\"cyan\"` and `?color=\"red\"`.",
-                solution: `display "Cyan Text" ?color="cyan"
-display "Red Text" ?color="red"`,
-                expectedMatch: /Cyan Text[\s\S]*Red Text/i
+                hint: "Use `throw NetworkTimeout ?msg=\"Connection lost\"`.",
+                solution: `do
+    throw NetworkTimeout ?msg="Connection lost"
+unless NetworkTimeout
+    display "Recovered from Timeout" ?color="green"`,
+                expectedMatch: /Recovered from Timeout/i
             },
             {
-                id: "ex_attr_2",
-                title: "Exercise 12.2: Inline Progress Bar",
-                prompt: "Print <code>\"[====\"</code>, <code>\"====] \"</code>, and <code>\"100%\"</code> on one line using <code>?newline=false</code>.",
-                starterCode: `! TODO: Assemble an inline progress bar on one line with ?newline=false
+                id: "ex_throw_2",
+                title: "Exercise 14.2: Catch Universal Error",
+                prompt: "Throw a custom <code>InvalidStateError</code> and catch it using the universal <code>unless error</code> catch handler, displaying <code>\"Caught: \" + error</code>.",
+                starterCode: `! TODO: Throw InvalidStateError and catch with unless error
 `,
-                hint: "Use `?newline=false` on first two displays.",
-                solution: `display "[====" ?newline=false ?color="yellow"
-display "====] " ?newline=false ?color="yellow"
-display "100%" ?color="green"`,
-                expectedMatch: /\[========\] 100%/i
+                hint: "`unless error` catches any thrown exception.",
+                solution: `do
+    throw InvalidStateError ?msg="Bad state"
+unless error
+    display "Caught: " + error ?color="yellow"`,
+                expectedMatch: /Caught: InvalidStateError/i
             },
             {
-                id: "ex_attr_3",
-                title: "Exercise 12.3: Prompt with Custom Default",
-                prompt: "Prompt for <code>serverPort</code> with default <code>\"8080\"</code> and display it.",
-                starterCode: `! TODO: Prompt serverPort with ?default="8080" and display "Port: " + serverPort
+                id: "ex_throw_3",
+                title: "Exercise 14.3: Custom Authorization Fault",
+                prompt: "Given <code>isAuth : false</code>, check if not auth and throw <code>AuthError ?msg=\"Denied\"</code>, catching and displaying in red.",
+                starterCode: `isAuth : false
+! TODO: If not isAuth throw AuthError and catch
 `,
-                hint: "Use `?default=\"8080\"`.",
-                solution: `prompt serverPort ?default="8080"
-display "Port: " + serverPort ?color="purple"`,
-                expectedMatch: /Port: 8080/i
+                hint: "Use `do` with `if isAuth = false then throw AuthError ?msg=\"Denied\"`.",
+                solution: `isAuth : false
+do
+    if isAuth = false then
+        throw AuthError ?msg="Denied"
+unless AuthError
+    display "Caught Auth Fault" ?color="red"`,
+                expectedMatch: /Caught Auth Fault/i
             }
         ]
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 5: POLYGLOT & METAPROGRAMMING
+    // ═══════════════════════════════════════════════════════════════
     {
-        id: "polyglot-injection",
-        number: 13,
-        title: "Polyglot Code Injection (<code>inject</code>)",
-        category: "Polyglot Runtime",
+        id: "ch15-inject",
+        number: 15,
+        section: "Section 5: Polyglot & Metaprogramming",
+        title: "Polyglot Code Injection (100+ Languages)",
+        category: "Metaprogramming",
         readTime: "6 min read",
-        summary: "Inject and evaluate code from 100+ languages directly inside VerScript with dynamic eval.",
+        summary: "Embed and execute source code from over 100 major languages directly inside VerScript scripts.",
         body: `
-            <h2>Polyglot Runtime Engine (<code>inject [lang]</code>)</h2>
-            <p>VerScript allows embedding source code written in <strong>100+ programming languages</strong> directly inside your VerScript code:</p>
+            <h2>The <code>inject</code> Keyword</h2>
+            <p>The <code>inject</code> statement enables polyglot execution. You can embed raw source code from over 100 programming languages (Python, JavaScript, Rust, C, Go, Java, TypeScript, Ruby, Shell, etc.) seamlessly.</p>
 
-            <div class="code-block"><span class="token-keyword">inject</span> python
-    import math
-    print(f"Pi calculation: {math.pi}")</div>
+            <h2>Attributes for <code>inject</code></h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Syntax Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>?color</code></td>
+                        <td><code>"name"</code> or <code>#hex</code></td>
+                        <td>Colors execution status tags in terminal output.</td>
+                        <td><code>inject python ?color="cyan"</code></td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <h2>Dynamic VerScript Evaluation (<code>inject verscript</code>)</h2>
-            <p>Passing <code>verscript</code>, <code>vrs</code>, or <code>eval</code> evaluates nested VerScript source dynamically at runtime (equivalent to <code>eval()</code> in JavaScript):</p>
-            <div class="code-block"><span class="token-keyword">inject</span> verscript
-    <span class="token-keyword">display</span> <span class="token-string">"Dynamically evaluated VerScript block!"</span></div>
+            <h2>Dynamic <code>eval</code> via <code>inject verscript</code></h2>
+            <p>Passing <code>inject verscript</code> (or <code>inject vrs</code> / <code>inject eval</code>) evaluates embedded VerScript code dynamically within the current runtime scope, just like JavaScript's <code>eval()</code>.</p>
         `,
         codeBlocks: [
             {
                 id: "cb_inject_1",
                 title: "polyglot_demo.vrs",
-                code: `display "=== Polyglot Injection Demo ===" ?color="cyan"
+                code: `! 1. Python Code Injection
+inject python ?color="yellow"
+    def calculate_fib(n):
+        return n if n <= 1 else calculate_fib(n-1) + calculate_fib(n-2)
+    print("Python Fibonacci Result:", calculate_fib(10))
 
-inject python
-    data = [x * 2 for x in range(4)]
-    print(f"Python list: {data}")
+! 2. JavaScript Code Injection
+inject javascript ?color="cyan"
+    const sum = [10, 20, 30].reduce((a, b) => a + b, 0);
+    console.log("JS Sum:", sum);
 
+! 3. Dynamic VerScript Eval
 inject verscript
-    display "Dynamically evaluated inside VerScript!" ?color="green"`
+    eval_msg : "Evaluated inside dynamic VerScript sub-scope!"
+    display eval_msg ?color="green"`
             }
         ],
         exercises: [
             {
                 id: "ex_inj_1",
-                title: "Exercise 13.1: Python Injection",
-                prompt: "Use <code>inject python</code> to print <code>\"Hello from Python VM\"</code>.",
-                starterCode: `! TODO: Write an 'inject python' block printing "Hello from Python VM"
+                title: "Exercise 15.1: Inject Python Script",
+                prompt: "Embed a Python code snippet that calculates <code>2 ** 8</code> using <code>inject python</code>.",
+                starterCode: `! TODO: Write an inject python block
 `,
-                hint: "Indent the python code block under `inject python`.",
-                solution: `inject python
-    print("Hello from Python VM")`,
-                expectedMatch: /Hello from Python VM|Evaluated.*line/i
+                hint: "Use `inject python` followed by indented python code.",
+                solution: `inject python ?color="yellow"
+    val = 2 ** 8
+    print("Power:", val)`,
+                expectedMatch: /\[Inject:python\]|Power:/i
             },
             {
                 id: "ex_inj_2",
-                title: "Exercise 13.2: Dynamic VerScript Eval",
-                prompt: "Use <code>inject verscript</code> to dynamically run a <code>display \"Nested dynamic code\"</code> statement.",
-                starterCode: `! TODO: Use inject verscript to dynamically execute a display command
+                title: "Exercise 15.2: Dynamic VerScript Sub-Execution",
+                prompt: "Use <code>inject verscript</code> to evaluate a dynamic block that sets <code>dyn : 777</code> and displays <code>\"Dynamic Value: \" + dyn</code> in green.",
+                starterCode: `! TODO: Write inject verscript block
 `,
-                hint: "Use `inject verscript` followed by indented VerScript commands.",
+                hint: "Use `inject verscript` with indented VerScript commands.",
                 solution: `inject verscript
-    display "Nested dynamic code" ?color="green"`,
-                expectedMatch: /Nested dynamic code/i
+    dyn : 777
+    display "Dynamic Value: " + dyn ?color="green"`,
+                expectedMatch: /Dynamic Value: 777/i
             },
             {
                 id: "ex_inj_3",
-                title: "Exercise 13.3: JavaScript Injection",
-                prompt: "Inject a JavaScript block that calculates <code>5 * 5</code>.",
-                starterCode: `! TODO: Use inject javascript to log the result of 5 * 5
+                title: "Exercise 15.3: Inject Rust / C Algorithms",
+                prompt: "Embed a Rust function signature inside an <code>inject rust</code> block with <code>?color=\"cyan\"</code>.",
+                starterCode: `! TODO: Write inject rust with ?color="cyan"
 `,
-                hint: "Write `inject javascript` and indent the JS code.",
-                solution: `inject javascript
-    console.log("Result: " + (5 * 5));`,
-                expectedMatch: /Result: 25|Evaluated.*line/i
+                hint: "Use `inject rust ?color=\"cyan\"`.",
+                solution: `inject rust ?color="cyan"
+    fn compute() -> i32 { 42 }`,
+                expectedMatch: /\[Inject:rust\]/i
             }
         ]
     },
 
     {
-        id: "command-aliases",
-        number: 14,
-        title: "Command Aliases (<code>alias</code>) &amp; Remapping",
-        category: "Language Customization",
+        id: "ch16-alias",
+        number: 16,
+        section: "Section 5: Polyglot & Metaprogramming",
+        title: "Alias Remapping & Custom Syntax",
+        category: "Metaprogramming",
         readTime: "6 min read",
-        summary: "Rebind command keywords and map attribute signatures with single-line, attribute, and multi-line alias blocks.",
+        summary: "Remap keywords, rename commands, map custom attribute names, and create domain-specific languages with alias.",
         body: `
             <h2>The <code>alias</code> Keyword</h2>
-            <p>VerScript allows renaming commands and translating attribute arguments dynamically at runtime:</p>
-
-            <h3>1. Single-Line Alias</h3>
-            <div class="code-block"><span class="token-keyword">alias</span> display: print
-<span class="token-keyword">print</span> <span class="token-string">"Printed via alias!"</span> ?color="green"</div>
-
-            <h3>2. Attribute / Argument Remapping</h3>
-            <p>Remap caller attributes into canonical command attributes:</p>
-            <div class="code-block"><span class="token-keyword">alias</span> display: echo ? color=tint newline=inline
-<span class="token-keyword">echo</span> <span class="token-string">"Echoed message!"</span> ?tint="cyan" ?inline=true</div>
-
-            <h3>3. Multi-Line Alias Blocks</h3>
-            <div class="code-block"><span class="token-keyword">alias:</span>
+            <p>The <code>alias</code> keyword allows you to customize the grammar of VerScript at runtime:</p>
+            <ul>
+                <li><strong>Single-Line:</strong> <code>alias cmd1: cmd2</code> (renames existing command <code>cmd1</code> to new alias <code>cmd2</code>).</li>
+                <li><strong>Attribute Mapping:</strong> <code>alias cmd1: cmd2 ? arg1=arg3 arg2=arg4</code> (maps original attribute <code>arg1</code> to custom attribute <code>arg3</code>).</li>
+                <li><strong>Multi-Line Block:</strong>
+                    <div class="code-block">alias:
     display: print
     loop: repeat
-    iterate: for ? step=by
+    iterate: for ? step=by</div>
+                </li>
+            </ul>
 
-<span class="token-keyword">repeat</span> 2
-    <span class="token-keyword">print</span> <span class="token-string">"Repeated!"</span> ?color="purple"</div>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Alias Rule</th>
+                        <th>Syntax</th>
+                        <th>Expanded Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Command Rename</td>
+                        <td><code>alias display: print</code></td>
+                        <td><code>print "Hello"</code> &rarr; <code>display "Hello"</code></td>
+                    </tr>
+                    <tr>
+                        <td>Attribute Mapping</td>
+                        <td><code>alias display: echo ? color=tint</code></td>
+                        <td><code>echo "Hi" ?tint="cyan"</code> &rarr; <code>display "Hi" ?color="cyan"</code></td>
+                    </tr>
+                </tbody>
+            </table>
         `,
         codeBlocks: [
             {
                 id: "cb_alias_1",
-                title: "alias_sample.vrs",
-                code: `display "=== Alias Demo ===" ?color="cyan"
-
+                title: "alias_showcase.vrs",
+                code: `! 1. Single-line command alias
 alias display: print
-print "Hello from 'print' alias!" ?color="green"
+print "Hello from print alias!" ?color="green"
 
+! 2. Alias with attribute mapping
+alias display: echo ? color=tint newline=inline
+echo "Segment 1, " ?tint="yellow" ?inline=false
+echo "Segment 2!" ?tint="cyan"
+
+! 3. Multi-line alias block
 alias:
     loop: repeat
+    iterate: for ? step=by
 
 repeat 2
-    print "Loop aliased to repeat" ?color="yellow"`
+    print "Repeat loop active" ?color="purple"
+
+for i from 10 to 30 ?by=10
+    print "Iterating as for: " + i ?color="yellow"`
             }
         ],
         exercises: [
             {
                 id: "ex_alias_1",
-                title: "Exercise 14.1: Simple Command Alias",
-                prompt: "Alias <code>display</code> to <code>log</code> and print <code>\"Log message\"</code> in green.",
-                starterCode: `! TODO: Alias display to log, then call log "Log message" ?color="green"
+                title: "Exercise 16.1: Command Alias",
+                prompt: "Alias <code>display</code> as <code>print</code> and display <code>\"Aliased Output\"</code> in green using <code>print</code>.",
+                starterCode: `! TODO: Define alias display: print and use it
 `,
-                hint: "Use `alias display: log` then use `log \"...\"`.",
-                solution: `alias display: log
-log "Log message" ?color="green"`,
-                expectedMatch: /Log message/i
+                hint: "Write `alias display: print` then `print \"Aliased Output\" ?color=\"green\"`.",
+                solution: `alias display: print
+print "Aliased Output" ?color="green"`,
+                expectedMatch: /Aliased Output/i
             },
             {
                 id: "ex_alias_2",
-                title: "Exercise 14.2: Attribute Remapping",
-                prompt: "Alias <code>display: echo ? color=tint</code> and call <code>echo \"Tinted\" ?tint=\"cyan\"</code>.",
-                starterCode: `! TODO: Rebind display: echo with ?color=tint mapping, and execute echo "Tinted" ?tint="cyan"
+                title: "Exercise 16.2: Attribute Remapping",
+                prompt: "Alias <code>display</code> as <code>log</code> with <code>?color=tint</code>, and output <code>\"Mapped Attribute\"</code> using <code>?tint=\"cyan\"</code>.",
+                starterCode: `! TODO: Write alias display: log ? color=tint
 `,
-                hint: "The alias maps `?tint` to `?color`.",
-                solution: `alias display: echo ? color=tint
-echo "Tinted" ?tint="cyan"`,
-                expectedMatch: /Tinted/i
+                hint: "Use `alias display: log ? color=tint`.",
+                solution: `alias display: log ? color=tint
+log "Mapped Attribute" ?tint="cyan"`,
+                expectedMatch: /Mapped Attribute/i
             },
             {
                 id: "ex_alias_3",
-                title: "Exercise 14.3: Multi-Line Alias Block",
-                prompt: "Define a multi-line <code>alias:</code> block aliasing <code>loop: repeat</code> and run a 2-iteration loop.",
-                starterCode: `! TODO: Define multi-line alias: block aliasing loop to repeat, then run repeat 2
+                title: "Exercise 16.3: Multi-line Alias Block",
+                prompt: "Create an <code>alias:</code> block mapping <code>loop: repeat</code> and execute <code>repeat 2</code> printing <code>\"Pass\"</code>.",
+                starterCode: `! TODO: Create alias: block and execute repeat 2
 `,
-                hint: "Use `alias:` followed by indented `loop: repeat`.",
+                hint: "Indent `loop: repeat` under `alias:`.",
                 solution: `alias:
     loop: repeat
-
 repeat 2
-    display "Repetition" ?color="yellow"`,
-                expectedMatch: /Repetition[\s\S]*Repetition/i
+    display "Pass" ?color="green"`,
+                expectedMatch: /(Pass[\s\S]*){2}/i
             }
         ]
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 6: APPLIED SYSTEMS & REFERENCE
+    // ═══════════════════════════════════════════════════════════════
     {
-        id: "ai-assistant-vs-sharp",
-        number: 15,
-        title: "VS#-1B AI Assistant & Tooling",
-        category: "Tooling & Ecosystem",
-        readTime: "4 min read",
-        summary: "Leverage the 1-Billion parameter VS#-1B neural AI model for code generation, syntax repair, and explanations.",
-        body: `
-            <h2>The VS#-1B Neural Assistant</h2>
-            <p>VerScript is integrated directly with <strong>VS#-1B</strong>, a custom transformer neural architecture trained specifically on VerScript syntax, AST rules, and polyglot translation.</p>
-
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Specification</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Parameters</strong></td>
-                        <td>1.0 Billion (1B) Parameters</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Context Window</strong></td>
-                        <td>4,096 Tokens</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Capabilities</strong></td>
-                        <td>Real-time code repair, syntax completions, multi-line comment generation.</td>
-                    </tr>
-                </tbody>
-            </table>
-        `,
-        codeBlocks: [
-            {
-                id: "cb_ai_1",
-                title: "ai_tooling.vrs",
-                code: `! Code generated and formatted with VS#-1B
-display "VS#-1B Neural Model Connected" ?color="cyan"
-display "Ready to analyze VerScript AST." ?color="green"`
-            }
-        ],
-        exercises: [
-            {
-                id: "ex_ai_1",
-                title: "Exercise 15.1: Write Self-Documenting Code",
-                prompt: "Write a short script with header comments, variable assignments, and a styled display output for <code>\"Agent: \" + player + \" | Score: \" + score</code>.",
-                starterCode: `! TODO: Initialize player : "Agent-01", score : 500, and display formatted stats
-`,
-                hint: "Assemble variables into a clean display message.",
-                solution: `! Player initialization
-player : "Agent-01"
-score : 500
-display "Agent: " + player + " | Score: " + score ?color="cyan"`,
-                expectedMatch: /Agent: Agent-01/i
-            },
-            {
-                id: "ex_ai_2",
-                title: "Exercise 15.2: Safe Execution Wrapper",
-                prompt: "Combine <code>do-unless</code> with colorized output for a robust execution routine displaying <code>\"Routine started\"</code>.",
-                starterCode: `! TODO: Wrap display "Routine started" in a do-unless error block
-`,
-                hint: "Use `do` and `unless error`.",
-                solution: `do
-    display "Routine started" ?color="green"
-unless error
-    display "Error handled" ?color="red"`,
-                expectedMatch: /Routine started/i
-            },
-            {
-                id: "ex_ai_3",
-                title: "Exercise 15.3: Complete Pipeline",
-                prompt: "Create an alias <code>display: print</code>, iterate across 3 items, and display <code>\"Item #\" + i</code> in purple.",
-                starterCode: `! TODO: Create alias display: print and iterate i from 1 to 3 displaying "Item #" + i
-`,
-                hint: "Alias display to print then iterate.",
-                solution: `alias display: print
-iterate i from 1 to 3
-    print "Item #" + i ?color="purple"`,
-                expectedMatch: /Item #1[\s\S]*Item #3/i
-            }
-        ]
-    },
-
-    {
-        id: "complete-reference",
-        number: 16,
-        title: "Language Specification & Cheat Sheet",
-        category: "Reference",
-        readTime: "5 min read",
-        summary: "A complete master reference table of all VerScript keywords, operators, attributes, and syntax rules.",
-        body: `
-            <h2>Master Keyword Index</h2>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Keyword</th>
-                        <th>Category</th>
-                        <th>Syntax Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>display</code></td><td>I/O</td><td><code>display "Hello" ?color="green"</code></td></tr>
-                    <tr><td><code>prompt</code></td><td>I/O</td><td><code>prompt var ?default="Guest"</code></td></tr>
-                    <tr><td><code>loop</code></td><td>Control</td><td><code>loop 5</code></td></tr>
-                    <tr><td><code>iterate</code></td><td>Control</td><td><code>iterate i from 1 to 10 step 2</code></td></tr>
-                    <tr><td><code>while</code></td><td>Control</td><td><code>while cond step n</code></td></tr>
-                    <tr><td><code>until</code></td><td>Control</td><td><code>until cond step n</code></td></tr>
-                    <tr><td><code>if / else if / else</code></td><td>Control</td><td><code>if x &gt; 0 then</code></td></tr>
-                    <tr><td><code>do / unless</code></td><td>Exceptions</td><td><code>do ... unless ErrorName</code></td></tr>
-                    <tr><td><code>throw</code></td><td>Exceptions</td><td><code>throw ErrorName ?msg="detail"</code></td></tr>
-                    <tr><td><code>inject</code></td><td>Polyglot</td><td><code>inject python</code></td></tr>
-                    <tr><td><code>alias</code></td><td>Custom</td><td><code>alias display: print</code></td></tr>
-                    <tr><td><code>SuppressErrors</code></td><td>Directives</td><td><code>SuppressErrors</code></td></tr>
-                    <tr><td><code>ForceErrors</code></td><td>Directives</td><td><code>ForceErrors</code></td></tr>
-                </tbody>
-            </table>
-        `,
-        codeBlocks: [
-            {
-                id: "cb_ref_1",
-                title: "master_showcase.vrs",
-                code: `! Master Showcase of VerScript v1.2.0
-alias display: print ? color=tint
-
-print "=== VerScript Master Engine Active ===" ?tint="cyan"
-
-iterate i from 1 to 3
-    print "Engine Core #" + i ?tint="green"
-
-print "All systems operational!" ?tint="yellow"`
-            }
-        ],
-        exercises: [
-            {
-                id: "ex_ref_1",
-                title: "Exercise 16.1: Comprehensive Test Script",
-                prompt: "Write a script combining <code>alias display: print</code>, <code>iterate k from 1 to 3</code>, and display <code>\"Step \" + k</code>.",
-                starterCode: `! TODO: Combine alias display: print with iterate k from 1 to 3
-`,
-                hint: "Use `alias display: print` then iterate.",
-                solution: `alias display: print
-iterate k from 1 to 3
-    print "Step " + k ?color="cyan"`,
-                expectedMatch: /Step 1[\s\S]*Step 3/i
-            },
-            {
-                id: "ex_ref_2",
-                title: "Exercise 16.2: Exception & Fallback Test",
-                prompt: "Implement a <code>do-unless</code> block with <code>?msg</code> attribute and print <code>\"Recovery Test Succeeded\"</code> in green.",
-                starterCode: `! TODO: Throw RecoveryTest error and handle it in unless block
-`,
-                hint: "Catch `RecoveryTest` and display success.",
-                solution: `do
-    throw RecoveryTest ?msg="Testing fallback"
-unless RecoveryTest
-    display "Recovery Test Succeeded" ?color="green"`,
-                expectedMatch: /Recovery Test Succeeded/i
-            },
-            {
-                id: "ex_ref_3",
-                title: "Exercise 16.3: Master Certification Script",
-                prompt: "Display <code>\"VerScript Certification Completed!\"</code> in green.",
-                starterCode: `! TODO: Display "VerScript Certification Completed!" in green
-`,
-                hint: "Display the certification text in green.",
-                solution: `display "VerScript Certification Completed!" ?color="green"`,
-                expectedMatch: /VerScript Certification Completed!/i
-            }
-        ]
-    },
-
-    {
-        id: "grandmaster-capstone",
+        id: "ch17-grandmaster-capstone",
         number: 17,
+        section: "Section 6: Applied Systems & Reference",
         title: "Grandmaster Capstone: Complex Systems & Pipelines",
-        category: "Expert Capstone",
-        readTime: "12 min read",
-        summary: "Build complex multi-stage architectures: state machines, reactive memory caches, autonomous retry engines, and polyglot streaming pipelines.",
+        category: "Systems Engineering",
+        readTime: "8 min read",
+        summary: "Challenge yourself with 8 complex systems engineering challenges testing the full depth of VerScript capabilities.",
         body: `
-            <h2>The Grandmaster Challenge</h2>
-            <p>Welcome to the final capstone chapter of the VerScript Academy. In this section, you will write complex real-world programs combining all advanced features of VerScript: multi-tier state machines, reactive watch guards, nested polyglot pipelines, custom error scopes, and dynamic command aliases.</p>
-
-            <div class="callout-box warn">
-                <div class="callout-title">⚔️ High Complexity Warning</div>
-                <p>These exercises require multi-statement algorithmic coordination, nested scopes, error interception, and dynamic attribute translations. No pre-written answers are given — you must build the systems from specifications!</p>
-            </div>
-
-            <h2>Architecture Matrix</h2>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>System Pattern</th>
-                        <th>VerScript Mechanisms</th>
-                        <th>Real-world Analog</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Reactive State Machine</strong></td>
-                        <td><code>do ... unless internal [condition]</code> + multi-line <code>alias:</code></td>
-                        <td>Circuit Breaker / Watchdog Timer</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Polyglot Stream Pipeline</strong></td>
-                        <td><code>inject python</code> + <code>inject javascript</code> + <code>inject verscript</code></td>
-                        <td>Multi-language Microservice Bus</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Autonomous Retry Orchestrator</strong></td>
-                        <td><code>SuppressErrors</code> + <code>while ... step</code> + <code>throw ?msg</code></td>
-                        <td>Exponential Backoff Network Client</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2>Grandmaster Systems Certification</h2>
+            <p>Welcome to the Grandmaster Capstone. This capstone challenges you to combine reactive watch conditions, stepped loops, suppression scopes, polyglot injection, custom exception hierarchies, and alias metaprogramming into complete, production-grade systems.</p>
         `,
         codeBlocks: [
             {
                 id: "cb_capstone_1",
-                title: "reactor_orchestrator.vrs",
-                code: `! Grandmaster Capstone: Reactor Multi-Tier Orchestrator
+                title: "capstone_pipeline.vrs",
+                code: `! Grandmaster Systems Engineering Showcase
 alias:
-    display: log ? color=tint newline=inline
+    display: emit ? color=tint
     loop: repeat
 
-log "=== Reactor System Boot ===" ?tint="cyan"
-log "\n"
-
-core_temp : 120
-containment_breach : false
-
 do
-    log "[Stage 1] Initializing coolant flow... " ?tint="yellow" ?inline=true
-    core_temp : core_temp + 80
-    log "Temp: " + core_temp + "C\n" ?tint="cyan"
-    
-    log "[Stage 2] Power surge injection... " ?tint="yellow" ?inline=true
-    core_temp : core_temp + 150
-    log "Temp: " + core_temp + "C\n" ?tint="red"
-unless internal core_temp > 300
-    log "[ALARM] Emergency Cryo-Vent Engaged! Reactor Stabilized.\n" ?tint="green"
-    core_temp : 95
-    log "Stabilized Temp: " + core_temp + "C\n" ?tint="cyan"`
+    emit "=== Booting Autonomous Watchdog Core ===" ?tint="purple"
+    pressure : 120
+    repeat 4
+        emit "Core Pressure: " + pressure ?tint="cyan"
+        pressure : pressure + 60
+unless internal pressure > 300
+    emit "ALERT: Pressure threshold breached at " + pressure ?tint="yellow"`
             }
         ],
         exercises: [
             {
-                id: "ex_capstone_1",
-                title: "Challenge 17.1: Multi-tier Reactor Core Watchdog",
-                prompt: `Build an industrial reactor watchdog system:
-1. Define a multi-line <code>alias:</code> block aliasing <code>display: log ? color=tint</code>.
-2. Initialize <code>pressure : 50</code> and <code>critical_alert : false</code>.
-3. In a <code>do</code> block, increment pressure to <code>120</code>, then <code>220</code>, then <code>320</code>.
-4. Set a reactive guard <code>unless internal pressure > 300</code> that halts the core and outputs <code>"[VENT-OPEN] Pressure Dropped! Core Safe."</code> in green.`,
-                starterCode: `! Grandmaster Challenge 17.1: Multi-tier Reactor Core Watchdog
-! TODO: Implement the reactor state machine as specified in the prompt:
+                id: "ex_cap_1",
+                title: "Challenge 17.1: Reactor Core Watchdog",
+                prompt: "Create an <code>alias:</code> block mapping <code>display: log ? color=tint</code> and <code>loop: cycle</code>. In a <code>do</code> block, start with <code>coreTemp : 150</code>, run <code>cycle 4</code> adding <code>coreTemp : coreTemp + 60</code>, and catch with <code>unless internal coreTemp > 300</code> displaying <code>\"CRITICAL TEMP SHUTDOWN: \" + coreTemp</code> in yellow.",
+                starterCode: `! TODO: Implement Challenge 17.1
 `,
-                hint: "Set up the multi-line alias block first, then use `unless internal pressure > 300` on the do block.",
+                hint: "Use `alias:`, `do`, `cycle 4`, and `unless internal coreTemp > 300`.",
                 solution: `alias:
     display: log ? color=tint
-
-pressure : 50
-critical_alert : false
-
+    loop: cycle
 do
-    log "Normal: " + pressure ?tint="cyan"
-    pressure : 120
-    pressure : 220
-    pressure : 320
-unless internal pressure > 300
-    log "[VENT-OPEN] Pressure Dropped! Core Safe." ?tint="green"`,
-                expectedMatch: /VENT-OPEN.*Pressure Dropped! Core Safe/i
+    coreTemp : 150
+    cycle 4
+        coreTemp : coreTemp + 60
+unless internal coreTemp > 300
+    log "CRITICAL TEMP SHUTDOWN: " + coreTemp ?tint="yellow"`,
+                expectedMatch: /CRITICAL TEMP SHUTDOWN: 330/i
             },
             {
-                id: "ex_capstone_2",
+                id: "ex_cap_2",
                 title: "Challenge 17.2: Polyglot Matrix Data Bus",
-                prompt: `Create an interconnected polyglot processing pipeline:
-1. Alias <code>display: emit ? color=hue</code>.
-2. <code>inject python</code> to calculate squares <code>[1, 4, 9, 16]</code>.
-3. <code>inject javascript</code> to process a timestamp.
-4. <code>inject verscript</code> to output <code>"[VERIFIED] Polyglot Bus Clean"</code> in cyan.`,
-                starterCode: `! Grandmaster Challenge 17.2: Polyglot Matrix Data Bus
-! TODO: Build the multi-language injected pipeline
+                prompt: "Build a multi-language pipeline: 1) <code>inject python</code> computing a hash, 2) <code>inject javascript</code> computing an array sum, 3) <code>inject verscript</code> calculating <code>bus_total : 500 + 250</code> and displaying <code>\"Bus Total: \" + bus_total</code> in green.",
+                starterCode: `! TODO: Implement Challenge 17.2
 `,
-                hint: "Use alias, then `inject python`, `inject javascript`, and `inject verscript` sequentially.",
-                solution: `alias display: emit ? color=hue
+                hint: "Chain `inject python`, `inject javascript`, and `inject verscript`.",
+                solution: `inject python ?color="yellow"
+    h = sum([ord(c) for c in "VER"])
+    print("Python Hash:", h)
 
-emit "Starting Polyglot Pipeline..." ?hue="yellow"
-
-inject python
-    data = [x**2 for x in [1, 2, 3, 4]]
-    print("Python computed:", data)
-
-inject javascript
-    console.log("JavaScript timestamp verified.");
+inject javascript ?color="cyan"
+    console.log("JS Matrix Checksum:", [1,2,3,4].reduce((a,b)=>a*b, 1))
 
 inject verscript
-    display "[VERIFIED] Polyglot Bus Clean" ?color="cyan"`,
-                expectedMatch: /VERIFIED.*Polyglot Bus Clean/i
+    bus_total : 500 + 250
+    display "Bus Total: " + bus_total ?color="green"`,
+                expectedMatch: /Bus Total: 750/i
             },
             {
-                id: "ex_capstone_3",
+                id: "ex_cap_3",
                 title: "Challenge 17.3: Stepped Sieve Calculation Engine",
-                prompt: `Build a stepped calculation algorithm:
-1. Initialize <code>accumulator : 0</code> and <code>checksum : 1</code>.
-2. Use <code>iterate step_idx from 10 to 50 step 10</code>.
-3. On each iteration, add <code>step_idx</code> to <code>accumulator</code> and multiply <code>checksum : checksum * 2</code>.
-4. After iteration finishes, display <code>"Accumulator: " + accumulator + " | Checksum: " + checksum</code> in purple.`,
-                starterCode: `! Grandmaster Challenge 17.3: Stepped Sieve Calculation Engine
-! TODO: Implement the iterative accumulator and checksum algorithm
+                prompt: "Declare <code>accumulator : 0</code>. Run <code>iterate step_idx from 10 to 50 step 10</code>, adding <code>accumulator : accumulator + step_idx</code>. Display <code>\"Accumulated Sieve Total: \" + accumulator</code> in cyan.",
+                starterCode: `accumulator : 0
+! TODO: Implement Challenge 17.3
 `,
-                hint: "Iterate from 10 to 50 with step 10 (will run for 10, 20, 30, 40, 50). Accumulator will equal 150, Checksum will equal 32.",
+                hint: "Use `step 10` on the iteration.",
                 solution: `accumulator : 0
-checksum : 1
-
 iterate step_idx from 10 to 50 step 10
     accumulator : accumulator + step_idx
-    checksum : checksum * 2
-
-display "Accumulator: " + accumulator + " | Checksum: " + checksum ?color="purple"`,
-                expectedMatch: /Accumulator: 150 \| Checksum: 32/i
+display "Accumulated Sieve Total: " + accumulator ?color="cyan"`,
+                expectedMatch: /Accumulated Sieve Total: 150/i
             },
             {
-                id: "ex_capstone_4",
+                id: "ex_cap_4",
                 title: "Challenge 17.4: Autonomous Network Retry Engine",
-                prompt: `Build an autonomous retry loop:
-1. Initialize <code>attempts : 0</code> and <code>max_retries : 3</code> and <code>connected : false</code>.
-2. Inside <code>SuppressErrors</code>, use a <code>while attempts < max_retries</code> loop.
-3. Increment <code>attempts</code> by 1, display <code>"Connecting attempt " + attempts</code>.
-4. If attempts == 3, set <code>connected : true</code>.
-5. After the loop, if connected is true, display <code>"[ESTABLISHED] Session Secured"</code> in green.`,
-                starterCode: `! Grandmaster Challenge 17.4: Autonomous Network Retry Engine
-! TODO: Build the retry orchestrator with SuppressErrors and while loop
+                prompt: "Build an autonomous retry loop: set <code>attempts : 0</code> and <code>max_retries : 3</code>. Run <code>while attempts < max_retries</code> inside <code>SuppressErrors</code>, incrementing <code>attempts : attempts + 1</code> and triggering a simulated division failure. Finally display <code>\"Retries Completed: \" + attempts</code> in green.",
+                starterCode: `attempts : 0
+max_retries : 3
+! TODO: Implement Challenge 17.4
 `,
-                hint: "Use `attempts : attempts + 1` inside while loop and set `connected : true` when attempts reaches 3.",
+                hint: "Inside `while attempts < max_retries`, increment attempts and execute `err : 10 / 0`.",
                 solution: `attempts : 0
 max_retries : 3
-connected : false
-
 SuppressErrors
     while attempts < max_retries
         attempts : attempts + 1
-        display "Connecting attempt " + attempts ?color="yellow"
-        if attempts == 3 then
-            connected : true
-
-if connected == true then
-    display "[ESTABLISHED] Session Secured" ?color="green"`,
-                expectedMatch: /ESTABLISHED.*Session Secured/i
+        fault : 10 / 0
+display "Retries Completed: " + attempts ?color="green"`,
+                expectedMatch: /Retries Completed: 3/i
             },
             {
-                id: "ex_capstone_5",
+                id: "ex_cap_5",
                 title: "Challenge 17.5: Cascading Custom Error Hierarchy",
-                prompt: `Build a multi-level fallback error recovery system:
-1. Outer <code>do</code> block throws <code>HardwareFault</code> with <code>?msg="Sensor Failure"</code>.
-2. The <code>unless HardwareFault</code> catches it and logs <code>"Sensor Fault Recovered"</code> in yellow, then re-runs backup check.
-3. Display final state <code>"[RESTORED] System operational"</code> in green.`,
-                starterCode: `! Grandmaster Challenge 17.5: Cascading Custom Error Hierarchy
-! TODO: Write the nested exception recovery pipeline
+                prompt: "Write a <code>do</code> block that checks <code>sensor_v : 0</code>, throws <code>HardwareFault ?msg=\"Zero Voltage\"</code>, and catch it in <code>unless HardwareFault</code>, displaying <code>\"Fault Captured: \" + error</code> in red.",
+                starterCode: `sensor_v : 0
+! TODO: Implement Challenge 17.5
 `,
-                hint: "Use `do` with `throw HardwareFault ?msg=\"Sensor Failure\"` and catch with `unless HardwareFault`.",
-                solution: `do
-    display "Starting sensor diagnostics..." ?color="cyan"
-    throw HardwareFault ?msg="Sensor Failure"
-unless HardwareFault
-    display "Sensor Fault Recovered: " + error ?color="yellow"
-    display "[RESTORED] System operational" ?color="green"`,
-                expectedMatch: /RESTORED.*System operational/i
-            },
-            {
-                id: "ex_capstone_6",
-                title: "Challenge 17.6: Self-Healing Memory Cache Eviction",
-                prompt: `Simulate a LRU memory cache eviction engine:
-1. Set <code>cache_size : 0</code> and <code>max_capacity : 3</code>.
-2. In a <code>do</code> block, add items: <code>cache_size : cache_size + 1</code>, then <code>+ 2</code>, then <code>+ 2</code> (total 5).
-3. Set guard <code>unless internal cache_size > max_capacity</code>.
-4. In the handler, evict items (<code>cache_size : 2</code>) and display <code>"[EVICTION] Evicted excess entries. Cache size: " + cache_size</code> in cyan.`,
-                starterCode: `! Grandmaster Challenge 17.6: Self-Healing Memory Cache Eviction
-! TODO: Implement the memory cache monitor and eviction handler
-`,
-                hint: "The internal watch condition `cache_size > max_capacity` trips as soon as capacity exceeds 3.",
-                solution: `cache_size : 0
-max_capacity : 3
-
+                hint: "Use `throw HardwareFault ?msg=\"Zero Voltage\"`.",
+                solution: `sensor_v : 0
 do
-    cache_size : cache_size + 1
-    cache_size : cache_size + 2
-    cache_size : cache_size + 2
-unless internal cache_size > max_capacity
-    cache_size : 2
-    display "[EVICTION] Evicted excess entries. Cache size: " + cache_size ?color="cyan"`,
-                expectedMatch: /EVICTION.*Cache size: 2/i
+    if sensor_v = 0 then
+        throw HardwareFault ?msg="Zero Voltage"
+unless HardwareFault
+    display "Fault Captured: " + error ?color="red"`,
+                expectedMatch: /Fault Captured: HardwareFault/i
             },
             {
-                id: "ex_capstone_7",
-                title: "Challenge 17.7: Microservice Dynamic Route Matrix",
-                prompt: `Build an aliased microservice command router:
-1. Multi-line <code>alias:</code> remapping <code>display: route_get</code> and <code>prompt: route_post</code>.
-2. Call <code>route_post endpoint ?default="/api/v1/auth"</code>.
-3. Call <code>route_get "[DISPATCH:GET] Endpoint mapped to: " + endpoint</code> in purple.`,
-                starterCode: `! Grandmaster Challenge 17.7: Microservice Dynamic Route Matrix
-! TODO: Set up the routing aliases and dispatch routine
+                id: "ex_cap_6",
+                title: "Challenge 17.6: Self-Healing Memory Cache",
+                prompt: "Simulate a cache: set <code>cache_size : 10</code>, <code>max_capacity : 80</code>. In a <code>do</code> block, run <code>loop 5</code> adding <code>cache_size : cache_size + 20</code>, and catch with <code>unless internal cache_size > max_capacity</code>, purging and displaying <code>\"CACHE EVICTED AT: \" + cache_size</code> in yellow.",
+                starterCode: `cache_size : 10
+max_capacity : 80
+! TODO: Implement Challenge 17.6
 `,
-                hint: "Use multi-line `alias:` block with `display: route_get` and `prompt: route_post`.",
+                hint: "Use `unless internal cache_size > max_capacity`.",
+                solution: `cache_size : 10
+max_capacity : 80
+do
+    loop 5
+        cache_size : cache_size + 20
+unless internal cache_size > max_capacity
+    display "CACHE EVICTED AT: " + cache_size ?color="yellow"`,
+                expectedMatch: /CACHE EVICTED AT: 90/i
+            },
+            {
+                id: "ex_cap_7",
+                title: "Challenge 17.7: Microservice Route Remapping",
+                prompt: "Create an <code>alias:</code> block mapping <code>display: route_get</code> and <code>prompt: route_post</code>. Use <code>route_post endpoint ?default=\"/api/v1/health\"</code> and <code>route_get \"Route: \" + endpoint</code> in green.",
+                starterCode: `! TODO: Implement Challenge 17.7
+`,
+                hint: "Use `alias:` with `display: route_get` and `prompt: route_post`.",
                 solution: `alias:
     display: route_get
     prompt: route_post
 
-route_post endpoint ?default="/api/v1/auth"
-route_get "[DISPATCH:GET] Endpoint mapped to: " + endpoint ?color="purple"`,
-                expectedMatch: /DISPATCH:GET.*Endpoint mapped to: \/api\/v1\/auth/i
+route_post endpoint ?default="/api/v1/health"
+route_get "Route: " + endpoint ?color="green"`,
+                expectedMatch: /Route: \/api\/v1\/health/i
             },
             {
-                id: "ex_capstone_8",
+                id: "ex_cap_8",
                 title: "Challenge 17.8: Grandmaster Final Proof of Mastery",
-                prompt: `Write a comprehensive master pipeline integrating:
-- A multi-line <code>alias:</code> block (remapping display to log and loop to repeat)
-- A 3-iteration repeat loop
-- An internal exception catch with custom <code>?msg</code>
-- A final certification display <code>"=== [GRANDMASTER CERTIFIED: VERIFIED] ==="</code> in green.`,
-                starterCode: `! Grandmaster Challenge 17.8: Final Proof of Mastery
-! TODO: Write the complete master integration pipeline
+                prompt: "Combine all skills: 1) <code>alias display: out ? color=col</code>, 2) set <code>total_cycles : 0</code>, 3) iterate <code>c</code> from 1 to 3 with <code>total_cycles : total_cycles + c</code>, 4) print <code>\"Mastery Proof Verified: \" + total_cycles</code> in unquoted hex <code>?col=#00ffcc</code>.",
+                starterCode: `! TODO: Implement Challenge 17.8 Proof of Mastery
 `,
-                hint: "Combine all VerScript language capabilities into a single cohesive script.",
-                solution: `alias:
-    display: log ? color=tint
+                hint: "Combine alias mapping with iterate and hex output.",
+                solution: `alias display: out ? color=col
+total_cycles : 0
+iterate c from 1 to 3
+    total_cycles : total_cycles + c
+out "Mastery Proof Verified: " + total_cycles ?col=#00ffcc`,
+                expectedMatch: /Mastery Proof Verified: 6/i
+            }
+        ]
+    },
+
+    {
+        id: "ch18-master-cheatsheet",
+        number: 18,
+        section: "Section 6: Applied Systems & Reference",
+        title: "Master Language Specification & Complete Attribute Cheatsheet",
+        category: "Quick Reference",
+        readTime: "7 min read",
+        summary: "The definitive VerScript reference manual, containing the complete command attribute matrix table, grammar rules, and CLI specification.",
+        body: `
+            <h2>Complete Command &amp; Attribute Matrix Table</h2>
+            <p>Below is the complete, exhaustive reference matrix of all VerScript keywords, their supported attributes, data types, default behaviors, and usage examples:</p>
+
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Command / Keyword</th>
+                        <th>Supported Attributes &amp; Modifiers</th>
+                        <th>Accepted Types &amp; Formats</th>
+                        <th>Default Value</th>
+                        <th>Example Syntax</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>display</code></td>
+                        <td><code>?color</code><br><code>?newline</code><br><code>?inline</code></td>
+                        <td>Named (<code>"red"</code>, <code>"green"</code>, <code>"yellow"</code>, <code>"blue"</code>, <code>"purple"</code>, <code>"cyan"</code>, <code>"white"</code>) or Hex (<code>#RRGGBB</code>, <code>#RGB</code>, quoted/unquoted)<br>Boolean (<code>true</code> / <code>false</code>)<br>Flag modifier</td>
+                        <td><code>white</code><br><code>true</code><br>N/A</td>
+                        <td><code>display "Hi" ?color=#00ffcc</code><br><code>display "Loading: " ?inline</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>prompt</code></td>
+                        <td><code>?default</code></td>
+                        <td>String / Number</td>
+                        <td><code>""</code> (empty string)</td>
+                        <td><code>prompt user ?default="Guest"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>loop</code></td>
+                        <td><code>step N</code></td>
+                        <td>Integer (&gt; 0)</td>
+                        <td><code>1</code></td>
+                        <td><code>loop 10 step 2</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>iterate</code></td>
+                        <td><code>from X to Y</code><br><code>step S</code></td>
+                        <td>Integer bounds<br>Integer step (&gt; 0)</td>
+                        <td>N/A<br><code>1</code></td>
+                        <td><code>iterate i from 1 to 50 step 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>while</code></td>
+                        <td><code>step N</code></td>
+                        <td>Integer cadence</td>
+                        <td><code>1</code></td>
+                        <td><code>while count &lt; 10 step 2</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>until</code></td>
+                        <td><code>step N</code></td>
+                        <td>Integer cadence</td>
+                        <td><code>1</code></td>
+                        <td><code>until power &gt;= 100</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>unless</code></td>
+                        <td><code>internal</code><br><code>external</code></td>
+                        <td>Expression / Condition<br>Expression / Condition</td>
+                        <td>Default error catch</td>
+                        <td><code>unless internal temp &gt; 100</code><br><code>unless external isLocked</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>throw</code></td>
+                        <td><code>?msg</code></td>
+                        <td>String (custom error payload)</td>
+                        <td><code>"User thrown error"</code></td>
+                        <td><code>throw HardwareFault ?msg="Low V"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>inject</code></td>
+                        <td><code>[language]</code><br><code>?color</code></td>
+                        <td>100+ Language Identifiers (<code>python</code>, <code>js</code>, <code>rust</code>, <code>c</code>, <code>verscript</code>)<br>Color string/hex</td>
+                        <td>N/A<br><code>"white"</code></td>
+                        <td><code>inject python ?color="yellow"</code><br><code>inject verscript</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>alias</code></td>
+                        <td><code>cmd1: cmd2</code><br><code>? orig=new</code><br><code>alias:</code> (block)</td>
+                        <td>Identifier remapping<br>Attribute mapping key-value pairs</td>
+                        <td>N/A</td>
+                        <td><code>alias display: print</code><br><code>alias display: log ? color=tint</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>SuppressErrors</code></td>
+                        <td>None</td>
+                        <td>Block scope</td>
+                        <td>N/A</td>
+                        <td><code>SuppressErrors<br>&nbsp;&nbsp;bad_call : 10 / 0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>CriticalErrors</code></td>
+                        <td>None</td>
+                        <td>Block scope</td>
+                        <td>N/A</td>
+                        <td><code>CriticalErrors<br>&nbsp;&nbsp;run_backend()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>ForceErrors</code></td>
+                        <td>None</td>
+                        <td>Block scope</td>
+                        <td>N/A</td>
+                        <td><code>ForceErrors<br>&nbsp;&nbsp;strict_test()</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Grammar &amp; Operator Precedence</h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Precedence</th>
+                        <th>Operators</th>
+                        <th>Description</th>
+                        <th>Associativity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 (Highest)</td>
+                        <td><code>-</code> (unary)</td>
+                        <td>Unary Negation</td>
+                        <td>Right-to-Left</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><code>*</code>, <code>/</code></td>
+                        <td>Multiplication, Integer Division</td>
+                        <td>Left-to-Right</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><code>+</code>, <code>-</code></td>
+                        <td>Addition / String Concatenation, Subtraction</td>
+                        <td>Left-to-Right</td>
+                    </tr>
+                    <tr>
+                        <td>4 (Lowest)</td>
+                        <td><code>=</code>, <code>x=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td>
+                        <td>Equality, Inequality, Relational</td>
+                        <td>Left-to-Right</td>
+                    </tr>
+                </tbody>
+            </table>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_spec_1",
+                title: "master_reference.vrs",
+                code: `! Complete VerScript Language Feature Demonstration
+alias:
+    display: print ? color=tint
     loop: repeat
 
-log "Initiating Grandmaster Proof Matrix..." ?tint="cyan"
-
-repeat 3
-    log "Processing cluster node..." ?tint="yellow"
-
-do
-    throw ValidationPass ?msg="All assertions verified"
-unless ValidationPass
-    log "=== [GRANDMASTER CERTIFIED: VERIFIED] ===" ?tint="green"`,
-                expectedMatch: /GRANDMASTER CERTIFIED: VERIFIED/i
+SuppressErrors
+    print "=== VerScript v1.2 Complete Reference ===" ?tint=#00ffcc
+    repeat 2
+        print "System certified and verified." ?tint=#50fa7b`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_spec_1",
+                title: "Exercise 18.1: Complete Syntax Verification",
+                prompt: "Using the cheatsheet table as reference, write a program that uses <code>alias display: out ? color=col</code>, runs <code>loop 2</code>, and prints <code>\"Reference Verified\"</code> in unquoted hex <code>?col=#00ffcc</code>.",
+                starterCode: `! TODO: Write program according to Exercise 18.1
+`,
+                hint: "Use `alias display: out ? color=col`, `loop 2`, and `out \"Reference Verified\" ?col=#00ffcc`.",
+                solution: `alias display: out ? color=col
+loop 2
+    out "Reference Verified" ?col=#00ffcc`,
+                expectedMatch: /Reference Verified/i
+            },
+            {
+                id: "ex_spec_2",
+                title: "Exercise 18.2: Comprehensive Attribute Validation",
+                prompt: "Write a program combining <code>prompt client ?default=\"Admin\"</code> and <code>display \"Verified: \" + client ?color=#50fa7b</code>.",
+                starterCode: `! TODO: Combine prompt with default and display with hex color
+`,
+                hint: "Use `prompt client ?default=\"Admin\"`.",
+                solution: `prompt client ?default="Admin"
+display "Verified: " + client ?color=#50fa7b`,
+                expectedMatch: /Verified:/i
             }
         ]
     }
