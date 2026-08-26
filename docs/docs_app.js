@@ -183,7 +183,7 @@ function renderRunBox(id, title, initialCode) {
                 </div>
             </div>
             <div class="code-editor-area">
-                <textarea class="code-textarea" id="textarea_${id}" spellcheck="false">${escapeHTML(initialCode)}</textarea>
+                <textarea class="code-textarea" aria-label="Code editor" id="textarea_${id}" spellcheck="false">${escapeHTML(initialCode)}</textarea>
             </div>
             <div class="runbox-console" id="console_${id}">
                 <div class="console-header">
