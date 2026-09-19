@@ -451,7 +451,7 @@
         }
 
         /* Syntax Highlight Palette */
-        .token-comment { color: #a3b8cc; font-style: italic; }
+        .token-comment { color: #6272a4; font-style: italic; }
         .token-keyword { color: #ff79c6; font-weight: 700; }
         .token-string { color: #f1fa8c; }
         .token-number { color: #bd93f9; }
@@ -491,7 +491,7 @@
         .terminal-body {
             color: #d8dee9;
             white-space: pre-wrap;
-            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         /* ═══════════════════════════════════════════════════════════
@@ -664,11 +664,11 @@
     <nav>
         <a href="index.html" class="logo-group">
             <span class="logo">VerScript</span>
-            <span class="logo-pill">v1.2.0</span>
+            <span class="logo-pill">v2.0</span>
         </a>
         <div class="nav-links">
             <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
-            <a href="docs/index.html" class="nav-link">Documentation (18 Ch)</a>
+            <a href="docs/index.html" class="nav-link">Documentation (20 Ch)</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -679,7 +679,7 @@
     <!-- Mobile Drawer -->
     <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
         <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
-        <a href="docs/index.html">Documentation Academy</a>
+        <a href="docs/index.html">Documentation Academy (20 Ch)</a>
         <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Open Web IDE</a>
     </div>
 
@@ -694,11 +694,11 @@
                 The Minimalist <span class="gradient-text">Polyglot</span> Scripting Language
             </h1>
             <p class="hero-tagline">
-                Seamlessly blending the raw determinism and speed of native C with modern ergonomics: reactive watchguards, Truecolor ANSI escape styling, command aliases, and 100+ language code injection.
+                Seamlessly blending the raw determinism and speed of native C with modern ergonomics: pure functions &amp; methods, reactive watchguards, Truecolor ANSI escape styling, command aliases, and 100+ language code injection.
             </p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary" id="ctaDocs">
-                    <span>Explore Academy (18 Chapters)</span> &rarr;
+                    <span>Explore Academy (20 Chapters)</span> &rarr;
                 </a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaIDE">
                     <span>Launch Web IDE</span> 🚀
@@ -721,7 +721,7 @@
                 <div class="stat-label">Native C VM Core</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">18</div>
+                <div class="stat-number">20</div>
                 <div class="stat-label">Interactive Chapters</div>
             </div>
         </div>
@@ -737,6 +737,7 @@
                     </div>
                     <div class="window-tabs">
                         <button class="tab-btn active" id="tabSample" onclick="switchSnippet('sample')">sample.vrs</button>
+                        <button class="tab-btn" id="tabFunctions" onclick="switchSnippet('functions')">functions.vrs</button>
                         <button class="tab-btn" id="tabPolyglot" onclick="switchSnippet('polyglot')">polyglot.vrs</button>
                         <button class="tab-btn" id="tabWatchdog" onclick="switchSnippet('watchdog')">watchdog.vrs</button>
                     </div>
@@ -768,6 +769,13 @@
 
         <div class="features-grid">
             <div class="feature-card">
+                <div class="feature-icon-badge">🧩</div>
+                <h3>Command-Query Purity</h3>
+                <p>Strict CQS architecture: pure <code>inbound</code> functions with <code>reply</code>, stateful <code>outbound</code> methods, and explicit <code>set</code> variable scoping.</p>
+                <div class="feature-snippet">def func add a b { reply a + b }</div>
+            </div>
+
+            <div class="feature-card">
                 <div class="feature-icon-badge">🎨</div>
                 <h3>Truecolor ANSI Engine</h3>
                 <p>Output rich 24-bit Truecolor gradients (<code>?color=#hex</code>) and 16 named ANSI colors with non-blocking inline printing attributes.</p>
@@ -778,7 +786,7 @@
                 <div class="feature-icon-badge">🛡️</div>
                 <h3>Reactive Watch Conditions</h3>
                 <p>Internal watchdogs halt execution and transfer control the exact instant a variable crosses a safe threshold during block passes.</p>
-                <div class="feature-snippet">do ... unless internal temp &gt; 100</div>
+                <div class="feature-snippet">do ... unless internal temp > 100</div>
             </div>
 
             <div class="feature-card">
@@ -820,37 +828,37 @@
         <div class="feature-card" style="width: 100%; margin-bottom: 24px; padding: 32px;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
                 <div>
-                    <h3 style="color: var(--primary); margin: 0 0 8px; font-size: 1.05rem;">⚙️ Systems &amp; Native</h3>
+                    <h4 style="color: var(--primary); margin: 0 0 8px; font-size: 1.05rem;">⚙️ Systems &amp; Native</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>c</code>, <code>cpp</code>, <code>rust</code>, <code>zig</code>, <code>go</code>, <code>d</code>, <code>nim</code>, <code>fortran</code>, <code>ada</code>, <code>asm</code>, <code>v</code>, <code>odin</code>, <code>pascal</code>, <code>modula</code>
                     </p>
                 </div>
                 <div>
-                    <h3 style="color: var(--accent-pink); margin: 0 0 8px; font-size: 1.05rem;">🌐 Web &amp; Fullstack</h3>
+                    <h4 style="color: var(--accent-pink); margin: 0 0 8px; font-size: 1.05rem;">🌐 Web &amp; Fullstack</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>javascript</code>, <code>typescript</code>, <code>html</code>, <code>css</code>, <code>scss</code>, <code>sass</code>, <code>less</code>, <code>jsx</code>, <code>tsx</code>, <code>json</code>, <code>yaml</code>, <code>toml</code>, <code>graphql</code>, <code>wasm</code>
                     </p>
                 </div>
                 <div>
-                    <h3 style="color: var(--accent-yellow); margin: 0 0 8px; font-size: 1.05rem;">🧠 AI, Data &amp; Math</h3>
+                    <h4 style="color: var(--accent-yellow); margin: 0 0 8px; font-size: 1.05rem;">🧠 AI, Data &amp; Math</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>python</code>, <code>r</code>, <code>julia</code>, <code>matlab</code>, <code>octave</code>, <code>sql</code>, <code>pgsql</code>, <code>mysql</code>, <code>sqlite</code>, <code>sas</code>, <code>stata</code>, <code>sparql</code>
                     </p>
                 </div>
                 <div>
-                    <h3 style="color: var(--accent-green); margin: 0 0 8px; font-size: 1.05rem;">🏢 Enterprise &amp; JVM / .NET</h3>
+                    <h4 style="color: var(--accent-green); margin: 0 0 8px; font-size: 1.05rem;">🏢 Enterprise &amp; JVM / .NET</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>java</code>, <code>csharp</code>, <code>kotlin</code>, <code>scala</code>, <code>groovy</code>, <code>fsharp</code>, <code>vb</code>, <code>clojure</code>, <code>swift</code>, <code>objective-c</code>
                     </p>
                 </div>
                 <div>
-                    <h3 style="color: #00d2ff; margin: 0 0 8px; font-size: 1.05rem;">📜 Scripting &amp; Automation</h3>
+                    <h4 style="color: #00d2ff; margin: 0 0 8px; font-size: 1.05rem;">📜 Scripting &amp; Automation</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>ruby</code>, <code>php</code>, <code>perl</code>, <code>lua</code>, <code>bash</code>, <code>sh</code>, <code>powershell</code>, <code>zsh</code>, <code>awk</code>, <code>sed</code>, <code>tcl</code>, <code>fish</code>, <code>bat</code>
                     </p>
                 </div>
                 <div>
-                    <h3 style="color: #bd93f9; margin: 0 0 8px; font-size: 1.05rem;">🧬 Functional, Web3 &amp; DSLs</h3>
+                    <h4 style="color: #bd93f9; margin: 0 0 8px; font-size: 1.05rem;">🧬 Functional, Web3 &amp; DSLs</h4>
                     <p style="font-family: 'Fira Code', monospace; font-size: 0.84rem; color: #d8dee9; line-height: 1.7; margin: 0;">
                         <code>haskell</code>, <code>elixir</code>, <code>erlang</code>, <code>ocaml</code>, <code>scheme</code>, <code>lisp</code>, <code>solidity</code>, <code>vyper</code>, <code>verilog</code>, <code>vhdl</code>, <code>latex</code>, <code>markdown</code>, <code>dockerfile</code>, <code>verscript</code>
                     </p>
@@ -861,7 +869,7 @@
         <!-- ══════════════ CTA BANNER ══════════════ -->
         <div class="cta-banner">
             <h2>Ready to Master VerScript?</h2>
-            <p>Step into the complete 18-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
+            <p>Step into the complete 20-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary">Start Interactive Academy &rarr;</a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary">Launch Web IDE</a>
@@ -902,49 +910,109 @@
         const SNIPPETS = {
             sample: {
                 code: `!!
-  VerScript Comprehensive Architecture Showcase — v1.2.0
-  Featuring:
-    1: Command Aliasing & Attribute Remapping
-    2: Unquoted Truecolor Hex Attributes (?color=#hex)
-    3: Stepped Range Iterations (iterate from X to Y step S)
-    4: Reactive Internal Watchdog Guards (do ... unless internal)
-    5: Scoped Error Suppression (SuppressErrors)
+  VerScript Comprehensive Showcase — v2.0
+  Showcasing:
+    1: Custom Functions (def func ... reply) & Purity Contracts (inbound/outbound)
+    2: Methods (def method) with State Mutation & Early Return (reply)
+    3: Explicit Variable Assignment with "set" keyword
+    4: ANSI & TrueColor Hex Attributes (?color=#38bdf8)
+    5: Command Aliasing & Polyglot Injections
+    6: Robust Error Handling (do ... unless) & ScopeViolationError
 !!
 
-alias display: print ? color=tint
+display "=== 1. Explicit Variable Setting ===" ?color=#38bdf8
+set status: "Engine Operational"
+set base_power: 50
+set boost_multiplier: 3
+display "System Status: " + status ?color=#22c55e
 
-print "=== VerScript Native Engine Active ===" ?tint=#00ffcc
-print "Core: 64-bit C Bytecode Interpreter" ?tint=#50fa7b
-print "Status: Online and Ready" ?tint=#f1fa8c
+display "=== 2. Pure Custom Functions (Inbound by default) ===" ?color=#c084fc
+def func calculate_power base mult
+  reply base * mult
 
-! Stepped Iteration
-iterate cycle from 1 to 7 step 2
-  print "Stepped Pass: " + cycle ?tint="cyan"
+set total_power: (calculate_power base_power boost_multiplier)
+display "Calculated Total Power: " + total_power ?color=#38bdf8
 
-! Reactive Internal Watchdog Guard
+display "=== 3. Scope Isolation & Purity Enforcement ===" ?color=#fbbf24
+def func pure_routine delta
+  ! Modifying outer variables from an inbound function raises ScopeViolationError
+  set base_power: base_power + delta
+  reply base_power
+
 do
-  pressure : 100
-  loop 3 step 1
-    print "Core Pressure: " + pressure ?tint=#00d2ff
-    pressure : pressure + 60
-unless internal pressure > 200
-  print "WATCHDOG TRIGGERED: Pressure breached at " + pressure ?tint=#ff5555
+  res: (pure_routine 100)
+unless ScopeViolationError
+  display "Purity Guard Active: Caught ScopeViolationError successfully!" ?color=#22c55e
 
-! Error Suppression Scope
-SuppressErrors
-  err_val : 100 / 0
-  print "Division by zero bypassed cleanly under SuppressErrors!" ?tint=#50fa7b`,
-                output: `<span style="color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.4); font-weight: bold;">=== VerScript Native Engine Active ===</span>
-<span style="color: #50fa7b; text-shadow: 0 0 10px rgba(80,250,123,0.4); font-weight: bold;">Core: 64-bit C Bytecode Interpreter</span>
-<span style="color: #f1fa8c; text-shadow: 0 0 10px rgba(241,250,140,0.4); font-weight: bold;">Status: Online and Ready</span>
-<span style="color: #8be9fd;">Stepped Pass: 1</span>
-<span style="color: #8be9fd;">Stepped Pass: 3</span>
-<span style="color: #8be9fd;">Stepped Pass: 5</span>
-<span style="color: #8be9fd;">Stepped Pass: 7</span>
-<span style="color: #00d2ff;">Core Pressure: 100</span>
-<span style="color: #00d2ff;">Core Pressure: 160</span>
-<span style="color: #ff5555; text-shadow: 0 0 10px rgba(255,85,85,0.4); font-weight: bold;">WATCHDOG TRIGGERED: Pressure breached at 220</span>
-<span style="color: #50fa7b; font-weight: bold;">Division by zero bypassed cleanly under SuppressErrors!</span>`
+display "=== 4. Custom Methods (Stateful & Void) ===" ?color=#c084fc
+set system_cycles: 0
+
+def method run_diagnostics iterations
+  iterate step from 1 to iterations step 1
+    if step = 3 then
+      set system_cycles: system_cycles + step
+      reply ! Early exit
+    set system_cycles: system_cycles + step
+
+run_diagnostics 5
+display "System Cycles after method call: " + system_cycles ?color=#38bdf8
+
+display "=== 5. Command Aliasing & Hex Colors ===" ?color=#38bdf8
+alias display: log
+log "Logging via custom alias with Hex Color #38bdf8!" ?color=#38bdf8
+
+display "=== 6. Polyglot Code Injection ===" ?color=#fbbf24
+inject python ?color=yellow
+  def py_helper(val):
+      return f"Python processing {val}"
+  print("Polyglot layer executed cleanly")
+
+inject verscript
+  display "Dynamic nested VerScript runtime active!" ?color=#22c55e
+
+display "=== VerScript v2.0 System Ready ===" ?color=#22c55e`,
+                output: `<span style="color: #38bdf8; font-weight: bold;">=== 1. Explicit Variable Setting ===</span>
+<span style="color: #22c55e;">System Status: Engine Operational</span>
+<span style="color: #c084fc; font-weight: bold;">=== 2. Pure Custom Functions (Inbound by default) ===</span>
+<span style="color: #38bdf8;">Calculated Total Power: 150</span>
+<span style="color: #fbbf24; font-weight: bold;">=== 3. Scope Isolation & Purity Enforcement ===</span>
+<span style="color: #22c55e; font-weight: bold;">Purity Guard Active: Caught ScopeViolationError successfully!</span>
+<span style="color: #c084fc; font-weight: bold;">=== 4. Custom Methods (Stateful & Void) ===</span>
+<span style="color: #38bdf8;">System Cycles after method call: 6</span>
+<span style="color: #38bdf8; font-weight: bold;">=== 5. Command Aliasing & Hex Colors ===</span>
+<span style="color: #38bdf8;">Logging via custom alias with Hex Color #38bdf8!</span>
+<span style="color: #fbbf24; font-weight: bold;">=== 6. Polyglot Code Injection ===</span>
+<span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Evaluated 3 code line(s) cleanly.
+<span style="color: #22c55e;">Dynamic nested VerScript runtime active!</span>
+<span style="color: #22c55e; font-weight: bold; text-shadow: 0 0 10px rgba(34,197,94,0.5);">=== VerScript v2.0 System Ready ===</span>`
+            },
+            functions: {
+                code: `! Command-Query Separation & Purity Contracts (v2.0)
+display "--- Math & Purity Contract Demo ---" ?color=#38bdf8
+
+! Pure query function (inbound by default)
+def func hypotenuse a b
+  set sq_sum: (a * a) + (b * b)
+  reply sq_sum
+
+! Explicit outbound method to modify outer state
+set total_operations: 0
+
+def outbound method record_operation name cost
+  set total_operations: total_operations + 1
+  display "Recorded " + name + " (Cost: " + cost + ")" ?color=#a855f7
+
+record_operation "Matrix Multiply" 45
+record_operation "FFT Transform" 80
+
+set result: (hypotenuse 3 4)
+display "Computed Hypotenuse Squared: " + result ?color=#22c55e
+display "Total System Operations: " + total_operations ?color=#fbbf24`,
+                output: `<span style="color: #38bdf8; font-weight: bold;">--- Math & Purity Contract Demo ---</span>
+<span style="color: #a855f7;">Recorded Matrix Multiply (Cost: 45)</span>
+<span style="color: #a855f7;">Recorded FFT Transform (Cost: 80)</span>
+<span style="color: #22c55e; font-weight: bold;">Computed Hypotenuse Squared: 25</span>
+<span style="color: #fbbf24; font-weight: bold;">Total System Operations: 2</span>`
             },
             polyglot: {
                 code: `! Polyglot Multi-Language Code Injection
@@ -998,7 +1066,7 @@ unless internal core_temperature > max_safe_limit
                 return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>)|(\n|[^\s\w]+|\w+|\s+)/g;
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|reply|set|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>|==|!=|\(|\))|(\n|[^\s\w]+|\w+|\s+)/g;
 
             return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
                 if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;
@@ -1016,9 +1084,10 @@ unless internal core_temperature > max_safe_limit
         function switchSnippet(key) {
             currentActiveSnippet = key;
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            if (key === 'sample') document.getElementById('tabSample').classList.add('active');
-            if (key === 'polyglot') document.getElementById('tabPolyglot').classList.add('active');
-            if (key === 'watchdog') document.getElementById('tabWatchdog').classList.add('active');
+            if (key === 'sample') document.getElementById('tabSample')?.classList.add('active');
+            if (key === 'functions') document.getElementById('tabFunctions')?.classList.add('active');
+            if (key === 'polyglot') document.getElementById('tabPolyglot')?.classList.add('active');
+            if (key === 'watchdog') document.getElementById('tabWatchdog')?.classList.add('active');
 
             codePreEl.innerHTML = highlightVerScript(SNIPPETS[key].code);
             terminalDrawerEl.classList.remove('open');
