@@ -1838,7 +1838,7 @@ unless LoopStepError
                 expectedMatch: /Handled Loop Step Error/i
             }
         ]
-    }
+    },
 
     // -------------------------------------------------------------------
     // SECTION 6: POLYGLOT & METAPROGRAMMING
