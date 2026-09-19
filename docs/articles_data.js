@@ -1,24 +1,25 @@
 // ═══════════════════════════════════════════════════════════════════
 //  VerScript Academy — Complete Interactive Documentation Articles
-//  Divided into 8 Rigorous Skill Tiers / Sections:
-//   1. Fundamentals (Ch 1-5)
+//  Pedagogically Structured into 8 Progressive Learning Sections:
+//   1. Fundamentals & Syntax (Ch 1-5)
 //   2. Input & Output Mastery (Ch 6-7)
 //   3. Control Flow & Iteration (Ch 8-11)
-//   4. Advanced Exception Architecture (Ch 12-14)
-//   5. Polyglot & Metaprogramming (Ch 15-16)
-//   6. Applied Systems & Reference (Ch 17-18)
-//   7. Procedures, Functions & Purity (Ch 19)
-//   8. Diagnostics & Runtime Architecture (Ch 20)
+//   4. Procedures, Functions & Purity (Ch 12)
+//   5. Advanced Exception Architecture & Diagnostics (Ch 13-16)
+//   6. Polyglot & Metaprogramming (Ch 17-18)
+//   7. Grandmaster Systems Capstone (Ch 19)
+//   8. Complete Language Specification & Cheatsheet (Ch 20)
 // ═══════════════════════════════════════════════════════════════════
 
 const ARTICLES = [
     // ═══════════════════════════════════════════════════════════════
     // SECTION 1: FUNDAMENTALS
     // ═══════════════════════════════════════════════════════════════
+
     {
         id: "ch1-intro",
         number: 1,
-        section: "Section 1: Fundamentals",
+        section: "Section 1: Fundamentals & Syntax",
         title: "Introduction & Language Architecture",
         category: "Getting Started",
         readTime: "4 min read",
@@ -114,7 +115,7 @@ display "Ready" ?color="yellow"`,
     {
         id: "ch2-lexical",
         number: 2,
-        section: "Section 1: Fundamentals",
+        section: "Section 1: Fundamentals & Syntax",
         title: "Lexical Structure & Comments",
         category: "Fundamentals",
         readTime: "3 min read",
@@ -191,15 +192,38 @@ display "Module Loaded" ?color="yellow"`,
     {
         id: "ch3-variables",
         number: 3,
-        section: "Section 1: Fundamentals",
+        section: "Section 1: Fundamentals & Syntax",
         title: "Variables, Dynamic Typing & Scope",
         category: "Fundamentals",
         readTime: "5 min read",
         summary: "Master variable assignment with the colon operator, dynamic typing, and memory semantics.",
         body: `
-            <h2>Variable Assignment (<code>identifier : expression</code>)</h2>
-            <p>In VerScript, variables are declared and mutated using the colon operator <code>:</code>. Keywords like <code>var</code>, <code>let</code>, or <code>const</code> are unnecessary.</p>
+            <h2>Variable Assignment &amp; Mutation</h2>
+            <p>In VerScript, variables can be assigned and mutated using either the concise colon syntax (<code>identifier : expression</code>) or the explicit <code>set</code> keyword (<code>set identifier : expression</code>). Keywords like <code>var</code>, <code>let</code>, or <code>const</code> are unnecessary.</p>
 
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Assignment Syntax</th>
+                        <th>Example</th>
+                        <th>Semantics &amp; Best Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>identifier : expr</code></td>
+                        <td><code>score : 100</code></td>
+                        <td>Standard concise assignment. Fast and expressive for script bodies.</td>
+                    </tr>
+                    <tr>
+                        <td><code>set identifier : expr</code></td>
+                        <td><code>set score : 100</code></td>
+                        <td>Explicit assignment keyword. Highly readable and prevents name collisions with future commands or aliases.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Data Types in VerScript</h2>
             <table class="doc-table">
                 <thead>
                     <tr>
@@ -230,7 +254,7 @@ display "Module Loaded" ?color="yellow"`,
             <h2>Dynamic Re-typing</h2>
             <p>Variables hold dynamic types and can transition seamlessly across types during execution:</p>
             <div class="code-block">data : 42
-data : "Forty-Two"
+set data : "Forty-Two"
 data : true</div>
         `,
         codeBlocks: [
@@ -290,7 +314,7 @@ display "System Operational: " + isOperational ?color="purple"`,
     {
         id: "ch4-expressions",
         number: 4,
-        section: "Section 1: Fundamentals",
+        section: "Section 1: Fundamentals & Syntax",
         title: "Arithmetic, Expressions & Operators",
         category: "Fundamentals",
         readTime: "4 min read",
@@ -398,7 +422,7 @@ display "Final: " + final ?color="yellow"`,
     {
         id: "ch5-comparisons",
         number: 5,
-        section: "Section 1: Fundamentals",
+        section: "Section 1: Fundamentals & Syntax",
         title: "Comparisons & Logical Guards",
         category: "Fundamentals",
         readTime: "4 min read",
@@ -518,6 +542,7 @@ display "Is Admin: " + (role = "admin") ?color="green"`,
     // ═══════════════════════════════════════════════════════════════
     // SECTION 2: INPUT & OUTPUT MASTERY
     // ═══════════════════════════════════════════════════════════════
+
     {
         id: "ch6-display-command",
         number: 6,
@@ -717,6 +742,7 @@ display "Connected to: " + city ?color=#00e5ff`,
     // ═══════════════════════════════════════════════════════════════
     // SECTION 3: CONTROL FLOW & ITERATION
     // ═══════════════════════════════════════════════════════════════
+
     {
         id: "ch8-conditionals",
         number: 8,
@@ -1081,13 +1107,220 @@ while n > 8
         ]
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 4: ADVANCED EXCEPTION ARCHITECTURE
-    // ═══════════════════════════════════════════════════════════════
+    // -------------------------------------------------------------------
+    // SECTION 4: PROCEDURES, FUNCTIONS & PURITY
+    // -------------------------------------------------------------------
+
     {
-        id: "ch12-do-unless",
+        id: "ch12-functions-methods",
         number: 12,
-        section: "Section 4: Advanced Exception Architecture",
+        section: "Section 4: Procedures, Functions & Purity",
+        title: "Custom Functions, Methods & Purity Contracts",
+        category: "Procedures & Purity",
+        readTime: "8 min read",
+        summary: "Master custom functions with def func, stateful methods with def method, Command-Query Separation, inbound/outbound purity contracts, and the explicit set keyword.",
+        body: `
+            <h2>The Command-Query Separation Paradigm</h2>
+            <p>VerScript adheres to a strict <strong>Command-Query Separation (CQS)</strong> design philosophy at the language level:</p>
+            <ul>
+                <li><strong>Functions (<code>def func</code>)</strong>: Pure queries designed to calculate and return a value using <code>reply &lt;expr&gt;</code>. By default, functions are <em>inbound</em> (pure) and cannot modify state outside their lexical call frame.</li>
+                <li><strong>Methods (<code>def method</code>)</strong>: Commands designed to perform side effects and modify program state. Methods return nothing (<code>void</code>); returning an expression with <code>reply</code> raises a <code>SyntaxError</code>. Methods can use bare <code>reply</code> for early exit.</li>
+            </ul>
+
+            <div class="callout-box tip">
+                <div class="callout-title">💡 Pure by Default, Explicit by Design</div>
+                <p>In VerScript, functions guarantee safety by defaulting to <code>inbound</code> (mathematically pure). Methods guarantee utility by defaulting to <code>outbound</code> (stateful). Any departure from these defaults must be explicitly declared.</p>
+            </div>
+
+            <h2>Explicit Variable Assignment: <code>set</code> Keyword</h2>
+            <p>VerScript supports explicit variable assignment using the <code>set</code> keyword:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Syntax</th>
+                        <th>Example</th>
+                        <th>Semantics &amp; Best Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>var: val</code></td>
+                        <td><code>score: 100</code></td>
+                        <td>Standard concise assignment. Fast and expressive for script bodies.</td>
+                    </tr>
+                    <tr>
+                        <td><code>set var: val</code></td>
+                        <td><code>set score: 100</code></td>
+                        <td>Explicit assignment keyword. Guarantees no collision with command aliases or future keywords. Highly recommended inside critical functions and methods.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Purity Contracts: <code>inbound</code> vs <code>outbound</code></h2>
+            <p>Purity contracts govern whether a routine is permitted to mutate variables in outer enclosing scopes:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Declaration</th>
+                        <th>Kind</th>
+                        <th>Default Purity</th>
+                        <th>Outer Scope Mutation</th>
+                        <th>Return Value (<code>reply</code>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>def func f ...</code></td>
+                        <td>Function</td>
+                        <td><code>inbound</code></td>
+                        <td>❌ Forbidden (raises <code>ScopeViolationError</code>)</td>
+                        <td>✅ Required / Optional (<code>reply &lt;expr&gt;</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>def outbound func f ...</code></td>
+                        <td>Function</td>
+                        <td><code>outbound</code></td>
+                        <td>✅ Allowed (explicit opt-in)</td>
+                        <td>✅ Allowed (<code>reply &lt;expr&gt;</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>def method m ...</code></td>
+                        <td>Method</td>
+                        <td><code>outbound</code></td>
+                        <td>✅ Allowed (state mutator)</td>
+                        <td>❌ Forbidden (raises <code>SyntaxError</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>def inbound method m ...</code></td>
+                        <td>Method</td>
+                        <td><code>inbound</code></td>
+                        <td>❌ Forbidden (raises <code>ScopeViolationError</code>)</td>
+                        <td>❌ Forbidden (bare <code>reply</code> only)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Defining and Calling Routines</h2>
+            <p>Routines take space-delimited parameters without parenthesized parameter lists. Inside expressions, function calls can be nested using parentheses:</p>
+            <div class="callout-box note">
+                <div class="callout-title">📝 Invocation Syntax</div>
+                <p><strong>Statement Invocation:</strong> <code>add 10 20</code> or <code>increment 5</code><br>
+                <strong>Expression Invocation:</strong> <code>res: (add 10 20) * 2</code> or <code>display add 10 20</code></p>
+            </div>
+
+            <h2>Scope Isolation &amp; <code>ScopeViolationError</code></h2>
+            <p>When an <code>inbound</code> routine executes an assignment statement targeting an identifier that was declared in an outer scope, the VerScript VM halts execution and throws <code>ScopeViolationError</code>:</p>
+            <pre><code>outer_var: 50
+def func attempt_leak delta
+    outer_var: outer_var + delta  ! Throws ScopeViolationError
+    reply outer_var</code></pre>
+            <p>This error can be caught cleanly with VerScript's <code>do ... unless ScopeViolationError</code> exception architecture.</p>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_ch12_1",
+                title: "functions_and_purity.vrs",
+                code: `! VerScript Custom Functions & Purity Contracts
+set initial_power: 100
+
+! Pure function: calculates without mutating outer scope
+def func calculate_surge base multiplier
+    set surge: base * multiplier
+    reply surge
+
+surge_val: (calculate_surge initial_power 3)
+display "Computed Surge: " + surge_val ?color=#38bdf8
+
+! Purity contract guard: catching ScopeViolationError
+def func illegal_mutator delta
+    set initial_power: initial_power + delta
+    reply initial_power
+
+do
+    val: (illegal_mutator 50)
+unless ScopeViolationError
+    display "Purity Guard Active: Outer scope protected from mutation!" ?color=#50fa7b`
+            },
+            {
+                id: "cb_ch12_2",
+                title: "methods_and_early_exit.vrs",
+                code: `! Stateful Methods & Early Exit with reply
+set system_health: 50
+
+! Method: mutates outer state, returns nothing
+def method boost_health amount max_cap
+    if (system_health + amount) > max_cap then
+        set system_health: max_cap
+        reply ! Early return (void)
+    set system_health: system_health + amount
+
+boost_health 30 100
+display "System Health after Boost: " + system_health ?color=#50fa7b
+boost_health 80 100
+display "System Health capped: " + system_health ?color=#00ffcc`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_12_1",
+                title: "Exercise 12.1: Pure Function Computation",
+                prompt: "Write a function <code>def func calculate_area w h</code> that replies with <code>w * h</code>, assign <code>set area: (calculate_area 12 5)</code>, and display <code>\"Area: \" + area</code> in green.",
+                starterCode: `! TODO: Define calculate_area and display result
+`,
+                hint: "Define `def func calculate_area w h`, use `reply w * h`, call `set area: (calculate_area 12 5)`, and `display \"Area: \" + area ?color=green`.",
+                solution: `def func calculate_area w h
+    reply w * h
+
+set area: (calculate_area 12 5)
+display "Area: " + area ?color=green`,
+                expectedMatch: /Area:\s*60/i
+            },
+            {
+                id: "ex_12_2",
+                title: "Exercise 12.2: Stateful Method Mutation",
+                prompt: "Declare <code>set score: 10</code>. Define an outbound method <code>def method add_points pts</code> that mutates <code>set score: score + pts</code>. Call <code>add_points 25</code> and display <code>score</code>.",
+                starterCode: `! TODO: Declare score, define method add_points, call it and display score
+`,
+                hint: "Use `set score: 10`, `def method add_points pts`, `set score: score + pts`, `add_points 25`, and `display score`.",
+                solution: `set score: 10
+
+def method add_points pts
+    set score: score + pts
+
+add_points 25
+display score`,
+                expectedMatch: /35/
+            },
+            {
+                id: "ex_12_3",
+                title: "Exercise 12.3: Catching ScopeViolationError",
+                prompt: "Write a test using <code>set balance: 100</code>, an inbound function <code>def func tamper_balance amt</code> that attempts to modify <code>balance: balance + amt</code>, and wrap a call to it in <code>do ... unless ScopeViolationError</code> to display <code>\"Scope Violation Intercepted\"</code>.",
+                starterCode: `! TODO: Catch ScopeViolationError from an inbound function
+`,
+                hint: "Wrap `val: (tamper_balance 50)` inside `do` and handle with `unless ScopeViolationError`.",
+                solution: `set balance: 100
+
+def func tamper_balance amt
+    balance: balance + amt
+    reply balance
+
+do
+    val: (tamper_balance 50)
+unless ScopeViolationError
+    display "Scope Violation Intercepted"`,
+                expectedMatch: /Scope Violation Intercepted/i
+            }
+        ]
+    },
+
+    // -------------------------------------------------------------------
+    // SECTION 5: ADVANCED EXCEPTION ARCHITECTURE & DIAGNOSTICS
+    // -------------------------------------------------------------------
+
+    {
+        id: "ch13-do-unless",
+        number: 13,
+        section: "Section 5: Advanced Exception Architecture & Diagnostics",
         title: "Try-Unless Architecture & Watch Guards",
         category: "Exception Handling",
         readTime: "6 min read",
@@ -1152,7 +1385,7 @@ unless DivisionByZeroError
         exercises: [
             {
                 id: "ex_dounless_1",
-                title: "Exercise 12.1: Catch Division by Zero",
+                title: "Exercise 13.1: Catch Division by Zero",
                 prompt: "Wrap a division by zero in <code>do ... unless DivisionByZeroError</code> and display <code>\"Bypassed Zero Error\"</code> in green.",
                 starterCode: `! TODO: Write do ... unless DivisionByZeroError
 do
@@ -1168,7 +1401,7 @@ unless DivisionByZeroError
             },
             {
                 id: "ex_dounless_2",
-                title: "Exercise 12.2: Reactive Internal Watchdog",
+                title: "Exercise 13.2: Reactive Internal Watchdog",
                 prompt: "Declare <code>fuel : 50</code>. Write a <code>do</code> block that subtracts <code>fuel : fuel - 40</code>, with <code>unless internal fuel < 20</code> displaying <code>\"Low Fuel Warning\"</code> in yellow.",
                 starterCode: `fuel : 50
 ! TODO: Implement do ... unless internal fuel < 20
@@ -1184,7 +1417,7 @@ unless internal fuel < 20
             },
             {
                 id: "ex_dounless_3",
-                title: "Exercise 12.3: External Condition Gate",
+                title: "Exercise 13.3: External Condition Gate",
                 prompt: "Declare <code>isMaintenanceMode : true</code>. Write <code>do ... unless external isMaintenanceMode = true</code> displaying <code>\"System In Maintenance\"</code> in red.",
                 starterCode: `isMaintenanceMode : true
 ! TODO: Write do ... unless external isMaintenanceMode = true
@@ -1200,10 +1433,11 @@ unless external isMaintenanceMode = true
         ]
     },
 
+
     {
-        id: "ch13-error-scopes",
-        number: 13,
-        section: "Section 4: Advanced Exception Architecture",
+        id: "ch14-error-scopes",
+        number: 14,
+        section: "Section 5: Advanced Exception Architecture & Diagnostics",
         title: "Error Scopes & Suppression Blocks",
         category: "Exception Handling",
         readTime: "5 min read",
@@ -1255,7 +1489,7 @@ display "=== Pipeline Continues Smoothly ===" ?color="cyan"`
         exercises: [
             {
                 id: "ex_scopes_1",
-                title: "Exercise 13.1: Suppress Dangerous Calculations",
+                title: "Exercise 14.1: Suppress Dangerous Calculations",
                 prompt: "Execute an invalid operation inside a <code>SuppressErrors</code> block and display <code>\"Safe continuation\"</code> in green after it.",
                 starterCode: `! TODO: Write SuppressErrors block containing 10 / 0 and display message
 `,
@@ -1267,7 +1501,7 @@ display "Safe continuation" ?color="green"`,
             },
             {
                 id: "ex_scopes_2",
-                title: "Exercise 13.2: Multi-step Suppressed Pipeline",
+                title: "Exercise 14.2: Multi-step Suppressed Pipeline",
                 prompt: "Inside <code>SuppressErrors</code>, perform two undefined operations, followed by displaying <code>\"Pipeline Finished\"</code> in cyan.",
                 starterCode: `! TODO: Perform 2 failing calculations in SuppressErrors
 `,
@@ -1280,7 +1514,7 @@ display "Pipeline Finished" ?color="cyan"`,
             },
             {
                 id: "ex_scopes_3",
-                title: "Exercise 13.3: ForceErrors Validation",
+                title: "Exercise 14.3: ForceErrors Validation",
                 prompt: "Write a safe calculation under <code>ForceErrors</code> and display <code>\"Strict Verification Passed\"</code> in green.",
                 starterCode: `! TODO: Write a ForceErrors block with valid code
 `,
@@ -1293,10 +1527,11 @@ display "Strict Verification Passed" ?color="green"`,
         ]
     },
 
+
     {
-        id: "ch14-custom-exceptions",
-        number: 14,
-        section: "Section 4: Advanced Exception Architecture",
+        id: "ch15-custom-exceptions",
+        number: 15,
+        section: "Section 5: Advanced Exception Architecture & Diagnostics",
         title: "Custom Exceptions, Signals & Attributes",
         category: "Exception Handling",
         readTime: "5 min read",
@@ -1342,7 +1577,7 @@ unless SensorFailure
         exercises: [
             {
                 id: "ex_throw_1",
-                title: "Exercise 14.1: Throw Custom Exception",
+                title: "Exercise 15.1: Throw Custom Exception",
                 prompt: "Throw a <code>NetworkTimeout</code> exception with <code>?msg=\"Connection lost\"</code> inside a <code>do ... unless NetworkTimeout</code> block and print <code>\"Recovered from Timeout\"</code> in green.",
                 starterCode: `! TODO: Throw NetworkTimeout ?msg="Connection lost" and catch it
 `,
@@ -1355,7 +1590,7 @@ unless NetworkTimeout
             },
             {
                 id: "ex_throw_2",
-                title: "Exercise 14.2: Catch Universal Error",
+                title: "Exercise 15.2: Catch Universal Error",
                 prompt: "Throw a custom <code>InvalidStateError</code> and catch it using the universal <code>unless error</code> catch handler, displaying <code>\"Caught: \" + error</code>.",
                 starterCode: `! TODO: Throw InvalidStateError and catch with unless error
 `,
@@ -1368,7 +1603,7 @@ unless error
             },
             {
                 id: "ex_throw_3",
-                title: "Exercise 14.3: Custom Authorization Fault",
+                title: "Exercise 15.3: Custom Authorization Fault",
                 prompt: "Given <code>isAuth : false</code>, check if not auth and throw <code>AuthError ?msg=\"Denied\"</code>, catching and displaying in red.",
                 starterCode: `isAuth : false
 ! TODO: If not isAuth throw AuthError and catch
@@ -1386,9 +1621,233 @@ unless AuthError
     },
 
     {
-        id: "ch15-inject",
-        number: 15,
-        section: "Section 5: Polyglot & Metaprogramming",
+        id: "ch16-error-directory",
+        number: 16,
+        section: "Section 5: Advanced Exception Architecture & Diagnostics",
+        title: "Interactive Error Directory & Diagnostics Reference",
+        category: "Diagnostics & Errors",
+        readTime: "10 min read",
+        summary: "A complete interactive reference of all 13 VerScript native errors with trigger conditions, critical classifications, and handling strategies.",
+        body: `
+            <h2>VerScript Complete Error Taxonomy</h2>
+            <p>The VerScript virtual machine implements a deterministic, categorized exception taxonomy. Every runtime error is strongly typed, named, and inspectable via the global <code>error</code> keyword inside <code>unless</code> handlers.</p>
+
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Error Identifier</th>
+                        <th>Classification</th>
+                        <th>Trigger Conditions</th>
+                        <th>Handling Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ScopeViolationError</code></td>
+                        <td>Safety / Purity</td>
+                        <td>An <code>inbound</code> function or method attempts to assign to a variable belonging to an outer scope frame.</td>
+                        <td>Catch with <code>do ... unless ScopeViolationError</code>, mark routine as <code>outbound</code>, or declare a local variable.</td>
+                    </tr>
+                    <tr>
+                        <td><code>UndefinedVariableError</code></td>
+                        <td>Semantic</td>
+                        <td>Reading an identifier that has not been initialized in the current or any enclosing scope.</td>
+                        <td>Initialize variable before access or guard with <code>SuppressErrors</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>InvalidOperandError</code></td>
+                        <td>Type / Operator</td>
+                        <td>Applying unary <code>-</code> to string/bool, multiplying/dividing strings, or comparing incompatible types.</td>
+                        <td>Ensure operands are strictly numeric before arithmetic operations.</td>
+                    </tr>
+                    <tr>
+                        <td><code>DivisionByZeroError</code></td>
+                        <td>Math</td>
+                        <td>Dividing any number by <code>0</code> using the <code>/</code> integer division operator.</td>
+                        <td>Validate divisor before division or trap using <code>do ... unless DivisionByZeroError</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LoopIterationError</code></td>
+                        <td>Loop Control</td>
+                        <td>Providing a string or non-numeric value for loop iteration counts or range bounds.</td>
+                        <td>Ensure count expressions resolve to integers.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LoopDirectionError</code></td>
+                        <td>Loop Control</td>
+                        <td>Specifying a <code>start</code> value greater than the <code>end</code> value in an <code>iterate</code> loop.</td>
+                        <td>Ensure ascending range bounds in <code>iterate from A to B</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LoopStepError</code></td>
+                        <td>Loop Control</td>
+                        <td>Specifying <code>step &lt;= 0</code>, a non-numeric step, or a step larger than the entire loop iteration size.</td>
+                        <td>Provide positive integers where <code>1 &lt;= step &lt;= loop_size</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>IndentationError</code></td>
+                        <td>Critical / Syntax</td>
+                        <td>Inconsistent indentation depth inside an indented block.</td>
+                        <td>Standardize on 4 spaces or 1 tab per indentation level across all nested blocks.</td>
+                    </tr>
+                    <tr>
+                        <td><code>SyntaxError</code></td>
+                        <td>Critical / Syntax</td>
+                        <td>Malformed tokens, missing colons, invalid keywords, or methods attempting to return values with <code>reply &lt;expr&gt;</code>.</td>
+                        <td>Fix syntax to comply with VerScript language grammar specification.</td>
+                    </tr>
+                    <tr>
+                        <td><code>RuntimeError</code></td>
+                        <td>Runtime</td>
+                        <td>Executing a rethrow (<code>throw error</code>) when no exception is currently active.</td>
+                        <td>Only invoke <code>throw error</code> inside an active <code>unless</code> handler block.</td>
+                    </tr>
+                    <tr>
+                        <td><code>InvalidErrorNameError</code></td>
+                        <td>Semantic</td>
+                        <td>Attempting to throw an unregistered error name (e.g. <code>throw MyFakeError</code>).</td>
+                        <td>Only throw recognized error identifiers from the VerScript error taxonomy.</td>
+                    </tr>
+                    <tr>
+                        <td><code>SystemError</code></td>
+                        <td>Critical / System</td>
+                        <td>Jump stack overflow (exceeding 64 nested <code>do</code> blocks) or call stack recursion depth exceeding 64 frames.</td>
+                        <td>Avoid infinite recursion; ensure terminating base cases in recursive functions.</td>
+                    </tr>
+                    <tr>
+                        <td><code>MemoryAllocationError</code></td>
+                        <td>Critical / System</td>
+                        <td>Host machine or process running out of heap memory during dynamic symbol table expansion.</td>
+                        <td>Free unused resources and reduce memory footprint.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Error Execution Modes Matrix</h2>
+            <p>VerScript supports four distinct error handling modes that govern how exceptions propagate through the execution engine:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Mode</th>
+                        <th>Directive</th>
+                        <th>Critical Errors</th>
+                        <th>Non-Critical Errors</th>
+                        <th>Primary Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Normal</strong></td>
+                        <td>Default</td>
+                        <td>Fatal exit</td>
+                        <td>Trapped by <code>unless</code> or fatal exit</td>
+                        <td>Standard development &amp; script execution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Force</strong></td>
+                        <td><code>ForceErrors</code></td>
+                        <td>Fatal exit immediately</td>
+                        <td>Fatal exit immediately (bypasses <code>unless</code>)</td>
+                        <td>Strict unit testing &amp; zero-tolerance assertions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Critical</strong></td>
+                        <td><code>CriticalErrors</code></td>
+                        <td>Fatal exit immediately</td>
+                        <td>Suppressed and skipped silently</td>
+                        <td>Fault-tolerant continuous telemetry collection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suppress</strong></td>
+                        <td><code>SuppressErrors</code></td>
+                        <td>Fatal exit immediately</td>
+                        <td>All non-critical errors suppressed &amp; skipped</td>
+                        <td>Best-effort recovery &amp; exploratory execution</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout-box tip">
+                <div class="callout-title">🛠️ Interactive Diagnostic Workflow</div>
+                <p>When debugging VerScript code, wrap suspicious operations inside a <code>do ... unless error</code> block and print both the exception category via <code>display error</code> and the context message. This enables pinpoint root-cause analysis.</p>
+            </div>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_ch16_1",
+                title: "diagnostics_workbench.vrs",
+                code: `! VerScript Diagnostics Workbench
+display "=== VerScript Error Diagnostic Workbench ===" ?color=#38bdf8
+
+! 1. Intercepting Math Errors
+do
+    set invalid_calc: 100 / 0
+unless DivisionByZeroError
+    display "Diagnostics [Math]: Intercepted DivisionByZeroError" ?color=#f1fa8c
+
+! 2. Intercepting Purity Violations
+set master_key: 1234
+def func inspect_purity
+    set master_key: 9999 ! Attempting outer mutation
+    reply master_key
+
+do
+    res: (inspect_purity)
+unless ScopeViolationError
+    display "Diagnostics [Purity]: Intercepted ScopeViolationError" ?color=#50fa7b
+
+! 3. Inspecting generic 'error' keyword
+do
+    throw InvalidOperandError ?msg="Invalid matrix dimension"
+unless error
+    display "Diagnostics [Generic]: Caught active error: " + error ?color=#ff79c6`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_16_1",
+                title: "Exercise 16.1: Scope Guard Exception Interception",
+                prompt: "Write a program with <code>set threshold: 50</code>, an inbound function <code>def func modify_threshold v</code> that executes <code>set threshold: v</code>, and trap the resulting error using <code>do ... unless ScopeViolationError</code> to display <code>\"Handled Scope Violation\"</code>.",
+                starterCode: `! TODO: Write function modifying outer threshold and trap ScopeViolationError
+`,
+                hint: "Use `set threshold: 50`, define `def func modify_threshold v`, mutate `set threshold: v`, and wrap `call: (modify_threshold 100)` in `do ... unless ScopeViolationError`.",
+                solution: `set threshold: 50
+
+def func modify_threshold v
+    set threshold: v
+    reply threshold
+
+do
+    call: (modify_threshold 100)
+unless ScopeViolationError
+    display "Handled Scope Violation"`,
+                expectedMatch: /Handled Scope Violation/i
+            },
+            {
+                id: "ex_16_2",
+                title: "Exercise 16.2: Safe Loop Step Validation",
+                prompt: "Write a program that executes an invalid loop <code>loop 5 step 10</code> inside a <code>do</code> block, traps <code>LoopStepError</code> with <code>unless LoopStepError</code>, and prints <code>\"Handled Loop Step Error\"</code> in yellow.",
+                starterCode: `! TODO: Trap LoopStepError from invalid loop
+`,
+                hint: "Use `do`, `loop 5 step 10`, `unless LoopStepError`, and `display \"Handled Loop Step Error\" ?color=yellow`.",
+                solution: `do
+    loop 5 step 10
+        display "step"
+unless LoopStepError
+    display "Handled Loop Step Error" ?color=yellow`,
+                expectedMatch: /Handled Loop Step Error/i
+            }
+        ]
+    }
+
+    // -------------------------------------------------------------------
+    // SECTION 6: POLYGLOT & METAPROGRAMMING
+    // -------------------------------------------------------------------
+
+    {
+        id: "ch17-inject",
+        number: 17,
+        section: "Section 6: Polyglot & Metaprogramming",
         title: "Polyglot Code Injection (100+ Languages)",
         category: "Metaprogramming",
         readTime: "7 min read",
@@ -1444,7 +1903,7 @@ inject verscript
         exercises: [
             {
                 id: "ex_inj_1",
-                title: "Exercise 15.1: Inject Python Script",
+                title: "Exercise 17.1: Inject Python Script",
                 prompt: "Embed a Python code snippet that calculates <code>2 ** 8</code> using <code>inject python</code>.",
                 starterCode: `! TODO: Write an inject python block
 `,
@@ -1456,7 +1915,7 @@ inject verscript
             },
             {
                 id: "ex_inj_2",
-                title: "Exercise 15.2: Dynamic VerScript Sub-Execution",
+                title: "Exercise 17.2: Dynamic VerScript Sub-Execution",
                 prompt: "Use <code>inject verscript</code> to evaluate a dynamic block that sets <code>dyn : 777</code> and displays <code>\"Dynamic Value: \" + dyn</code> in green.",
                 starterCode: `! TODO: Write inject verscript block
 `,
@@ -1468,7 +1927,7 @@ inject verscript
             },
             {
                 id: "ex_inj_3",
-                title: "Exercise 15.3: Inject Rust / C Algorithms",
+                title: "Exercise 17.3: Inject Rust / C Algorithms",
                 prompt: "Embed a Rust function signature inside an <code>inject rust</code> block with <code>?color=\"cyan\"</code>.",
                 starterCode: `! TODO: Write inject rust with ?color="cyan"
 `,
@@ -1480,10 +1939,11 @@ inject verscript
         ]
     },
 
+
     {
-        id: "ch16-alias",
-        number: 16,
-        section: "Section 5: Polyglot & Metaprogramming",
+        id: "ch18-alias",
+        number: 18,
+        section: "Section 6: Polyglot & Metaprogramming",
         title: "Alias Remapping & Custom Syntax",
         category: "Metaprogramming",
         readTime: "6 min read",
@@ -1552,7 +2012,7 @@ for i from 10 to 30 ?by=10
         exercises: [
             {
                 id: "ex_alias_1",
-                title: "Exercise 16.1: Command Alias",
+                title: "Exercise 18.1: Command Alias",
                 prompt: "Alias <code>display</code> as <code>print</code> and display <code>\"Aliased Output\"</code> in green using <code>print</code>.",
                 starterCode: `! TODO: Define alias display: print and use it
 `,
@@ -1563,7 +2023,7 @@ print "Aliased Output" ?color="green"`,
             },
             {
                 id: "ex_alias_2",
-                title: "Exercise 16.2: Attribute Remapping",
+                title: "Exercise 18.2: Attribute Remapping",
                 prompt: "Alias <code>display</code> as <code>log</code> with <code>?color=tint</code>, and output <code>\"Mapped Attribute\"</code> using <code>?tint=\"cyan\"</code>.",
                 starterCode: `! TODO: Write alias display: log ? color=tint
 `,
@@ -1574,7 +2034,7 @@ log "Mapped Attribute" ?tint="cyan"`,
             },
             {
                 id: "ex_alias_3",
-                title: "Exercise 16.3: Multi-line Alias Block",
+                title: "Exercise 18.3: Multi-line Alias Block",
                 prompt: "Create an <code>alias:</code> block mapping <code>loop: repeat</code> and execute <code>repeat 2</code> printing <code>\"Pass\"</code>.",
                 starterCode: `! TODO: Create alias: block and execute repeat 2
 `,
@@ -1588,13 +2048,14 @@ repeat 2
         ]
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 6: APPLIED SYSTEMS & REFERENCE
-    // ═══════════════════════════════════════════════════════════════
+    // -------------------------------------------------------------------
+    // SECTION 7: GRANDMASTER SYSTEMS CAPSTONE
+    // -------------------------------------------------------------------
+
     {
-        id: "ch17-grandmaster-capstone",
-        number: 17,
-        section: "Section 6: Applied Systems & Reference",
+        id: "ch19-grandmaster-capstone",
+        number: 19,
+        section: "Section 7: Grandmaster Systems Capstone",
         title: "Grandmaster Capstone: Complex Systems & Pipelines",
         category: "Systems Engineering",
         readTime: "8 min read",
@@ -1758,10 +2219,14 @@ out "Mastery Proof Verified: " + total_cycles ?col=#00ffcc`,
         ]
     },
 
+    // -------------------------------------------------------------------
+    // SECTION 8: COMPLETE LANGUAGE SPECIFICATION & CHEATSHEET
+    // -------------------------------------------------------------------
+
     {
-        id: "ch18-master-cheatsheet",
-        number: 18,
-        section: "Section 6: Applied Systems & Reference",
+        id: "ch20-master-cheatsheet",
+        number: 20,
+        section: "Section 8: Complete Language Specification & Cheatsheet",
         title: "Master Language Specification & Complete Attribute Cheatsheet",
         category: "Quick Reference",
         readTime: "7 min read",
@@ -1852,6 +2317,27 @@ out "Mastery Proof Verified: " + total_cycles ?col=#00ffcc`,
                         <td><code>alias display: print</code><br><code>alias display: log ? color=tint</code></td>
                     </tr>
                     <tr>
+                        <td><code>def</code></td>
+                        <td><code>func</code><br><code>method</code><br><code>inbound</code><br><code>outbound</code></td>
+                        <td>Routine type &amp; purity contract specifiers</td>
+                        <td><code>func</code> (inbound)<br><code>method</code> (outbound)</td>
+                        <td><code>def func add x y</code><br><code>def outbound method log_msg m</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>reply</code></td>
+                        <td><code>[expression]</code></td>
+                        <td>Optional return expression in functions; bare exit in methods</td>
+                        <td>N/A</td>
+                        <td><code>reply x + y</code><br><code>reply ! early exit</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>set</code></td>
+                        <td><code>var : val</code></td>
+                        <td>Explicit variable declaration and assignment keyword</td>
+                        <td>N/A</td>
+                        <td><code>set power : 100</code></td>
+                    </tr>
+                    <tr>
                         <td><code>SuppressErrors</code></td>
                         <td>None</td>
                         <td>Block scope</td>
@@ -1931,9 +2417,9 @@ SuppressErrors
         exercises: [
             {
                 id: "ex_spec_1",
-                title: "Exercise 18.1: Complete Syntax Verification",
+                title: "Exercise 20.1: Complete Syntax Verification",
                 prompt: "Using the cheatsheet table as reference, write a program that uses <code>alias display: out ? color=col</code>, runs <code>loop 2</code>, and prints <code>\"Reference Verified\"</code> in unquoted hex <code>?col=#00ffcc</code>.",
-                starterCode: `! TODO: Write program according to Exercise 18.1
+                starterCode: `! TODO: Write program according to Exercise 20.1
 `,
                 hint: "Use `alias display: out ? color=col`, `loop 2`, and `out \"Reference Verified\" ?col=#00ffcc`.",
                 solution: `alias display: out ? color=col
@@ -1943,7 +2429,7 @@ loop 2
             },
             {
                 id: "ex_spec_2",
-                title: "Exercise 18.2: Comprehensive Attribute Validation",
+                title: "Exercise 20.2: Comprehensive Attribute Validation",
                 prompt: "Write a program combining <code>prompt client ?default=\"Admin\"</code> and <code>display \"Verified: \" + client ?color=#50fa7b</code>.",
                 starterCode: `! TODO: Combine prompt with default and display with hex color
 `,
@@ -1955,432 +2441,4 @@ display "Verified: " + client ?color=#50fa7b`,
         ]
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 7: PROCEDURES, FUNCTIONS & PURITY
-    // ═══════════════════════════════════════════════════════════════
-    {
-        id: "ch19-functions-methods",
-        number: 19,
-        section: "Section 7: Procedures, Functions & Purity",
-        title: "Custom Functions, Methods & Purity Contracts",
-        category: "Procedures & Purity",
-        readTime: "8 min read",
-        summary: "Master custom functions with def func, stateful methods with def method, Command-Query Separation, inbound/outbound purity contracts, and the explicit set keyword.",
-        body: `
-            <h2>The Command-Query Separation Paradigm</h2>
-            <p>VerScript adheres to a strict <strong>Command-Query Separation (CQS)</strong> design philosophy at the language level:</p>
-            <ul>
-                <li><strong>Functions (<code>def func</code>)</strong>: Pure queries designed to calculate and return a value using <code>reply &lt;expr&gt;</code>. By default, functions are <em>inbound</em> (pure) and cannot modify state outside their lexical call frame.</li>
-                <li><strong>Methods (<code>def method</code>)</strong>: Commands designed to perform side effects and modify program state. Methods return nothing (<code>void</code>); returning an expression with <code>reply</code> raises a <code>SyntaxError</code>. Methods can use bare <code>reply</code> for early exit.</li>
-            </ul>
-
-            <div class="callout-box tip">
-                <div class="callout-title">💡 Pure by Default, Explicit by Design</div>
-                <p>In VerScript, functions guarantee safety by defaulting to <code>inbound</code> (mathematically pure). Methods guarantee utility by defaulting to <code>outbound</code> (stateful). Any departure from these defaults must be explicitly declared.</p>
-            </div>
-
-            <h2>Explicit Variable Assignment: <code>set</code> Keyword</h2>
-            <p>VerScript supports explicit variable assignment using the <code>set</code> keyword:</p>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Syntax</th>
-                        <th>Example</th>
-                        <th>Semantics &amp; Best Use Case</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>var: val</code></td>
-                        <td><code>score: 100</code></td>
-                        <td>Standard concise assignment. Fast and expressive for script bodies.</td>
-                    </tr>
-                    <tr>
-                        <td><code>set var: val</code></td>
-                        <td><code>set score: 100</code></td>
-                        <td>Explicit assignment keyword. Guarantees no collision with command aliases or future keywords. Highly recommended inside critical functions and methods.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Purity Contracts: <code>inbound</code> vs <code>outbound</code></h2>
-            <p>Purity contracts govern whether a routine is permitted to mutate variables in outer enclosing scopes:</p>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Declaration</th>
-                        <th>Kind</th>
-                        <th>Default Purity</th>
-                        <th>Outer Scope Mutation</th>
-                        <th>Return Value (<code>reply</code>)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>def func f ...</code></td>
-                        <td>Function</td>
-                        <td><code>inbound</code></td>
-                        <td>❌ Forbidden (raises <code>ScopeViolationError</code>)</td>
-                        <td>✅ Required / Optional (<code>reply &lt;expr&gt;</code>)</td>
-                    </tr>
-                    <tr>
-                        <td><code>def outbound func f ...</code></td>
-                        <td>Function</td>
-                        <td><code>outbound</code></td>
-                        <td>✅ Allowed (explicit opt-in)</td>
-                        <td>✅ Allowed (<code>reply &lt;expr&gt;</code>)</td>
-                    </tr>
-                    <tr>
-                        <td><code>def method m ...</code></td>
-                        <td>Method</td>
-                        <td><code>outbound</code></td>
-                        <td>✅ Allowed (state mutator)</td>
-                        <td>❌ Forbidden (raises <code>SyntaxError</code>)</td>
-                    </tr>
-                    <tr>
-                        <td><code>def inbound method m ...</code></td>
-                        <td>Method</td>
-                        <td><code>inbound</code></td>
-                        <td>❌ Forbidden (raises <code>ScopeViolationError</code>)</td>
-                        <td>❌ Forbidden (bare <code>reply</code> only)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Defining and Calling Routines</h2>
-            <p>Routines take space-delimited parameters without parenthesized parameter lists. Inside expressions, function calls can be nested using parentheses:</p>
-            <div class="callout-box note">
-                <div class="callout-title">📝 Invocation Syntax</div>
-                <p><strong>Statement Invocation:</strong> <code>add 10 20</code> or <code>increment 5</code><br>
-                <strong>Expression Invocation:</strong> <code>res: (add 10 20) * 2</code> or <code>display add 10 20</code></p>
-            </div>
-
-            <h2>Scope Isolation &amp; <code>ScopeViolationError</code></h2>
-            <p>When an <code>inbound</code> routine executes an assignment statement targeting an identifier that was declared in an outer scope, the VerScript VM halts execution and throws <code>ScopeViolationError</code>:</p>
-            <pre><code>outer_var: 50
-def func attempt_leak delta
-    outer_var: outer_var + delta  ! Throws ScopeViolationError
-    reply outer_var</code></pre>
-            <p>This error can be caught cleanly with VerScript's <code>do ... unless ScopeViolationError</code> exception architecture.</p>
-        `,
-        codeBlocks: [
-            {
-                id: "cb_ch19_1",
-                title: "functions_and_purity.vrs",
-                code: `! VerScript Custom Functions & Purity Contracts
-set initial_power: 100
-
-! Pure function: calculates without mutating outer scope
-def func calculate_surge base multiplier
-    set surge: base * multiplier
-    reply surge
-
-surge_val: (calculate_surge initial_power 3)
-display "Computed Surge: " + surge_val ?color=#38bdf8
-
-! Purity contract guard: catching ScopeViolationError
-def func illegal_mutator delta
-    set initial_power: initial_power + delta
-    reply initial_power
-
-do
-    val: (illegal_mutator 50)
-unless ScopeViolationError
-    display "Purity Guard Active: Outer scope protected from mutation!" ?color=#50fa7b`
-            },
-            {
-                id: "cb_ch19_2",
-                title: "methods_and_early_exit.vrs",
-                code: `! Stateful Methods & Early Exit with reply
-set system_health: 50
-
-! Method: mutates outer state, returns nothing
-def method boost_health amount max_cap
-    if (system_health + amount) > max_cap then
-        set system_health: max_cap
-        reply ! Early return (void)
-    set system_health: system_health + amount
-
-boost_health 30 100
-display "System Health after Boost: " + system_health ?color=#50fa7b
-boost_health 80 100
-display "System Health capped: " + system_health ?color=#00ffcc`
-            }
-        ],
-        exercises: [
-            {
-                id: "ex_19_1",
-                title: "Exercise 19.1: Pure Function Computation",
-                prompt: "Write a function <code>def func calculate_area w h</code> that replies with <code>w * h</code>, assign <code>set area: (calculate_area 12 5)</code>, and display <code>\"Area: \" + area</code> in green.",
-                starterCode: `! TODO: Define calculate_area and display result
-`,
-                hint: "Define `def func calculate_area w h`, use `reply w * h`, call `set area: (calculate_area 12 5)`, and `display \"Area: \" + area ?color=green`.",
-                solution: `def func calculate_area w h
-    reply w * h
-
-set area: (calculate_area 12 5)
-display "Area: " + area ?color=green`,
-                expectedMatch: /Area:\s*60/i
-            },
-            {
-                id: "ex_19_2",
-                title: "Exercise 19.2: Stateful Method Mutation",
-                prompt: "Declare <code>set score: 10</code>. Define an outbound method <code>def method add_points pts</code> that mutates <code>set score: score + pts</code>. Call <code>add_points 25</code> and display <code>score</code>.",
-                starterCode: `! TODO: Declare score, define method add_points, call it and display score
-`,
-                hint: "Use `set score: 10`, `def method add_points pts`, `set score: score + pts`, `add_points 25`, and `display score`.",
-                solution: `set score: 10
-
-def method add_points pts
-    set score: score + pts
-
-add_points 25
-display score`,
-                expectedMatch: /35/
-            },
-            {
-                id: "ex_19_3",
-                title: "Exercise 19.3: Catching ScopeViolationError",
-                prompt: "Write a test using <code>set balance: 100</code>, an inbound function <code>def func tamper_balance amt</code> that attempts to modify <code>balance: balance + amt</code>, and wrap a call to it in <code>do ... unless ScopeViolationError</code> to display <code>\"Scope Violation Intercepted\"</code>.",
-                starterCode: `! TODO: Catch ScopeViolationError from an inbound function
-`,
-                hint: "Wrap `val: (tamper_balance 50)` inside `do` and handle with `unless ScopeViolationError`.",
-                solution: `set balance: 100
-
-def func tamper_balance amt
-    balance: balance + amt
-    reply balance
-
-do
-    val: (tamper_balance 50)
-unless ScopeViolationError
-    display "Scope Violation Intercepted"`,
-                expectedMatch: /Scope Violation Intercepted/i
-            }
-        ]
-    },
-
-    // ═══════════════════════════════════════════════════════════════
-    // SECTION 8: DIAGNOSTICS & RUNTIME ARCHITECTURE
-    // ═══════════════════════════════════════════════════════════════
-    {
-        id: "ch20-error-directory",
-        number: 20,
-        section: "Section 8: Diagnostics & Runtime Architecture",
-        title: "Interactive Error Directory & Diagnostics Reference",
-        category: "Diagnostics & Errors",
-        readTime: "10 min read",
-        summary: "A complete interactive reference of all 13 VerScript native errors with trigger conditions, critical classifications, and handling strategies.",
-        body: `
-            <h2>VerScript Complete Error Taxonomy</h2>
-            <p>The VerScript virtual machine implements a deterministic, categorized exception taxonomy. Every runtime error is strongly typed, named, and inspectable via the global <code>error</code> keyword inside <code>unless</code> handlers.</p>
-
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Error Identifier</th>
-                        <th>Classification</th>
-                        <th>Trigger Conditions</th>
-                        <th>Handling Strategy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>ScopeViolationError</code></td>
-                        <td>Safety / Purity</td>
-                        <td>An <code>inbound</code> function or method attempts to assign to a variable belonging to an outer scope frame.</td>
-                        <td>Catch with <code>do ... unless ScopeViolationError</code>, mark routine as <code>outbound</code>, or declare a local variable.</td>
-                    </tr>
-                    <tr>
-                        <td><code>UndefinedVariableError</code></td>
-                        <td>Semantic</td>
-                        <td>Reading an identifier that has not been initialized in the current or any enclosing scope.</td>
-                        <td>Initialize variable before access or guard with <code>SuppressErrors</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>InvalidOperandError</code></td>
-                        <td>Type / Operator</td>
-                        <td>Applying unary <code>-</code> to string/bool, multiplying/dividing strings, or comparing incompatible types.</td>
-                        <td>Ensure operands are strictly numeric before arithmetic operations.</td>
-                    </tr>
-                    <tr>
-                        <td><code>DivisionByZeroError</code></td>
-                        <td>Math</td>
-                        <td>Dividing any number by <code>0</code> using the <code>/</code> integer division operator.</td>
-                        <td>Validate divisor before division or trap using <code>do ... unless DivisionByZeroError</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopIterationError</code></td>
-                        <td>Loop Control</td>
-                        <td>Providing a string or non-numeric value for loop iteration counts or range bounds.</td>
-                        <td>Ensure count expressions resolve to integers.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopDirectionError</code></td>
-                        <td>Loop Control</td>
-                        <td>Specifying a <code>start</code> value greater than the <code>end</code> value in an <code>iterate</code> loop.</td>
-                        <td>Ensure ascending range bounds in <code>iterate from A to B</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopStepError</code></td>
-                        <td>Loop Control</td>
-                        <td>Specifying <code>step &lt;= 0</code>, a non-numeric step, or a step larger than the entire loop iteration size.</td>
-                        <td>Provide positive integers where <code>1 &lt;= step &lt;= loop_size</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>IndentationError</code></td>
-                        <td>Critical / Syntax</td>
-                        <td>Inconsistent indentation depth inside an indented block.</td>
-                        <td>Standardize on 4 spaces or 1 tab per indentation level across all nested blocks.</td>
-                    </tr>
-                    <tr>
-                        <td><code>SyntaxError</code></td>
-                        <td>Critical / Syntax</td>
-                        <td>Malformed tokens, missing colons, invalid keywords, or methods attempting to return values with <code>reply &lt;expr&gt;</code>.</td>
-                        <td>Fix syntax to comply with VerScript language grammar specification.</td>
-                    </tr>
-                    <tr>
-                        <td><code>RuntimeError</code></td>
-                        <td>Runtime</td>
-                        <td>Executing a rethrow (<code>throw error</code>) when no exception is currently active.</td>
-                        <td>Only invoke <code>throw error</code> inside an active <code>unless</code> handler block.</td>
-                    </tr>
-                    <tr>
-                        <td><code>InvalidErrorNameError</code></td>
-                        <td>Semantic</td>
-                        <td>Attempting to throw an unregistered error name (e.g. <code>throw MyFakeError</code>).</td>
-                        <td>Only throw recognized error identifiers from the VerScript error taxonomy.</td>
-                    </tr>
-                    <tr>
-                        <td><code>SystemError</code></td>
-                        <td>Critical / System</td>
-                        <td>Jump stack overflow (exceeding 64 nested <code>do</code> blocks) or call stack recursion depth exceeding 64 frames.</td>
-                        <td>Avoid infinite recursion; ensure terminating base cases in recursive functions.</td>
-                    </tr>
-                    <tr>
-                        <td><code>MemoryAllocationError</code></td>
-                        <td>Critical / System</td>
-                        <td>Host machine or process running out of heap memory during dynamic symbol table expansion.</td>
-                        <td>Free unused resources and reduce memory footprint.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Error Execution Modes Matrix</h2>
-            <p>VerScript supports four distinct error handling modes that govern how exceptions propagate through the execution engine:</p>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Mode</th>
-                        <th>Directive</th>
-                        <th>Critical Errors</th>
-                        <th>Non-Critical Errors</th>
-                        <th>Primary Use Case</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Normal</strong></td>
-                        <td>Default</td>
-                        <td>Fatal exit</td>
-                        <td>Trapped by <code>unless</code> or fatal exit</td>
-                        <td>Standard development &amp; script execution</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Force</strong></td>
-                        <td><code>ForceErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>Fatal exit immediately (bypasses <code>unless</code>)</td>
-                        <td>Strict unit testing &amp; zero-tolerance assertions</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Critical</strong></td>
-                        <td><code>CriticalErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>Suppressed and skipped silently</td>
-                        <td>Fault-tolerant continuous telemetry collection</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Suppress</strong></td>
-                        <td><code>SuppressErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>All non-critical errors suppressed &amp; skipped</td>
-                        <td>Best-effort recovery &amp; exploratory execution</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="callout-box tip">
-                <div class="callout-title">🛠️ Interactive Diagnostic Workflow</div>
-                <p>When debugging VerScript code, wrap suspicious operations inside a <code>do ... unless error</code> block and print both the exception category via <code>display error</code> and the context message. This enables pinpoint root-cause analysis.</p>
-            </div>
-        `,
-        codeBlocks: [
-            {
-                id: "cb_ch20_1",
-                title: "diagnostics_workbench.vrs",
-                code: `! VerScript Diagnostics Workbench
-display "=== VerScript Error Diagnostic Workbench ===" ?color=#38bdf8
-
-! 1. Intercepting Math Errors
-do
-    set invalid_calc: 100 / 0
-unless DivisionByZeroError
-    display "Diagnostics [Math]: Intercepted DivisionByZeroError" ?color=#f1fa8c
-
-! 2. Intercepting Purity Violations
-set master_key: 1234
-def func inspect_purity
-    set master_key: 9999 ! Attempting outer mutation
-    reply master_key
-
-do
-    res: (inspect_purity)
-unless ScopeViolationError
-    display "Diagnostics [Purity]: Intercepted ScopeViolationError" ?color=#50fa7b
-
-! 3. Inspecting generic 'error' keyword
-do
-    throw InvalidOperandError ?msg="Invalid matrix dimension"
-unless error
-    display "Diagnostics [Generic]: Caught active error: " + error ?color=#ff79c6`
-            }
-        ],
-        exercises: [
-            {
-                id: "ex_20_1",
-                title: "Exercise 20.1: Scope Guard Exception Interception",
-                prompt: "Write a program with <code>set threshold: 50</code>, an inbound function <code>def func modify_threshold v</code> that executes <code>set threshold: v</code>, and trap the resulting error using <code>do ... unless ScopeViolationError</code> to display <code>\"Handled Scope Violation\"</code>.",
-                starterCode: `! TODO: Write function modifying outer threshold and trap ScopeViolationError
-`,
-                hint: "Use `set threshold: 50`, define `def func modify_threshold v`, mutate `set threshold: v`, and wrap `call: (modify_threshold 100)` in `do ... unless ScopeViolationError`.",
-                solution: `set threshold: 50
-
-def func modify_threshold v
-    set threshold: v
-    reply threshold
-
-do
-    call: (modify_threshold 100)
-unless ScopeViolationError
-    display "Handled Scope Violation"`,
-                expectedMatch: /Handled Scope Violation/i
-            },
-            {
-                id: "ex_20_2",
-                title: "Exercise 20.2: Safe Loop Step Validation",
-                prompt: "Write a program that executes an invalid loop <code>loop 5 step 10</code> inside a <code>do</code> block, traps <code>LoopStepError</code> with <code>unless LoopStepError</code>, and prints <code>\"Handled Loop Step Error\"</code> in yellow.",
-                starterCode: `! TODO: Trap LoopStepError from invalid loop
-`,
-                hint: "Use `do`, `loop 5 step 10`, `unless LoopStepError`, and `display \"Handled Loop Step Error\" ?color=yellow`.",
-                solution: `do
-    loop 5 step 10
-        display "step"
-unless LoopStepError
-    display "Handled Loop Step Error" ?color=yellow`,
-                expectedMatch: /Handled Loop Step Error/i
-            }
-        ]
-    }
 ];
-
