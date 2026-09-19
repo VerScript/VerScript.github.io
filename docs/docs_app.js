@@ -93,6 +93,25 @@ function loadArticle(index) {
 
     // Close mobile sidebar if open
     sidebarEl.classList.remove('open');
+    const backdropEl = document.getElementById('sidebarBackdrop');
+    if (backdropEl) backdropEl.classList.remove('active');
+    document.body.style.overflow = '';
+
+    // Update mobile bottom bar controls if present
+    const mobileIndicator = document.getElementById('mobileChapterIndicator');
+    if (mobileIndicator) {
+        mobileIndicator.textContent = `${String(article.number).padStart(2, '0')}/${ARTICLES.length}`;
+    }
+    const mobilePrevBtn = document.getElementById('mobilePrevBtn');
+    if (mobilePrevBtn) {
+        mobilePrevBtn.disabled = index === 0;
+        mobilePrevBtn.style.opacity = index === 0 ? '0.45' : '1';
+    }
+    const mobileNextBtn = document.getElementById('mobileNextBtn');
+    if (mobileNextBtn) {
+        mobileNextBtn.disabled = index === ARTICLES.length - 1;
+        mobileNextBtn.style.opacity = index === ARTICLES.length - 1 ? '0.45' : '1';
+    }
 
     // Build Codeblocks HTML
     let codeBlocksHTML = '';
@@ -208,10 +227,12 @@ function renderExerciseCard(ex, indexNum) {
             <div class="exercise-body">
                 <div class="exercise-prompt">${ex.prompt}</div>
                 ${renderRunBox('ex_' + ex.id, `exercise_${indexNum}.vrs`, ex.starterCode)}
-                <div style="margin-top: 12px;">
-                    <button class="exercise-hints-toggle" onclick="toggleHint('${ex.id}')">💡 Show Hint</button>
-                    <button class="exercise-sol-toggle" onclick="toggleSolution('${ex.id}')">👁️ View Solution</button>
-                    <button class="action-btn run-btn" style="float: right;" onclick="validateExercise('${ex.id}', \`${escapeTemplateString(ex.expectedMatch ? ex.expectedMatch.source : '')}\`)">✔ Validate &amp; Submit</button>
+                <div class="exercise-actions-bar">
+                    <div class="exercise-toggles">
+                        <button class="exercise-toggle-pill" onclick="toggleHint('${ex.id}')">💡 Show Hint</button>
+                        <button class="exercise-toggle-pill" onclick="toggleSolution('${ex.id}')">👁️ View Solution</button>
+                    </div>
+                    <button class="action-btn run-btn validate-btn" onclick="validateExercise('${ex.id}', \`${escapeTemplateString(ex.expectedMatch ? ex.expectedMatch.source : '')}\`)">✔ Validate &amp; Submit</button>
                 </div>
                 <div class="exercise-hint-content" id="hint_${ex.id}">${escapeHTML(ex.hint)}</div>
                 <div class="exercise-sol-content" id="sol_${ex.id}">
@@ -698,19 +719,21 @@ function setupEventListeners() {
         renderSidebarList(filtered);
     });
 
-    const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
-
-    function toggleSidebar(open) {
+    window.toggleSidebar = function(open) {
         const isOpen = typeof open === 'boolean' ? open : !sidebarEl.classList.contains('open');
         sidebarEl.classList.toggle('open', isOpen);
         if (sidebarBackdropEl) {
             sidebarBackdropEl.classList.toggle('active', isOpen);
         }
         document.body.style.overflow = isOpen && window.innerWidth <= 900 ? 'hidden' : '';
-    }
+    };
+
+    window.navigateArticle = function(delta) {
+        loadArticle(currentArticleIndex + delta);
+    };
 
     sidebarToggleEl.addEventListener('click', () => {
-        toggleSidebar();
+        window.toggleSidebar();
     });
 
     if (sidebarBackdropEl) {

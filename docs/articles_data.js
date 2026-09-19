@@ -1629,147 +1629,236 @@ unless AuthError
         readTime: "10 min read",
         summary: "A complete interactive reference of all 13 VerScript native errors with trigger conditions, critical classifications, and handling strategies.",
         body: `
-            <h2>VerScript Complete Error Taxonomy</h2>
-            <p>The VerScript virtual machine implements a deterministic, categorized exception taxonomy. Every runtime error is strongly typed, named, and inspectable via the global <code>error</code> keyword inside <code>unless</code> handlers.</p>
+            <h2>VerScript Complete Error Taxonomy &amp; Diagnostics Architecture</h2>
+            <p>The VerScript virtual machine implements a deterministic, multi-tiered exception taxonomy. Every runtime condition is strongly typed, named, and inspectable via the global <code>error</code> identifier inside <code>unless</code> handlers. The VM evaluates faults along two rigorous metrics: <strong>Criticality Points (1–10)</strong> and <strong>Suppression Levels (0–4)</strong>.</p>
 
+            <h2>The 10-Point Criticality Scoring Framework</h2>
+            <p>Every error in VerScript is assigned an integer <strong>Criticality Point (1 to 10)</strong> score reflecting its threat to virtual machine state stability, memory integrity, and lexical contract purity:</p>
+            <ul>
+                <li><strong>Points 1 – 3 (Low Severity / Semantic Anomaly)</strong>: Localized boundary faults, uninitialized identifier reads, and step calculations. These affect only the current statement and leave the VM heap and call stack entirely pristine.</li>
+                <li><strong>Points 4 – 6 (Moderate Severity / Logic &amp; Purity Faults)</strong>: Arithmetic domain errors, type/operator mismatches, and lexical contract breaches (such as an <code>inbound</code> function violating scope immutability). These corrupt expression evaluations but are safely catchable and recoverable.</li>
+                <li><strong>Points 7 – 8 (High Severity / Metaprogramming Breaches)</strong>: Dynamic syntax alias collisions, unregistered exception names, or failing foreign language polyglot bridges. These require explicit defensive architecture to trap.</li>
+                <li><strong>Points 9 – 10 (Fatal Severity / Structural System Collapse)</strong>: Indentation depth corruptions, token syntax malformations, jump/call stack overflows (&gt;64 frames), and host OS memory exhaustion. These directly threaten process execution and trigger an immediate VM abort.</li>
+            </ul>
+
+            <h2>The 4-Tier Suppression Level Hierarchy</h2>
+            <p>VerScript establishes four runtime <strong>Suppression Levels</strong> that determine what severity of error can be bypassed, masked, or silenced during script execution:</p>
             <table class="doc-table">
                 <thead>
                     <tr>
-                        <th>Error Identifier</th>
-                        <th>Classification</th>
-                        <th>Trigger Conditions</th>
-                        <th>Handling Strategy</th>
+                        <th>Suppression Tier</th>
+                        <th>Directive / Attribute</th>
+                        <th>Criticality Range</th>
+                        <th>Suppression Behavior</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>ScopeViolationError</code></td>
-                        <td>Safety / Purity</td>
-                        <td>An <code>inbound</code> function or method attempts to assign to a variable belonging to an outer scope frame.</td>
-                        <td>Catch with <code>do ... unless ScopeViolationError</code>, mark routine as <code>outbound</code>, or declare a local variable.</td>
-                    </tr>
-                    <tr>
-                        <td><code>UndefinedVariableError</code></td>
-                        <td>Semantic</td>
-                        <td>Reading an identifier that has not been initialized in the current or any enclosing scope.</td>
-                        <td>Initialize variable before access or guard with <code>SuppressErrors</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>InvalidOperandError</code></td>
-                        <td>Type / Operator</td>
-                        <td>Applying unary <code>-</code> to string/bool, multiplying/dividing strings, or comparing incompatible types.</td>
-                        <td>Ensure operands are strictly numeric before arithmetic operations.</td>
-                    </tr>
-                    <tr>
-                        <td><code>DivisionByZeroError</code></td>
-                        <td>Math</td>
-                        <td>Dividing any number by <code>0</code> using the <code>/</code> integer division operator.</td>
-                        <td>Validate divisor before division or trap using <code>do ... unless DivisionByZeroError</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopIterationError</code></td>
-                        <td>Loop Control</td>
-                        <td>Providing a string or non-numeric value for loop iteration counts or range bounds.</td>
-                        <td>Ensure count expressions resolve to integers.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopDirectionError</code></td>
-                        <td>Loop Control</td>
-                        <td>Specifying a <code>start</code> value greater than the <code>end</code> value in an <code>iterate</code> loop.</td>
-                        <td>Ensure ascending range bounds in <code>iterate from A to B</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LoopStepError</code></td>
-                        <td>Loop Control</td>
-                        <td>Specifying <code>step &lt;= 0</code>, a non-numeric step, or a step larger than the entire loop iteration size.</td>
-                        <td>Provide positive integers where <code>1 &lt;= step &lt;= loop_size</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>IndentationError</code></td>
-                        <td>Critical / Syntax</td>
-                        <td>Inconsistent indentation depth inside an indented block.</td>
-                        <td>Standardize on 4 spaces or 1 tab per indentation level across all nested blocks.</td>
-                    </tr>
-                    <tr>
-                        <td><code>SyntaxError</code></td>
-                        <td>Critical / Syntax</td>
-                        <td>Malformed tokens, missing colons, invalid keywords, or methods attempting to return values with <code>reply &lt;expr&gt;</code>.</td>
-                        <td>Fix syntax to comply with VerScript language grammar specification.</td>
-                    </tr>
-                    <tr>
-                        <td><code>RuntimeError</code></td>
-                        <td>Runtime</td>
-                        <td>Executing a rethrow (<code>throw error</code>) when no exception is currently active.</td>
-                        <td>Only invoke <code>throw error</code> inside an active <code>unless</code> handler block.</td>
-                    </tr>
-                    <tr>
-                        <td><code>InvalidErrorNameError</code></td>
-                        <td>Semantic</td>
-                        <td>Attempting to throw an unregistered error name (e.g. <code>throw MyFakeError</code>).</td>
-                        <td>Only throw recognized error identifiers from the VerScript error taxonomy.</td>
-                    </tr>
-                    <tr>
-                        <td><code>SystemError</code></td>
-                        <td>Critical / System</td>
-                        <td>Jump stack overflow (exceeding 64 nested <code>do</code> blocks) or call stack recursion depth exceeding 64 frames.</td>
-                        <td>Avoid infinite recursion; ensure terminating base cases in recursive functions.</td>
-                    </tr>
-                    <tr>
-                        <td><code>MemoryAllocationError</code></td>
-                        <td>Critical / System</td>
-                        <td>Host machine or process running out of heap memory during dynamic symbol table expansion.</td>
-                        <td>Free unused resources and reduce memory footprint.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Error Execution Modes Matrix</h2>
-            <p>VerScript supports four distinct error handling modes that govern how exceptions propagate through the execution engine:</p>
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Mode</th>
-                        <th>Directive</th>
-                        <th>Critical Errors</th>
-                        <th>Non-Critical Errors</th>
-                        <th>Primary Use Case</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Normal</strong></td>
-                        <td>Default</td>
-                        <td>Fatal exit</td>
-                        <td>Trapped by <code>unless</code> or fatal exit</td>
-                        <td>Standard development &amp; script execution</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Force</strong></td>
+                        <td><strong>Level 0: Zero-Tolerance</strong></td>
                         <td><code>ForceErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>Fatal exit immediately (bypasses <code>unless</code>)</td>
-                        <td>Strict unit testing &amp; zero-tolerance assertions</td>
+                        <td>None (0 pts)</td>
+                        <td><strong>No errors suppressed</strong>. Any error, even minor 1-point reads, terminates execution immediately. Bypasses <code>unless</code> handlers.</td>
                     </tr>
                     <tr>
-                        <td><strong>Critical</strong></td>
+                        <td><strong>Level 1: Minor Fault</strong></td>
+                        <td><code>SuppressErrors</code> (Default)</td>
+                        <td>Points 1 – 3</td>
+                        <td>Silently masks minor semantic and iteration faults (e.g. <code>UndefinedVariableError</code> resolves to fallback, loop step errors reset).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Level 2: Standard Logic</strong></td>
                         <td><code>CriticalErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>Suppressed and skipped silently</td>
-                        <td>Fault-tolerant continuous telemetry collection</td>
+                        <td>Points 1 – 6</td>
+                        <td>Silently bypasses arithmetic faults and purity contract violations while continuing script execution.</td>
                     </tr>
                     <tr>
-                        <td><strong>Suppress</strong></td>
-                        <td><code>SuppressErrors</code></td>
-                        <td>Fatal exit immediately</td>
-                        <td>All non-critical errors suppressed &amp; skipped</td>
-                        <td>Best-effort recovery &amp; exploratory execution</td>
+                        <td><strong>Level 3: Deep Metaprogramming</strong></td>
+                        <td><code>suppress: high</code> / Scopes</td>
+                        <td>Points 1 – 8</td>
+                        <td>Masks alias collision and polyglot execution failures; logs warnings to telemetry stream without halting.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Level 4: Unsuppressable Fatal</strong></td>
+                        <td><em>Engine Core Invariant</em></td>
+                        <td>Points 9 – 10</td>
+                        <td><strong>Cannot be suppressed under any directive</strong>. VM halts immediately with line pointer and exit code to prevent memory corruption.</td>
                     </tr>
                 </tbody>
             </table>
+
+            <h2>Complete 13-Error Criticality Points &amp; Suppression Matrix</h2>
+            <p>Below is the complete reference matrix mapping every native VerScript error to its Criticality Points, Severity Classification, Raised Suppression Level, and recovery strategy:</p>
+
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Error Identifier</th>
+                            <th>Criticality Points</th>
+                            <th>Severity Class</th>
+                            <th>Raised Suppression Tier</th>
+                            <th>Trigger Condition &amp; VM Impact</th>
+                            <th>Recovery &amp; Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>UndefinedVariableError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">1 / 10</span></td>
+                            <td>Minor / Semantic</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td>Reading an uninitialized identifier. Evaluates to <code>""</code> or <code>0</code> under suppression.</td>
+                            <td>Define variable before access, use <code>set var: val</code>, or provide default attributes.</td>
+                        </tr>
+                        <tr>
+                            <td><code>LoopDirectionError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">2 / 10</span></td>
+                            <td>Minor / Loop</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td><code>start &gt; end</code> in ascending <code>iterate</code> loop. Loop body skipped under suppression.</td>
+                            <td>Ensure <code>start &lt;= end</code> or invert range boundary expressions.</td>
+                        </tr>
+                        <tr>
+                            <td><code>LoopIterationError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">2 / 10</span></td>
+                            <td>Minor / Loop</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td>Non-numeric iteration count in <code>loop</code>. Loop count defaults to 0 under suppression.</td>
+                            <td>Cast or validate count expression to positive integer.</td>
+                        </tr>
+                        <tr>
+                            <td><code>LoopStepError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">2 / 10</span></td>
+                            <td>Minor / Loop</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td><code>step &lt;= 0</code> or <code>step &gt; count</code>. Step defaults to <code>1</code> under suppression.</td>
+                            <td>Ensure <code>1 &lt;= step &lt;= total_iterations</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>RuntimeError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">3 / 10</span></td>
+                            <td>Minor / Contextual</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td>Invoking <code>throw error</code> outside an active <code>unless</code> handler block.</td>
+                            <td>Only execute rethrows inside valid <code>unless</code> catch blocks.</td>
+                        </tr>
+                        <tr>
+                            <td><code>InvalidOperandError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);">4 / 10</span></td>
+                            <td>Moderate / Types</td>
+                            <td><strong>Level 2 (Standard)</strong></td>
+                            <td>Incompatible operator usage (e.g. string multiplication or unary minus on booleans).</td>
+                            <td>Ensure operands match operator type requirements prior to execution.</td>
+                        </tr>
+                        <tr>
+                            <td><code>DivisionByZeroError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);">5 / 10</span></td>
+                            <td>Moderate / Math</td>
+                            <td><strong>Level 2 (Standard)</strong></td>
+                            <td>Division operator <code>/</code> with divisor evaluating to <code>0</code>. Yields <code>0</code> under suppression.</td>
+                            <td>Guard divisor with <code>if divisor != 0</code> or trap with <code>do ... unless DivisionByZeroError</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>ScopeViolationError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);">6 / 10</span></td>
+                            <td>Moderate / Purity</td>
+                            <td><strong>Level 2 (Standard)</strong></td>
+                            <td>An <code>inbound</code> function or method mutates a variable in an outer lexical frame.</td>
+                            <td>Declare routine with <code>outbound</code>, keep mutations purely local, or catch via <code>unless</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>InvalidErrorNameError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,121,198,0.15); color: #ff79c6; border-color: rgba(255,121,198,0.3);">7 / 10</span></td>
+                            <td>High / Semantic</td>
+                            <td><strong>Level 3 (Deep)</strong></td>
+                            <td>Attempting to throw an unrecognized error symbol not in the taxonomy.</td>
+                            <td>Use recognized error identifiers or raise via <code>throw CustomError ?code=...</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>IndentationError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);">9 / 10</span></td>
+                            <td>Fatal / Structural</td>
+                            <td><strong>Level 4 (Unsuppressable)</strong></td>
+                            <td>Mismatched indentation spaces or tabs within indented statement blocks.</td>
+                            <td>Standardize block indentation to 4 spaces or 1 tab throughout the script.</td>
+                        </tr>
+                        <tr>
+                            <td><code>SyntaxError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);">10 / 10</span></td>
+                            <td>Fatal / Structural</td>
+                            <td><strong>Level 4 (Unsuppressable)</strong></td>
+                            <td>Lexer/parser failure: illegal tokens, missing colons, or methods returning values with <code>reply &lt;expr&gt;</code>.</td>
+                            <td>Fix script syntax to strictly adhere to VerScript grammar specification.</td>
+                        </tr>
+                        <tr>
+                            <td><code>SystemError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);">10 / 10</span></td>
+                            <td>Fatal / Virtual Machine</td>
+                            <td><strong>Level 4 (Unsuppressable)</strong></td>
+                            <td>Call stack frame depth exceeding 64 or jump stack overflow across nested <code>do</code> scopes.</td>
+                            <td>Ensure recursive procedures have base-case terminations; flatten deeply nested blocks.</td>
+                        </tr>
+                        <tr>
+                            <td><code>MemoryAllocationError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);">10 / 10</span></td>
+                            <td>Fatal / Virtual Machine</td>
+                            <td><strong>Level 4 (Unsuppressable)</strong></td>
+                            <td>Host operating system memory exhausted during symbol table expansion.</td>
+                            <td>Release resources and reduce memory footprint of large datasets.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>How Error Modes Govern Suppression</h2>
+            <p>The VerScript engine evaluates the active error mode against the error's criticality points before deciding whether to dispatch an <code>unless</code> handler or abort:</p>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Active Mode</th>
+                            <th>Directive</th>
+                            <th>Allowed Suppression Tiers</th>
+                            <th>Critical Errors (Pts 9-10)</th>
+                            <th>Standard Errors (Pts 1-8)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Normal</strong></td>
+                            <td>Default runtime</td>
+                            <td>Tiers 1 – 2 (via <code>unless</code>)</td>
+                            <td>Fatal Abort</td>
+                            <td>Dispatched to matching <code>unless</code> block or fatal abort</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Force</strong></td>
+                            <td><code>ForceErrors</code></td>
+                            <td>Tier 0 Only</td>
+                            <td>Fatal Abort</td>
+                            <td>Fatal Abort immediately (bypasses <code>unless</code> catch blocks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Critical</strong></td>
+                            <td><code>CriticalErrors</code></td>
+                            <td>Tiers 1 – 2</td>
+                            <td>Fatal Abort</td>
+                            <td>Suppressed and skipped silently (Points 1–6)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Suppress</strong></td>
+                            <td><code>SuppressErrors</code></td>
+                            <td>Tiers 1 – 3</td>
+                            <td>Fatal Abort</td>
+                            <td>All non-fatal errors suppressed &amp; skipped silently</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="callout-box tip">
-                <div class="callout-title">🛠️ Interactive Diagnostic Workflow</div>
-                <p>When debugging VerScript code, wrap suspicious operations inside a <code>do ... unless error</code> block and print both the exception category via <code>display error</code> and the context message. This enables pinpoint root-cause analysis.</p>
+                <div class="callout-title">💡 Diagnostic Best Practice: Selective Trap Pattern</div>
+                <p>Always trap specific error types (e.g. <code>unless DivisionByZeroError</code> or <code>unless ScopeViolationError</code>) rather than generic catches. This ensures low-criticality faults are cleanly mitigated without masking unexpected structural errors.</p>
             </div>
         `,
         codeBlocks: [
