@@ -15,6 +15,7 @@ const progressBarEl = document.getElementById('progressBar');
 const progressTextEl = document.getElementById('progressText');
 const sidebarToggleEl = document.getElementById('sidebarToggle');
 const sidebarEl = document.getElementById('sidebar');
+const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
 
 // ─── INITIALIZATION ────────────────────────────────────────────────
 function initDocsApp() {
@@ -180,6 +181,7 @@ function loadArticle(index) {
         </div>
     `;
 }
+window.loadArticle = loadArticle;
 
 // ─── RENDER RUNBOX COMPONENT ───────────────────────────────────────
 function renderRunBox(id, title, initialCode) {
@@ -632,11 +634,32 @@ window.executeRunBox = async function(id) {
     }
 };
 
+// ─── TOAST NOTIFICATION SYSTEM ────────────────────────────────────
+window.showToast = function(message, type = 'info', duration = 3200) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = `toast-message ${type}`;
+    toast.innerHTML = escapeHTML(message);
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(12px) scale(0.95)';
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+};
+
 window.copyRunboxCode = function(id) {
     const textarea = document.getElementById(`textarea_${id}`);
     if (textarea) {
         navigator.clipboard?.writeText(textarea.value);
-        alert("📋 Code snippet copied to clipboard!");
+        window.showToast("📋 Code snippet copied to clipboard!", "info");
     }
 };
 
@@ -646,6 +669,7 @@ window.resetRunboxCode = function(id, originalCode) {
         textarea.value = originalCode;
         const outputEl = document.getElementById(`output_${id}`);
         if (outputEl) outputEl.textContent = 'Code reset. Click "Run Code" to execute.';
+        window.showToast("↺ Code editor reset to initial starter code", "info");
     }
 };
 
@@ -697,9 +721,9 @@ window.validateExercise = async function(exId, expectedRegexStr) {
         badgeEl.textContent = "✅ Solved";
         updateProgressDisplay();
         renderSidebarList(ARTICLES);
-        alert("🎉 Exercise Solved! Fantastic work!");
+        window.showToast("🎉 Exercise Solved! Fantastic work!", "success");
     } else {
-        alert("⚠️ Output didn't match the expected requirements. Check the hint and try again!");
+        window.showToast("⚠️ Output didn't match expected requirements. Check hint & retry!", "warn");
     }
 };
 
@@ -716,7 +740,15 @@ function setupEventListeners() {
             a.summary.toLowerCase().includes(query) ||
             a.category.toLowerCase().includes(query)
         );
-        renderSidebarList(filtered);
+        if (filtered.length === 0) {
+            articleListEl.innerHTML = `
+                <li style="padding: 24px 14px; text-align: center; color: var(--text-muted); font-size: 0.88rem;">
+                    No chapters matching "<strong>${escapeHTML(query)}</strong>"
+                </li>
+            `;
+        } else {
+            renderSidebarList(filtered);
+        }
     });
 
     window.toggleSidebar = function(open) {
@@ -760,6 +792,66 @@ function setupEventListeners() {
             loadArticle(foundIdx);
             if (window.innerWidth <= 900) {
                 toggleSidebar(false);
+            }
+        }
+    });
+
+    // Desktop Keyboard Navigation & Shortcuts
+    window.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement ? document.activeElement.tagName : '';
+        const isEditing = ['INPUT', 'TEXTAREA'].includes(activeTag);
+
+        // Ctrl+K or / to quickly focus search
+        if ((e.key === '/' || (e.ctrlKey && e.key.toLowerCase() === 'k') || (e.metaKey && e.key.toLowerCase() === 'k')) && !isEditing) {
+            e.preventDefault();
+            articleSearchEl.focus();
+            articleSearchEl.select();
+            return;
+        }
+
+        // Escape to clear search and blur
+        if (e.key === 'Escape' && document.activeElement === articleSearchEl) {
+            articleSearchEl.value = '';
+            renderSidebarList(ARTICLES);
+            articleSearchEl.blur();
+            return;
+        }
+
+        // Left / Right Arrow keys to navigate chapters (when not typing)
+        if (!isEditing) {
+            if (e.key === 'ArrowLeft' && currentArticleIndex > 0) {
+                e.preventDefault();
+                loadArticle(currentArticleIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentArticleIndex < ARTICLES.length - 1) {
+                e.preventDefault();
+                loadArticle(currentArticleIndex + 1);
+            }
+        }
+    });
+
+    // Delegate Tab key indentation & Ctrl+Enter execution in code editors
+    mainContentEl.addEventListener('keydown', (e) => {
+        if (e.target && e.target.classList.contains('code-textarea')) {
+            const textarea = e.target;
+
+            // Tab key indents by 2 spaces
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value = textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 2;
+                return;
+            }
+
+            // Ctrl+Enter or Cmd+Enter executes runbox
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                const runbox = textarea.closest('.runbox-container');
+                if (runbox) {
+                    const id = runbox.id.replace('runbox_', '');
+                    window.executeRunBox(id);
+                }
             }
         }
     });

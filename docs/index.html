@@ -1176,6 +1176,68 @@
                 text-align: left;
             }
         }
+
+        /* TOAST NOTIFICATION CONTAINER */
+        .toast-container {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .toast-message {
+            background: rgba(15, 17, 24, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: var(--text-main);
+            font-size: 0.92rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 204, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            pointer-events: auto;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .toast-message.success {
+            border-color: rgba(72, 187, 120, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(72, 187, 120, 0.25);
+            color: #68D391;
+        }
+        .toast-message.info {
+            border-color: rgba(0, 255, 204, 0.5);
+            color: var(--primary);
+        }
+        .toast-message.warn {
+            border-color: rgba(255, 209, 102, 0.6);
+            color: var(--accent-yellow);
+        }
+        @keyframes toastSlideIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .search-kbd-hint {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -1213,6 +1275,7 @@
             <div class="search-box">
                 <span class="search-icon">🔍</span>
                 <input type="text" id="articleSearch" placeholder="Search documentation..." autocomplete="off">
+                <span class="search-kbd-hint">/</span>
             </div>
 
             <div class="progress-card">
