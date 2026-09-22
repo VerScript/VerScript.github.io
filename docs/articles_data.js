@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════
 //  VerScript Academy — Complete Interactive Documentation Articles
-//  Pedagogically Structured into 8 Progressive Learning Sections:
+//  Pedagogically Structured into 9 Progressive Learning Sections:
 //   1. Fundamentals & Syntax (Ch 1-5)
 //   2. Input & Output Mastery (Ch 6-7)
 //   3. Control Flow & Iteration (Ch 8-11)
@@ -9,6 +9,7 @@
 //   6. Polyglot & Metaprogramming (Ch 17-18)
 //   7. Grandmaster Systems Capstone (Ch 19)
 //   8. Complete Language Specification & Cheatsheet (Ch 20)
+//   9. Data Structures & Object Architecture (Ch 21-22)
 // ═══════════════════════════════════════════════════════════════════
 
 const ARTICLES = [
@@ -1627,7 +1628,7 @@ unless AuthError
         title: "Interactive Error Directory & Diagnostics Reference",
         category: "Diagnostics & Errors",
         readTime: "10 min read",
-        summary: "A complete interactive reference of all 13 VerScript native errors with trigger conditions, critical classifications, and handling strategies.",
+        summary: "A complete interactive reference of all 17 VerScript native errors with trigger conditions, critical classifications, and handling strategies.",
         body: `
             <h2>VerScript Complete Error Taxonomy &amp; Diagnostics Architecture</h2>
             <p>The VerScript virtual machine implements a deterministic, multi-tiered exception taxonomy. Every runtime condition is strongly typed, named, and inspectable via the global <code>error</code> identifier inside <code>unless</code> handlers. The VM evaluates faults along two rigorous metrics: <strong>Criticality Points (1–10)</strong> and <strong>Suppression Levels (0–4)</strong>.</p>
@@ -1686,7 +1687,7 @@ unless AuthError
                 </tbody>
             </table>
 
-            <h2>Complete 13-Error Criticality Points &amp; Suppression Matrix</h2>
+            <h2>Complete 17-Error Criticality Points &amp; Suppression Matrix</h2>
             <p>Below is the complete reference matrix mapping every native VerScript error to its Criticality Points, Severity Classification, Raised Suppression Level, and recovery strategy:</p>
 
             <div class="doc-table-wrapper">
@@ -1797,6 +1798,38 @@ unless AuthError
                             <td><strong>Level 4 (Unsuppressable)</strong></td>
                             <td>Call stack frame depth exceeding 64 or jump stack overflow across nested <code>do</code> scopes.</td>
                             <td>Ensure recursive procedures have base-case terminations; flatten deeply nested blocks.</td>
+                        </tr>
+                        <tr>
+                            <td><code>IndexOutOfBoundsError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">2 / 10</span></td>
+                            <td>Minor / Boundary</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td>Attempting to index an array out of bounds (<code>index &lt; 0</code> or <code>index &gt;= count</code>).</td>
+                            <td>Check array bounds before indexing or guard with <code>do ... unless IndexOutOfBoundsError</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>EntityError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);">3 / 10</span></td>
+                            <td>Minor / Member Resolution</td>
+                            <td><strong>Level 1 (Minor)</strong></td>
+                            <td>Accessing or invoking an undeclared property or method on an instantiated entity.</td>
+                            <td>Ensure member is declared in class <code>static:</code> or <code>dynamic:</code> sections.</td>
+                        </tr>
+                        <tr>
+                            <td><code>ImmutableError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);">6 / 10</span></td>
+                            <td>Moderate / Immutability</td>
+                            <td><strong>Level 2 (Standard)</strong></td>
+                            <td>Mutating an entity static property or modifying an immutable library <code>const</code>.</td>
+                            <td>Mutate dynamic entity properties instead, or treat library constants as read-only.</td>
+                        </tr>
+                        <tr>
+                            <td><code>VisibilityError</code></td>
+                            <td><span class="meta-pill" style="background: rgba(255,121,198,0.15); color: #ff79c6; border-color: rgba(255,121,198,0.3);">7 / 10</span></td>
+                            <td>High / Access Control</td>
+                            <td><strong>Level 3 (Deep)</strong></td>
+                            <td>Accessing private static properties, calling private methods outside an entity, or calling private library routines.</td>
+                            <td>Mark static member with <code>public</code> or invoke routines within their enclosing entity/library scope.</td>
                         </tr>
                         <tr>
                             <td><code>MemoryAllocationError</code></td>
@@ -2447,6 +2480,34 @@ out "Mastery Proof Verified: " + total_cycles ?col=#00ffcc`,
                         <td>N/A</td>
                         <td><code>ForceErrors<br>&nbsp;&nbsp;strict_test()</code></td>
                     </tr>
+                    <tr>
+                        <td><code>arr</code></td>
+                        <td><code>items: [v1, v2]</code><br><code>items[idx]</code></td>
+                        <td>Dynamic heterogeneous array declaration, indexing &amp; mutation</td>
+                        <td>Empty array</td>
+                        <td><code>arr list: [1, "two", true]<br>list[0]: 99</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>class</code></td>
+                        <td><code>(args...)</code><br><code>static:</code><br><code>dynamic:</code></td>
+                        <td>Entity blueprint; static immutable partition, dynamic mutable partition</td>
+                        <td>N/A</td>
+                        <td><code>class Hero(name)<br>&nbsp;&nbsp;dynamic: hp: 100</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>lib</code> / <code>library</code></td>
+                        <td><code>const:</code><br><code>dynamic:</code></td>
+                        <td>Pure functional static library; unqualified member access</td>
+                        <td>N/A</td>
+                        <td><code>lib MathLib<br>&nbsp;&nbsp;const: PI: 314</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>outscope</code></td>
+                        <td><code>var: val</code></td>
+                        <td>Target true global/outer scope from inside entity methods</td>
+                        <td>N/A</td>
+                        <td><code>outscope global_log: 1</code></td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -2476,14 +2537,20 @@ out "Mastery Proof Verified: " + total_cycles ?col=#00ffcc`,
                     <tr>
                         <td>3</td>
                         <td><code>+</code>, <code>-</code></td>
-                        <td>Addition / String Concatenation, Subtraction</td>
+                        <td>Addition, Subtraction</td>
                         <td>Left-to-Right</td>
                     </tr>
                     <tr>
-                        <td>4 (Lowest)</td>
-                        <td><code>=</code>, <code>x=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td>
-                        <td>Equality, Inequality, Relational</td>
+                        <td>4</td>
+                        <td><code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code></td>
+                        <td>Relational &amp; Equality Comparisons</td>
                         <td>Left-to-Right</td>
+                    </tr>
+                    <tr>
+                        <td>5 (Lowest)</td>
+                        <td><code>:</code>, <code>x=</code></td>
+                        <td>Assignment, In-Place Multiplication</td>
+                        <td>Right-to-Left</td>
                     </tr>
                 </tbody>
             </table>
@@ -2530,4 +2597,250 @@ display "Verified: " + client ?color=#50fa7b`,
         ]
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // SECTION 9: DATA STRUCTURES & OBJECT ARCHITECTURE
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        id: "ch21-arrays",
+        number: 21,
+        section: "Section 4: Data Structures & Objects",
+        title: "Arrays & Dynamic Heterogeneous Collections",
+        category: "Data Structures",
+        readTime: "8 min read",
+        summary: "Master VerScript's native arr data type: heterogeneous lists, zero-based indexing, in-place element mutation, and bounds safety.",
+        body: `
+            <h2>The <code>arr</code> Data Type</h2>
+            <p>VerScript introduces first-class dynamic collections through the <code>arr</code> keyword. Unlike static C arrays, VerScript arrays are <strong>heterogeneous</strong>, dynamically resized on the virtual machine heap, and support mixed datatypes (integers, strings, booleans, nested arrays, and entity references) in a single collection.</p>
+
+            <h2>Syntax &amp; Initialization</h2>
+            <p>Arrays are declared using <code>arr &lt;identifier&gt;</code> and initialized using bracket syntax <code>[item1, item2, ...]</code>:</p>
+            <pre class="code-block"><code>arr inventory: ["Elixir", 42, true, 999]
+arr matrix: [[1, 0], [0, 1]]
+arr empty_list</code></pre>
+
+            <h2>0-Based Indexing &amp; Bounds Safety</h2>
+            <p>Array elements are accessed using standard bracket indexing <code>items[index]</code>, starting from index <code>0</code>:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Syntax</th>
+                        <th>Description &amp; Behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Element Read</strong></td>
+                        <td><code>items[0]</code></td>
+                        <td>Reads the element at index 0. Preserves native value and type.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Element Mutation</strong></td>
+                        <td><code>items[1]: "New Value"</code></td>
+                        <td>Mutates the element in-place. Supports replacing with any type.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Out-of-Bounds Trap</strong></td>
+                        <td><code>do display items[99] unless IndexOutOfBoundsError</code></td>
+                        <td>Accessing negative indices or index &gt;= count raises <code>IndexOutOfBoundsError</code> (Criticality 2/10).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout-box tip">
+                <div class="callout-title">💡 Element Mutation Semantics</div>
+                <p>Element assignment uses the standard VerScript colon operator: <code>items[idx]: new_val</code>. Memory management is handled automatically by the VM heap tracker.</p>
+            </div>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_ch21_1",
+                title: "arrays_demo.vrs",
+                code: `! VerScript Dynamic Heterogeneous Array Demonstration
+arr hero_stats: [100, "Paladin", true, 2500]
+
+display "Initial Hero Stats:" ?color=#38bdf8
+display hero_stats ?color=#22c55e
+
+display "Class Name: " + hero_stats[1] ?color=#a855f7
+display "HP: " + hero_stats[0] ?color=#a855f7
+
+! In-place mutation
+hero_stats[0]: 85
+hero_stats[1]: "Arch-Paladin"
+
+display "Updated Stats after damage:" ?color=#38bdf8
+display hero_stats ?color=#22c55e
+
+! Safe boundary guard
+do
+    display hero_stats[10]
+unless IndexOutOfBoundsError
+    display "Protected from IndexOutOfBoundsError!" ?color=#eab308`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_ch21_1",
+                title: "Exercise 21.1: Declare and Mutate an Array",
+                prompt: "Declare an array <code>arr scores: [10, 20, 30]</code>. Mutate the second item (index 1) to <code>99</code>, and display the entire array.",
+                starterCode: `! Declare and mutate array
+`,
+                hint: "Use `arr scores: [10, 20, 30]`, `scores[1]: 99`, and `display scores`.",
+                solution: `arr scores: [10, 20, 30]
+scores[1]: 99
+display scores`,
+                expectedMatch: /\[10,\s*99,\s*30\]/i
+            }
+        ]
+    },
+
+    {
+        id: "ch22-classes-entities-libraries",
+        number: 22,
+        section: "Section 9: Data Structures & Object Architecture",
+        title: "Object Architecture: Classes, Entities & Libraries",
+        category: "Object Systems",
+        readTime: "11 min read",
+        summary: "Understand VerScript's entity-based object model: class templates with static/dynamic partitions, instancers, non-procedural definitions, and pure functional libraries.",
+        body: `
+            <h2>The Entity-Based Object Model</h2>
+            <p>In VerScript, objects are designated as <strong>entities</strong>. Classes are not runtime types or objects themselves—they exist purely as blueprints used to <strong>instantiate entities</strong>.</p>
+
+            <h2>Class Structure: Static vs Dynamic Partitions</h2>
+            <p>Classes declare two distinct lexical sections with clean immutability and visibility boundaries:</p>
+            <pre class="code-block"><code>class Hero(hero_name, hero_hp)
+    static:
+        ! Immutable inside an entity instance
+        ! Inaccessible outside entity unless marked 'public'
+        public faction: "Guardians"
+        secret_vault: 777
+    dynamic:
+        ! Mutable properties & methods
+        name: hero_name
+        hp: hero_hp
+        def method take_damage(amount)
+            outbound hp: hp - amount
+            outscope global_battle_log: global_battle_log + 1
+        def func get_status()
+            reply hp
+        private def func internal_audit()
+            reply 42</code></pre>
+
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Section / Keyword</th>
+                        <th>Mutability</th>
+                        <th>Scope &amp; Visibility Rules</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>static:</code></td>
+                        <td><strong>Immutable</strong></td>
+                        <td>Private to the entity by default. Cannot be accessed from outside unless declared with <code>public</code>. Attempted mutation raises <code>ImmutableError</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>dynamic:</code></td>
+                        <td><strong>Mutable</strong></td>
+                        <td>Holds entity state and member routines. Can call later definitions freely (<strong>non-procedural</strong>).</td>
+                    </tr>
+                    <tr>
+                        <td><code>outbound</code></td>
+                        <td>Scoped Mutation</td>
+                        <td>Inside an entity method, <code>outbound</code> targets the <strong>entity dynamic scope</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>outscope</code></td>
+                        <td>Global Mutation</td>
+                        <td>Bypasses entity scope to target the <strong>true outer/global scope</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>private</code></td>
+                        <td>Strict Encapsulation</td>
+                        <td>Private routines can only be invoked internally within the class/library definition. Calling from outside raises <code>VisibilityError</code>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Pure Functional Classes: Libraries (<code>lib</code> / <code>library</code>)</h2>
+            <p>For collections of pure functions, utility math routines, and module-level constants, VerScript provides <strong>Libraries</strong> defined with <code>lib</code> or <code>library</code>:</p>
+            <pre class="code-block"><code>lib MathToolkit
+    const:
+        ! Immutable constant, accessible WITHOUT dot notation
+        pi: 314
+        golden_ratio: 1618
+    dynamic:
+        def func double_val(x)
+            reply x * 2
+        private def func secret_formula(x)
+            reply x + 999</code></pre>
+
+            <div class="callout-box tip">
+                <div class="callout-title">💡 Unqualified Calls &amp; Precedence</div>
+                <p>Functions and constants defined by libraries <strong>do not require dot notation</strong> unless naming conflicts occur. Resolution precedence strictly follows: <strong>core built-ins &gt; user-defined locals &gt; imported library symbols</strong>.</p>
+            </div>
+        `,
+        codeBlocks: [
+            {
+                id: "cb_ch22_1",
+                title: "entities_and_libraries.vrs",
+                code: `! Classes, Entities, and Libraries in Action
+class Player(p_name, initial_energy)
+    static:
+        public guild: "Ironclad"
+        vault_code: 8888
+    dynamic:
+        name: p_name
+        energy: initial_energy
+        def method recharge(amt)
+            outbound energy: energy + amt
+        def func get_energy()
+            reply energy
+
+lib PhysicsEngine
+    const:
+        gravity: 98
+    dynamic:
+        def func compute_velocity(t)
+            reply gravity * t
+
+! Entity Instantiation
+p: Player("Aria", 100)
+display "Player Guild: " + p.guild ?color=#38bdf8
+display "Player Energy: " + p.get_energy() ?color=#22c55e
+
+p.recharge(25)
+display "Recharged Energy: " + p.get_energy() ?color=#22c55e
+
+! Unqualified Library Access
+display "Gravity Constant: " + gravity ?color=#a855f7
+display "Velocity at 2s: " + compute_velocity(2) ?color=#a855f7`
+            }
+        ],
+        exercises: [
+            {
+                id: "ex_ch22_1",
+                title: "Exercise 22.1: Create Class and Entity",
+                prompt: "Define a class <code>Warrior(w_name)</code> with dynamic property <code>name: w_name</code>. Instantiate <code>w: Warrior(\"Thor\")</code> and display <code>w.name</code>.",
+                starterCode: `! Define Warrior class and instantiate
+`,
+                hint: "Use `class Warrior(w_name)`, indented `dynamic:`, `name: w_name`, then `w: Warrior(\"Thor\")` and `display w.name`.",
+                solution: `class Warrior(w_name)
+    dynamic:
+        name: w_name
+
+w: Warrior("Thor")
+display w.name`,
+                expectedMatch: /Thor/i
+            }
+        ]
+    }
+
 ];
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { ARTICLES };
+}

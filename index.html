@@ -903,7 +903,7 @@
         </a>
         <div class="nav-links">
             <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
-            <a href="docs/index.html" class="nav-link">Documentation (20 Ch)</a>
+            <a href="docs/index.html" class="nav-link">Documentation (22 Ch)</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -933,7 +933,7 @@
                     <span class="menu-item-icon">📚</span>
                     <span class="menu-item-text">Documentation Academy</span>
                 </span>
-                <span class="menu-item-badge">20 Ch</span>
+                <span class="menu-item-badge">22 Ch</span>
             </a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="mobile-menu-item highlight">
                 <span class="menu-item-left">
@@ -951,7 +951,7 @@
             </a>
         </div>
         <div class="mobile-menu-footer">
-            <a href="docs/index.html" class="mobile-menu-cta">Explore 20 Interactive Chapters &rarr;</a>
+            <a href="docs/index.html" class="mobile-menu-cta">Explore 22 Interactive Chapters &rarr;</a>
         </div>
     </div>
 
@@ -970,7 +970,7 @@
             </p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary" id="ctaDocs">
-                    <span>Explore Academy (20 Chapters)</span> &rarr;
+                    <span>Explore Academy (22 Chapters)</span> &rarr;
                 </a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaIDE">
                     <span>Launch Web IDE</span> 🚀
@@ -993,7 +993,7 @@
                 <div class="stat-label">Native C VM Core</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">20</div>
+                <div class="stat-number">22</div>
                 <div class="stat-label">Interactive Chapters</div>
             </div>
         </div>
@@ -1009,6 +1009,7 @@
                     </div>
                     <div class="window-tabs">
                         <button class="tab-btn active" id="tabSample" onclick="switchSnippet('sample')">sample.vrs</button>
+                        <button class="tab-btn" id="tabEntities" onclick="switchSnippet('entities')">entities.vrs</button>
                         <button class="tab-btn" id="tabFunctions" onclick="switchSnippet('functions')">functions.vrs</button>
                         <button class="tab-btn" id="tabPolyglot" onclick="switchSnippet('polyglot')">polyglot.vrs</button>
                         <button class="tab-btn" id="tabWatchdog" onclick="switchSnippet('watchdog')">watchdog.vrs</button>
@@ -1088,6 +1089,20 @@
                 <p>Declaratively control error tolerance with <code>SuppressErrors</code>, <code>CriticalErrors</code>, and <code>ForceErrors</code> block scopes.</p>
                 <div class="feature-snippet">SuppressErrors { invalid / 0 }</div>
             </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">📦</div>
+                <h3>Heterogeneous Arrays</h3>
+                <p>Native <code>arr</code> collection type supporting mixed data types, zero-indexed access, and in-place element mutation with bounds checking.</p>
+                <div class="feature-snippet">arr items: [1, "two", true]; items[0]: 99</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">🏛️</div>
+                <h3>Classes, Entities &amp; Libraries</h3>
+                <p>Encapsulated blueprints (<code>class</code>) instantiating <strong>entities</strong> with static/dynamic scopes, plus pure functional static modules (<code>lib</code>).</p>
+                <div class="feature-snippet">class Hero(name) { dynamic: hp: 100 }</div>
+            </div>
         </div>
 
         <!-- ══════════════ EXHAUSTIVE 100+ LANGUAGE DIRECTORY ══════════════ -->
@@ -1141,7 +1156,7 @@
         <!-- ══════════════ CTA BANNER ══════════════ -->
         <div class="cta-banner">
             <h2>Ready to Master VerScript?</h2>
-            <p>Step into the complete 20-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
+            <p>Step into the complete 22-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary">Start Interactive Academy &rarr;</a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary">Launch Web IDE</a>
@@ -1189,9 +1204,11 @@
     1: Custom Functions (def func ... reply) & Purity Contracts (inbound/outbound)
     2: Methods (def method) with State Mutation & Early Return (reply)
     3: Explicit Variable Assignment with "set" keyword
-    4: ANSI & TrueColor Hex Attributes (?color=#38bdf8)
-    5: Command Aliasing & Polyglot Injections
-    6: Robust Error Handling (do ... unless) & ScopeViolationError
+    4: Heterogeneous Arrays (arr) with Element Mutation
+    5: Encapsulated Classes, Entities & Pure Static Libraries
+    6: ANSI & TrueColor Hex Attributes (?color=#38bdf8)
+    7: Command Aliasing & Polyglot Injections
+    8: Robust Error Directives (do ... unless) & ScopeViolationError
 !!
 
 display "=== 1. Explicit Variable Setting ===" ?color=#38bdf8
@@ -1231,11 +1248,27 @@ def method run_diagnostics iterations
 run_diagnostics 5
 display "System Cycles after method call: " + system_cycles ?color=#38bdf8
 
-display "=== 5. Command Aliasing & Hex Colors ===" ?color=#38bdf8
+display "=== 5. Heterogeneous Arrays & Mutation ===" ?color=#38bdf8
+arr telemetry: ["Core-Alpha", 42, true]
+display "Array Element 0 (Name): " + telemetry[0] ?color=#22c55e
+telemetry[1]: 99
+display "Mutated Element 1 (Load): " + telemetry[1] ?color=#38bdf8
+
+display "=== 6. Classes & Entities with Dynamic State ===" ?color=#c084fc
+class Agent(agent_name)
+  dynamic:
+    name: agent_name
+    outbound method ping
+      display "Agent " + name + " pinged successfully!" ?color=#22c55e
+
+set my_agent: Agent("Sentinel-7")
+my_agent.ping
+
+display "=== 7. Command Aliasing & Hex Colors ===" ?color=#38bdf8
 alias display: log
 log "Logging via custom alias with Hex Color #38bdf8!" ?color=#38bdf8
 
-display "=== 6. Polyglot Code Injection ===" ?color=#fbbf24
+display "=== 8. Polyglot Code Injection ===" ?color=#fbbf24
 inject python ?color=yellow
   def py_helper(val):
       return f"Python processing {val}"
@@ -1253,12 +1286,86 @@ display "=== VerScript v2.0 System Ready ===" ?color=#22c55e`,
 <span style="color: #22c55e; font-weight: bold;">Purity Guard Active: Caught ScopeViolationError successfully!</span>
 <span style="color: #c084fc; font-weight: bold;">=== 4. Custom Methods (Stateful & Void) ===</span>
 <span style="color: #38bdf8;">System Cycles after method call: 6</span>
-<span style="color: #38bdf8; font-weight: bold;">=== 5. Command Aliasing & Hex Colors ===</span>
+<span style="color: #38bdf8; font-weight: bold;">=== 5. Heterogeneous Arrays &amp; Mutation ===</span>
+<span style="color: #22c55e;">Array Element 0 (Name): Core-Alpha</span>
+<span style="color: #38bdf8;">Mutated Element 1 (Load): 99</span>
+<span style="color: #c084fc; font-weight: bold;">=== 6. Classes &amp; Entities with Dynamic State ===</span>
+<span style="color: #22c55e;">Agent Sentinel-7 pinged successfully!</span>
+<span style="color: #38bdf8; font-weight: bold;">=== 7. Command Aliasing &amp; Hex Colors ===</span>
 <span style="color: #38bdf8;">Logging via custom alias with Hex Color #38bdf8!</span>
-<span style="color: #fbbf24; font-weight: bold;">=== 6. Polyglot Code Injection ===</span>
+<span style="color: #fbbf24; font-weight: bold;">=== 8. Polyglot Code Injection ===</span>
 <span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Evaluated 3 code line(s) cleanly.
 <span style="color: #22c55e;">Dynamic nested VerScript runtime active!</span>
 <span style="color: #22c55e; font-weight: bold; text-shadow: 0 0 10px rgba(34,197,94,0.5);">=== VerScript v2.0 System Ready ===</span>`
+            },
+            entities: {
+                code: `! Arrays, Entities & Libraries Showcase (v2.0)
+display "=== 1. Heterogeneous Arrays & Mutation ===" ?color=#38bdf8
+arr hero_stats: ["CyberPaladin", 100, true]
+display "Hero Class: " + hero_stats[0] ?color=#22c55e
+display "Initial HP: " + hero_stats[1] ?color=#22c55e
+hero_stats[1]: 120
+display "Buffed HP:  " + hero_stats[1] ?color=#a855f7
+
+display "=== 2. Pure Static Library (lib / library) ===" ?color=#fbbf24
+lib MathLib
+  const:
+    MAX_CAP: 9999
+  dynamic:
+    def func calc_boost base multiplier
+      reply base * multiplier
+
+! Library functions & constants can be called without dot notation!
+display "Max Capacity: " + MAX_CAP ?color=#38bdf8
+set boost: (calc_boost 50 4)
+display "Unqualified Library Call Boost: " + boost ?color=#22c55e
+
+display "=== 3. Classes & Entities with Encapsulation ===" ?color=#c084fc
+class Hero(name, initial_hp)
+  static:
+    public faction: "Solar Guard"
+    private secret_key: 777
+  dynamic:
+    title: name
+    hp: initial_hp
+    outbound method take_damage dmg
+      hp: hp - dmg
+      display ">> " + title + " takes " + dmg + " damage! (HP remaining: " + hp + ")" ?color=#f87171
+
+! Instantiate an entity from class
+set player: Hero("Alekhyo", 100)
+display "Player Entity Created: " + player.title ?color=#38bdf8
+display "Static Public Faction: " + player.faction ?color=#38bdf8
+
+! Invoke entity dynamic method
+player.take_damage 35
+display "Player Current HP: " + player.hp ?color=#22c55e
+
+display "=== 4. Access Control & Purity Enforcement ===" ?color=#fbbf24
+do
+  player.faction: "Rebel"
+unless ImmutableError
+  display "Guard Active: Static faction is immutable outside entity!" ?color=#22c55e
+
+do
+  display player.secret_key
+unless VisibilityError
+  display "Guard Active: Private member secret_key blocked outside class!" ?color=#22c55e`,
+                output: `<span style="color: #38bdf8; font-weight: bold;">=== 1. Heterogeneous Arrays &amp; Mutation ===</span>
+<span style="color: #22c55e;">Hero Class: CyberPaladin</span>
+<span style="color: #22c55e;">Initial HP: 100</span>
+<span style="color: #a855f7;">Buffed HP:  120</span>
+<span style="color: #fbbf24; font-weight: bold;">=== 2. Pure Static Library (lib / library) ===</span>
+<span style="color: #38bdf8;">Max Capacity: 9999</span>
+<span style="color: #22c55e;">Unqualified Library Call Boost: 200</span>
+<span style="color: #c084fc; font-weight: bold;">=== 3. Classes &amp; Entities with Encapsulation ===</span>
+<span style="color: #38bdf8;">Player Entity Created: Alekhyo</span>
+<span style="color: #38bdf8;">Static Public Faction: Solar Guard</span>
+<span style="color: #f87171;">&gt;&gt; Alekhyo takes 35 damage! (HP remaining: 65)</span>
+<span style="color: #22c55e;">Player Current HP: 65</span>
+<span style="color: #fbbf24; font-weight: bold;">=== 4. Access Control &amp; Purity Enforcement ===</span>
+<span style="color: #22c55e; font-weight: bold;">Guard Active: Static faction is immutable outside entity!</span>
+<span style="color: #22c55e; font-weight: bold;">Guard Active: Private member secret_key blocked outside class!</span>`
             },
             functions: {
                 code: `! Command-Query Separation & Purity Contracts (v2.0)
@@ -1340,7 +1447,7 @@ unless internal core_temperature > max_safe_limit
                 return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|reply|set|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>|==|!=|\(|\))|(\n|[^\s\w]+|\w+|\s+)/g;
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
 
             return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
                 if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;
@@ -1359,6 +1466,7 @@ unless internal core_temperature > max_safe_limit
             currentActiveSnippet = key;
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             if (key === 'sample') document.getElementById('tabSample')?.classList.add('active');
+            if (key === 'entities') document.getElementById('tabEntities')?.classList.add('active');
             if (key === 'functions') document.getElementById('tabFunctions')?.classList.add('active');
             if (key === 'polyglot') document.getElementById('tabPolyglot')?.classList.add('active');
             if (key === 'watchdog') document.getElementById('tabWatchdog')?.classList.add('active');
@@ -1408,6 +1516,8 @@ unless internal core_temperature > max_safe_limit
             'iterate idx from 1 to 50 step 5', 'do ... unless internal temp > 100',
             'SuppressErrors', 'loop 10 step 2', 'inject python ?color="yellow"',
             'prompt user ?default="Admin"', 'power : 9000', 'score : score + 10',
+            'arr list: [1, "two", true]', 'class Hero(name) { dynamic: hp: 100 }',
+            'lib MathUtils { const: PI: 3.14 }', 'hero.take_damage 25',
             'status x= 0', '?inline', 'throw HardwareFault ?msg="Low V"',
             'CriticalErrors', '!! ... !!', '! active watchdog guard', 'print "Core: 64-bit C VM" ?tint=#50fa7b'
         ];
