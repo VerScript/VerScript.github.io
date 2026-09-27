@@ -2652,6 +2652,75 @@ arr empty_list</code></pre>
                 <div class="callout-title">💡 Element Mutation Semantics</div>
                 <p>Element assignment uses the standard VerScript colon operator: <code>items[idx]: new_val</code>. Memory management is handled automatically by the VM heap tracker.</p>
             </div>
+
+            <h2>Native Array Methods (Zero Imports, camelCase)</h2>
+            <p>Arrays provide built-in native operations without requiring any library imports. All method names follow the strict <strong>camelCase</strong> standard:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Syntax &amp; Example</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>len()</code></td>
+                        <td><code>items.len()</code></td>
+                        <td>Returns the current element count of the array.</td>
+                    </tr>
+                    <tr>
+                        <td><code>push(val)</code></td>
+                        <td><code>items.push(42)</code></td>
+                        <td>Appends an element to the end of the array.</td>
+                    </tr>
+                    <tr>
+                        <td><code>pop()</code></td>
+                        <td><code>set last: items.pop()</code></td>
+                        <td>Removes and returns the last element.</td>
+                    </tr>
+                    <tr>
+                        <td><code>contains(val)</code></td>
+                        <td><code>items.contains("Paladin")</code></td>
+                        <td>Returns 1 if value exists in array, 0 otherwise.</td>
+                    </tr>
+                    <tr>
+                        <td><code>indexOf(val)</code></td>
+                        <td><code>items.indexOf(2500)</code></td>
+                        <td>Returns 0-based index of first occurrence, or -1 if absent.</td>
+                    </tr>
+                    <tr>
+                        <td><code>slice(start, end)</code></td>
+                        <td><code>items.slice(0, 2)</code></td>
+                        <td>Returns a new sub-array from start index up to end index.</td>
+                    </tr>
+                    <tr>
+                        <td><code>reverse()</code></td>
+                        <td><code>items.reverse()</code></td>
+                        <td>Reverses array elements in-place.</td>
+                    </tr>
+                    <tr>
+                        <td><code>swap(i, j)</code></td>
+                        <td><code>items.swap(0, 2)</code></td>
+                        <td>Swaps elements at index i and j.</td>
+                    </tr>
+                    <tr>
+                        <td><code>join(sep)</code></td>
+                        <td><code>items.join(" - ")</code></td>
+                        <td>Joins all elements into a formatted string with separator.</td>
+                    </tr>
+                    <tr>
+                        <td><code>clear()</code></td>
+                        <td><code>items.clear()</code></td>
+                        <td>Empties all elements from the array.</td>
+                    </tr>
+                    <tr>
+                        <td><code>isEmpty()</code></td>
+                        <td><code>items.isEmpty()</code></td>
+                        <td>Returns 1 if array length is 0, 0 otherwise.</td>
+                    </tr>
+                </tbody>
+            </table>
         `,
         codeBlocks: [
             {
@@ -2782,6 +2851,104 @@ display scores`,
                 <div class="callout-title">💡 Unqualified Calls &amp; Precedence</div>
                 <p>Functions and constants defined by libraries <strong>do not require dot notation</strong> unless naming conflicts occur. Resolution precedence strictly follows: <strong>core built-ins &gt; user-defined locals &gt; imported library symbols</strong>.</p>
             </div>
+
+            <h2>Library Loading (<code>load</code> Keyword &amp; <code>.lib.vrs</code> Files)</h2>
+            <p>VerScript uses the <code>load</code> statement to import static libraries. Library definitions must reside in standalone files using the <strong><code>.lib.vrs</code></strong> compound extension:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Library Type</th>
+                        <th>Syntax</th>
+                        <th>Resolution Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Release Core Library</strong></td>
+                        <td><code>load Math</code></td>
+                        <td>Resolved by identifier directly from the runtime engine or <code>core_libs/Math.lib.vrs</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User-Defined Library</strong></td>
+                        <td><code>load "./path/to/custom.lib.vrs"</code></td>
+                        <td>Resolved relative to the invoking source file. File must use <code>.lib.vrs</code> extension.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Native String Methods (Zero Imports, camelCase)</h2>
+            <p>Strings in VerScript support fluent method invocation directly on literals or variables with zero imports:</p>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Syntax &amp; Example</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>len()</code></td>
+                        <td><code>"Hello".len()</code></td>
+                        <td>Returns the number of characters in the string.</td>
+                    </tr>
+                    <tr>
+                        <td><code>indexOf(sub)</code></td>
+                        <td><code>s.indexOf("World")</code></td>
+                        <td>Returns 0-based index of substring, or -1 if not found.</td>
+                    </tr>
+                    <tr>
+                        <td><code>contains(sub)</code></td>
+                        <td><code>s.contains("abc")</code></td>
+                        <td>Returns 1 if substring is contained, 0 otherwise.</td>
+                    </tr>
+                    <tr>
+                        <td><code>slice(start, end)</code></td>
+                        <td><code>s.slice(0, 5)</code></td>
+                        <td>Returns substring from start index up to end index.</td>
+                    </tr>
+                    <tr>
+                        <td><code>trim()</code></td>
+                        <td><code>s.trim()</code></td>
+                        <td>Strips leading and trailing whitespace.</td>
+                    </tr>
+                    <tr>
+                        <td><code>toUpper()</code></td>
+                        <td><code>s.toUpper()</code></td>
+                        <td>Converts ASCII characters to uppercase.</td>
+                    </tr>
+                    <tr>
+                        <td><code>toLower()</code></td>
+                        <td><code>s.toLower()</code></td>
+                        <td>Converts ASCII characters to lowercase.</td>
+                    </tr>
+                    <tr>
+                        <td><code>padLeft(w, pad)</code></td>
+                        <td><code>s.padLeft(8, "*")</code></td>
+                        <td>Pads string on the left up to total width.</td>
+                    </tr>
+                    <tr>
+                        <td><code>padRight(w, pad)</code></td>
+                        <td><code>s.padRight(8, " ")</code></td>
+                        <td>Pads string on the right up to total width.</td>
+                    </tr>
+                    <tr>
+                        <td><code>repeat(count)</code></td>
+                        <td><code>"-".repeat(20)</code></td>
+                        <td>Repeats string count times.</td>
+                    </tr>
+                    <tr>
+                        <td><code>split(delim)</code></td>
+                        <td><code>s.split(" ")</code></td>
+                        <td>Splits string by delimiter into a native array.</td>
+                    </tr>
+                    <tr>
+                        <td><code>isEmpty()</code></td>
+                        <td><code>s.isEmpty()</code></td>
+                        <td>Returns 1 if string is empty, 0 otherwise.</td>
+                    </tr>
+                </tbody>
+            </table>
         `,
         codeBlocks: [
             {
