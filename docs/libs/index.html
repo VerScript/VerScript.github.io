@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="VerScript Core & Standard Libraries Portal — Complete API specifications, internal metadata architecture, and interactive code playgrounds for 20+ release libraries.">
+    <title>VerScript Core Libraries Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #07070a;
+            --surface-color: #0f1015;
+            --surface-card: rgba(22, 23, 31, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(0, 255, 204, 0.3);
+            --primary: #00FFCC;
+            --primary-glow: rgba(0, 255, 204, 0.25);
+            --secondary: #9D00FF;
+            --secondary-glow: rgba(157, 0, 255, 0.25);
+            --accent-yellow: #FFD166;
+            --accent-pink: #FF79C6;
+            --accent-red: #EF476F;
+            --accent-blue: #118AB2;
+            --text-main: #FFFFFF;
+            --text-muted: #9DA3AE;
+            --sidebar-width: 340px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { overflow-x: hidden; width: 100%; max-width: 100vw; -webkit-text-size-adjust: 100%; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* TOPBAR */
+        nav.topbar {
+            height: 64px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: rgba(7, 7, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 100;
+        }
+        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 900;
+            text-decoration: none;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo-badge {
+            background: rgba(157, 0, 255, 0.15);
+            color: #C084FC;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(157, 0, 255, 0.35);
+            text-transform: uppercase;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .nav-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .nav-btn-outline {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+        }
+        .nav-btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 255, 204, 0.06);
+        }
+        .nav-btn-primary {
+            background: linear-gradient(90deg, var(--primary), #00d2ff);
+            color: #08080C;
+            font-weight: 700;
+            box-shadow: 0 0 16px rgba(0, 255, 204, 0.3);
+        }
+        .nav-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 24px rgba(0, 255, 204, 0.5);
+        }
+
+        /* APP LAYOUT */
+        .app-layout {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* SIDEBAR */
+        aside.sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            background: #090a0e;
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+            padding: 20px 16px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 80;
+        }
+        .sidebar-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-header-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .lib-count-badge {
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            font-weight: 700;
+        }
+
+        .search-box { position: relative; }
+        .search-box input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 14px 10px 38px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-box input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 255, 204, 0.03);
+            box-shadow: 0 0 16px rgba(0, 255, 204, 0.15);
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .search-kbd-hint {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .category-pills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .cat-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-pill:hover {
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .cat-pill.active {
+            background: rgba(0, 255, 204, 0.12);
+            color: var(--primary);
+            border-color: rgba(0, 255, 204, 0.4);
+            font-weight: 600;
+        }
+
+        .sidebar-section-divider {
+            list-style: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 12px 6px 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 6px;
+        }
+        .lib-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .lib-item-btn {
+            width: 100%;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 10px 12px;
+            border-radius: 10px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .lib-item-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .lib-item-btn.active {
+            background: rgba(0, 255, 204, 0.08);
+            border-color: var(--border-highlight);
+            color: var(--primary);
+        }
+        .lib-btn-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .lib-btn-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            font-family: 'Fira Code', monospace;
+        }
+        .lib-btn-badge {
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        .lib-btn-badge.embedded {
+            background: rgba(0, 255, 204, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+        }
+        .lib-btn-badge.standard {
+            background: rgba(157, 0, 255, 0.15);
+            color: #C084FC;
+            border: 1px solid rgba(157, 0, 255, 0.3);
+        }
+        .lib-btn-summary {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* MAIN CONTENT */
+        main.content-area {
+            flex: 1;
+            padding: 40px 48px 100px;
+            max-width: 1080px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lib-header {
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .lib-header-badges {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .lib-badge-cat {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .lib-badge-status {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        .lib-badge-status.embedded {
+            background: rgba(0, 255, 204, 0.12);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+        }
+        .lib-badge-status.standard {
+            background: rgba(157, 0, 255, 0.12);
+            color: #C084FC;
+            border: 1px solid rgba(157, 0, 255, 0.25);
+        }
+        .lib-badge-version {
+            font-family: 'Fira Code', monospace;
+            background: rgba(255, 209, 102, 0.1);
+            color: var(--accent-yellow);
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 209, 102, 0.25);
+        }
+        h1.lib-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, #FFFFFF 60%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .lib-summary {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin: 0 0 20px 0;
+        }
+
+        .import-code-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 255, 204, 0.04);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        .import-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        .import-syntax {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+        .copy-import-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-import-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .lib-section {
+            margin: 40px 0;
+        }
+        .lib-section h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin: 0 0 16px 0;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .section-title-row h2 { margin: 0; }
+        .meta-protection-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(239, 71, 111, 0.12);
+            color: #FF5C8A;
+            border: 1px solid rgba(239, 71, 111, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* TABLES */
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(15, 16, 21, 0.6);
+            margin: 16px 0;
+        }
+        table.doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        table.doc-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        table.doc-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+        table.doc-table tr:last-child td {
+            border-bottom: none;
+        }
+        table.doc-table code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #00FFCC;
+        }
+
+        .type-pill {
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .type-pill.immutable {
+            background: rgba(17, 138, 178, 0.15);
+            color: #38BDF8;
+            border: 1px solid rgba(17, 138, 178, 0.3);
+        }
+        .type-pill.mutable {
+            background: rgba(72, 187, 120, 0.15);
+            color: #4ADE80;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+        .type-pill.session {
+            background: rgba(255, 209, 102, 0.15);
+            color: #FCD34D;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+        .return-type-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(157, 0, 255, 0.12);
+            color: #C084FC;
+            border: 1px solid rgba(157, 0, 255, 0.25);
+        }
+
+        /* RUNBOX SANDBOX */
+        .runbox-container {
+            background: #0B0C10;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 24px 0;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+        .runbox-header {
+            background: #111218;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .runbox-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .window-dots { display: flex; gap: 6px; }
+        .w-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .w-dot.red { background: #FF5F56; }
+        .w-dot.yellow { background: #FFBD2E; }
+        .w-dot.green { background: #27C93F; }
+        .runbox-actions { display: flex; gap: 8px; }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .run-btn {
+            background: linear-gradient(90deg, #00FFCC, #00B4D8);
+            color: #07070A;
+            border: none;
+            font-weight: 700;
+        }
+        .run-btn:hover {
+            box-shadow: 0 0 16px rgba(0, 255, 204, 0.4);
+            transform: translateY(-1px);
+        }
+        .code-editor-area {
+            position: relative;
+            background: #090a0e;
+        }
+        .code-textarea {
+            width: 100%;
+            height: 180px;
+            background: transparent;
+            border: none;
+            color: #E2E8F0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            padding: 16px;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+        .runbox-console {
+            background: #070709;
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+        }
+        .console-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        pre.console-output {
+            margin: 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #A0AEC0;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        pre.console-output.success { color: #68D391; }
+        pre.console-output.error { color: #FC8181; }
+
+        /* PAGE NAV */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 50px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+        .page-nav-card {
+            flex: 1;
+            padding: 18px 22px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .page-nav-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .page-nav-card.prev { text-align: left; }
+        .page-nav-card.next { text-align: right; }
+        .nav-card-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .nav-card-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary);
+        }
+
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast-message {
+            background: #111218;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 18px;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s;
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .hamburger-btn { display: block; }
+            .nav-btn-outline { display: none; }
+            aside.sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 86vw;
+                max-width: 360px;
+                transform: translateX(-100%);
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 25px 0 60px rgba(0,0,0,0.9);
+                z-index: 120;
+            }
+            aside.sidebar.open { transform: translateX(0); }
+            .sidebar-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.7);
+                backdrop-filter: blur(4px);
+                z-index: 110;
+            }
+            .sidebar-backdrop.active { display: block; }
+            main.content-area { padding: 24px 16px 80px; }
+            h1.lib-title { font-size: 1.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <nav class="topbar">
+        <div class="nav-left">
+            <button class="hamburger-btn" id="sidebarToggle" aria-label="Toggle Navigation">☰</button>
+            <a href="../../index.html" class="logo">VerScript</a>
+            <span class="logo-badge">Core Libraries</span>
+        </div>
+        <div class="nav-right">
+            <a href="../../index.html" class="nav-btn nav-btn-outline">🏠 Home</a>
+            <a href="../index.html" class="nav-btn nav-btn-outline">📚 Academy Docs</a>
+            <a href="https://verscript.github.io/IDE/" target="_blank" rel="noreferrer" class="nav-btn nav-btn-primary">⚡ Open Web IDE</a>
+            <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noreferrer" class="nav-btn nav-btn-outline">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- BACKDROP FOR MOBILE -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- MAIN APP LAYOUT -->
+    <div class="app-layout">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header-row">
+                <span class="sidebar-header-title">Release Libraries</span>
+                <span class="lib-count-badge">21 Modules</span>
+            </div>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="libSearch" placeholder="Search libraries & functions..." aria-label="Search libraries" autocomplete="off">
+                <span class="search-kbd-hint">/</span>
+            </div>
+
+            <div class="category-pills-container" id="categoryPills">
+                <!-- Injected via JS -->
+            </div>
+
+            <ul class="lib-list" id="libList">
+                <!-- Injected via JS -->
+            </ul>
+        </aside>
+
+        <!-- MAIN LIBRARY CONTENT -->
+        <main class="content-area" id="mainContent">
+            <!-- Dynamically populated by libs_app.js -->
+        </main>
+    </div>
+
+    <!-- DATA & APP CONTROLLER -->
+    <script src="libs_data.js"></script>
+    <script src="libs_app.js"></script>
+</body>
+</html>
