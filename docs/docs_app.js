@@ -595,8 +595,26 @@ function evalSimpleExpr(expr, vars) {
     });
 
     try {
-        // Evaluate safe arithmetic and string addition
-        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!]/g, '');
+        // Translate VerScript native boolean logic gates into JS:
+        // Equivalence gates: xnor, xand, x&
+        result = result.replace(/\bxnor\b/g, ' === ');
+        result = result.replace(/\bxand\b/g, ' === ');
+        result = result.replace(/x&/g, ' === ');
+        // Exclusive OR: xor
+        result = result.replace(/\bxor\b/g, ' !== ');
+        // Negated OR (NOR): a nor b -> !(a || b)
+        result = result.replace(/([a-zA-Z0-9_")\]]+)\s+nor\s+([a-zA-Z0-9_"(]+)/g, '!($1 || $2)');
+        // Negated AND (NAND): a and b -> !(a && b)
+        result = result.replace(/([a-zA-Z0-9_")\]]+)\s+and\s+([a-zA-Z0-9_"(]+)/g, '!($1 && $2)');
+        // Normal AND (& or &&)
+        result = result.replace(/&+/g, '&&');
+        // Normal OR (or or ||)
+        result = result.replace(/\bor\b/g, ' || ');
+        // Unary NOT (not)
+        result = result.replace(/\bnot\b/g, ' ! ');
+
+        // Evaluate safe arithmetic and boolean expressions
+        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!\&\|]/g, '');
         // eslint-disable-next-line no-eval
         const evaluated = Function(`"use strict"; return (${clean})`)();
         return evaluated !== undefined ? String(evaluated) : '';
