@@ -140,6 +140,7 @@ function loadLibrary(index) {
             <td style="font-family: 'Fira Code', monospace; font-weight: 600; color: var(--primary);">${escapeHTML(f.name)}</td>
             <td style="font-family: 'Fira Code', monospace; color: #FFD166;">${escapeHTML(f.params)}</td>
             <td><span class="return-type-pill">${escapeHTML(f.returnType)}</span></td>
+            <td><span style="font-family: 'Fira Code', monospace; font-size: 0.85em; color: #06D6A0; background: rgba(6, 214, 160, 0.1); padding: 2px 6px; border-radius: 4px;">${escapeHTML(f.aliases || '—')}</span></td>
             <td>${escapeHTML(f.desc)}</td>
         </tr>
     `).join('');
@@ -193,7 +194,7 @@ function loadLibrary(index) {
             <div class="table-container">
                 <table class="doc-table">
                     <thead>
-                        <tr><th>Signature</th><th>Parameters</th><th>Return</th><th>Description</th></tr>
+                        <tr><th>Signature</th><th>Parameters</th><th>Return</th><th>Common Aliases</th><th>Description</th></tr>
                     </thead>
                     <tbody>
                         ${funcsTableRows}

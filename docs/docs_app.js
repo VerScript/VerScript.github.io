@@ -595,6 +595,62 @@ function evalSimpleExpr(expr, vars) {
     });
 
     try {
+        // Native Mathematical Constants
+        result = result.replace(/\b(pi|π)\b/g, '3.141592653589793');
+        result = result.replace(/\b(tau|τ)\b/g, '6.283185307179586');
+        result = result.replace(/\bphi\b/g, '1.618033988749895');
+        result = result.replace(/\b(inf|infinity)\b/g, 'Infinity');
+
+        // Absolute value |expr| -> Math.abs(expr)
+        result = result.replace(/\|([^|]+)\|/g, 'Math.abs($1)');
+
+        // Postfix Factorial x! -> __fact(x)
+        result = result.replace(/([0-9a-zA-Z_\)]+)!/g, '(__fact($1))');
+
+        // Exponentiation ^ -> **
+        result = result.replace(/\^/g, '**');
+
+        // Integer division // -> Math.floor(a / b)
+        result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s*\/\/\s*([0-9a-zA-Z_\.\(\)]+)/g, 'Math.floor(($1) / ($2))');
+
+        // Roots
+        result = result.replace(/(?:sqrt|√)\s*([0-9a-zA-Z_\.\(\)]+)/g, 'Math.sqrt($1)');
+        result = result.replace(/\brt\s+([0-9a-zA-Z_\.\(\)]+)\s+([0-9a-zA-Z_\.\(\)]+)/g, 'Math.pow($2, 1 / ($1))');
+
+        // Min, Max, Clamping
+        result = result.replace(/\bclamp\s+([^\s]+)\s+from\s+([^\s]+)\s+to\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
+        result = result.replace(/\bclamp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
+        result = result.replace(/\bmin\s+([^\s]+)\s+([^\s]+)/g, 'Math.min($1, $2)');
+        result = result.replace(/\bmax\s+([^\s]+)\s+([^\s]+)/g, 'Math.max($1, $2)');
+
+        // Interpolation
+        result = result.replace(/\blerp\s+from\s+([^\s]+)\s+to\s+([^\s]+)\s+by\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
+        result = result.replace(/\blerp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
+
+        // Signum & Parity
+        result = result.replace(/\b(sign|sgn)\s+([^\s]+)/g, 'Math.sign($2)');
+        result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s+is\s+even\b/g, '(($1) % 2 === 0)');
+        result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s+is\s+odd\b/g, '(($1) % 2 !== 0)');
+        result = result.replace(/\b(isEven|even)\s+([^\s]+)/g, '(($2) % 2 === 0)');
+        result = result.replace(/\b(isOdd|odd)\s+([^\s]+)/g, '(($2) % 2 !== 0)');
+
+        // Trig and Log functions
+        result = result.replace(/\bsinDeg\s+([^\s]+)/g, 'Math.sin(($1) * Math.PI / 180)');
+        result = result.replace(/\bcosDeg\s+([^\s]+)/g, 'Math.cos(($1) * Math.PI / 180)');
+        result = result.replace(/\bdegToRad\s+([^\s]+)/g, '(($1) * Math.PI / 180)');
+        result = result.replace(/\bradToDeg\s+([^\s]+)/g, '(($1) * 180 / Math.PI)');
+        result = result.replace(/\bsin\s+([^\s]+)/g, 'Math.sin($1)');
+        result = result.replace(/\bcos\s+([^\s]+)/g, 'Math.cos($1)');
+        result = result.replace(/\btan\s+([^\s]+)/g, 'Math.tan($1)');
+        result = result.replace(/\bhypot\s+([^\s]+)\s+([^\s]+)/g, 'Math.hypot($1, $2)');
+        result = result.replace(/\bln\s+([^\s]+)/g, 'Math.log($1)');
+        result = result.replace(/\blog2\s+([^\s]+)/g, 'Math.log2($1)');
+        result = result.replace(/\blog\s+([^\s]+)/g, 'Math.log10($1)');
+        result = result.replace(/\bexp\s+([^\s]+)/g, 'Math.exp($1)');
+        result = result.replace(/\bfloor\s+([^\s]+)/g, 'Math.floor($1)');
+        result = result.replace(/\bceil\s+([^\s]+)/g, 'Math.ceil($1)');
+        result = result.replace(/\bround\s+([^\s]+)/g, 'Math.round($1)');
+
         // Translate VerScript native boolean logic gates into JS:
         // Equivalence gates: xnor, xand, x&
         result = result.replace(/\bxnor\b/g, ' === ');
@@ -614,9 +670,10 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/\bnot\b/g, ' ! ');
 
         // Evaluate safe arithmetic and boolean expressions
-        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!\&\|]/g, '');
+        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!\&\|\%]/g, '');
+        const factHelper = 'function __fact(n){ let r=1; for(let i=2;i<=n;i++)r*=i; return r; };';
         // eslint-disable-next-line no-eval
-        const evaluated = Function(`"use strict"; return (${clean})`)();
+        const evaluated = Function(`"use strict"; ${factHelper} return (${clean})`)();
         return evaluated !== undefined ? String(evaluated) : '';
     } catch (e) {
         return expr.replace(/^"|"$/g, '');

@@ -904,7 +904,7 @@
         <div class="nav-links">
             <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
             <a href="docs/index.html" class="nav-link">Documentation (27 Ch)</a>
-            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Libraries (21 Libs)</a>
+            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Libraries (19 Libs)</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -941,7 +941,7 @@
                     <span class="menu-item-icon">📦</span>
                     <span class="menu-item-text">Core Libraries Portal</span>
                 </span>
-                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">21 Libs</span>
+                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">19 Libs</span>
             </a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="mobile-menu-item highlight">
                 <span class="menu-item-left">
@@ -978,7 +978,7 @@
             </p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary" id="ctaDocs">
-                    <span>Explore Academy (22 Chapters)</span> &rarr;
+                    <span>Explore Academy (27 Chapters)</span> &rarr;
                 </a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaIDE">
                     <span>Launch Web IDE</span> 🚀
@@ -1111,6 +1111,13 @@
                 <p>Encapsulated blueprints (<code>class</code>) instantiating <strong>entities</strong> with static/dynamic scopes, plus pure functional static modules (<code>lib</code>).</p>
                 <div class="feature-snippet">class Hero(name) { dynamic: hp: 100 }</div>
             </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">🔢</div>
+                <h3>Native Mathematics Engine</h3>
+                <p>Native arithmetic operators, power (<code>^</code>), absolute value (<code>|x|</code>), factorial (<code>x!</code>), roots (<code>sqrt</code>, <code>rt</code>), bounds (<code>min</code>, <code>max</code>, <code>clamp</code>), trigonometry, logarithms, and parity predicates.</p>
+                <div class="feature-snippet">|-42| + 2 ^ 8 + 5! + (sqrt 144)</div>
+            </div>
         </div>
 
         <!-- ══════════════ EXHAUSTIVE 100+ LANGUAGE DIRECTORY ══════════════ -->
@@ -1164,7 +1171,7 @@
         <!-- ══════════════ CTA BANNER ══════════════ -->
         <div class="cta-banner">
             <h2>Ready to Master VerScript?</h2>
-            <p>Step into the complete 22-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
+            <p>Step into the complete 27-chapter Academy featuring runnable code sandboxes, in-depth attribute matrices, and hands-on practice challenges.</p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary">Start Interactive Academy &rarr;</a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary">Launch Web IDE</a>
@@ -1285,6 +1292,17 @@ inject python ?color=yellow
 inject verscript
   display "Dynamic nested VerScript runtime active!" ?color=#22c55e
 
+display "=== 9. Native Mathematics Engine ===" ?color=#38bdf8
+set base_energy: |-50|
+set power_output: 2 ^ 8
+set efficiency_rank: 5!
+display "Absolute Energy: " + base_energy ?color=#22c55e
+display "Exponentiation (2 ^ 8): " + power_output ?color=#38bdf8
+display "Factorial (5!): " + efficiency_rank ?color=#c084fc
+display "Square Root: " + (sqrt 144) ?color=#22c55e
+display "Clamped Output: " + (clamp 150 from 0 to 100) ?color=#fbbf24
+display "System Parity (4 is even): " + (4 is even) ?color=#22c55e
+
 display "=== VerScript v2.0 System Ready ===" ?color=#22c55e`,
                 output: `<span style="color: #38bdf8; font-weight: bold;">=== 1. Explicit Variable Setting ===</span>
 <span style="color: #22c55e;">System Status: Engine Operational</span>
@@ -1304,6 +1322,13 @@ display "=== VerScript v2.0 System Ready ===" ?color=#22c55e`,
 <span style="color: #fbbf24; font-weight: bold;">=== 8. Polyglot Code Injection ===</span>
 <span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Evaluated 3 code line(s) cleanly.
 <span style="color: #22c55e;">Dynamic nested VerScript runtime active!</span>
+<span style="color: #38bdf8; font-weight: bold;">=== 9. Native Mathematics Engine ===</span>
+<span style="color: #22c55e;">Absolute Energy: 50</span>
+<span style="color: #38bdf8;">Exponentiation (2 ^ 8): 256</span>
+<span style="color: #c084fc;">Factorial (5!): 120</span>
+<span style="color: #22c55e;">Square Root: 12</span>
+<span style="color: #fbbf24;">Clamped Output: 100</span>
+<span style="color: #22c55e;">System Parity (4 is even): true</span>
 <span style="color: #22c55e; font-weight: bold; text-shadow: 0 0 10px rgba(34,197,94,0.5);">=== VerScript v2.0 System Ready ===</span>`
             },
             entities: {
@@ -1455,7 +1480,7 @@ unless internal core_temperature > max_safe_limit
                 return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step|sqrt|rt|min|max|clamp|sign|sgn|divRem|isEven|isOdd|gcd|hcf|lcm|floor|ceil|round|sin|cos|tan|hypot|degToRad|radToDeg|sinDeg|cosDeg|ln|log|log2|exp|lerp|pi|tau|phi|inf|even|odd|is|by)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|\/\/|%|\^|\||!|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
 
             return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
                 if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;
