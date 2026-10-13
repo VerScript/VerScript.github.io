@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════
 // VerScript Release Core Libraries Directory
-// Auto-generated specification with 19 comprehensive release libraries.
+// Auto-generated specification with 18 comprehensive release libraries.
 // ═══════════════════════════════════════════════════════════════════
 
 const CORE_LIBRARIES = [
@@ -163,76 +163,6 @@ const CORE_LIBRARIES = [
       }
     ],
     "runnableExample": "load Assert\n\nAssert.equals (10 + 5) 15 \"Addition test\"\nAssert.true (50 > 20) \"Inequality guard\"\nAssert.inRange 85 0 100 \"Percentage range\"\n\ndisplay \"Assertions executed successfully!\"\nAssert.summary"
-  },
-  {
-    "id": "lib-random",
-    "name": "Random",
-    "category": "Core & Math",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Random",
-    "summary": "Pseudo-random number generator, uniform integer sampling, random coin tosses, and array shuffling.",
-    "description": "The <code>Random</code> library implements standard linear congruential and Xorshift PRNG algorithms to deliver fast, reproducible random distributions for game logic, simulations, and testing.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 4,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "seed": 123456789,
-        "generatedCount": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "int min max",
-        "params": "min: num, max: num",
-        "returnType": "num",
-        "desc": "Generates a pseudo-random integer between min and max inclusive.",
-        "aliases": "randInt, integer"
-      },
-      {
-        "name": "float min max",
-        "params": "min: num, max: num",
-        "returnType": "num",
-        "desc": "Generates a pseudo-random floating-point number between min and max.",
-        "aliases": "rand, decimal"
-      },
-      {
-        "name": "boolean",
-        "params": "none",
-        "returnType": "bool",
-        "desc": "Simulates an unbiased coin toss, returning true or false.",
-        "aliases": "booleanFn, booleanAlias"
-      },
-      {
-        "name": "choice arr",
-        "params": "arr: arr",
-        "returnType": "any",
-        "desc": "Selects a random element from the provided array.",
-        "aliases": "pick, sample"
-      },
-      {
-        "name": "sample arr count",
-        "params": "arr: arr, count: num",
-        "returnType": "arr",
-        "desc": "Draws count random elements without replacement.",
-        "aliases": "sampleFn, sampleAlias"
-      },
-      {
-        "name": "shuffle arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Returns a randomly shuffled shallow copy using Fisher-Yates.",
-        "aliases": "permute, randomize"
-      }
-    ],
-    "runnableExample": "load Random\n\ndisplay \"Random Integer (1-100): \" + (Random.int 1 100)\ndisplay \"Coin Flip:             \" + (Random.boolean)\n\nset fruits: [\"Apple\", \"Banana\", \"Cherry\", \"Mango\", \"Dragonfruit\"]\ndisplay \"Random Choice:         \" + (Random.choice fruits)\ndisplay \"Shuffled Array:        \" + (Random.shuffle fruits)"
   },
   {
     "id": "lib-collections",

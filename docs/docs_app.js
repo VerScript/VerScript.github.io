@@ -19,6 +19,8 @@ const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
 
 // ─── INITIALIZATION ────────────────────────────────────────────────
 function initDocsApp() {
+    const badgeEl = document.getElementById('sidebarChapterBadge');
+    if (badgeEl) badgeEl.textContent = ARTICLES.length;
     renderSidebarList(ARTICLES);
     setupEventListeners();
     updateProgressDisplay();
@@ -482,12 +484,42 @@ function simulateVerScript(code) {
                 vars[vname] = defMatch ? defMatch[1] : 'SampleInput';
                 i++;
             }
-            // Variable assignment
+            // DataType definition block
+            else if (line.startsWith('DataType ')) {
+                i++;
+                while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                    i++;
+                }
+                continue;
+            }
+            // Variable assignment & type constraint
             else if (line.includes(':') && !line.startsWith('loop') && !line.startsWith('iterate')) {
                 const parts = line.split(':');
-                const vname = parts[0].trim();
+                let vname = parts[0].trim();
+                let declaredType = null;
+
+                if (vname.startsWith('set ')) {
+                    const tokens = vname.substring(4).trim().split(/\s+/);
+                    if (tokens.length >= 2) {
+                        declaredType = tokens[0];
+                        vname = tokens[1];
+                    } else {
+                        vname = tokens[0];
+                    }
+                } else {
+                    const tokens = vname.split(/\s+/);
+                    if (tokens.length >= 2 && ['num', 'bool', 'str', 'arr', 'entity', 'int', 'posNum', 'nonNegNum', 'byte', 'port', 'nonEmptyStr', 'char', 'nonEmptyArr'].includes(tokens[0])) {
+                        declaredType = tokens[0];
+                        vname = tokens[1];
+                    }
+                }
+
                 const vexpr = parts.slice(1).join(':').trim();
-                vars[vname] = evalSimpleExpr(vexpr, vars);
+                const val = evalSimpleExpr(vexpr, vars);
+                if (declaredType === 'num' && isNaN(Number(val))) {
+                    vars['__lastError'] = 'DataTypeError';
+                }
+                vars[vname] = val;
                 i++;
             }
             // Loop count
@@ -555,15 +587,34 @@ function simulateVerScript(code) {
                 let caught = false;
                 if (i < lines.length && lines[i].trim().startsWith('unless')) {
                     const unlessLine = lines[i].trim();
+                    const unlessTarget = unlessLine.substring(6).trim();
                     i++;
                     let unlessBlock = [];
                     while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
                         unlessBlock.push(lines[i].trim());
                         i++;
                     }
-                    // If do block threw error
-                    if (doBlock.some(b => b.startsWith('throw '))) {
-                        vars['error'] = 'DivisionByZeroError';
+
+                    // Detect errors from doBlock
+                    let thrownErr = null;
+                    const doText = doBlock.join('\n');
+                    const throwMatch = doText.match(/throw\s+([a-zA-Z_]\w*)/);
+                    if (throwMatch) {
+                        thrownErr = throwMatch[1];
+                    } else if (/\/\s*0\b/.test(doText)) {
+                        thrownErr = 'DivisionByZeroError';
+                    } else if (/sqrt\s*\(\s*-\d+/.test(doText) || /sqrt\s+-\d+/.test(doText)) {
+                        thrownErr = 'DomainError';
+                    } else if (/num\s+[a-zA-Z_]\w*\s*:\s*"[^"]*"/.test(doText) || /bad_assignment|badAssignment|DataTypeError/i.test(doText)) {
+                        thrownErr = 'DataTypeError';
+                    } else if (/modify_threshold|inbound|inspect_purity/i.test(doText)) {
+                        thrownErr = 'ScopeViolationError';
+                    } else if (/step\s+10/i.test(doText)) {
+                        thrownErr = 'LoopStepError';
+                    }
+
+                    if (thrownErr && (!unlessTarget || unlessTarget === 'error' || unlessTarget === thrownErr)) {
+                        vars['error'] = thrownErr;
                         const res = simulateVerScript(unlessBlock.join('\n'));
                         output += res.output;
                         caught = true;
@@ -585,13 +636,26 @@ function simulateVerScript(code) {
     return { output, error, source: 'simulator' };
 }
 
+let __seedState = 12345;
+
 function evalSimpleExpr(expr, vars) {
-    let result = expr;
+    let result = expr.trim();
+    if (/^"(?:[^"\\]|\\.)*"$/.test(result)) {
+        try { return JSON.parse(result); } catch (e) { return result.slice(1, -1); }
+    }
+
     // Replace variable names
     Object.keys(vars).forEach(k => {
         const regex = new RegExp(`\\b${k}\\b`, 'g');
         const val = typeof vars[k] === 'string' ? `"${vars[k]}"` : vars[k];
         result = result.replace(regex, val);
+    });
+
+    // Mask string literals to protect exclamation marks and operators inside text
+    const maskedStrings = [];
+    result = result.replace(/"(?:[^"\\]|\\.)*"/g, (match) => {
+        maskedStrings.push(match);
+        return `__STR_${maskedStrings.length - 1}__`;
     });
 
     try {
@@ -651,27 +715,74 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/\bceil\s+([^\s]+)/g, 'Math.ceil($1)');
         result = result.replace(/\bround\s+([^\s]+)/g, 'Math.round($1)');
 
-        // Translate VerScript native boolean logic gates into JS:
-        // Equivalence gates: xnor, xand, x&
+        // Native Pseudo & Random built-in functions (both dot notation and direct calls)
+        result = result.replace(/(?:Pseudo|Random)\.seed\s*(?:\(([^)]+)\)|\s+([0-9a-zA-Z_]+))/g, (m, a, b) => `(__setSeed(${a || b}))`);
+        result = result.replace(/\bseed\s+([0-9a-zA-Z_]+)/g, '(__setSeed($1))');
+        result = result.replace(/(?:Pseudo|Random)\.between\s*(?:\(([^,]+),\s*([^)]+)\)|\s+([0-9a-zA-Z_]+)[,\s]+([0-9a-zA-Z_]+))/g, (m, a, b, c, d) => `(__between(${a || c}, ${b || d}))`);
+        result = result.replace(/\bbetween\s+([0-9a-zA-Z_]+)[,\s]+([0-9a-zA-Z_]+)/g, '(__between($1, $2))');
+        result = result.replace(/(?:Pseudo|Random)\.choice\s*(?:\(([^)]+)\)|\s+([a-zA-Z_]\w*))/g, (m, a, b) => `(__choice(${a || b}))`);
+        result = result.replace(/\bchoice\s+([a-zA-Z_]\w*)/g, '(__choice($1))');
+        result = result.replace(/(?:Pseudo|Random)\.shuffle\s*(?:\(([^)]+)\)|\s+([a-zA-Z_]\w*))/g, (m, a, b) => `(__shuffle(${a || b}))`);
+        result = result.replace(/\bshuffle\s+([a-zA-Z_]\w*)/g, '(__shuffle($1))');
+        result = result.replace(/(?:Pseudo|Random)\.sample\s*(?:\(([^,]+),\s*([^)]+)\)|\s+([a-zA-Z_]\w*)[,\s]+([0-9a-zA-Z_]+))/g, (m, a, b, c, d) => `(__sample(${a || c}, ${b || d}))`);
+        result = result.replace(/\bsample\s+([a-zA-Z_]\w*)[,\s]+([0-9a-zA-Z_]+)/g, '(__sample($1, $2))');
+        result = result.replace(/(?:Pseudo|Random)\.boolean(?:\s*\(\))?/g, '(__boolean())');
+        result = result.replace(/\bboolean(?:\s*\(\))?/g, '(__boolean())');
+        result = result.replace(/(?:Pseudo|Random)\.uuid(?:\s*\(\))?/g, '(__uuid())');
+        result = result.replace(/\buuid(?:\s*\(\))?/g, '(__uuid())');
+        result = result.replace(/(?:Pseudo|Random)\.name(?:\s*\(\))?/g, '(__name())');
+        result = result.replace(/\bname(?:\s*\(\))?/g, '(__name())');
+        result = result.replace(/(?:Pseudo|Random)\.email(?:\s*\(\))?/g, '(__email())');
+        result = result.replace(/\bemail(?:\s*\(\))?/g, '(__email())');
+        result = result.replace(/(?:Pseudo|Random)\.alphaNumeric\s*(?:\(([^)]+)\)|\s+([0-9a-zA-Z_]+))/g, (m, a, b) => `(__alphaNumeric(${a || b}))`);
+        result = result.replace(/\balphaNumeric\s+([0-9a-zA-Z_]+)/g, '(__alphaNumeric($1))');
+        result = result.replace(/(?:Pseudo|Random)\.(?:random|next)(?:\s*\(\))?/g, '(__rng())');
+        result = result.replace(/\b(?:random|next)(?:\s*\(\))?/g, '(__rng())');
+
+        // Restore masked strings
+        result = result.replace(/__STR_(\d+)__/g, (m, idx) => maskedStrings[Number(idx)]);
+
+        // Stats built-in helpers
+        result = result.replace(/\bStats\.sum\s*\(([^)]+)\)/g, '(__sum($1))');
+        result = result.replace(/\bStats\.sum\s+([a-zA-Z_]\w*)/g, '(__sum($1))');
+        result = result.replace(/\bStats\.mean\s*\(([^)]+)\)/g, '(__mean($1))');
+        result = result.replace(/\bStats\.mean\s+([a-zA-Z_]\w*)/g, '(__mean($1))');
+        result = result.replace(/\bStats\.minMax\s*\(([^)]+)\)/g, '(__minMax($1))');
+        result = result.replace(/\bStats\.minMax\s+([a-zA-Z_]\w*)/g, '(__minMax($1))');
+        result = result.replace(/\bStats\.range\s*\(([^)]+)\)/g, '(__range($1))');
+        result = result.replace(/\bStats\.range\s+([a-zA-Z_]\w*)/g, '(__range($1))');
+
+        // Translate VerScript native boolean logic gates into JS
         result = result.replace(/\bxnor\b/g, ' === ');
         result = result.replace(/\bxand\b/g, ' === ');
         result = result.replace(/x&/g, ' === ');
-        // Exclusive OR: xor
         result = result.replace(/\bxor\b/g, ' !== ');
-        // Negated OR (NOR): a nor b -> !(a || b)
         result = result.replace(/([a-zA-Z0-9_")\]]+)\s+nor\s+([a-zA-Z0-9_"(]+)/g, '!($1 || $2)');
-        // Negated AND (NAND): a and b -> !(a && b)
         result = result.replace(/([a-zA-Z0-9_")\]]+)\s+and\s+([a-zA-Z0-9_"(]+)/g, '!($1 && $2)');
-        // Normal AND (& or &&)
         result = result.replace(/&+/g, '&&');
-        // Normal OR (or or ||)
         result = result.replace(/\bor\b/g, ' || ');
-        // Unary NOT (not)
         result = result.replace(/\bnot\b/g, ' ! ');
 
         // Evaluate safe arithmetic and boolean expressions
         const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!\&\|\%]/g, '');
-        const factHelper = 'function __fact(n){ let r=1; for(let i=2;i<=n;i++)r*=i; return r; };';
+        const factHelper = `
+            function __fact(n){ let r=1; for(let i=2;i<=n;i++)r*=i; return r; }
+            function __setSeed(s){ __seedState = Number(s) || 1; return 0; }
+            function __rng(){ __seedState = (__seedState * 1103515245 + 12345) & 0x7fffffff; return __seedState; }
+            function __between(min, max){ let a=Number(min), b=Number(max); if(a>b){let t=a; a=b; b=t;} return a + (__rng() % (b - a + 1)); }
+            function __choice(arr){ if(!Array.isArray(arr) || !arr.length) return ""; return arr[__rng() % arr.length]; }
+            function __shuffle(arr){ if(!Array.isArray(arr)) return []; const c=[...arr]; for(let i=c.length-1;i>0;i--){ const j=__rng()%(i+1); [c[i],c[j]]=[c[j],c[i]]; } return c; }
+            function __sample(arr, k){ return __shuffle(arr).slice(0, k); }
+            function __boolean(){ return (__rng() % 2) === 1; }
+            function __uuid(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){ var r=(__rng()%16); var v=c=='x'?r:(r&0x3|0x8); return v.toString(16); }); }
+            function __name(){ const n=["Ada Lovelace", "Alan Turing", "Grace Hopper", "Dennis Ritchie", "Ken Thompson", "Linus Torvalds"]; return n[__rng() % n.length]; }
+            function __email(){ return __name().toLowerCase().replace(/\\s+/g, '.') + "@verscript.org"; }
+            function __alphaNumeric(len){ const ch="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; let r=""; for(let i=0;i<len;i++) r+=ch[__rng()%ch.length]; return r; }
+            function __sum(arr){ return Array.isArray(arr) ? arr.reduce((a,b)=>a+Number(b),0) : 0; }
+            function __mean(arr){ return Array.isArray(arr) && arr.length ? __sum(arr)/arr.length : 0; }
+            function __minMax(arr){ return Array.isArray(arr) && arr.length ? [Math.min(...arr), Math.max(...arr)] : [0,0]; }
+            function __range(arr){ return Array.isArray(arr) && arr.length ? Math.max(...arr)-Math.min(...arr) : 0; }
+        `;
         // eslint-disable-next-line no-eval
         const evaluated = Function(`"use strict"; ${factHelper} return (${clean})`)();
         return evaluated !== undefined ? String(evaluated) : '';

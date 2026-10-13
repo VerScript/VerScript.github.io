@@ -18,6 +18,9 @@ const sidebarBackdropEl = document.getElementById('sidebarBackdrop');
 
 // ─── INITIALIZATION ────────────────────────────────────────────────
 function initLibsApp() {
+    const badge = document.querySelector('.lib-count-badge');
+    if (badge) badge.textContent = `${CORE_LIBRARIES.length} Modules`;
+
     renderCategoryPills();
     renderSidebarList(CORE_LIBRARIES);
     setupEventListeners();
@@ -293,20 +296,48 @@ async function executeCode(code) {
 function simulateVerScript(code) {
     const lines = code.split('\n');
     let out = [];
+    const vars = {};
+
+    function evalLibExpr(expr) {
+        let clean = expr;
+        Object.keys(vars).forEach(k => {
+            const regex = new RegExp(`\\b${k}\\b`, 'g');
+            clean = clean.replace(regex, typeof vars[k] === 'string' ? `"${vars[k]}"` : vars[k]);
+        });
+        clean = clean.replace(/\bStats\.sum\s*\(([^)]+)\)/g, '($1).reduce((a,b)=>a+b,0)');
+        clean = clean.replace(/\bStats\.sum\s+([a-zA-Z_]\w*)/g, '($1).reduce((a,b)=>a+b,0)');
+        clean = clean.replace(/\bStats\.mean\s*\(([^)]+)\)/g, '(($1).reduce((a,b)=>a+b,0)/($1).length)');
+        clean = clean.replace(/\bStats\.mean\s+([a-zA-Z_]\w*)/g, '(($1).reduce((a,b)=>a+b,0)/($1).length)');
+        clean = clean.replace(/\bStats\.range\s*\(([^)]+)\)/g, '(Math.max(...$1)-Math.min(...$1))');
+        clean = clean.replace(/\bStats\.range\s+([a-zA-Z_]\w*)/g, '(Math.max(...$1)-Math.min(...$1))');
+        clean = clean.replace(/\bStats\.minMax\s*\(([^)]+)\)/g, '`[${Math.min(...$1)}, ${Math.max(...$1)}]`');
+        clean = clean.replace(/\bStats\.minMax\s+([a-zA-Z_]\w*)/g, '`[${Math.min(...$1)}, ${Math.max(...$1)}]`');
+        try {
+            // eslint-disable-next-line no-eval
+            const evaluated = Function(`"use strict"; return (${clean});`)();
+            return evaluated !== undefined ? String(evaluated) : clean;
+        } catch (e) {
+            return clean.replace(/"\s*\+\s*/g, '').replace(/\s*\+\s*"/g, '').replace(/"/g, '');
+        }
+    }
+
     for (let line of lines) {
         let t = line.trim();
         if (!t || t.startsWith('!')) continue;
-        if (t.startsWith('display ')) {
-            let expr = t.substring(8).trim();
-            // Handle simple display statements in simulation
-            expr = expr.replace(/\?color=[^\s]+/g, '').trim();
+        if (t.includes(':') && !t.startsWith('display')) {
+            const parts = t.split(':');
+            let vname = parts[0].replace(/^(set|num|str|bool|arr)\s+/, '').trim();
+            let vexpr = parts.slice(1).join(':').trim();
             try {
-                // Remove VerScript string concat pluses when safe
-                let cleaned = expr.replace(/"\s*\+\s*/g, '').replace(/\s*\+\s*"/g, '').replace(/"/g, '');
-                out.push(cleaned);
-            } catch (err) {
-                out.push(expr);
+                // eslint-disable-next-line no-eval
+                vars[vname] = Function(`"use strict"; return (${vexpr});`)();
+            } catch (e) {
+                vars[vname] = vexpr;
             }
+        } else if (t.startsWith('display ') || t === 'display') {
+            let expr = t.length > 8 ? t.substring(8).trim() : '';
+            expr = expr.replace(/\?color=[^\s]+/g, '').replace(/\?inline/g, '').trim();
+            out.push(evalLibExpr(expr));
         }
     }
     return out.join('\n');
