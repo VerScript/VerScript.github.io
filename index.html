@@ -903,8 +903,8 @@
         </a>
         <div class="nav-links">
             <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
-            <a href="docs/index.html" class="nav-link">Documentation (29 Ch)</a>
-            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Libraries (18 Libs)</a>
+            <a href="docs/index.html" class="nav-link">Documentation (35 Ch)</a>
+            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Libraries (20 Libs)</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -934,14 +934,14 @@
                     <span class="menu-item-icon">📚</span>
                     <span class="menu-item-text">Documentation Academy</span>
                 </span>
-                <span class="menu-item-badge">29 Ch</span>
+                <span class="menu-item-badge">35 Ch</span>
             </a>
             <a href="docs/libs/index.html" class="mobile-menu-item">
                 <span class="menu-item-left">
                     <span class="menu-item-icon">📦</span>
                     <span class="menu-item-text">Core Libraries Portal</span>
                 </span>
-                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">18 Libs</span>
+                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">20 Libs</span>
             </a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="mobile-menu-item highlight">
                 <span class="menu-item-left">
@@ -959,7 +959,7 @@
             </a>
         </div>
         <div class="mobile-menu-footer">
-            <a href="docs/index.html" class="mobile-menu-cta">Explore 29 Interactive Chapters &rarr;</a>
+            <a href="docs/index.html" class="mobile-menu-cta">Explore 35 Interactive Chapters &rarr;</a>
         </div>
     </div>
 
@@ -978,7 +978,7 @@
             </p>
             <div class="cta-group">
                 <a href="docs/index.html" class="cta-btn cta-btn-primary" id="ctaDocs">
-                    <span>Explore Academy (29 Chapters)</span> &rarr;
+                    <span>Explore Academy (35 Chapters)</span> &rarr;
                 </a>
                 <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaIDE">
                     <span>Launch Web IDE</span> 🚀
@@ -1001,7 +1001,7 @@
                 <div class="stat-label">Native C VM Core</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">29</div>
+                <div class="stat-number">35</div>
                 <div class="stat-label">Interactive Chapters</div>
             </div>
         </div>
@@ -1214,142 +1214,82 @@
         // Interactive Snippet Repository
         const SNIPPETS = {
             sample: {
-                code: `!!
-  VerScript Comprehensive Showcase — v2.0
-  Showcasing:
-    1: Custom Functions (def func ... reply) & Purity Contracts (inbound/outbound)
-    2: Methods (def method) with State Mutation & Early Return (reply)
-    3: Explicit Variable Assignment with "set" keyword
-    4: Heterogeneous Arrays (arr) with Element Mutation
-    5: Encapsulated Classes, Entities & Pure Static Libraries
-    6: ANSI & TrueColor Hex Attributes (?color=#38bdf8)
-    7: Command Aliasing & Polyglot Injections
-    8: Robust Error Directives (do ... unless) & ScopeViolationError
-    9: Native Mathematics Engine & Predicates
-    10: DataType Constraints & Native Pseudo/Random PRNG
-!!
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Enterprise IoT Telemetry & Threat Mitigation Pipeline
+! Features: on start/exit, temp/del, inst, async/sync, chan, match, guard, |>, stdlib
+! ═══════════════════════════════════════════════════════════════════
 
-display "=== 1. Explicit Variable Setting ===" ?color=#38bdf8
-set status: "Engine Operational"
-set base_power: 50
-set boost_multiplier: 3
-display "System Status: " + status ?color=#22c55e
+on start:
+  display "[NODE-BOOT] Edge Ingestion Gateway initialized cleanly." ?color=#38bdf8
 
-display "=== 2. Pure Custom Functions (Inbound by default) ===" ?color=#c084fc
-def func calculate_power base mult
-  reply base * mult
+! 1. Ephemeral session auth with temp and del
+temp auth_token: "AUTH_SEC_9942"
+display "[SECURITY] Authenticating worker with ephemeral token..." ?color=#eab308
+del auth_token
 
-set total_power: (calculate_power base_power boost_multiplier)
-display "Calculated Total Power: " + total_power ?color=#38bdf8
+! 2. Stack-isolated instance state
+inst node_cluster: "Alpha-7"
+display "[CLUSTER] Active Node Partition: " + node_cluster ?color=#22c55e
 
-display "=== 3. Scope Isolation & Purity Enforcement ===" ?color=#fbbf24
-def func pure_routine delta
-  ! Modifying outer variables from an inbound function raises ScopeViolationError
-  set base_power: base_power + delta
-  reply base_power
+! 3. Asynchronous Sensor Telemetry Fetching
+async func fetch_telemetry sensor_id
+  set reading: sensor_id * 18 + 14
+  reply reading
 
-do
-  res: (pure_routine 100)
-unless ScopeViolationError
-  display "Purity Guard Active: Caught ScopeViolationError successfully!" ?color=#22c55e
+set handle: fetch_telemetry(4)
+set raw_metric: sync handle
+display "[TELEMETRY] Sensor 4 raw metric synchronized: " + raw_metric ?color=#38bdf8
 
-display "=== 4. Custom Methods (Stateful & Void) ===" ?color=#c084fc
-set system_cycles: 0
+! 4. Guard Clause and Pipeline Data Normalization
+def func normalize_reading val
+  guard val > 0 else reply 0
+  reply val + 14
 
-def method run_diagnostics iterations
-  iterate step from 1 to iterations step 1
-    if step = 3 then
-      set system_cycles: system_cycles + step
-      reply ! Early exit
-    set system_cycles: system_cycles + step
+def func clamp_metric val
+  reply Math.clamp(val, 0, 100)
 
-run_diagnostics 5
-display "System Cycles after method call: " + system_cycles ?color=#38bdf8
+set processed_load: raw_metric |> normalize_reading |> clamp_metric
+display "[PIPELINE] Pipelined & Clamped Load: " + processed_load + "%" ?color=#22c55e
 
-display "=== 5. Heterogeneous Arrays & Mutation ===" ?color=#38bdf8
-arr telemetry: ["Core-Alpha", 42, true]
-display "Array Element 0 (Name): " + telemetry[0] ?color=#22c55e
-telemetry[1]: 99
-display "Mutated Element 1 (Load): " + telemetry[1] ?color=#38bdf8
+! 5. Structural Pattern Matching on Telemetry Severity
+set threat_level: "ELEVATED"
+match threat_level
+  with "CRITICAL":
+    display "[ALERT] Immediate failover engaged!" ?color=#ef4444
+  with "ELEVATED":
+    display "[WARNING] High load detected. Rerouting traffic." ?color=#f59e0b
+  else:
+    display "[INFO] State nominal." ?color=#10b981
 
-display "=== 6. Classes & Entities with Dynamic State ===" ?color=#c084fc
-class Agent(agent_name)
-  dynamic:
-    name: agent_name
-    outbound method ping
-      display "Agent " + name + " pinged successfully!" ?color=#22c55e
+! 6. High-Throughput FIFO Queue Distribution
+chan threat_queue
+send threat_queue, "SEC_EVENT_001"
+send threat_queue, "SEC_EVENT_002"
 
-set my_agent: Agent("Sentinel-7")
-my_agent.ping
+set event1: recv threat_queue
+set event2: recv threat_queue
+display "[QUEUE] Consumed item: " + event1 ?color=#38bdf8
+display "[QUEUE] Consumed item: " + event2 ?color=#38bdf8
 
-display "=== 7. Command Aliasing & Hex Colors ===" ?color=#38bdf8
-alias display: log
-log "Logging via custom alias with Hex Color #38bdf8!" ?color=#38bdf8
+! 7. Auto-Loaded Standard Library Utilities
+set report_label: Strings.toUpper("telemetry digest verified")
+display "[REPORT] " + report_label ?color=#a855f7
+set cluster_nodes: [101, 102, 103, 104]
+display "[STATUS] Monitored Nodes: " + (Arrays.len(cluster_nodes)) ?color=#22c55e
 
-display "=== 8. Polyglot Code Injection ===" ?color=#fbbf24
-inject python ?color=yellow
-  def py_helper(val):
-      return f"Python processing {val}"
-  print("Polyglot layer executed cleanly")
-
-inject verscript
-  display "Dynamic nested VerScript runtime active!" ?color=#22c55e
-
-display "=== 9. Native Mathematics Engine ===" ?color=#38bdf8
-set base_energy: |-50|
-set power_output: 2 ^ 8
-set efficiency_rank: 5!
-display "Absolute Energy: " + base_energy ?color=#22c55e
-display "Exponentiation (2 ^ 8): " + power_output ?color=#38bdf8
-display "Factorial (5!): " + efficiency_rank ?color=#c084fc
-display "Square Root: " + (sqrt 144) ?color=#22c55e
-display "Clamped Output: " + (clamp 150 from 0 to 100) ?color=#fbbf24
-display "System Parity (4 is even): " + (4 is even) ?color=#22c55e
-
-display "=== 10. DataType Constraints & Native Pseudo Engine ===" ?color=#c084fc
-num core_load: 75
-DataType PortNum extends num
-  it >= 1
-  it <= 65535
-
-PortNum active_port: 8080
-display "PortNum Validated: " + active_port ?color=#22c55e
-
-Pseudo.seed 42
-display "Random Port (between 1000 9000): " + (between 1000 9000) ?color=#38bdf8
-display "PRNG UUID: " + (uuid) ?color=#fbbf24
-
-display "=== VerScript v2.0 System Ready ===" ?color=#22c55e`,
-                output: `<span style="color: #38bdf8; font-weight: bold;">=== 1. Explicit Variable Setting ===</span>
-<span style="color: #22c55e;">System Status: Engine Operational</span>
-<span style="color: #c084fc; font-weight: bold;">=== 2. Pure Custom Functions (Inbound by default) ===</span>
-<span style="color: #38bdf8;">Calculated Total Power: 150</span>
-<span style="color: #fbbf24; font-weight: bold;">=== 3. Scope Isolation & Purity Enforcement ===</span>
-<span style="color: #22c55e; font-weight: bold;">Purity Guard Active: Caught ScopeViolationError successfully!</span>
-<span style="color: #c084fc; font-weight: bold;">=== 4. Custom Methods (Stateful & Void) ===</span>
-<span style="color: #38bdf8;">System Cycles after method call: 6</span>
-<span style="color: #38bdf8; font-weight: bold;">=== 5. Heterogeneous Arrays &amp; Mutation ===</span>
-<span style="color: #22c55e;">Array Element 0 (Name): Core-Alpha</span>
-<span style="color: #38bdf8;">Mutated Element 1 (Load): 99</span>
-<span style="color: #c084fc; font-weight: bold;">=== 6. Classes &amp; Entities with Dynamic State ===</span>
-<span style="color: #22c55e;">Agent Sentinel-7 pinged successfully!</span>
-<span style="color: #38bdf8; font-weight: bold;">=== 7. Command Aliasing &amp; Hex Colors ===</span>
-<span style="color: #38bdf8;">Logging via custom alias with Hex Color #38bdf8!</span>
-<span style="color: #fbbf24; font-weight: bold;">=== 8. Polyglot Code Injection ===</span>
-<span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Evaluated 3 code line(s) cleanly.
-<span style="color: #22c55e;">Dynamic nested VerScript runtime active!</span>
-<span style="color: #38bdf8; font-weight: bold;">=== 9. Native Mathematics Engine ===</span>
-<span style="color: #22c55e;">Absolute Energy: 50</span>
-<span style="color: #38bdf8;">Exponentiation (2 ^ 8): 256</span>
-<span style="color: #c084fc;">Factorial (5!): 120</span>
-<span style="color: #22c55e;">Square Root: 12</span>
-<span style="color: #fbbf24;">Clamped Output: 100</span>
-<span style="color: #22c55e;">System Parity (4 is even): true</span>
-<span style="color: #c084fc; font-weight: bold;">=== 10. DataType Constraints &amp; Native Pseudo Engine ===</span>
-<span style="color: #22c55e;">PortNum Validated: 8080</span>
-<span style="color: #38bdf8;">Random Port (between 1000 9000): 4218</span>
-<span style="color: #fbbf24;">PRNG UUID: 9f8a2b3c-4d5e-4f6a-8b9c-0d1e2f3a4b5c</span>
-<span style="color: #22c55e; font-weight: bold; text-shadow: 0 0 10px rgba(34,197,94,0.5);">=== VerScript v2.0 System Ready ===</span>`
+on exit:
+  display "[SHUTDOWN] Pipeline drained. Node safe." ?color=#a855f7`,
+                output: `<span style="color: #38bdf8; font-weight: bold;">[NODE-BOOT] Edge Ingestion Gateway initialized cleanly.</span>
+<span style="color: #eab308;">[SECURITY] Authenticating worker with ephemeral token...</span>
+<span style="color: #22c55e; font-weight: bold;">[CLUSTER] Active Node Partition: Alpha-7</span>
+<span style="color: #38bdf8;">[TELEMETRY] Sensor 4 raw metric synchronized: 86</span>
+<span style="color: #22c55e; font-weight: bold;">[PIPELINE] Pipelined &amp; Clamped Load: 100%</span>
+<span style="color: #f59e0b; font-weight: bold;">[WARNING] High load detected. Rerouting traffic.</span>
+<span style="color: #38bdf8;">[QUEUE] Consumed item: SEC_EVENT_001</span>
+<span style="color: #38bdf8;">[QUEUE] Consumed item: SEC_EVENT_002</span>
+<span style="color: #a855f7; font-weight: bold;">[REPORT] TELEMETRY DIGEST VERIFIED</span>
+<span style="color: #22c55e;">[STATUS] Monitored Nodes: 4</span>
+<span style="color: #a855f7;">[SHUTDOWN] Pipeline drained. Node safe.</span>`
             },
             entities: {
                 code: `! Arrays, Entities & Libraries Showcase (v2.0)
@@ -1540,7 +1480,7 @@ display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b`,
                 return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step|sqrt|rt|min|max|clamp|sign|sgn|divRem|isEven|isOdd|gcd|hcf|lcm|floor|ceil|round|sin|cos|tan|hypot|degToRad|radToDeg|sinDeg|cosDeg|ln|log|log2|exp|lerp|pi|tau|phi|inf|even|odd|is|by|DataType|extends|it|num|bool|str|entity|Pseudo|Random|seed|between|choice|shuffle|sample|boolean|uuid|alphaNumeric)\b|\b([0-9]+)\b|(:|\+|-|\*|\/|\/\/|%|\^|\||!|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step|sqrt|rt|min|max|clamp|sign|sgn|divRem|isEven|isOdd|gcd|hcf|lcm|floor|ceil|round|sin|cos|tan|hypot|degToRad|radToDeg|sinDeg|cosDeg|ln|log|log2|exp|lerp|pi|tau|phi|inf|even|odd|is|by|DataType|extends|it|num|bool|str|entity|Pseudo|Random|seed|between|choice|shuffle|sample|boolean|uuid|alphaNumeric|temp|inst|del|on|when|emit|async|sync|guard|chan|send|recv|match|with)\b|\b([0-9]+)\b|(\|>|:|\+|-|\*|\/|\/\/|%|\^|\||!|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
 
             return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
                 if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;
@@ -1563,6 +1503,7 @@ display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b`,
             if (key === 'functions') document.getElementById('tabFunctions')?.classList.add('active');
             if (key === 'polyglot') document.getElementById('tabPolyglot')?.classList.add('active');
             if (key === 'watchdog') document.getElementById('tabWatchdog')?.classList.add('active');
+            if (key === 'async') document.getElementById('tabAsync')?.classList.add('active');
 
             codePreEl.innerHTML = highlightVerScript(SNIPPETS[key].code);
             terminalDrawerEl.classList.remove('open');

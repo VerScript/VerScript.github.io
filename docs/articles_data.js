@@ -1119,19 +1119,18 @@ const ARTICLES = [
   }
 ,
   {
-    "id": "ch30-async-events-channels",
+    "id": "ch30-variable-lifecycles",
     "number": 30,
-    "section": "Section 10: Asynchronous & Event-Driven Systems",
-    "title": "Asynchronous Execution, Event Architecture & High-Performance Channels",
-    "category": "Concurrency & Events",
-    "readTime": "14 min read",
-    "summary": "Master VerScript asynchronous routines (async func, sync), reactive event stacks (on start/exit/interval/timeout, when), variable lifecycles (temp, del, inst), guard clauses, FIFO channels (chan, send, recv), structural pattern matching, pipeline chaining (|>), and auto-loading standard libraries.",
+    "section": "Section 10: Memory Management & Variable Lifecycles",
+    "title": "Variable Lifecycles: Temporary & Stack-Isolated Variables",
+    "category": "Memory & Lifecycles",
+    "readTime": "7 min read",
+    "summary": "Master granular memory lifecycles using the temp and inst variable modifiers, manual unbinding with del, and stack-frame isolation.",
     "body": `
-            <h2>Asynchronous Programming &amp; Event-Driven Architecture</h2>
-            <p>VerScript introduces an enterprise-grade concurrency and event-driven runtime directly inside the native C VM. Applications can execute non-blocking operations, schedule reactive event listeners across isolated stack frames, pass messages through high-performance FIFO channels, and chain functional pipelines with zero boilerplate.</p>
+            <h2>Deterministic Memory &amp; Variable Lifecycles</h2>
+            <p>While VerScript provides dynamic garbage-managed variables by default, high-throughput systems require precise control over variable lifetimes and stack boundaries. VerScript introduces the <code>temp</code> and <code>inst</code> modifiers alongside the explicit <code>del</code> keyword to give developers deterministic memory isolation directly inside the native runtime.</p>
 
-            <h2>Variable Modifiers: Lifecycles &amp; Stack Isolation</h2>
-            <p>VerScript provides granular control over variable memory lifecycles through <code>temp</code> and <code>inst</code> modifiers:</p>
+            <h2>Variable Modifiers Reference</h2>
             <div class="doc-table-wrapper">
                 <table class="doc-table">
                     <thead>
@@ -1146,154 +1145,511 @@ const ARTICLES = [
                         <tr>
                             <td><code>temp</code></td>
                             <td><code>temp [type] var: val</code></td>
-                            <td>Temporary variable; destroyed explicitly via <code>del &lt;var&gt;</code>. Post-deletion access raises exception.</td>
+                            <td>Temporary variable marked for explicit manual destruction via <code>del &lt;var&gt;</code>. Post-deletion access raises an unassigned error.</td>
                             <td><code>UnassignedVariableError</code></td>
                         </tr>
                         <tr>
                             <td><code>del</code></td>
                             <td><code>del &lt;var&gt;</code></td>
-                            <td>Explicitly unbinds and frees the target variable, marking it as deleted.</td>
+                            <td>Explicitly unbinds and frees the target variable, marking it as permanently deleted from the active scope.</td>
                             <td>N/A</td>
                         </tr>
                         <tr>
                             <td><code>inst</code></td>
                             <td><code>inst [type] var: val</code></td>
-                            <td>Instance variable bound strictly to its originating event stack frame. Destroyed upon stack exit.</td>
+                            <td>Stack-isolated instance variable bound strictly to the current call frame / stack ID. Cannot be read or modified outside its originating stack.</td>
                             <td><code>ScopeViolationError</code></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <h2>Reactive Event Architecture (<code>on</code> &amp; <code>when</code>)</h2>
-            <p>Event blocks execute asynchronously with isolated stack frames. The runtime manages both built-in lifecycle triggers and custom publish-subscribe channels:</p>
-            <ul>
-                <li><strong><code>on start</code></strong>: Dispatches immediately upon runtime initialization as stack 1.</li>
-                <li><strong><code>on exit</code></strong>: Dispatches during graceful shutdown before globals cleanup.</li>
-                <li><strong><code>on complete</code></strong>: Automatically fires whenever an <code>async</code> routine finishes execution.</li>
-                <li><strong><code>on interval &lt;ms&gt;</code></strong>: Recurring timer event scheduled in milliseconds.</li>
-                <li><strong><code>on timeout &lt;ms&gt;</code></strong>: One-shot delayed timer event scheduled in milliseconds.</li>
-                <li><strong><code>when &lt;condition&gt;</code></strong>: Reactive predicate trigger that fires when a condition evaluates to true.</li>
-                <li><strong><code>emit &lt;event&gt; [payload]</code> / <code>on &lt;event&gt; [param]</code></strong>: Custom pub/sub event distribution.</li>
-            </ul>
+            <h2>Temporary Variables and Explicit Deletion</h2>
+            <p>Temporary variables declared with <code>temp</code> are designed for sensitive data (such as API keys, cryptographic nonces, or scratch buffers) that must not persist in the symbol table longer than necessary:</p>
+            <pre><code class="language-verscript">temp session_token: "tok_sec_9948271"
+display "Active Token: " + session_token ?color=#38bdf8
 
-            <h2>Asynchronous Routines (<code>async</code> &amp; <code>sync</code>)</h2>
-            <p>Declare non-blocking procedures using the <code>async</code> prefix. When an <code>async</code> routine is invoked, it immediately returns an <code>AsyncHandle</code> entity and registers an internal completion event. The caller can inspect the handle or unwrap its resolved value synchronously using the <code>sync</code> operator:</p>
-            <pre><code class="language-verscript">async func compute_telemetry sensor_id
-    reply sensor_id * 100
+! Explicitly free and delete the variable
+del session_token
 
-on complete
-    display "Telemetry processing completed!" ?color=#22c55e
+do
+  display session_token
+unless UnassignedVariableError
+  display "Protected: session_token cannot be accessed after del" ?color=#50fa7b</code></pre>
 
-! Unwrap resolved value synchronously
-set res: sync compute_telemetry(42)
-display "Result: " + res ?color=#38bdf8</code></pre>
+            <h2>Stack-Frame Isolation with 'inst'</h2>
+            <p>The <code>inst</code> keyword creates variables that are strictly locked to the executing stack frame. If an inner routine or external caller attempts to access an instance variable outside its origin stack, the runtime raises a <code>ScopeViolationError</code>:</p>
+            <pre><code class="language-verscript">inst thread_id: 1042
+display "Current Thread ID: " + thread_id ?color=#22c55e
 
-            <h2>Native FIFO Channels (<code>chan</code>, <code>send</code>, <code>recv</code>)</h2>
-            <p>High-throughput thread-safe FIFO message queues built directly into the VM:</p>
-            <ul>
-                <li><code>chan &lt;name&gt;</code>: Declares a named FIFO queue.</li>
-                <li><code>send &lt;name&gt; &lt;expr&gt;</code>: Appends a message payload to the tail of the queue.</li>
-                <li><code>recv &lt;name&gt;</code>: Pops and returns the head message payload. If the channel is empty, raises <code>ChannelError</code>.</li>
-            </ul>
-
-            <h2>Guard Clauses, Pattern Matching &amp; Pipelines</h2>
-            <p>Expressive modern language natives for defensive programming and functional composition:</p>
-            <ul>
-                <li><strong>Guard Clauses</strong>: <code>guard &lt;condition&gt; else reply &lt;expr&gt;</code> / <code>else throw &lt;Error&gt;</code> ensures early exit when preconditions are not met.</li>
-                <li><strong>Structural Pattern Matching</strong>:
-                    <pre><code class="language-verscript">match response_code
-    with 200:
-        display "Success"
-    with 404:
-        display "Resource Not Found"
-    with _:
-        display "Unhandled HTTP Code"</code></pre>
-                </li>
-                <li><strong>Pipeline Chaining (<code>|&gt;</code>)</strong>: Forwards the result of the left-hand expression as the first argument to the right-hand routine:
-                    <pre><code class="language-verscript">set result: 5 |&gt; double |&gt; add_three</code></pre>
-                </li>
-            </ul>
-
-            <h2>18 Dynamic Auto-Loading Standard Libraries</h2>
-            <p>All standard release libraries (<code>Strings</code>, <code>Arrays</code>, <code>Json</code>, <code>Crypto</code>, <code>Time</code>, <code>Matrix</code>, <code>Stats</code>, <code>Assert</code>, <code>Color</code>, <code>Regex</code>, <code>Http</code>, <code>Fs</code>, <code>Path</code>, <code>Env</code>, <code>Log</code>, <code>Benchmark</code>, <code>Mock</code>, <code>Validate</code>) load automatically on first access without requiring explicit <code>load</code> statements.</p>
+! Re-entering another stack or external caller isolates thread_id</code></pre>
     `,
     "codeBlocks": [
       {
         "id": "cb_ch30_1",
-        "title": "async_concurrency_showcase.vrs",
-        "code": `! VerScript Asynchronous Execution & Event System
-on start
-  temp auth_token: "TEMP_XYZ_999"
-  inst worker_id: 42
-  display "Stack Initialized. Worker ID: " + worker_id ?color=#38bdf8
-  del auth_token
+        "title": "variable_lifecycles.vrs",
+        "code": `! VerScript Temporary and Stack-Isolated Variables
+temp secret_key: "AES_256_KEY_SAMPLE"
+display "Allocated Temp Key: " + secret_key ?color=#38bdf8
 
-! Guard Clause Preconditions
-def func process_reading val
-  guard val >= 0 else reply -1
-  reply val * 2
+! Manual cleanup
+del secret_key
 
-! Asynchronous Task Routine
-async func compute_heavy_task factor
-  reply factor ^ 3
+do
+    display secret_key
+unless UnassignedVariableError
+    display "Key successfully purged from memory!" ?color=#50fa7b
 
-on complete
-  display "Asynchronous task completed successfully!" ?color=#22c55e
-
-! High-Performance FIFO Channels
-chan task_queue
-send task_queue "TASK_ALPHA"
-send task_queue "TASK_BETA"
-
-! Synchronous Unwrapping
-set async_result: sync compute_heavy_task(4)
-display "Synchronized Computation Result: " + async_result ?color=#38bdf8
-
-! Structural Pattern Matching
-match (recv task_queue)
-  with "TASK_ALPHA":
-    display "Executing Task Alpha" ?color=#50fa7b
-  with _:
-    display "Fallback task" ?color=#f1fa8c
-
-! Pipeline Operator (|>) Chaining
-set final_metric: 5 |> process_reading |> (func x: reply x + 10)
-display "Pipelined Calculation: " + final_metric ?color=#bd93f9
-
-! Dynamic Standard Library Auto-loading
-display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b
-display "Total Array Elements: " + (Arrays.len([10, 20, 30])) ?color=#f1fa8c`
+inst frame_seq: 100
+display "Stack-Isolated Frame: " + frame_seq ?color=#eab308`
       }
     ],
     "exercises": [
       {
         "id": "ex_30_1",
-        "title": "Exercise 30.1: Variable Lifecycle and Stack Isolation",
-        "prompt": "Declare a temporary variable <code>temp temp_key: 1234</code>, delete it using <code>del temp_key</code>, declare an instance variable <code>inst worker_code: 88</code>, and print <code>'Worker: ' + worker_code</code>.",
-        "starterCode": "! TODO: Implement temporary deletion and instance variable\\n",
-        "hint": "Use `temp temp_key: 1234`, `del temp_key`, `inst worker_code: 88`, and `display 'Worker: ' + worker_code`.",
-        "solution": "temp temp_key: 1234\\ndel temp_key\\ninst worker_code: 88\\ndisplay \\\"Worker: \\\" + worker_code",
+        "title": "Exercise 30.1: Managing Temporary Lifecycles",
+        "prompt": "Declare a temporary variable <code>temp token: 999</code>, delete it using <code>del token</code>, and declare an instance variable <code>inst worker_id: 7</code> with <code>display 'Worker: ' + worker_id</code>.",
+        "starterCode": "! TODO: Declare temp, del, and declare inst\n",
+        "hint": "Use `temp token: 999`, then `del token`, then `inst worker_id: 7` and `display 'Worker: ' + worker_id`.",
+        "solution": "temp token: 999\ndel token\ninst worker_id: 7\ndisplay \"Worker: \" + worker_id",
         "expectedMatch": {}
-      },
+      }
+    ]
+  },
+  {
+    "id": "ch31-modern-flow-control",
+    "number": 31,
+    "section": "Section 10: Memory Management & Variable Lifecycles",
+    "title": "Modern Flow Control: Guard Clauses, Pattern Matching & Pipeline Chaining",
+    "category": "Control Flow",
+    "readTime": "8 min read",
+    "summary": "Streamline logic with defensive guard clauses, expressive structural pattern matching with fallback wildcards, and Unix-style pipeline chaining.",
+    "body": `
+            <h2>Modern Flow Control in VerScript</h2>
+            <p>Modern production code favors flat, expressive control flow over deep nested if-else ladders. VerScript incorporates three powerful flow primitives: <strong>guard clauses</strong>, <strong>structural pattern matching</strong>, and <strong>pipeline operator chaining</strong>.</p>
+
+            <h2>Guard Clauses (<code>guard ... else:</code>)</h2>
+            <p>A guard clause enforces pre-conditions at the beginning of a function or loop. If the condition evaluates to false, the <code>else:</code> branch executes immediately, typically returning early or raising an error:</p>
+            <pre><code class="language-verscript">def func calculateDiscount price, customerTier
+  guard price > 0 else:
+    reply 0
+
+  guard customerTier = "VIP" else:
+    reply price * 90 // 100
+
+  reply price * 75 // 100</code></pre>
+
+            <h2>Structural Pattern Matching (<code>match ... with:</code>)</h2>
+            <p>Pattern matching evaluates an expression against multiple structural patterns, supporting literals and the wildcard pattern <code>_</code>:</p>
+            <pre><code class="language-verscript">match statusCode
+  with 200:
+    display "OK - Success" ?color=#50fa7b
+  with 404:
+    display "Not Found" ?color=#f1fa8c
+  with 500:
+    display "Internal Error" ?color=#ff5555
+  with _:
+    display "Unhandled Status Code" ?color=#8be9fd</code></pre>
+
+            <h2>The Pipeline Operator (<code>|&gt;</code>)</h2>
+            <p>The pipeline operator passes the result of the left-hand expression as the first argument to the right-hand function or method, eliminating deep nested function calls:</p>
+            <pre><code class="language-verscript">def func doubleVal x
+  reply x * 2
+
+def func addTen x
+  reply x + 10
+
+! 5 is doubled (10), then 10 is added (20)
+set finalResult: 5 |> doubleVal |> addTen
+display "Pipeline Result: " + finalResult ?color=#38bdf8</code></pre>
+    `,
+    "codeBlocks": [
       {
-        "id": "ex_30_2",
-        "title": "Exercise 30.2: FIFO Channels and Pattern Matching",
-        "prompt": "Create a channel <code>chan signals</code>, send <code>'PING'</code> into it, and pattern match the received value to print <code>'PONG'</code> when matching <code>'PING'</code>.",
-        "starterCode": "! TODO: Channel send, recv and match\\n",
-        "hint": "Use `chan signals`, `send signals 'PING'`, and `match (recv signals) with 'PING': display 'PONG'`.",
-        "solution": "chan signals\\nsend signals \\\"PING\\\"\\nmatch (recv signals)\\n  with \\\"PING\\\":\\n    display \\\"PONG\\\"",
+        "id": "cb_ch31_1",
+        "title": "modern_control_flow.vrs",
+        "code": `! Modern Flow Control Showcase
+def func validateAge age
+    guard age >= 18 else:
+        reply "Minor"
+    reply "Adult"
+
+display "Age Check: " + (validateAge 21) ?color=#22c55e
+
+set code: 200
+match code
+    with 200:
+        display "Status: 200 OK" ?color=#38bdf8
+    with _:
+        display "Status: Other" ?color=#f1fa8c
+
+def func square x: reply x * x
+def func increment x: reply x + 1
+
+set pipelined: 4 |> square |> increment
+display "4 squared then incremented: " + pipelined ?color=#eab308`
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_31_1",
+        "title": "Exercise 31.1: Guard and Pipeline Chaining",
+        "prompt": "Create a function <code>def func triple x</code> that guards <code>guard x > 0 else: reply 0</code> and returns <code>x * 3</code>. Then compute <code>5 |> triple</code> and display the result.",
+        "starterCode": "! TODO: Define triple with guard and call via pipeline\n",
+        "hint": "Use `guard x > 0 else: reply 0`, `reply x * 3`, and `display 5 |> triple`.",
+        "solution": "def func triple x\n    guard x > 0 else:\n        reply 0\n    reply x * 3\n\ndisplay 5 |> triple",
         "expectedMatch": {}
-      },
+      }
+    ]
+  },
+  {
+    "id": "ch32-reactive-event-architecture",
+    "number": 32,
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "title": "Reactive Event Architecture: System Events & Dynamic Reactive Triggers",
+    "category": "Event Architecture",
+    "readTime": "8 min read",
+    "summary": "Build reactive systems using lifecycle events (on start, on exit), interval timers (on interval, on timeout), state triggers (when), and custom event dispatch (emit).",
+    "body": `
+            <h2>Reactive Event Architecture</h2>
+            <p>VerScript incorporates a native event loop directly into the execution engine. Event handlers can listen for system lifecycle milestones, timer interrupts, reactive state changes, or user-defined custom event broadcasts.</p>
+
+            <h2>Lifecycle Event Listeners (<code>on &lt;event&gt;:</code>)</h2>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Directive</th>
+                            <th>Execution Trigger</th>
+                            <th>Typical Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>on start:</code></td>
+                            <td>Fires immediately after main script initialization.</td>
+                            <td>Bootstrapping services, loading configurations, spawning workers.</td>
+                        </tr>
+                        <tr>
+                            <td><code>on exit:</code></td>
+                            <td>Fires during runtime shutdown after event queue drains.</td>
+                            <td>Flushing logs, closing sockets, finalizing database transactions.</td>
+                        </tr>
+                        <tr>
+                            <td><code>on interval &lt;ms&gt;:</code></td>
+                            <td>Fires periodically every N milliseconds.</td>
+                            <td>Heartbeat monitors, metric polling, cache invalidation.</td>
+                        </tr>
+                        <tr>
+                            <td><code>on timeout &lt;ms&gt;:</code></td>
+                            <td>Fires once after a specified delay in milliseconds.</td>
+                            <td>Graceful timeout aborts, delayed telemetry triggers.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>State-Driven Reactive Triggers (<code>when &lt;condition&gt;:</code>)</h2>
+            <p>The <code>when</code> directive establishes a reactive watcher that automatically fires its block the instant its condition transitions to true:</p>
+            <pre><code class="language-verscript">set temperature: 75
+
+when temperature > 100:
+  display "ALERT: Temperature exceeded critical threshold!" ?color=#ff5555
+
+! When temperature rises, the handler fires reactively
+set temperature: 105</code></pre>
+
+            <h2>Custom Event Broadcasting (<code>emit</code>)</h2>
+            <p>Routines can emit custom event payloads to decoupled subscribers across the entire application:</p>
+            <pre><code class="language-verscript">on order_placed:
+  display "Order Received: processing shipment" ?color=#50fa7b
+
+! Trigger the custom event
+emit "order_placed", 4001</code></pre>
+    `,
+    "codeBlocks": [
       {
-        "id": "ex_30_3",
-        "title": "Exercise 30.3: Guard Clauses and Pipeline Chaining",
-        "prompt": "Define a function <code>def func square n</code> that checks <code>guard n > 0 else reply 0</code> and returns <code>n * n</code>. Then calculate <code>4 |> square</code> and display the result.",
-        "starterCode": "! TODO: Define guard function and pipeline 4 into it\\n",
-        "hint": "Use `guard n > 0 else reply 0`, `reply n * n`, and `set res: 4 |> square`.",
-        "solution": "def func square n\\n  guard n > 0 else reply 0\\n  reply n * n\\n\\nset res: 4 |> square\\ndisplay res",
+        "id": "cb_ch32_1",
+        "title": "reactive_events.vrs",
+        "code": `! Reactive System Events
+on start:
+    display "[SYSTEM] Service started successfully." ?color=#22c55e
+
+set cpu_load: 45
+
+when cpu_load > 80:
+    display "[ALERT] CPU load critical: " + cpu_load ?color=#ef4444
+
+on order_complete:
+    display "[EVENT] Order finalized cleanly." ?color=#38bdf8
+
+emit "order_complete", 501
+set cpu_load: 92
+
+on exit:
+    display "[SYSTEM] Safe shutdown complete." ?color=#a855f7`
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_32_1",
+        "title": "Exercise 32.1: Lifecycle and Custom Events",
+        "prompt": "Register an <code>on start:</code> block displaying <code>'Booting'</code>, an <code>on ping:</code> block displaying <code>'PONG'</code>, and emit the <code>'ping'</code> event.",
+        "starterCode": "! TODO: Setup on start, on ping, and emit ping\n",
+        "hint": "Use `on start: display 'Booting'`, `on ping: display 'PONG'`, and `emit 'ping', 0`.",
+        "solution": "on start:\n    display \"Booting\"\non ping:\n    display \"PONG\"\nemit \"ping\", 0",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch33-asynchronous-routines",
+    "number": 33,
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "title": "Asynchronous Routines & Synchronous Unwrapping",
+    "category": "Concurrency",
+    "readTime": "8 min read",
+    "summary": "Execute non-blocking background routines with async func and async method, handle AsyncHandle entities, and synchronously resolve results with sync.",
+    "body": `
+            <h2>Asynchronous Procedures &amp; Futures</h2>
+            <p>In high-throughput services, compute-heavy or network-bound tasks must not block the primary thread of execution. VerScript provides first-class support for asynchronous routines declared with <code>async func</code> and <code>async method</code>.</p>
+
+            <h2>Async Routine Invocation</h2>
+            <p>Invoking an asynchronous function immediately returns an <code>AsyncHandle</code> entity without blocking execution:</p>
+            <pre><code class="language-verscript">async func fetchRemoteTelemetry sensorId
+  ! Simulates non-blocking background computation
+  set reading: sensorId * 15 + 42
+  reply reading
+
+! handle holds the running future
+set handle: fetchRemoteTelemetry(101)
+display "Task spawned in background: " + handle ?color=#38bdf8</code></pre>
+
+            <h2>Synchronous Resolution with <code>sync</code></h2>
+            <p>When the calling code requires the computation result, the <code>sync</code> keyword awaits completion, unwraps the payload, and returns the result directly into an expression:</p>
+            <pre><code class="language-verscript">set result: sync handle
+display "Telemetry Result: " + result ?color=#22c55e</code></pre>
+
+            <h2>Async Methods on Entities</h2>
+            <p>Classes and entities can also define asynchronous methods that mutate internal entity state asynchronously:</p>
+            <pre><code class="language-verscript">class Worker
+  dynamic:
+    processedTasks: 0
+
+  async method processBatch count
+    set processedTasks: processedTasks + count</code></pre>
+    `,
+    "codeBlocks": [
+      {
+        "id": "cb_ch33_1",
+        "title": "async_execution.vrs",
+        "code": `! Asynchronous Functions and Synchronization
+async func computeHash payload
+    set val: payload * 7 + 13
+    reply val
+
+display "Initiating background async computation..." ?color=#38bdf8
+set handle: computeHash(50)
+display "Handle received: " + handle ?color=#eab308
+
+! Synchronize and resolve the outcome
+set outcome: sync handle
+display "Synchronized Result: " + outcome ?color=#22c55e`
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_33_1",
+        "title": "Exercise 33.1: Asynchronous Computation",
+        "prompt": "Define an asynchronous function <code>async func calcValue x</code> that returns <code>x * 10</code>. Call it with <code>5</code>, store the handle, and synchronize the result with <code>sync</code> to display it.",
+        "starterCode": "! TODO: Define async func and sync its handle\n",
+        "hint": "Use `async func calcValue x: reply x * 10`, `set h: calcValue(5)`, and `display sync h`.",
+        "solution": "async func calcValue x\n    reply x * 10\n\nset h: calcValue(5)\ndisplay sync h",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch34-concurrency-channels",
+    "number": 34,
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "title": "Concurrency Primitives: High-Throughput FIFO Channels",
+    "category": "Concurrency",
+    "readTime": "8 min read",
+    "summary": "Implement thread-safe, lockless inter-routine communication with first-class FIFO channels using chan, send, and recv.",
+    "body": `
+            <h2>Message-Passing Concurrency via Channels</h2>
+            <p>Rather than sharing mutable state across concurrent routines with complex mutex locks, VerScript embraces the CSP (Communicating Sequential Processes) paradigm: <em>Do not communicate by sharing memory; instead, share memory by communicating</em>.</p>
+
+            <h2>Channel Primitives</h2>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Syntax</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>chan</code></td>
+                            <td><code>chan &lt;channel_name&gt;</code></td>
+                            <td>Allocates a new FIFO message-passing queue.</td>
+                        </tr>
+                        <tr>
+                            <td><code>send</code></td>
+                            <td><code>send &lt;channel_name&gt;, &lt;val&gt;</code></td>
+                            <td>Pushes a value into the channel's queue.</td>
+                        </tr>
+                        <tr>
+                            <td><code>recv</code></td>
+                            <td><code>recv &lt;channel_name&gt;</code></td>
+                            <td>Pulls the next available value from the channel. Throws <code>ChannelError</code> if empty.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Producer-Consumer Architecture</h2>
+            <pre><code class="language-verscript">chan task_queue
+
+! Producer pushes work items
+send task_queue, "PARSE_METRICS"
+send task_queue, "OPTIMIZE_INDEX"
+
+! Consumer pulls items in strict FIFO order
+set item1: recv task_queue
+set item2: recv task_queue
+
+display "Consumed: " + item1 ?color=#38bdf8
+display "Consumed: " + item2 ?color=#50fa7b</code></pre>
+
+            <h2>Channel Exhaustion Safety</h2>
+            <p>Attempting to receive from an empty channel safely raises a catchable <code>ChannelError</code>:</p>
+            <pre><code class="language-verscript">do
+  set item: recv task_queue
+unless ChannelError
+  display "Queue exhausted: all tasks completed" ?color=#f1fa8c</code></pre>
+    `,
+    "codeBlocks": [
+      {
+        "id": "cb_ch34_1",
+        "title": "fifo_channels.vrs",
+        "code": `! FIFO Channels in Action
+chan job_channel
+
+! Producer
+send job_channel, "TASK_INGEST"
+send job_channel, "TASK_TRANSFORM"
+send job_channel, "TASK_DISPATCH"
+
+! Consumer
+display "Job 1: " + (recv job_channel) ?color=#38bdf8
+display "Job 2: " + (recv job_channel) ?color=#22c55e
+display "Job 3: " + (recv job_channel) ?color=#eab308
+
+! Attempt recv from empty channel
+do
+    set empty_val: recv job_channel
+unless ChannelError
+    display "Channel cleanly empty, consumer safe!" ?color=#a855f7`
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_34_1",
+        "title": "Exercise 34.1: Message Passing with Channels",
+        "prompt": "Create a channel <code>chan pipe</code>, send the numbers <code>100</code> and <code>200</code> into it, and display their sum by receiving both values.",
+        "starterCode": "! TODO: Setup channel, send two numbers, and display sum\n",
+        "hint": "Use `chan pipe`, `send pipe, 100`, `send pipe, 200`, and `display (recv pipe) + (recv pipe)`.",
+        "solution": "chan pipe\nsend pipe, 100\nsend pipe, 200\ndisplay (recv pipe) + (recv pipe)",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch35-standard-library-ecosystem",
+    "number": 35,
+    "section": "Section 12: Standard Library & Ecosystem",
+    "title": "Standard Library Ecosystem: 20 Auto-Loading Release Libraries",
+    "category": "Standard Library",
+    "readTime": "12 min read",
+    "summary": "Explore VerScript's 20 production-grade auto-loading standard libraries: Strings, Arrays, Math, Json, Crypto, Http, Fs, Path, Os, Time, Regex, Env, Test, Csv, Log, Events, Async, Random, Console, and Meta.",
+    "body": `
+            <h2>Zero-Boilerplate Standard Library Ecosystem</h2>
+            <p>VerScript ships with 20 production-grade standard libraries that are <strong>automatically loaded</strong> by the runtime. Developers can directly invoke library functions and inspect immutable constants without manual import statements.</p>
+
+            <h2>The 20 Auto-Loading Standard Modules</h2>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Library</th>
+                            <th>Namespace</th>
+                            <th>Core Methods &amp; Capabilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>Strings</code></td><td><code>Strings.*</code></td><td><code>toUpper</code>, <code>toLower</code>, <code>trim</code>, <code>slice</code>, <code>split</code>, <code>contains</code>, <code>padLeft</code>, <code>repeat</code></td></tr>
+                        <tr><td><code>Arrays</code></td><td><code>Arrays.*</code></td><td><code>len</code>, <code>push</code>, <code>pop</code>, <code>indexOf</code>, <code>contains</code>, <code>reverse</code>, <code>slice</code>, <code>join</code></td></tr>
+                        <tr><td><code>Math</code></td><td><code>Math.*</code></td><td><code>abs</code>, <code>min</code>, <code>max</code>, <code>clamp</code>, <code>gcd</code>, <code>lcm</code>, <code>sqrt</code>, <code>lerp</code>, <code>PI</code>, <code>E</code></td></tr>
+                        <tr><td><code>Console</code></td><td><code>Console.*</code></td><td><code>log</code>, <code>info</code>, <code>warn</code>, <code>error</code>, <code>colorLog</code>, ANSI formatting</td></tr>
+                        <tr><td><code>Json</code></td><td><code>Json.*</code></td><td><code>stringify</code>, <code>parse</code>, JSON tokenization and serialization</td></tr>
+                        <tr><td><code>Crypto</code></td><td><code>Crypto.*</code></td><td><code>sha256</code>, <code>md5</code>, <code>uuid</code>, <code>hmac</code>, hashing and digest tools</td></tr>
+                        <tr><td><code>Http</code></td><td><code>Http.*</code></td><td><code>get</code>, <code>post</code>, <code>put</code>, <code>delete</code>, request header generation</td></tr>
+                        <tr><td><code>Fs</code></td><td><code>Fs.*</code></td><td><code>readFile</code>, <code>writeFile</code>, <code>exists</code>, <code>deleteFile</code>, <code>listDir</code></td></tr>
+                        <tr><td><code>Path</code></td><td><code>Path.*</code></td><td><code>join</code>, <code>basename</code>, <code>dirname</code>, <code>extname</code>, cross-platform normalization</td></tr>
+                        <tr><td><code>Os</code></td><td><code>Os.*</code></td><td><code>platform</code>, <code>hostname</code>, <code>cpus</code>, <code>totalMem</code>, <code>freeMem</code></td></tr>
+                        <tr><td><code>Time</code></td><td><code>Time.*</code></td><td><code>now</code>, <code>sleep</code>, <code>formatIso</code>, <code>elapsedMs</code>, timestamps</td></tr>
+                        <tr><td><code>Regex</code></td><td><code>Regex.*</code></td><td><code>test</code>, <code>match</code>, <code>replace</code>, regex pattern matching</td></tr>
+                        <tr><td><code>Env</code></td><td><code>Env.*</code></td><td><code>get</code>, <code>set</code>, <code>has</code>, environment variable management</td></tr>
+                        <tr><td><code>Test</code></td><td><code>Test.*</code></td><td><code>assert</code>, <code>assertEqual</code>, <code>assertThrows</code>, unit testing framework</td></tr>
+                        <tr><td><code>Csv</code></td><td><code>Csv.*</code></td><td><code>parse</code>, <code>stringify</code>, delimiter-separated data processing</td></tr>
+                        <tr><td><code>Log</code></td><td><code>Log.*</code></td><td>Structured leveled logging (<code>DEBUG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>)</td></tr>
+                        <tr><td><code>Events</code></td><td><code>Events.*</code></td><td><code>on</code>, <code>emit</code>, <code>once</code>, decoupled pub-sub event emitter</td></tr>
+                        <tr><td><code>Async</code></td><td><code>Async.*</code></td><td><code>all</code>, <code>race</code>, <code>parallel</code>, task coordination utilities</td></tr>
+                        <tr><td><code>Random</code></td><td><code>Random.*</code></td><td><code>seed</code>, <code>between</code>, <code>choice</code>, <code>shuffle</code>, <code>sample</code>, <code>boolean</code></td></tr>
+                        <tr><td><code>Meta</code></td><td><code>Meta.*</code></td><td>Runtime reflection, library introspection, version and build tags</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Using Auto-Loaded Standard Libraries</h2>
+            <pre><code class="language-verscript">! Direct invocation of standard libraries without import
+set shout: Strings.toUpper("autonomous verscript ecosystem")
+display shout ?color=#38bdf8
+
+set arrLen: Arrays.len([10, 20, 30, 40])
+display "Array count: " + arrLen ?color=#22c55e
+
+set bounded: Math.clamp(150, 0, 100)
+display "Clamped: " + bounded ?color=#eab308</code></pre>
+    `,
+    "codeBlocks": [
+      {
+        "id": "cb_ch35_1",
+        "title": "stdlib_ecosystem.vrs",
+        "code": `! Testing Auto-Loaded Standard Libraries
+display Strings.toUpper("enterprise runtime active") ?color=#22c55e
+display "Length: " + (Strings.len("Hello")) ?color=#38bdf8
+display "Max value: " + (Math.max(45, 99)) ?color=#eab308
+display "Clamped: " + (Math.clamp(200, 0, 50)) ?color=#a855f7`
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_35_1",
+        "title": "Exercise 35.1: Standard Library Invocation",
+        "prompt": "Call <code>Strings.toUpper(\"hello\")</code> and display the result.",
+        "starterCode": "! TODO: Use Strings.toUpper\n",
+        "hint": "Use `display Strings.toUpper(\"hello\")`.",
+        "solution": "display Strings.toUpper(\"hello\")",
         "expectedMatch": {}
       }
     ]
   }
 ];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { ARTICLES };
+}
