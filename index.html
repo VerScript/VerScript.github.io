@@ -1021,6 +1021,7 @@
                         <button class="tab-btn" id="tabFunctions" onclick="switchSnippet('functions')">functions.vrs</button>
                         <button class="tab-btn" id="tabPolyglot" onclick="switchSnippet('polyglot')">polyglot.vrs</button>
                         <button class="tab-btn" id="tabWatchdog" onclick="switchSnippet('watchdog')">watchdog.vrs</button>
+                        <button class="tab-btn" id="tabAsync" onclick="switchSnippet('async')">async.vrs</button>
                     </div>
                     <div class="window-actions">
                         <button class="action-run-btn" id="runBtn" onclick="runSnippet()">
@@ -1486,6 +1487,46 @@ unless internal core_temperature > max_safe_limit
 <span style="color: #f1fa8c;">Temperature at step 2: 190</span>
 <span style="color: #f1fa8c;">Temperature at step 3: 240</span>
 <span style="color: #ff5555; text-shadow: 0 0 10px rgba(255,85,85,0.5); font-weight: bold;">CRITICAL SHUTDOWN: Reactor threshold exceeded (290°C)!</span>`
+            },
+            async: {
+                code: `! VerScript Concurrency, Events & Reactive Stacks
+on start
+  temp auth: "TOKEN_INITIALIZING"
+  inst worker_id: 101
+  display "Stack 1 Active. Worker: " + worker_id ?color=#38bdf8
+  del auth
+
+async func fetch_telemetry sensor_id
+  reply sensor_id * 250
+
+on complete
+  display "Async Task Completed via Event Listener!" ?color=#22c55e
+
+chan signal_bus
+send signal_bus "METRIC_OK"
+
+set res: sync fetch_telemetry(16)
+display "Synchronized Telemetry: " + res ?color=#38bdf8
+
+match (recv signal_bus)
+  with "METRIC_OK":
+    display "Channel Bus verified: METRIC_OK" ?color=#22c55e
+  with _:
+    display "Unhandled bus packet"
+
+set final_val: 10 |> (func x: reply x * 2) |> (func y: reply y + 5)
+display "Pipeline Chaining Result: " + final_val ?color=#bd93f9
+
+display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b`,
+                output: `<span style="color: #6272a4;">[SYSTEM] Initializing VerScript v2.0 runtime...</span>
+<span style="color: #38bdf8; font-weight: bold;">Stack 1 Active. Worker: 101</span>
+<span style="color: #22c55e; font-weight: bold;">Async Task Completed via Event Listener!</span>
+<span style="color: #38bdf8;">Synchronized Telemetry: 4000</span>
+<span style="color: #22c55e; font-weight: bold;">Channel Bus verified: METRIC_OK</span>
+<span style="color: #bd93f9;">Pipeline Chaining Result: 25</span>
+<span style="color: #50fa7b; font-weight: bold;">AUTONOMOUS STDLIB ACTIVE</span>
+<span style="color: #6272a4;">----------------------------------------</span>
+<span style="color: #50fa7b; font-weight: bold;">[SUCCESS] Runtime completed cleanly with exit code 0.</span>`
             }
         };
 
