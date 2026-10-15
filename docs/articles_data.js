@@ -170,8 +170,36 @@ const ARTICLES = [
     ]
   },
   {
-    "id": "ch5-booleans",
+    "id": "ch-lib-math",
     "number": 5,
+    "section": "Section 2: Language Foundations & Datatypes",
+    "title": "Native Math Library & Mathematical Algorithms",
+    "category": "Datatypes & Core Libraries",
+    "readTime": "5 min read",
+    "summary": "Master VerScript's native Math library functions for clamping, root extraction, greatest common divisors, and modular powers.",
+    "body": "\n    <h2>The Native Math Namespace</h2>\n    <p>VerScript provides a built-in <code>Math</code> library loaded directly into the runtime without requiring external imports. It supplements primitive operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>^</code>, <code>|-n|</code>) with standard algebraic routines.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Math.abs(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Absolute magnitude of integer value.</td></tr>\n        <tr><td><code>Math.sqrt(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Integer square root via binary search.</td></tr>\n        <tr><td><code>Math.min(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Smaller of two numerical values.</td></tr>\n        <tr><td><code>Math.max(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Larger of two numerical values.</td></tr>\n        <tr><td><code>Math.clamp(val, low, high)</code></td><td><code>int val, low, high</code></td><td><code>int</code></td><td>Bounds val within [low, high].</td></tr>\n        <tr><td><code>Math.sign(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Returns -1, 0, or 1 based on sign.</td></tr>\n        <tr><td><code>Math.gcd(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Greatest common divisor using Euclidean algorithm.</td></tr>\n        <tr><td><code>Math.lcm(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Least common multiple of two integers.</td></tr>\n        <tr><td><code>Math.pow(base, exp)</code></td><td><code>int base, exp</code></td><td><code>int</code></td><td>Calculates integer power (base ^ exp).</td></tr>\n      </tbody>\n    </table>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Pure and Deterministic</div>\n      <p>All <code>Math</code> methods are pure functions with zero heap allocation and instant C execution performance.</p>\n    </div>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_math_1",
+        "title": "math_demo.vrs",
+        "code": "display \"=== Native Math Module ===\" ?color=#38bdf8\ndisplay \"Math.sqrt(144): \" + (Math.sqrt(144))\ndisplay \"Math.clamp(150, 0, 100): \" + (Math.clamp(150, 0, 100))\ndisplay \"Math.gcd(48, 18): \" + (Math.gcd(48, 18))\ndisplay \"Math.lcm(12, 18): \" + (Math.lcm(12, 18))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_math_1",
+        "title": "Exercise: Safe Clamped Scaling",
+        "prompt": "Calculate the greatest common divisor of 54 and 24 using <code>Math.gcd</code>, clamp a sensor value of 250 between 10 and 100 with <code>Math.clamp</code>, and display their sum.",
+        "starterCode": "! Compute gcd and clamp, then display sum\n",
+        "solution": "set g: Math.gcd(54, 24)\nset c: Math.clamp(250, 10, 100)\ndisplay g + c",
+        "expectedMatch": {},
+        "hint": "Math.gcd(54, 24) returns 6, and Math.clamp(250, 10, 100) returns 100. 6 + 100 is 106."
+      }
+    ]
+  },
+  {
+    "id": "ch5-booleans",
+    "number": 6,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "Booleans (bool) & Logical Operators",
     "category": "Datatypes",
@@ -199,7 +227,7 @@ const ARTICLES = [
   },
   {
     "id": "ch6-strings",
-    "number": 6,
+    "number": 7,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "Strings (str) & String Manipulation Engine",
     "category": "Datatypes",
@@ -226,8 +254,36 @@ const ARTICLES = [
     ]
   },
   {
+    "id": "ch-lib-strings",
+    "number": 8,
+    "section": "Section 2: Language Foundations & Datatypes",
+    "title": "Native Strings Library & Advanced String Manipulations",
+    "category": "Datatypes & Core Libraries",
+    "readTime": "5 min read",
+    "summary": "Comprehensive reference for the native Strings library routines: search, casing, slicing, delimiter splitting, and repetition.",
+    "body": "\n    <h2>The Native Strings Namespace</h2>\n    <p>VerScript complements instance methods on strings (like <code>str.len()</code> and <code>str.trim()</code>) with a comprehensive standalone <code>Strings</code> module. These routines provide deterministic text transformation algorithms directly accessible globally.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Strings.toUpper(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Transforms all ASCII characters to uppercase.</td></tr>\n        <tr><td><code>Strings.toLower(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Transforms all ASCII characters to lowercase.</td></tr>\n        <tr><td><code>Strings.trim(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Strips leading and trailing whitespace.</td></tr>\n        <tr><td><code>Strings.length(text)</code></td><td><code>str text</code></td><td><code>int</code></td><td>Returns byte length of the string.</td></tr>\n        <tr><td><code>Strings.contains(text, needle)</code></td><td><code>str text, needle</code></td><td><code>bool</code></td><td>Returns true if needle occurs in text.</td></tr>\n        <tr><td><code>Strings.startsWith(text, prefix)</code></td><td><code>str text, prefix</code></td><td><code>bool</code></td><td>Returns true if text begins with prefix.</td></tr>\n        <tr><td><code>Strings.endsWith(text, suffix)</code></td><td><code>str text, suffix</code></td><td><code>bool</code></td><td>Returns true if text terminates with suffix.</td></tr>\n        <tr><td><code>Strings.slice(text, start, finish)</code></td><td><code>str, int, int</code></td><td><code>str</code></td><td>Extracts substring between start and finish.</td></tr>\n        <tr><td><code>Strings.split(text, delim)</code></td><td><code>str text, delim</code></td><td><code>arr</code></td><td>Splits string into array by delimiter.</td></tr>\n        <tr><td><code>Strings.replace(text, target, rep)</code></td><td><code>str, str, str</code></td><td><code>str</code></td><td>Substitutes target substring with replacement.</td></tr>\n        <tr><td><code>Strings.repeat(text, count)</code></td><td><code>str text, int</code></td><td><code>str</code></td><td>Repeats text count times.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_strings_1",
+        "title": "strings_demo.vrs",
+        "code": "display \"=== Native Strings Module ===\" ?color=#38bdf8\nset greeting: \"  Hello, VerScript Developer!  \"\ndisplay \"Trimmed: [\" + (Strings.trim(greeting)) + \"]\"\ndisplay \"Upper: \" + (Strings.toUpper(\"verscript\"))\ndisplay \"Starts with Hello: \" + (Strings.startsWith(\"Hello World\", \"Hello\"))\ndisplay \"Repeated: \" + (Strings.repeat(\"*-\", 5))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_strings_1",
+        "title": "Exercise: String Normalization",
+        "prompt": "Trim the string <code>'  production_ready  '</code>, convert it to uppercase, and display the result.",
+        "starterCode": "! Normalize string and display\n",
+        "solution": "set raw: \"  production_ready  \"\nset clean: Strings.trim(raw)\ndisplay Strings.toUpper(clean)",
+        "expectedMatch": {},
+        "hint": "Use Strings.trim followed by Strings.toUpper."
+      }
+    ]
+  },
+  {
     "id": "ch7-arrays",
-    "number": 7,
+    "number": 9,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "Arrays (arr) & Collection Operations",
     "category": "Data Structures",
@@ -254,8 +310,64 @@ const ARTICLES = [
     ]
   },
   {
+    "id": "ch-lib-arrays",
+    "number": 10,
+    "section": "Section 2: Language Foundations & Datatypes",
+    "title": "Native Arrays Library & Collection Algorithms",
+    "category": "Datatypes & Core Libraries",
+    "readTime": "5 min read",
+    "summary": "Comprehensive reference for the native Arrays library routines: sorting, reversing, search, concatenation, and bounds extraction.",
+    "body": "\n    <h2>The Native Arrays Namespace</h2>\n    <p>VerScript collections benefit from both object method dispatch (such as <code>arr.push(val)</code>) and functional namespace routines in <code>Arrays</code>. The <code>Arrays</code> module offers utility routines for immutable and algorithmic collection transformations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Arrays.first(items)</code></td><td><code>arr items</code></td><td><code>any</code></td><td>Retrieves the first element (index 0).</td></tr>\n        <tr><td><code>Arrays.last(items)</code></td><td><code>arr items</code></td><td><code>any</code></td><td>Retrieves the terminal element.</td></tr>\n        <tr><td><code>Arrays.reverse(items)</code></td><td><code>arr items</code></td><td><code>arr</code></td><td>Returns a new array with elements in reversed order.</td></tr>\n        <tr><td><code>Arrays.sort(items)</code></td><td><code>arr items</code></td><td><code>arr</code></td><td>Sorts array in ascending order.</td></tr>\n        <tr><td><code>Arrays.contains(items, val)</code></td><td><code>arr, any</code></td><td><code>bool</code></td><td>Returns true if value exists in array.</td></tr>\n        <tr><td><code>Arrays.indexOf(items, val)</code></td><td><code>arr, any</code></td><td><code>int</code></td><td>Returns zero-based index or -1 if absent.</td></tr>\n        <tr><td><code>Arrays.join(items, delim)</code></td><td><code>arr, str</code></td><td><code>str</code></td><td>Concatenates items into a string separated by delim.</td></tr>\n        <tr><td><code>Arrays.concat(arr1, arr2)</code></td><td><code>arr, arr</code></td><td><code>arr</code></td><td>Merges two arrays into a unified sequence.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_arrays_1",
+        "title": "arrays_demo.vrs",
+        "code": "display \"=== Native Arrays Module ===\" ?color=#38bdf8\nset list: [50, 10, 40, 20, 30]\nset sortedList: Arrays.sort(list)\ndisplay \"Sorted: \" + sortedList\ndisplay \"First: \" + (Arrays.first(sortedList))\ndisplay \"Last: \" + (Arrays.last(sortedList))\ndisplay \"Joined: \" + (Arrays.join(sortedList, \" -> \"))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_arrays_1",
+        "title": "Exercise: Extremes and Delimited Sequences",
+        "prompt": "Create an array <code>[9, 3, 7, 1, 5]</code>, sort it with <code>Arrays.sort</code>, and display the first element multiplied by the last element.",
+        "starterCode": "! Sort array and multiply first and last\n",
+        "solution": "set nums: [9, 3, 7, 1, 5]\nset s: Arrays.sort(nums)\nset f: Arrays.first(s)\nset l: Arrays.last(s)\ndisplay f * l",
+        "expectedMatch": {},
+        "hint": "First element in sorted array is 1, last is 9. 1 * 9 = 9."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-matrix",
+    "number": 11,
+    "section": "Section 2: Language Foundations & Datatypes",
+    "title": "Native Matrix Library & Multi-Dimensional Grid Operations",
+    "category": "Datatypes & Core Libraries",
+    "readTime": "5 min read",
+    "summary": "Comprehensive guide to multi-dimensional grid manipulation, identity matrices, transposition, and 2x2 determinants.",
+    "body": "\n    <h2>The Native Matrix Namespace</h2>\n    <p>VerScript native arrays support nested dimensions (arrays of arrays), forming the basis of matrices. The <code>Matrix</code> module provides linear algebra fundamentals for graphic transforms, simulations, and grid computations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Matrix.identity(size)</code></td><td><code>int size</code></td><td><code>arr</code></td><td>Generates an N x N identity matrix with 1 on diagonal and 0 elsewhere.</td></tr>\n        <tr><td><code>Matrix.transpose(mat)</code></td><td><code>arr mat</code></td><td><code>arr</code></td><td>Flips a matrix over its diagonal, switching row and column indices.</td></tr>\n        <tr><td><code>Matrix.determinant2x2(mat)</code></td><td><code>arr mat</code></td><td><code>int</code></td><td>Computes the determinant <code>(a*d - b*c)</code> of a 2x2 matrix.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_matrix_1",
+        "title": "matrix_demo.vrs",
+        "code": "display \"=== Native Matrix Module ===\" ?color=#38bdf8\nset id3: Matrix.identity(3)\ndisplay \"Identity 3x3 Row 0: \" + id3[0]\ndisplay \"Identity 3x3 Row 1: \" + id3[1]\ndisplay \"Identity 3x3 Row 2: \" + id3[2]\n\nset m2: [[4, 2], [3, 5]]\ndisplay \"Determinant 2x2: \" + (Matrix.determinant2x2(m2))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_matrix_1",
+        "title": "Exercise: Matrix Determinant",
+        "prompt": "Compute and display the 2x2 determinant of <code>[[5, 2], [3, 4]]</code> using <code>Matrix.determinant2x2</code>.",
+        "starterCode": "! Calculate 2x2 matrix determinant\n",
+        "solution": "set m: [[5, 2], [3, 4]]\ndisplay Matrix.determinant2x2(m)",
+        "expectedMatch": {},
+        "hint": "(5 * 4) - (2 * 3) = 20 - 6 = 14."
+      }
+    ]
+  },
+  {
     "id": "ch8-entities",
-    "number": 8,
+    "number": 12,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "Entities, Instances & Dynamic Objects",
     "category": "Datatypes",
@@ -283,7 +395,7 @@ const ARTICLES = [
   },
   {
     "id": "ch9-datatypes",
-    "number": 9,
+    "number": 13,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "DataType Constraints, Custom Types & Type Enforcement",
     "category": "Datatypes",
@@ -329,7 +441,7 @@ const ARTICLES = [
   },
   {
     "id": "ch10-pseudo-random",
-    "number": 10,
+    "number": 14,
     "section": "Section 2: Language Foundations & Datatypes",
     "title": "Native Pseudo & Random Generation Engine",
     "category": "Built-in Engines",
@@ -375,7 +487,7 @@ const ARTICLES = [
   },
   {
     "id": "ch7-prompt",
-    "number": 11,
+    "number": 15,
     "section": "Section 3: Execution Control & Branching",
     "title": "Interactive Input & Prompt Attributes",
     "category": "Input & Output",
@@ -421,7 +533,7 @@ const ARTICLES = [
   },
   {
     "id": "ch8-conditionals",
-    "number": 12,
+    "number": 16,
     "section": "Section 3: Execution Control & Branching",
     "title": "Conditional Branching & Guards",
     "category": "Control Flow",
@@ -467,7 +579,7 @@ const ARTICLES = [
   },
   {
     "id": "ch11-loops-iterations",
-    "number": 13,
+    "number": 17,
     "section": "Section 3: Execution Control & Branching",
     "title": "Loops & Iterations (loop, iterate, while, until)",
     "category": "Control Flow",
@@ -495,7 +607,7 @@ const ARTICLES = [
   },
   {
     "id": "ch12-functions-purity",
-    "number": 14,
+    "number": 18,
     "section": "Section 4: Procedures, Routines & Purity",
     "title": "Custom Functions & Inbound Purity Contracts",
     "category": "Procedures",
@@ -523,7 +635,7 @@ const ARTICLES = [
   },
   {
     "id": "ch13-methods-outbound",
-    "number": 15,
+    "number": 19,
     "section": "Section 4: Procedures, Routines & Purity",
     "title": "Methods & Outbound State Mutation",
     "category": "Procedures",
@@ -551,7 +663,7 @@ const ARTICLES = [
   },
   {
     "id": "ch14-recursion-stack",
-    "number": 16,
+    "number": 20,
     "section": "Section 4: Procedures, Routines & Purity",
     "title": "Recursive Routines & Call Stack Dynamics",
     "category": "Procedures",
@@ -579,7 +691,7 @@ const ARTICLES = [
   },
   {
     "id": "ch15-classes-encapsulation",
-    "number": 17,
+    "number": 21,
     "section": "Section 5: Object-Oriented Architecture",
     "title": "Classes & Encapsulation (static vs dynamic sections)",
     "category": "OOP",
@@ -607,7 +719,7 @@ const ARTICLES = [
   },
   {
     "id": "ch16-entity-lifecycle",
-    "number": 18,
+    "number": 22,
     "section": "Section 5: Object-Oriented Architecture",
     "title": "Entity Lifecycle, Method Binding & Instantiation",
     "category": "OOP",
@@ -635,7 +747,7 @@ const ARTICLES = [
   },
   {
     "id": "ch17-metaprogramming-meta",
-    "number": 19,
+    "number": 23,
     "section": "Section 5: Object-Oriented Architecture",
     "title": "Metaprogramming & Internal 'meta' Components",
     "category": "OOP",
@@ -663,7 +775,7 @@ const ARTICLES = [
   },
   {
     "id": "ch18-libraries-distribution",
-    "number": 20,
+    "number": 24,
     "section": "Section 6: Modular Systems & Code Organization",
     "title": "Libraries (.lib.vrs) & Core Distribution",
     "category": "Modules",
@@ -691,7 +803,7 @@ const ARTICLES = [
   },
   {
     "id": "ch19-imports-namespaces",
-    "number": 21,
+    "number": 25,
     "section": "Section 6: Modular Systems & Code Organization",
     "title": "Unqualified Imports & Namespaces",
     "category": "Modules",
@@ -719,7 +831,7 @@ const ARTICLES = [
   },
   {
     "id": "ch17-inject",
-    "number": 22,
+    "number": 26,
     "section": "Section 6: Modular Systems & Code Organization",
     "title": "Polyglot Code Injection (100+ Languages)",
     "category": "Metaprogramming",
@@ -765,7 +877,7 @@ const ARTICLES = [
   },
   {
     "id": "ch13-do-unless",
-    "number": 23,
+    "number": 27,
     "section": "Section 7: Robustness, Errors & Testing",
     "title": "Try-Unless Architecture & Watch Guards",
     "category": "Exception Handling",
@@ -811,7 +923,7 @@ const ARTICLES = [
   },
   {
     "id": "ch14-error-scopes",
-    "number": 24,
+    "number": 28,
     "section": "Section 7: Robustness, Errors & Testing",
     "title": "Error Scopes & Suppression Blocks",
     "category": "Exception Handling",
@@ -857,7 +969,7 @@ const ARTICLES = [
   },
   {
     "id": "ch16-error-directory",
-    "number": 25,
+    "number": 29,
     "section": "Section 7: Robustness, Errors & Testing",
     "title": "Interactive Error Directory & Diagnostics Reference",
     "category": "Diagnostics & Errors",
@@ -903,7 +1015,7 @@ const ARTICLES = [
   },
   {
     "id": "ch18-alias",
-    "number": 26,
+    "number": 30,
     "section": "Section 8: Advanced Tooling & Customizations",
     "title": "Alias Remapping & Custom Syntax",
     "category": "Metaprogramming",
@@ -949,7 +1061,7 @@ const ARTICLES = [
   },
   {
     "id": "ch25-polyserver-runner",
-    "number": 27,
+    "number": 31,
     "section": "Section 8: Advanced Tooling & Customizations",
     "title": "PolyServer Cloud Execution & Web Runner",
     "category": "Tooling",
@@ -977,7 +1089,7 @@ const ARTICLES = [
   },
   {
     "id": "ch19-grandmaster-capstone",
-    "number": 28,
+    "number": 32,
     "section": "Section 9: Capstone & Advanced Architecture",
     "title": "Grandmaster Capstone: Complex Systems & Pipelines",
     "category": "Systems Engineering",
@@ -1073,7 +1185,7 @@ const ARTICLES = [
   },
   {
     "id": "ch30-variable-lifecycles",
-    "number": 29,
+    "number": 33,
     "section": "Section 10: Memory Management & Variable Lifecycles",
     "title": "Variable Lifecycles: Temporary & Stack-Isolated Variables",
     "category": "Memory & Lifecycles",
@@ -1101,7 +1213,7 @@ const ARTICLES = [
   },
   {
     "id": "ch31-modern-flow-control",
-    "number": 30,
+    "number": 34,
     "section": "Section 10: Memory Management & Variable Lifecycles",
     "title": "Modern Flow Control: Guard Clauses, Pattern Matching & Pipeline Chaining",
     "category": "Control Flow",
@@ -1129,7 +1241,7 @@ const ARTICLES = [
   },
   {
     "id": "ch32-reactive-event-architecture",
-    "number": 31,
+    "number": 35,
     "section": "Section 11: Asynchronous & Event-Driven Systems",
     "title": "Reactive Event Architecture: System Events & Dynamic Reactive Triggers",
     "category": "Event Architecture",
@@ -1157,7 +1269,7 @@ const ARTICLES = [
   },
   {
     "id": "ch33-asynchronous-routines",
-    "number": 32,
+    "number": 36,
     "section": "Section 11: Asynchronous & Event-Driven Systems",
     "title": "Asynchronous Routines & Synchronous Unwrapping",
     "category": "Concurrency",
@@ -1185,7 +1297,7 @@ const ARTICLES = [
   },
   {
     "id": "ch34-concurrency-channels",
-    "number": 33,
+    "number": 37,
     "section": "Section 11: Asynchronous & Event-Driven Systems",
     "title": "Concurrency Primitives: High-Throughput FIFO Channels",
     "category": "Concurrency",
@@ -1212,37 +1324,457 @@ const ARTICLES = [
     ]
   },
   {
-    "id": "ch35-standard-library-ecosystem",
-    "number": 34,
-    "section": "Section 12: Native Engine Modules & Built-ins",
-    "title": "Native Standard Built-ins & Runtime Engine Modules",
-    "category": "Native Built-ins",
-    "readTime": "12 min read",
-    "summary": "Exhaustive specification of VerScript's 20 native engine built-ins: Strings, Math, Arrays, Json, Crypto, Time, Fs, Path, Env, Regex, Log, Benchmark, Validate, Color, Console, Matrix, Mock, Http, Stats, and Assert compiled directly into the C virtual machine runtime.",
-    "body": "\n            <h2>Zero-Dependency Native Built-in Architecture</h2>\n            <p>In VerScript, all 20 foundational standard modules are <strong>compiled directly into the native C virtual machine runtime</strong>. Unlike traditional interpreted languages that require external packages or disk lookups, VerScript provides immediate, zero-latency access to these namespaces without needing any <code>load</code> or <code>import</code> statements.</p>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">⚡ Zero External File I/O &amp; Instant Execution</div>\n                <p>Because these modules are embedded in-memory within the engine binary, your VerScript scripts run identically whether executing via the CLI, inside Docker containers, within embedded microcontrollers, or in sandboxed web workers (PolyServer).</p>\n            </div>\n\n            <h2>The 20 First-Class Native Modules</h2>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Native Module</th>\n                            <th>Namespace</th>\n                            <th>Primary Capabilities &amp; Built-in Functions</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr><td><code>Strings</code></td><td><code>Strings.*</code></td><td><code>toUpper</code>, <code>toLower</code>, <code>trim</code>, <code>slice</code>, <code>split</code>, <code>contains</code>, <code>startsWith</code>, <code>endsWith</code></td></tr>\n                        <tr><td><code>Math</code></td><td><code>Math.*</code></td><td><code>clamp</code>, <code>abs</code>, <code>sqrt</code>, <code>min</code>, <code>max</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>floor</code>, <code>ceil</code></td></tr>\n                        <tr><td><code>Arrays</code></td><td><code>Arrays.*</code></td><td><code>len</code>, <code>length</code>, <code>push</code>, <code>pop</code>, <code>reverse</code>, <code>sort</code>, <code>contains</code>, <code>indexOf</code>, <code>join</code>, <code>slice</code></td></tr>\n                        <tr><td><code>Json</code></td><td><code>Json.*</code></td><td><code>stringify</code>, <code>parse</code>, <code>isValid</code> structured data serialization</td></tr>\n                        <tr><td><code>Crypto</code></td><td><code>Crypto.*</code></td><td><code>sha256</code>, <code>md5</code>, <code>base64Encode</code>, <code>base64Decode</code> deterministic hashing</td></tr>\n                        <tr><td><code>Time</code></td><td><code>Time.*</code></td><td><code>now</code>, <code>unix</code>, <code>format</code>, <code>elapsed</code>, <code>sleep</code> execution timing</td></tr>\n                        <tr><td><code>Fs</code></td><td><code>Fs.*</code></td><td><code>exists</code>, <code>read</code>, <code>write</code>, <code>append</code>, <code>remove</code>, <code>size</code> file system operations</td></tr>\n                        <tr><td><code>Path</code></td><td><code>Path.*</code></td><td><code>join</code>, <code>baseName</code>, <code>dirName</code>, <code>extension</code>, <code>normalize</code> path manipulation</td></tr>\n                        <tr><td><code>Env</code></td><td><code>Env.*</code></td><td><code>get</code>, <code>set</code>, <code>has</code>, <code>all</code> system environment inspection</td></tr>\n                        <tr><td><code>Regex</code></td><td><code>Regex.*</code></td><td><code>test</code>, <code>match</code>, <code>replace</code>, <code>findAll</code> pattern matching</td></tr>\n                        <tr><td><code>Log</code></td><td><code>Log.*</code></td><td><code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code> ANSI structured logger</td></tr>\n                        <tr><td><code>Benchmark</code></td><td><code>Benchmark.*</code></td><td><code>measure</code>, <code>compare</code>, <code>timer</code> micro-benchmarking suite</td></tr>\n                        <tr><td><code>Validate</code></td><td><code>Validate.*</code></td><td><code>email</code>, <code>url</code>, <code>inRange</code>, <code>isNumeric</code> input validation rules</td></tr>\n                        <tr><td><code>Color</code></td><td><code>Color.*</code></td><td><code>red</code>, <code>green</code>, <code>blue</code>, <code>yellow</code>, <code>cyan</code>, <code>hex</code> ANSI formatting</td></tr>\n                        <tr><td><code>Console</code></td><td><code>Console.*</code></td><td><code>clear</code>, <code>table</code>, <code>cursor</code>, <code>raw</code> terminal screen control</td></tr>\n                        <tr><td><code>Matrix</code></td><td><code>Matrix.*</code></td><td><code>create</code>, <code>transpose</code>, <code>mult</code>, <code>add</code> 2D matrix transformations</td></tr>\n                        <tr><td><code>Mock</code></td><td><code>Mock.*</code></td><td><code>user</code>, <code>dataset</code>, <code>fixture</code>, <code>id</code> synthetic data generation</td></tr>\n                        <tr><td><code>Http</code></td><td><code>Http.*</code></td><td><code>get</code>, <code>post</code>, <code>statusText</code> client request abstractions</td></tr>\n                        <tr><td><code>Stats</code></td><td><code>Stats.*</code></td><td><code>mean</code>, <code>sum</code>, <code>minMax</code>, <code>range</code> statistical aggregation</td></tr>\n                        <tr><td><code>Assert</code></td><td><code>Assert.*</code></td><td><code>equal</code>, <code>notEqual</code>, <code>isTrue</code>, <code>isFalse</code> testing assertions</td></tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Comprehensive Multi-Module Production Example</h2>\n            <p>The code below demonstrates several native modules working cohesively in a single data processing pipeline:</p>\n\n            <pre><code class=\"language-verscript\">! Native module demonstration without imports\nset inputData: [15, 30, 45, 60, 90]\n\n! 1. Statistics Aggregation\nset avg: Stats.mean(inputData)\ndisplay \"Computed Average: \" + avg ?color=\"cyan\"\n\n! 2. Array Formatting & Joining\nset joined: Arrays.join([\"Alpha\", \"Beta\", \"Gamma\"], \" -> \")\ndisplay \"Pipeline Stages: \" + joined ?color=\"yellow\"\n\n! 3. Mathematical Bounding\nset clamped: Math.clamp(avg, 0, 50)\ndisplay \"Clamped Average: \" + clamped ?color=\"purple\"\n\n! 4. Json Serialization\nset serialized: Json.stringify(inputData)\ndisplay \"Serialized Payload: \" + serialized ?color=\"green\"\n\n! 5. Verification Assertion\nAssert.isTrue(avg > 0, \"Average must be positive\")\ndisplay \"Pipeline Verification Successful!\" ?color=\"green\"</code></pre>\n\n            <h2>Native Type Inspection with 'typeof'</h2>\n            <p>VerScript includes a built-in <code>typeof</code> operator that returns the primitive type of any expression (<code>\"num\"</code>, <code>\"str\"</code>, <code>\"bool\"</code>, <code>\"arr\"</code>, or <code>\"entity\"</code>):</p>\n            <pre><code class=\"language-verscript\">display (typeof 42)           ! \"num\"\ndisplay (typeof \"VerScript\")   ! \"str\"\ndisplay (typeof true)         ! \"bool\"\ndisplay (typeof [1, 2, 3])    ! \"arr\"</code></pre>\n",
+    "id": "ch-lib-json",
+    "number": 38,
+    "section": "Section 12: Native Data Processing & Security",
+    "title": "Native Json: Serialization, Parsing & Schema Verification",
+    "category": "Data Processing",
+    "readTime": "5 min read",
+    "summary": "Comprehensive guide to native Json serialization, parsing, and syntax validation.",
+    "body": "\n    <h2>The Native Json Module</h2>\n    <p>VerScript includes high-throughput JSON processing directly in the runtime. The <code>Json</code> library supports serialization of primitives and arrays, string unescaping, and structure verification without external dependencies.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Json.stringify(data)</code></td><td><code>any data</code></td><td><code>str</code></td><td>Serializes numbers, booleans, strings, and arrays into standard JSON.</td></tr>\n        <tr><td><code>Json.parse(jsonStr)</code></td><td><code>str jsonStr</code></td><td><code>str</code></td><td>Trims and unpacks formatted JSON payloads.</td></tr>\n        <tr><td><code>Json.isValid(jsonStr)</code></td><td><code>str jsonStr</code></td><td><code>bool</code></td><td>Validates whether a string has balanced JSON bracket envelopes.</td></tr>\n      </tbody>\n    </table>\n  ",
     "codeBlocks": [
       {
-        "id": "cb_ch35_1",
-        "title": "stdlib_ecosystem.vrs",
-        "code": "! Testing Auto-Loaded Standard Libraries\ndisplay Strings.toUpper(\"enterprise runtime active\") ?color=#22c55e\ndisplay \"Length: \" + (Strings.len(\"Hello\")) ?color=#38bdf8\ndisplay \"Max value: \" + (Math.max(45, 99)) ?color=#eab308\ndisplay \"Clamped: \" + (Math.clamp(200, 0, 50)) ?color=#a855f7"
+        "id": "cb_json_1",
+        "title": "json_demo.vrs",
+        "code": "display \"=== Native Json Module ===\" ?color=#38bdf8\nset payload: Json.stringify([\"Telemetry\", 1024, true])\ndisplay \"Serialized: \" + payload\ndisplay \"Is Valid: \" + (Json.isValid(payload))"
       }
     ],
     "exercises": [
       {
-        "id": "ex_35_1",
-        "title": "Exercise 34.1: Native Module Invocation",
-        "prompt": "Call <code>Strings.toUpper(\"native engine\")</code> and display the result.",
-        "starterCode": "! TODO: Invoke Strings.toUpper\n",
-        "hint": "Use `display Strings.toUpper(\"native engine\")`.",
-        "solution": "display Strings.toUpper(\"native engine\")",
-        "expectedMatch": {}
+        "id": "ex_json_1",
+        "title": "Exercise: JSON Payload Serialization",
+        "prompt": "Serialize an array containing <code>[10, 20, 30]</code> using <code>Json.stringify</code> and display the serialized string.",
+        "starterCode": "! Serialize array to JSON\n",
+        "solution": "set items: [10, 20, 30]\ndisplay Json.stringify(items)",
+        "expectedMatch": {},
+        "hint": "Use Json.stringify([10, 20, 30])."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-crypto",
+    "number": 39,
+    "section": "Section 12: Native Data Processing & Security",
+    "title": "Native Crypto: SHA-256, MD5 & Base64 Encodings",
+    "category": "Security & Cryptography",
+    "readTime": "5 min read",
+    "summary": "Comprehensive guide to native cryptographic hash generation, checksums, and Base64 stream encodings.",
+    "body": "\n    <h2>The Native Crypto Module</h2>\n    <p>VerScript includes cryptographic utilities for tamper-proofing messages, generating deterministic message digests, and encoding binary buffers.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Crypto.sha256(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Generates a deterministic 256-bit hexadecimal digest of the input text.</td></tr>\n        <tr><td><code>Crypto.md5(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Generates a 128-bit MD5 hex checksum.</td></tr>\n        <tr><td><code>Crypto.base64Encode(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Encodes text into ASCII Base64 format.</td></tr>\n        <tr><td><code>Crypto.base64Decode(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Decodes a Base64 string back to plaintext.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_crypto_1",
+        "title": "crypto_demo.vrs",
+        "code": "display \"=== Native Crypto Module ===\" ?color=#38bdf8\ndisplay \"SHA256 Token: \" + (Crypto.sha256(\"auth_secret_token\"))\ndisplay \"MD5 Checksum: \" + (Crypto.md5(\"packet_payload\"))\ndisplay \"Base64 Encoded: \" + (Crypto.base64Encode(\"VerScript\"))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_crypto_1",
+        "title": "Exercise: Cryptographic Verification",
+        "prompt": "Encode <code>'security'</code> using <code>Crypto.base64Encode</code> and display the encoded token.",
+        "starterCode": "! Base64 encode string\n",
+        "solution": "display Crypto.base64Encode(\"security\")",
+        "expectedMatch": {},
+        "hint": "Call Crypto.base64Encode(\"security\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-regex",
+    "number": 40,
+    "section": "Section 12: Native Data Processing & Security",
+    "title": "Native Regex: Regular Expressions & Pattern Substitution",
+    "category": "Data Processing",
+    "readTime": "5 min read",
+    "summary": "Comprehensive reference for the native Regex pattern matching, test verification, and substitution routines.",
+    "body": "\n    <h2>The Native Regex Module</h2>\n    <p>VerScript incorporates an embedded regular expression engine for text validation, substring extraction, and global token replacement.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Regex.test(pattern, text)</code></td><td><code>str, str</code></td><td><code>bool</code></td><td>Returns true if text matches pattern.</td></tr>\n        <tr><td><code>Regex.match(pattern, text)</code></td><td><code>str, str</code></td><td><code>str</code></td><td>Extracts first matching substring or empty string.</td></tr>\n        <tr><td><code>Regex.replaceAll(pattern, text, repl)</code></td><td><code>str, str, str</code></td><td><code>str</code></td><td>Substitutes every occurrence of pattern in text with repl.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_regex_1",
+        "title": "regex_demo.vrs",
+        "code": "display \"=== Native Regex Module ===\" ?color=#38bdf8\nset text: \"The quick brown fox jumps over the lazy dog\"\nset updated: Regex.replaceAll(\"brown\", text, \"crimson\")\ndisplay \"Updated: \" + updated\ndisplay \"Has fox: \" + (Regex.test(\"fox\", updated))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_regex_1",
+        "title": "Exercise: String Replacement",
+        "prompt": "Use <code>Regex.replaceAll</code> to replace all occurrences of <code>'fail'</code> with <code>'pass'</code> in the string <code>'test_fail_status_fail'</code> and display the result.",
+        "starterCode": "! Replace fail with pass\n",
+        "solution": "set s: \"test_fail_status_fail\"\ndisplay Regex.replaceAll(\"fail\", s, \"pass\")",
+        "expectedMatch": {},
+        "hint": "Use Regex.replaceAll(\"fail\", s, \"pass\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-stats",
+    "number": 41,
+    "section": "Section 12: Native Data Processing & Security",
+    "title": "Native Stats: Descriptive Statistics & Variance Engine",
+    "category": "Data Processing",
+    "readTime": "5 min read",
+    "summary": "Compute sums, arithmetic means, ranges, and statistical variances on numerical datasets.",
+    "body": "\n    <h2>The Native Stats Module</h2>\n    <p>VerScript's <code>Stats</code> module provides essential statistical calculations for telemetry, data analysis, and mathematical modeling.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Stats.sum(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes the total sum of numerical elements.</td></tr>\n        <tr><td><code>Stats.mean(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes integer arithmetic mean (average).</td></tr>\n        <tr><td><code>Stats.range(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Difference between maximum and minimum values.</td></tr>\n        <tr><td><code>Stats.variance(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes population variance of the dataset.</td></tr>\n        <tr><td><code>Stats.stdDev(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Standard deviation (integer root of variance).</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_stats_1",
+        "title": "stats_demo.vrs",
+        "code": "display \"=== Native Stats Module ===\" ?color=#38bdf8\nset samples: [10, 20, 30, 40, 50]\ndisplay \"Sum: \" + (Stats.sum(samples))\ndisplay \"Mean: \" + (Stats.mean(samples))\ndisplay \"Range: \" + (Stats.range(samples))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_stats_1",
+        "title": "Exercise: Metric Averages",
+        "prompt": "Compute and display the arithmetic mean of the scores <code>[80, 90, 100]</code> using <code>Stats.mean</code>.",
+        "starterCode": "! Compute mean of scores\n",
+        "solution": "set scores: [80, 90, 100]\ndisplay Stats.mean(scores)",
+        "expectedMatch": {},
+        "hint": "(80 + 90 + 100) / 3 = 90."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-validate",
+    "number": 42,
+    "section": "Section 12: Native Data Processing & Security",
+    "title": "Native Validate: Domain Rules & Input Sanitization",
+    "category": "Data Processing",
+    "readTime": "5 min read",
+    "summary": "Comprehensive guide to native structural validators for email addresses, URLs, and bounded numeric ranges.",
+    "body": "\n    <h2>The Native Validate Module</h2>\n    <p>VerScript's <code>Validate</code> module enforces domain validation contracts on user inputs and network payloads.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Validate.isEmail(text)</code></td><td><code>str text</code></td><td><code>bool</code></td><td>Validates whether text matches standard email structure.</td></tr>\n        <tr><td><code>Validate.isUrl(text)</code></td><td><code>str text</code></td><td><code>bool</code></td><td>Validates if string begins with http:// or https://.</td></tr>\n        <tr><td><code>Validate.inRange(val, lower, upper)</code></td><td><code>int, int, int</code></td><td><code>bool</code></td><td>Validates if val is inclusively within lower and upper bounds.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_validate_1",
+        "title": "validate_demo.vrs",
+        "code": "display \"=== Native Validate Module ===\" ?color=#38bdf8\ndisplay \"Valid Email: \" + (Validate.isEmail(\"dev@verscript.org\"))\ndisplay \"Valid URL: \" + (Validate.isUrl(\"https://verscript.org\"))\ndisplay \"Score in Range: \" + (Validate.inRange(75, 1, 100))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_validate_1",
+        "title": "Exercise: Range Guard",
+        "prompt": "Verify if value <code>42</code> is between <code>0</code> and <code>100</code> with <code>Validate.inRange</code> and display the boolean result.",
+        "starterCode": "! Verify value in range\n",
+        "solution": "display Validate.inRange(42, 0, 100)",
+        "expectedMatch": {},
+        "hint": "Validate.inRange(42, 0, 100) returns true."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-fs",
+    "number": 43,
+    "section": "Section 13: Native System, Filesystem & Network",
+    "title": "Native Fs: High-Integrity Filesystem I/O",
+    "category": "System & Network",
+    "readTime": "5 min read",
+    "summary": "Inspect file existence, verify script extensions, and manage file streams with the native Fs module.",
+    "body": "\n    <h2>The Native Fs Module</h2>\n    <p>VerScript includes built-in filesystem inspection capabilities for validating file descriptors, path safety, and extension contracts.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Fs.exists(filePath)</code></td><td><code>str filePath</code></td><td><code>bool</code></td><td>Checks if a file exists on the local filesystem.</td></tr>\n        <tr><td><code>Fs.isVrsFile(filePath)</code></td><td><code>str filePath</code></td><td><code>bool</code></td><td>Checks if the given file has a <code>.vrs</code> extension.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_fs_1",
+        "title": "fs_demo.vrs",
+        "code": "display \"=== Native Fs Module ===\" ?color=#38bdf8\ndisplay \"Is VRS File: \" + (Fs.isVrsFile(\"main.vrs\"))\ndisplay \"Is Config VRS: \" + (Fs.isVrsFile(\"config.json\"))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_fs_1",
+        "title": "Exercise: Script Extension Guard",
+        "prompt": "Verify whether <code>'service_worker.vrs'</code> is a valid VerScript file using <code>Fs.isVrsFile</code> and display the result.",
+        "starterCode": "! Check VRS file extension\n",
+        "solution": "display Fs.isVrsFile(\"service_worker.vrs\")",
+        "expectedMatch": {},
+        "hint": "Use Fs.isVrsFile(\"service_worker.vrs\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-path",
+    "number": 44,
+    "section": "Section 13: Native System, Filesystem & Network",
+    "title": "Native Path: Cross-Platform Path Resolution",
+    "category": "System & Network",
+    "readTime": "5 min read",
+    "summary": "Resolve directories, join path segments, and extract file extensions across platforms.",
+    "body": "\n    <h2>The Native Path Module</h2>\n    <p>VerScript's <code>Path</code> module normalizes filesystem paths across Windows and POSIX systems with consistent path delimiter handling.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Path.join(dir, file)</code></td><td><code>str dir, str file</code></td><td><code>str</code></td><td>Concatenates directory and filename with forward slashes.</td></tr>\n        <tr><td><code>Path.extname(path)</code></td><td><code>str path</code></td><td><code>str</code></td><td>Extracts the extension (e.g., .vrs, .json) including leading period.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_path_1",
+        "title": "path_demo.vrs",
+        "code": "display \"=== Native Path Module ===\" ?color=#38bdf8\nset full: Path.join(\"src\", \"engine.vrs\")\ndisplay \"Joined Path: \" + full\ndisplay \"Extension: \" + (Path.extname(full))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_path_1",
+        "title": "Exercise: Path Composition",
+        "prompt": "Join directory <code>'modules'</code> and file <code>'kernel.vrs'</code> using <code>Path.join</code> and display the result.",
+        "starterCode": "! Join path segments\n",
+        "solution": "display Path.join(\"modules\", \"kernel.vrs\")",
+        "expectedMatch": {},
+        "hint": "Use Path.join(\"modules\", \"kernel.vrs\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-env",
+    "number": 45,
+    "section": "Section 13: Native System, Filesystem & Network",
+    "title": "Native Env: Environment Inspection & Runtime Flags",
+    "category": "System & Network",
+    "readTime": "5 min read",
+    "summary": "Inspect operating system environment variables, execution modes, and fallback configurations.",
+    "body": "\n    <h2>The Native Env Module</h2>\n    <p>The <code>Env</code> module interfaces with host process variables and environmental flags to adjust runtime behavior dynamically.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Env.isDevelopment()</code></td><td><code>none</code></td><td><code>bool</code></td><td>Returns true when running in development environment.</td></tr>\n        <tr><td><code>Env.isProduction()</code></td><td><code>none</code></td><td><code>bool</code></td><td>Returns true when running in production environment.</td></tr>\n        <tr><td><code>Env.get(key, defaultVal)</code></td><td><code>str key, str defaultVal</code></td><td><code>str</code></td><td>Retrieves environment key or returns defaultVal fallback.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_env_1",
+        "title": "env_demo.vrs",
+        "code": "display \"=== Native Env Module ===\" ?color=#38bdf8\ndisplay \"Development Mode: \" + (Env.isDevelopment())\ndisplay \"Port: \" + (Env.get(\"PORT\", \"8080\"))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_env_1",
+        "title": "Exercise: Safe Variable Retrieval",
+        "prompt": "Retrieve the environment key <code>'DATABASE_URL'</code> with fallback default <code>'localhost:5432'</code> using <code>Env.get</code> and display it.",
+        "starterCode": "! Retrieve env key with fallback\n",
+        "solution": "display Env.get(\"DATABASE_URL\", \"localhost:5432\")",
+        "expectedMatch": {},
+        "hint": "Use Env.get(\"DATABASE_URL\", \"localhost:5432\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-time",
+    "number": 46,
+    "section": "Section 13: Native System, Filesystem & Network",
+    "title": "Native Time: Epoch Timestamps & Execution Clocks",
+    "category": "System & Network",
+    "readTime": "5 min read",
+    "summary": "Query system timestamps, measure execution delta milliseconds, and determine leap years.",
+    "body": "\n    <h2>The Native Time Module</h2>\n    <p>VerScript's <code>Time</code> module provides high-precision epoch clocks and calendar calculation routines.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Time.now()</code></td><td><code>none</code></td><td><code>int</code></td><td>Returns current calendar year.</td></tr>\n        <tr><td><code>Time.epochMs()</code></td><td><code>none</code></td><td><code>int</code></td><td>Returns current UNIX epoch milliseconds timestamp.</td></tr>\n        <tr><td><code>Time.diffMs(startMs, endMs)</code></td><td><code>int start, int end</code></td><td><code>int</code></td><td>Calculates absolute elapsed millisecond delta.</td></tr>\n        <tr><td><code>Time.isLeapYear(year)</code></td><td><code>int year</code></td><td><code>bool</code></td><td>Determines if year is a Gregorian leap year.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_time_1",
+        "title": "time_demo.vrs",
+        "code": "display \"=== Native Time Module ===\" ?color=#38bdf8\ndisplay \"Current Year: \" + (Time.now())\ndisplay \"2024 Leap Year: \" + (Time.isLeapYear(2024))\ndisplay \"2025 Leap Year: \" + (Time.isLeapYear(2025))\ndisplay \"Elapsed Delta: \" + (Time.diffMs(1000, 1450))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_time_1",
+        "title": "Exercise: Calendar Leap Verification",
+        "prompt": "Check whether year <code>2000</code> is a leap year using <code>Time.isLeapYear</code> and display the result.",
+        "starterCode": "! Check leap year\n",
+        "solution": "display Time.isLeapYear(2000)",
+        "expectedMatch": {},
+        "hint": "Year 2000 is divisible by 400, so Time.isLeapYear(2000) returns true."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-http",
+    "number": 47,
+    "section": "Section 13: Native System, Filesystem & Network",
+    "title": "Native Http: Network Status Codes & Protocol Abstractions",
+    "category": "System & Network",
+    "readTime": "5 min read",
+    "summary": "Classify HTTP response codes, inspect client errors, server faults, and protocol statuses.",
+    "body": "\n    <h2>The Native Http Module</h2>\n    <p>VerScript's <code>Http</code> module classifies standard HTTP response status codes into canonical groups.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Http.isSuccess(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 2xx status codes (200-299).</td></tr>\n        <tr><td><code>Http.isClientError(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 4xx client errors (400-499).</td></tr>\n        <tr><td><code>Http.isServerError(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 5xx server errors (500-599).</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_http_1",
+        "title": "http_demo.vrs",
+        "code": "display \"=== Native Http Module ===\" ?color=#38bdf8\ndisplay \"HTTP 200 Success: \" + (Http.isSuccess(200))\ndisplay \"HTTP 404 Client Error: \" + (Http.isClientError(404))\ndisplay \"HTTP 503 Server Error: \" + (Http.isServerError(503))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_http_1",
+        "title": "Exercise: Response Status Classification",
+        "prompt": "Check if status code <code>201</code> is a success status using <code>Http.isSuccess</code> and display the result.",
+        "starterCode": "! Validate HTTP status\n",
+        "solution": "display Http.isSuccess(201)",
+        "expectedMatch": {},
+        "hint": "Use Http.isSuccess(201)."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-log",
+    "number": 48,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Log: Structured ANSI Console Logging",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Format multi-level diagnostic logs with ANSI color formatting and severity prefixes.",
+    "body": "\n    <h2>The Native Log Module</h2>\n    <p>The <code>Log</code> module formats terminal output with standardized severity levels: info, success, warning, and error.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Log.info(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs informational message with cyan prefix.</td></tr>\n        <tr><td><code>Log.success(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs success message with green prefix.</td></tr>\n        <tr><td><code>Log.warn(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs warning message with yellow prefix.</td></tr>\n        <tr><td><code>Log.error(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs error message with red prefix.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_log_1",
+        "title": "log_demo.vrs",
+        "code": "Log.info(\"Daemon initializing on port 8080\")\nLog.success(\"Cluster nodes handshake complete\")\nLog.warn(\"Buffer capacity at 85%\")\nLog.error(\"Heartbeat timeout on worker 3\")"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_log_1",
+        "title": "Exercise: Emission of Diagnostic Log",
+        "prompt": "Emit a success log with message <code>'Pipeline online'</code> using <code>Log.success</code>.",
+        "starterCode": "! Emit success log\n",
+        "solution": "Log.success(\"Pipeline online\")",
+        "expectedMatch": {},
+        "hint": "Call Log.success(\"Pipeline online\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-color",
+    "number": 49,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Color: Truecolor Hex & ANSI Terminal Styling",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Validate hexadecimal color strings, convert RGB values, and wrap strings in ANSI escape codes.",
+    "body": "\n    <h2>The Native Color Module</h2>\n    <p>The <code>Color</code> module provides palette utilities and terminal color formatting for CLI applications.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Color.isHexCode(hex)</code></td><td><code>str hex</code></td><td><code>bool</code></td><td>Validates whether a string is a 4-char or 7-char hexadecimal color code.</td></tr>\n        <tr><td><code>Color.rgbToHex(r, g, b)</code></td><td><code>int, int, int</code></td><td><code>str</code></td><td>Encodes RGB channel values into a hex string.</td></tr>\n        <tr><td><code>Color.ansiWrap(text, name)</code></td><td><code>str text, str name</code></td><td><code>str</code></td><td>Wraps text in ANSI terminal escape sequences.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_color_1",
+        "title": "color_demo.vrs",
+        "code": "display \"=== Native Color Module ===\" ?color=#38bdf8\ndisplay \"Valid Hex: \" + (Color.isHexCode(\"#00ffcc\"))\ndisplay \"Valid Short Hex: \" + (Color.isHexCode(\"#fff\"))\ndisplay \"Invalid Hex: \" + (Color.isHexCode(\"red\"))\ndisplay Color.ansiWrap(\"VerScript Truecolor\", \"green\")"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_color_1",
+        "title": "Exercise: Hex Color Validation",
+        "prompt": "Validate whether <code>'#38bdf8'</code> is a valid hexadecimal code with <code>Color.isHexCode</code> and display the result.",
+        "starterCode": "! Validate hex code\n",
+        "solution": "display Color.isHexCode(\"#38bdf8\")",
+        "expectedMatch": {},
+        "hint": "Use Color.isHexCode(\"#38bdf8\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-console",
+    "number": 50,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Console: Screen Buffer & Terminal Streams",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Direct stream output across stdout and stderr channels with structured console functions.",
+    "body": "\n    <h2>The Native Console Module</h2>\n    <p>The <code>Console</code> module provides standard console stream logging mirroring modern runtime conventions.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Console.log(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Standard log output to console.</td></tr>\n        <tr><td><code>Console.info(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Informational notice to stdout.</td></tr>\n        <tr><td><code>Console.warn(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Warning output to console.</td></tr>\n        <tr><td><code>Console.error(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Error diagnostic stream output.</td></tr>\n        <tr><td><code>Console.success(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Success status message output.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_console_1",
+        "title": "console_demo.vrs",
+        "code": "Console.log(\"Standard output stream initialized\")\nConsole.info(\"Kernel telemetry active\")\nConsole.success(\"Compilation succeeded without warnings\")"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_console_1",
+        "title": "Exercise: Console Stream Output",
+        "prompt": "Log <code>'All systems operational'</code> to the console using <code>Console.success</code>.",
+        "starterCode": "! Log success to console\n",
+        "solution": "Console.success(\"All systems operational\")",
+        "expectedMatch": {},
+        "hint": "Call Console.success(\"All systems operational\")."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-benchmark",
+    "number": 51,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Benchmark: Performance Profiling & Microbenchmarks",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Measure computational overhead, iterations per second, and generate benchmark reports.",
+    "body": "\n    <h2>The Native Benchmark Module</h2>\n    <p>The <code>Benchmark</code> module profiles routines, tracking execution time and throughput across iterations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Benchmark.report(name, iters, elapsedMs)</code></td><td><code>str, int, int</code></td><td><code>str</code></td><td>Formats a structured benchmark summary report.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_benchmark_1",
+        "title": "benchmark_demo.vrs",
+        "code": "display \"=== Native Benchmark Module ===\" ?color=#38bdf8\ndisplay Benchmark.report(\"MatrixMultiplication\", 10000, 24)"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_benchmark_1",
+        "title": "Exercise: Benchmark Formatting",
+        "prompt": "Generate a benchmark report for test <code>'HashDigest'</code> running <code>5000</code> iterations in <code>12</code> ms using <code>Benchmark.report</code>, and display it.",
+        "starterCode": "! Generate benchmark report\n",
+        "solution": "display Benchmark.report(\"HashDigest\", 5000, 12)",
+        "expectedMatch": {},
+        "hint": "Use Benchmark.report(\"HashDigest\", 5000, 12)."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-mock",
+    "number": 52,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Mock: Synthetic Data Fixtures, Spies & Stubs",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Simulate service dependencies, record invocation counts, and create deterministic stubs.",
+    "body": "\n    <h2>The Native Mock Module</h2>\n    <p>The <code>Mock</code> module facilitates unit testing and isolation of external dependencies through lightweight test doubles.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Mock.stub(returnValue)</code></td><td><code>any val</code></td><td><code>any</code></td><td>Creates a deterministic stub returning specified value.</td></tr>\n        <tr><td><code>Mock.spy(name, calls)</code></td><td><code>str, int</code></td><td><code>str</code></td><td>Creates an invocation tracker recording routine invocations.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_mock_1",
+        "title": "mock_demo.vrs",
+        "code": "display \"=== Native Mock Module ===\" ?color=#38bdf8\nset mockResponse: Mock.stub(\"200 OK\")\ndisplay \"Stub Output: \" + mockResponse\nset spyReport: Mock.spy(\"PaymentGateway\", 3)\ndisplay \"Spy Record: \" + spyReport"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_mock_1",
+        "title": "Exercise: Stub Return Value",
+        "prompt": "Create a test stub returning integer <code>99</code> using <code>Mock.stub</code> and display the stub output.",
+        "starterCode": "! Create stub returning 99\n",
+        "solution": "set s: Mock.stub(99)\ndisplay s",
+        "expectedMatch": {},
+        "hint": "Use Mock.stub(99)."
+      }
+    ]
+  },
+  {
+    "id": "ch-lib-assert",
+    "number": 53,
+    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
+    "title": "Native Assert: Invariant Verification & Test Suites",
+    "category": "Developer Tools & Diagnostics",
+    "readTime": "5 min read",
+    "summary": "Verify invariants, equality conditions, and tolerance thresholds with native test assertions.",
+    "body": "\n    <h2>The Native Assert Module</h2>\n    <p>The <code>Assert</code> module establishes test boundaries and invariant contracts within VerScript test suites.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Assert.equal(actual, expected, msg)</code></td><td><code>any, any, str</code></td><td><code>void</code></td><td>Verifies strict equality between actual and expected values.</td></tr>\n        <tr><td><code>Assert.notEqual(actual, expected, msg)</code></td><td><code>any, any, str</code></td><td><code>void</code></td><td>Verifies that two values are not equal.</td></tr>\n        <tr><td><code>Assert.isTrue(cond, msg)</code></td><td><code>bool, str</code></td><td><code>void</code></td><td>Verifies that condition evaluates to true.</td></tr>\n        <tr><td><code>Assert.isFalse(cond, msg)</code></td><td><code>bool, str</code></td><td><code>void</code></td><td>Verifies that condition evaluates to false.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_assert_1",
+        "title": "assert_demo.vrs",
+        "code": "Assert.equal(10 * 5, 50, \"Multiplication invariant holds\")\nAssert.isTrue(100 > 25, \"100 is strictly greater than 25\")\nAssert.isFalse(0 = 1, \"0 must not equal 1\")\ndisplay \"All assertions verified successfully!\" ?color=#50fa7b"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_assert_1",
+        "title": "Exercise: Invariant Equality Test",
+        "prompt": "Assert that <code>5 + 5</code> equals <code>10</code> with message <code>'Math invariant'</code> using <code>Assert.equal</code>, then display <code>'Verified'</code>.",
+        "starterCode": "! Verify assertion and display\n",
+        "solution": "Assert.equal(5 + 5, 10, \"Math invariant\")\ndisplay \"Verified\"",
+        "expectedMatch": {},
+        "hint": "Use Assert.equal(5 + 5, 10, \"Math invariant\")."
       }
     ]
   },
   {
     "id": "ch20-master-cheatsheet",
-    "number": 35,
-    "section": "Section 13: Reference & Complete Language Specification",
+    "number": 54,
+    "section": "Section 15: Reference & Complete Language Specification",
     "title": "Master Language Specification & Complete Attribute Cheatsheet",
     "category": "Quick Reference",
     "readTime": "15 min read",
