@@ -904,7 +904,7 @@
         <div class="nav-links">
             <a href="https://github.com/VerScript/VerScript" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a>
             <a href="docs/index.html" class="nav-link">Documentation (35 Ch)</a>
-            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Libraries (20 Libs)</a>
+            <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Community Packages</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -939,9 +939,9 @@
             <a href="docs/libs/index.html" class="mobile-menu-item">
                 <span class="menu-item-left">
                     <span class="menu-item-icon">📦</span>
-                    <span class="menu-item-text">Core Libraries Portal</span>
+                    <span class="menu-item-text">Community Packages Hub</span>
                 </span>
-                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">20 Libs</span>
+                <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">Ecosystem</span>
             </a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="mobile-menu-item highlight">
                 <span class="menu-item-left">
@@ -989,16 +989,16 @@
         <!-- ══════════════ STATS ROW ══════════════ -->
         <div class="stats-grid">
             <div class="stat-card">
+                <div class="stat-number">20</div>
+                <div class="stat-label">Native Core Modules</div>
+            </div>
+            <div class="stat-card">
                 <div class="stat-number">100+</div>
                 <div class="stat-label">Injected Languages</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">0</div>
-                <div class="stat-label">External Deps</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">64-bit</div>
-                <div class="stat-label">Native C VM Core</div>
+                <div class="stat-label">External Dependencies</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">35</div>
@@ -1118,6 +1118,13 @@
                 <h3>Native Mathematics Engine</h3>
                 <p>Native arithmetic operators, power (<code>^</code>), absolute value (<code>|x|</code>), factorial (<code>x!</code>), roots (<code>sqrt</code>, <code>rt</code>), bounds (<code>min</code>, <code>max</code>, <code>clamp</code>), trigonometry, logarithms, and parity predicates.</p>
                 <div class="feature-snippet">|-42| + 2 ^ 8 + 5! + (sqrt 144)</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon-badge">⚡</div>
+                <h3>20 Native Engine Modules</h3>
+                <p>Zero-dependency built-in engine modules (<code>Strings</code>, <code>Math</code>, <code>Arrays</code>, <code>Json</code>, <code>Crypto</code>, <code>Time</code>, <code>Fs</code>, <code>Path</code>, <code>Stats</code>, etc.) embedded directly in the C VM runtime.</p>
+                <div class="feature-snippet">Strings.toUpper("core") + Json.stringify(arr)</div>
             </div>
         </div>
 
@@ -1271,11 +1278,13 @@ set event2: recv threat_queue
 display "[QUEUE] Consumed item: " + event1 ?color=#38bdf8
 display "[QUEUE] Consumed item: " + event2 ?color=#38bdf8
 
-! 7. Auto-Loaded Standard Library Utilities
+! 7. Native Built-in Engine Modules (Zero Dependencies)
 set report_label: Strings.toUpper("telemetry digest verified")
 display "[REPORT] " + report_label ?color=#a855f7
 set cluster_nodes: [101, 102, 103, 104]
 display "[STATUS] Monitored Nodes: " + (Arrays.len(cluster_nodes)) ?color=#22c55e
+set serialized_payload: Json.stringify(cluster_nodes)
+display "[PAYLOAD] " + serialized_payload ?color=#00ffcc
 
 on exit:
   display "[SHUTDOWN] Pipeline drained. Node safe." ?color=#a855f7`,
@@ -1289,6 +1298,7 @@ on exit:
 <span style="color: #38bdf8;">[QUEUE] Consumed item: SEC_EVENT_002</span>
 <span style="color: #a855f7; font-weight: bold;">[REPORT] TELEMETRY DIGEST VERIFIED</span>
 <span style="color: #22c55e;">[STATUS] Monitored Nodes: 4</span>
+<span style="color: #00ffcc;">[PAYLOAD] [101, 102, 103, 104]</span>
 <span style="color: #a855f7;">[SHUTDOWN] Pipeline drained. Node safe.</span>`
             },
             entities: {
@@ -1480,7 +1490,7 @@ display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b`,
                 return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step|sqrt|rt|min|max|clamp|sign|sgn|divRem|isEven|isOdd|gcd|hcf|lcm|floor|ceil|round|sin|cos|tan|hypot|degToRad|radToDeg|sinDeg|cosDeg|ln|log|log2|exp|lerp|pi|tau|phi|inf|even|odd|is|by|DataType|extends|it|num|bool|str|entity|Pseudo|Random|seed|between|choice|shuffle|sample|boolean|uuid|alphaNumeric|temp|inst|del|on|when|emit|async|sync|guard|chan|send|recv|match|with)\b|\b([0-9]+)\b|(\|>|:|\+|-|\*|\/|\/\/|%|\^|\||!|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
+            const tokenRegex = /(!![\s\S]*?!!)|(![^\n\r]*)|("(?:\\.|[^"\\])*")|(\?[a-zA-Z0-9_]+(?:=[^\s\n\r]+)?)|(#[0-9a-fA-F]{3,6})|\b(def|func|method|inbound|outbound|outscope|reply|set|arr|class|lib|library|static|dynamic|const|public|private|display|prompt|loop|iterate|while|until|do|unless|if|then|else|inject|alias|throw|SuppressErrors|CriticalErrors|ForceErrors|internal|external|from|to|step|sqrt|rt|min|max|clamp|sign|sgn|divRem|isEven|isOdd|gcd|hcf|lcm|floor|ceil|round|sin|cos|tan|hypot|degToRad|radToDeg|sinDeg|cosDeg|ln|log|log2|exp|lerp|pi|tau|phi|inf|even|odd|is|by|DataType|extends|it|num|bool|str|entity|typeof|Strings|Math|Arrays|Json|Crypto|Time|Fs|Path|Env|Regex|Log|Benchmark|Validate|Color|Console|Matrix|Mock|Http|Stats|Assert|Pseudo|Random|seed|between|choice|shuffle|sample|boolean|uuid|alphaNumeric|temp|inst|del|on|when|emit|async|sync|guard|chan|send|recv|match|with)\b|\b([0-9]+)\b|(\|>|:|\+|-|\*|\/|\/\/|%|\^|\||!|x=|=|<|>|==|!=|\(|\)|\[|\]|\.)|(\n|[^\s\w]+|\w+|\s+)/g;
 
             return src.replace(tokenRegex, (match, blockComment, lineComment, str, attr, hex, keyword, num, op, other) => {
                 if (blockComment) return `<span class="token-comment">${esc(blockComment)}</span>`;

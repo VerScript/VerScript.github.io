@@ -1,1103 +1,313 @@
 // ═══════════════════════════════════════════════════════════════════
-// VerScript Release Core Libraries Directory
-// Auto-generated specification with 18 comprehensive release libraries.
+// VerScript Community Packages & Ecosystem Extension Directory
+// 
+// NOTICE: All 20 Core Standard Libraries (Strings, Math, Arrays,
+// Json, Crypto, Time, Fs, Path, Env, Regex, Log, Benchmark,
+// Validate, Color, Console, Matrix, Mock, Http, Stats, Assert)
+// have officially graduated into FIRST-CLASS NATIVE ENGINE BUILT-INS!
+//
+// This portal now serves as the Community Package Registry, Extension
+// Authoring Specification, and Ecosystem Library Directory.
 // ═══════════════════════════════════════════════════════════════════
 
 const CORE_LIBRARIES = [
   {
-    "id": "lib-stats",
-    "name": "Stats",
-    "category": "Core & Math",
-    "version": "1.1.0",
-    "status": "Embedded Core",
-    "loadSyntax": "load Stats",
-    "summary": "Descriptive statistics, aggregations, averages, variance, and min/max detection on numeric collections.",
-    "description": "The <code>Stats</code> embedded library provides robust collection analysis routines. Optimized for numeric arrays, it performs single-pass or two-pass computations for mean, sum, variance, and standard deviation.",
+    "id": "lib-package-spec",
+    "name": "CommunityPackageSpec",
+    "category": "Authoring & Specs",
+    "version": "1.0.0",
+    "status": "Specification",
+    "loadSyntax": "! Architecture Specification for VerScript Packages",
+    "summary": "Official specification for authoring, distributing, and naming modular VerScript packages (.lib.vrs).",
+    "description": "VerScript community libraries are self-contained modular files ending with <code>.lib.vrs</code>. Unlike built-in native modules which are compiled directly into the C VM engine, community packages are distributed as plain source files and loaded dynamically on-demand using <code>load \"PackageName\"</code> or <code>import \"PackageName\"</code>.",
     "meta": {
       "static": {
-        "author": "VerScript Core Team",
-        "revision": 8,
-        "kind": "library",
-        "origin": "embedded"
+        "author": "VerScript Ecosystem Committee",
+        "standard": "VRS-PKG-2026",
+        "distribution": "community"
       },
       "dynamic": {
-        "totalBatches": 0
+        "activeRegistry": "VerScript-Org"
       },
       "thisstatic": {
-        "loadedAt": "boot"
+        "specVersion": "1.0.0"
       }
     },
     "functions": [
       {
-        "name": "sum values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Calculates the arithmetic sum of all numbers in the collection.",
-        "aliases": "total, addAll"
-      },
-      {
-        "name": "mean values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Computes the average (mean) of all numeric elements.",
-        "aliases": "avg, average"
-      },
-      {
-        "name": "minMax values",
-        "params": "values: arr",
+        "name": "manifest",
+        "params": "none",
         "returnType": "arr",
-        "desc": "Returns a 2-element array [min, max] from the given collection.",
-        "aliases": "bounds, extrema"
+        "desc": "Returns specification compliance keys required in package meta blocks.",
+        "aliases": "specKeys"
       },
       {
-        "name": "range values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Calculates the difference between maximum and minimum values.",
-        "aliases": "span"
-      },
-      {
-        "name": "variance values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Calculates sample variance for the numeric collection.",
-        "aliases": "var"
-      },
-      {
-        "name": "stdDev values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Computes the standard deviation sqrt(variance).",
-        "aliases": "stdDevFn, stdDevAlias"
-      },
-      {
-        "name": "median values",
-        "params": "values: arr",
-        "returnType": "num",
-        "desc": "Sorts and extracts the middle value of the collection.",
-        "aliases": "mid, p50"
+        "name": "resolve candidateName",
+        "params": "candidateName: str",
+        "returnType": "str",
+        "desc": "Resolves local directory paths and relative paths for package loading.",
+        "aliases": "resolvePath"
       }
     ],
-    "runnableExample": "load Stats\n\nset data: [12, 45, 67, 89, 23, 56, 78, 90, 34]\ndisplay \"Dataset: \" + data\ndisplay \"Sum:      \" + (Stats.sum data)\ndisplay \"Mean:     \" + (Stats.mean data)\nset mm: Stats.minMax data\ndisplay \"Min:      \" + mm[0]\ndisplay \"Max:      \" + mm[1]\ndisplay \"Range:    \" + (Stats.range data)"
+    "codeSnippet": "! Example: Structure of a Community VerScript Library\nlib CommunityStarter\n  const:\n    VERSION: \"1.0.0\"\n    AUTHOR: \"Community Contributor\"\n  dynamic:\n    def func greet user\n      reply \"Hello, \" + user + \" from Community Package!\"\n\ndisplay CommunityStarter.greet(\"Architect\")",
+    "interactiveExample": "lib DemoSpec\n  const:\n    NAME: \"DemoSpec\"\n    KIND: \"Community\"\n  dynamic:\n    def func check\n      reply \"Package specification valid!\"\n\ndisplay DemoSpec.check()"
   },
   {
-    "id": "lib-assert",
-    "name": "Assert",
-    "category": "Testing & Quality",
+    "id": "lib-vector3d",
+    "name": "Vector3D",
+    "category": "Graphics & 3D",
     "version": "1.2.0",
-    "status": "Embedded Core",
-    "loadSyntax": "load Assert",
-    "summary": "Production-grade assertion harness with test counters, diagnostic mismatch printing, and summary reporting.",
-    "description": "Embedded into every VerScript binary, <code>Assert</code> is the standard testing library used in continuous integration and unit test scripts. It automatically tracks passed and failed assertions in internal dynamic metadata.",
+    "status": "Community Package",
+    "loadSyntax": "load \"Vector3D\"",
+    "summary": "3D spatial geometry, dot and cross products, vector distance, magnitude, and normalization.",
+    "description": "The <code>Vector3D</code> community package provides lightweight, allocation-free 3D vector calculations for game engines, physics simulations, and computer graphics applications written in VerScript.",
     "meta": {
       "static": {
-        "author": "VerScript Core Team",
-        "revision": 10,
-        "kind": "library",
-        "origin": "embedded"
+        "author": "Graphics WG",
+        "domain": "Spatial Math"
       },
       "dynamic": {
-        "passedCount": 0,
-        "failedCount": 0
+        "opsComputed": 0
       },
       "thisstatic": {
-        "loadedAt": "boot"
+        "precision": "64-bit float"
       }
     },
     "functions": [
       {
-        "name": "equals actual expected msg",
-        "params": "actual: any, expected: any, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that actual equals expected.",
-        "aliases": "equalsFn, equalsAlias"
+        "name": "dot v1 v2",
+        "params": "v1: arr, v2: arr",
+        "returnType": "num",
+        "desc": "Computes the scalar dot product of two 3D vectors [x, y, z].",
+        "aliases": "scalarProduct"
       },
       {
-        "name": "notEquals actual expected msg",
-        "params": "actual: any, expected: any, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that actual does not equal expected.",
-        "aliases": "notEqualsFn, notEqualsAlias"
+        "name": "cross v1 v2",
+        "params": "v1: arr, v2: arr",
+        "returnType": "arr",
+        "desc": "Computes the 3D cross product vector perpendicular to both inputs.",
+        "aliases": "vectorProduct"
       },
       {
-        "name": "true condition msg",
-        "params": "condition: bool, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that condition evaluates to true.",
-        "aliases": "trueFn, trueAlias"
+        "name": "magnitude v",
+        "params": "v: arr",
+        "returnType": "num",
+        "desc": "Calculates the Euclidean length/norm of a 3D vector.",
+        "aliases": "length, norm"
       },
       {
-        "name": "false condition msg",
-        "params": "condition: bool, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that condition evaluates to false.",
-        "aliases": "falseFn, falseAlias"
-      },
-      {
-        "name": "greaterThan a b msg",
-        "params": "a: num, b: num, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that a > b.",
-        "aliases": "greaterThanFn, greaterThanAlias"
-      },
-      {
-        "name": "lessThan a b msg",
-        "params": "a: num, b: num, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts that a < b.",
-        "aliases": "lessThanFn, lessThanAlias"
-      },
-      {
-        "name": "inRange val low high msg",
-        "params": "val: num, low: num, high: num, msg: str",
-        "returnType": "bool",
-        "desc": "Asserts low <= val <= high.",
-        "aliases": "inRangeFn, inRangeAlias"
-      },
-      {
-        "name": "summary",
-        "params": "none",
-        "returnType": "none",
-        "desc": "Prints comprehensive test suite summary with pass/fail counts.",
-        "aliases": "summaryFn, summaryAlias"
+        "name": "dist v1 v2",
+        "params": "v1: arr, v2: arr",
+        "returnType": "num",
+        "desc": "Calculates the straight-line Euclidean distance between two spatial points.",
+        "aliases": "distance"
       }
     ],
-    "runnableExample": "load Assert\n\nAssert.equals (10 + 5) 15 \"Addition test\"\nAssert.true (50 > 20) \"Inequality guard\"\nAssert.inRange 85 0 100 \"Percentage range\"\n\ndisplay \"Assertions executed successfully!\"\nAssert.summary"
+    "codeSnippet": "lib Vector3D\n  dynamic:\n    def func dot a b\n      reply (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2])\n    def func dist a b\n      set dx: a[0] - b[0]\n      set dy: a[1] - b[1]\n      set dz: a[2] - b[2]\n      reply sqrt((dx * dx) + (dy * dy) + (dz * dz))\n\nset p1: [10, 0, 0]\nset p2: [10, 20, 0]\ndisplay \"Distance: \" + Vector3D.dist(p1, p2)",
+    "interactiveExample": "lib Vector3D\n  dynamic:\n    def func dot a b\n      reply (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2])\n\nset v1: [1, 2, 3]\nset v2: [4, 5, 6]\ndisplay \"Vector Dot Product: \" + Vector3D.dot(v1, v2) ?color=\"cyan\""
   },
   {
-    "id": "lib-collections",
-    "name": "Collections",
-    "category": "Data & Collections",
+    "id": "lib-csv-parser",
+    "name": "CsvParser",
+    "category": "Data & Formats",
+    "version": "1.0.4",
+    "status": "Community Package",
+    "loadSyntax": "load \"CsvParser\"",
+    "summary": "Fast tabular CSV parsing, delimiter splitting, header extraction, and record serialization.",
+    "description": "A high-performance CSV processing library written for extracting structured datasets, handling quoted fields, splitting records into arrays of tokens, and formatting matrices back into standard CSV text.",
+    "meta": {
+      "static": {
+        "author": "Data Platform Team",
+        "format": "RFC 4180"
+      },
+      "dynamic": {
+        "parsedRows": 0
+      },
+      "thisstatic": {
+        "standardDelimiter": ","
+      }
+    },
+    "functions": [
+      {
+        "name": "parseLine rowText delimiter",
+        "params": "rowText: str, delimiter: str",
+        "returnType": "arr",
+        "desc": "Splits a single CSV row into constituent token strings.",
+        "aliases": "splitRow"
+      },
+      {
+        "name": "formatRow items delimiter",
+        "params": "items: arr, delimiter: str",
+        "returnType": "str",
+        "desc": "Serializes an array of values into a single delimited row string.",
+        "aliases": "joinRow"
+      }
+    ],
+    "codeSnippet": "lib CsvParser\n  dynamic:\n    def func parseLine line delimiter\n      reply line.split(delimiter)\n    def func formatRow fields delimiter\n      reply fields.join(delimiter)\n\nset line: \"Alice,Engineer,San Francisco,140000\"\nset tokens: CsvParser.parseLine(line, \",\")\ndisplay \"Name: \" + tokens[0] + \" | Role: \" + tokens[1]",
+    "interactiveExample": "lib CsvParser\n  dynamic:\n    def func parseLine line delimiter\n      reply line.split(delimiter)\n\nset row: \"ID-101|SensorAlpha|Optimal|98.6\"\nset cols: CsvParser.parseLine(row, \"|\")\ndisplay \"Decoded Status: \" + cols[2] ?color=\"green\""
+  },
+  {
+    "id": "lib-ascii-art",
+    "name": "AsciiArt",
+    "category": "Game & Utilities",
     "version": "1.1.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Collections",
-    "summary": "Functional array utilities, set deduplication, chunking, zipping, flattening, and frequency counters.",
-    "description": "<code>Collections</code> extends VerScript's native array primitives with higher-level algorithms for data manipulation and restructuring.",
+    "status": "Community Package",
+    "loadSyntax": "load \"AsciiArt\"",
+    "summary": "Terminal banners, stylized text headers, framed announcement boxes, and progress bars.",
+    "description": "The <code>AsciiArt</code> package delivers rich command-line presentation tools for terminal applications, build logs, and console dashboards. Formats text inside double-line borders, produces stylized headers, and generates horizontal progress bars.",
     "meta": {
       "static": {
-        "author": "VerScript Core Team",
-        "revision": 6,
-        "kind": "library",
-        "origin": "core"
+        "author": "CLI Tools WG",
+        "encoding": "UTF-8 & ASCII"
       },
       "dynamic": {
-        "opsCount": 0
+        "bannersPrinted": 0
       },
       "thisstatic": {
-        "loadedAt": "runtime"
+        "boxStyle": "double"
       }
     },
     "functions": [
       {
-        "name": "unique arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Returns an array with all duplicate elements removed.",
-        "aliases": "uniqueFn, uniqueAlias"
+        "name": "box text title",
+        "params": "text: str, title: str",
+        "returnType": "str",
+        "desc": "Renders text wrapped inside an elegant framed box.",
+        "aliases": "frame"
       },
       {
-        "name": "flatten arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Flattens a multi-dimensional array into a 1D collection.",
-        "aliases": "flattenFn, flattenAlias"
-      },
-      {
-        "name": "chunk arr size",
-        "params": "arr: arr, size: num",
-        "returnType": "arr",
-        "desc": "Splits an array into sub-arrays of maximum size length.",
-        "aliases": "batch"
-      },
-      {
-        "name": "zip arrA arrB",
-        "params": "arrA: arr, arrB: arr",
-        "returnType": "arr",
-        "desc": "Combines two arrays into an array of 2-element tuples [a, b].",
-        "aliases": "zipFn, zipAlias"
-      },
-      {
-        "name": "frequency arr",
-        "params": "arr: arr",
-        "returnType": "entity",
-        "desc": "Counts occurrences of each unique element in the collection.",
-        "aliases": "frequencyFn, frequencyAlias"
+        "name": "progressBar percent width",
+        "params": "percent: num, width: num",
+        "returnType": "str",
+        "desc": "Generates a textual progress bar string with brackets and fill characters.",
+        "aliases": "progress"
       }
     ],
-    "runnableExample": "load Collections\n\nset tags: [\"dev\", \"prod\", \"dev\", \"staging\", \"prod\", \"test\"]\ndisplay \"Unique Tags:   \" + (Collections.unique(tags))\n\nset pairs: Collections.zip([\"id\", \"name\", \"role\"], [101, \"Aiden\", \"Lead\"])\ndisplay \"Zipped Pairs:  \" + pairs\n\nset chunks: Collections.chunk([1, 2, 3, 4, 5, 6, 7], 3)\ndisplay \"Chunked Array: \" + chunks"
+    "codeSnippet": "lib AsciiArt\n  dynamic:\n    def func box text\n      set border: \"=\" * (text.length() + 4)\n      reply border + \"\\n| \" + text + \" |\\n\" + border\n\ndisplay AsciiArt.box(\"VERSCRIPT NATIVE ENGINE ONLINE\") ?color=\"cyan\"",
+    "interactiveExample": "lib AsciiArt\n  dynamic:\n    def func banner title\n      set bar: \"========================================\"\n      reply bar + \"\\n  \" + title + \"\\n\" + bar\n\ndisplay AsciiArt.banner(\"COMMUNITY PACKAGE SYSTEM\") ?color=\"purple\""
   },
   {
-    "id": "lib-sort",
-    "name": "Sort",
-    "category": "Data & Collections",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Sort",
-    "summary": "High-performance collection sorting algorithms, reverse orders, sortedness guards, and binary search.",
-    "description": "The <code>Sort</code> library provides optimized sorting algorithms along with logarithmic binary search on pre-sorted numeric and string arrays.",
+    "id": "lib-game-utils",
+    "name": "GameUtils",
+    "category": "Game & Utilities",
+    "version": "1.0.2",
+    "status": "Community Package",
+    "loadSyntax": "load \"GameUtils\"",
+    "summary": "2D Axis-Aligned Bounding Box (AABB) collision detection, velocity clamping, and grid stepping.",
+    "description": "Essential primitives for game developers building 2D arcade games, simulations, and grid engines in VerScript. Includes rectangle overlap tests, position wrap-around, and distance checks.",
     "meta": {
       "static": {
-        "author": "VerScript Core Team",
-        "revision": 7,
-        "kind": "library",
-        "origin": "core"
+        "author": "GameDev Community",
+        "target": "2D Engines"
       },
       "dynamic": {
-        "comparisons": 0
+        "collisionsTested": 0
       },
       "thisstatic": {
-        "loadedAt": "runtime"
+        "engine": "AABB 2D"
       }
     },
     "functions": [
       {
-        "name": "asc arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Returns a new array sorted in ascending order.",
-        "aliases": "sort, ascending"
-      },
-      {
-        "name": "desc arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Returns a new array sorted in descending order.",
-        "aliases": "reverseSort, descending"
-      },
-      {
-        "name": "isSorted arr",
-        "params": "arr: arr",
+        "name": "checkAABB r1 r2",
+        "params": "r1: arr, r2: arr",
         "returnType": "bool",
-        "desc": "Checks if an array is strictly sorted in non-decreasing order.",
-        "aliases": "isSortedFn, isSortedAlias"
+        "desc": "Returns true if two rectangles [x, y, width, height] overlap.",
+        "aliases": "intersects, collides"
       },
       {
-        "name": "binarySearch sortedArr target",
-        "params": "sortedArr: arr, target: any",
+        "name": "wrapCoord val min max",
+        "params": "val: num, min: num, max: num",
         "returnType": "num",
-        "desc": "Finds index of target in O(log N) time, or -1 if absent.",
-        "aliases": "binarySearchFn, binarySearchAlias"
-      },
-      {
-        "name": "reverse arr",
-        "params": "arr: arr",
-        "returnType": "arr",
-        "desc": "Returns a new array with elements in reversed order.",
-        "aliases": "reverseFn, reverseAlias"
+        "desc": "Wraps coordinate around screen boundary (toroidal space).",
+        "aliases": "wrap"
       }
     ],
-    "runnableExample": "load Sort\n\nset scores: [84, 12, 99, 45, 67, 33]\nset sortedScores: Sort.asc scores\ndisplay \"Sorted Ascending:  \" + sortedScores\ndisplay \"Sorted Descending: \" + (Sort.desc scores)\ndisplay \"Is Sorted?         \" + (Sort.isSorted(sortedScores))\ndisplay \"Binary Search(45): \" + (Sort.binarySearch(sortedScores, 45))"
+    "codeSnippet": "lib GameUtils\n  dynamic:\n    def func checkAABB r1 r2\n      set xOverlap: (r1[0] < (r2[0] + r2[2])) & ((r1[0] + r1[2]) > r2[0])\n      set yOverlap: (r1[1] < (r2[1] + r2[3])) & ((r1[1] + r1[3]) > r2[1])\n      reply xOverlap & yOverlap\n\nset player: [10, 10, 32, 32]\nset enemy: [20, 20, 32, 32]\ndisplay \"Collision: \" + GameUtils.checkAABB(player, enemy)",
+    "interactiveExample": "lib GameUtils\n  dynamic:\n    def func checkAABB r1 r2\n      set xOverlap: (r1[0] < (r2[0] + r2[2])) & ((r1[0] + r1[2]) > r2[0])\n      set yOverlap: (r1[1] < (r2[1] + r2[3])) & ((r1[1] + r1[3]) > r2[1])\n      reply xOverlap & yOverlap\n\nset box1: [0, 0, 10, 10]\nset box2: [5, 5, 10, 10]\nif GameUtils.checkAABB(box1, box2) then\n  display \"HIT: Overlap Detected!\" ?color=\"red\"\nelse\n  display \"CLEAR: No Collision\" ?color=\"green\""
   },
   {
-    "id": "lib-matrix",
-    "name": "Matrix",
-    "category": "Core & Math",
+    "id": "lib-sql-builder",
+    "name": "SqlBuilder",
+    "category": "Data & Formats",
+    "version": "1.0.1",
+    "status": "Community Package",
+    "loadSyntax": "load \"SqlBuilder\"",
+    "summary": "Fluent declarative SQL query builder with table projection, WHERE filters, and LIMIT clauses.",
+    "description": "Construct sanitized SQL query strings programmatically without fragile string concatenations. Supports SELECT projections, dynamic WHERE constraints, ORDER BY clauses, and parameterized queries.",
+    "meta": {
+      "static": {
+        "author": "Backend WG",
+        "dialect": "ANSI SQL"
+      },
+      "dynamic": {
+        "queriesBuilt": 0
+      },
+      "thisstatic": {
+        "quoting": "standard"
+      }
+    },
+    "functions": [
+      {
+        "name": "select table fields",
+        "params": "table: str, fields: arr",
+        "returnType": "str",
+        "desc": "Builds a standard SELECT statement string.",
+        "aliases": "querySelect"
+      },
+      {
+        "name": "where clause query",
+        "params": "clause: str, query: str",
+        "returnType": "str",
+        "desc": "Appends a WHERE filter condition onto a base query string.",
+        "aliases": "filter"
+      }
+    ],
+    "codeSnippet": "lib SqlBuilder\n  dynamic:\n    def func select table cols\n      reply \"SELECT \" + cols.join(\", \") + \" FROM \" + table\n    def func where query condition\n      reply query + \" WHERE \" + condition\n\nset q: SqlBuilder.select(\"users\", [\"id\", \"username\", \"email\"])\nset finalQ: SqlBuilder.where(q, \"active = 1\")\ndisplay finalQ",
+    "interactiveExample": "lib SqlBuilder\n  dynamic:\n    def func select table cols\n      reply \"SELECT \" + cols.join(\", \") + \" FROM \" + table\n\nset query: SqlBuilder.select(\"audit_logs\", [\"timestamp\", \"action\", \"user_id\"])\ndisplay \"Generated Query: \" + query ?color=\"yellow\""
+  },
+  {
+    "id": "lib-async-queue",
+    "name": "AsyncQueue",
+    "category": "Testing & Concurrency",
     "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Matrix",
-    "summary": "2D grid operations, matrix transpositions, identity matrices, and linear algebra transformations.",
-    "description": "<code>Matrix</code> provides high-level 2D array and matrix manipulation routines for game boards, physics coordinates, and graphic transformations.",
+    "status": "Community Package",
+    "loadSyntax": "load \"AsyncQueue\"",
+    "summary": "In-memory task queues, priority task scheduling, and batch worker dispatchers.",
+    "description": "A lightweight task queue abstraction constructed on top of VerScript FIFO channels. Facilitates decoupling asynchronous worker producers from consumers with backpressure management.",
     "meta": {
       "static": {
-        "author": "VerScript Core Team",
-        "revision": 3,
-        "kind": "library",
-        "origin": "core"
+        "author": "Concurrency Taskforce",
+        "engine": "Channel-backed"
       },
       "dynamic": {
-        "matricesCreated": 0
+        "enqueuedTasks": 0
       },
       "thisstatic": {
-        "loadedAt": "runtime"
+        "maxDepth": 1024
       }
     },
     "functions": [
       {
-        "name": "create rows cols fillVal",
-        "params": "rows: num, cols: num, fillVal: any",
-        "returnType": "arr",
-        "desc": "Creates a 2D matrix of dimensions rows x cols initialized to fillVal.",
-        "aliases": "zeros, grid"
-      },
-      {
-        "name": "identity size",
-        "params": "size: num",
-        "returnType": "arr",
-        "desc": "Generates an identity matrix with 1s on diagonal and 0s elsewhere.",
-        "aliases": "eye, I"
-      },
-      {
-        "name": "transpose matrix",
-        "params": "matrix: arr",
-        "returnType": "arr",
-        "desc": "Swaps row and column indices of the matrix.",
-        "aliases": "t, flip"
-      },
-      {
-        "name": "add matA matB",
-        "params": "matA: arr, matB: arr",
-        "returnType": "arr",
-        "desc": "Computes element-wise sum of two matrices.",
-        "aliases": "plus"
-      },
-      {
-        "name": "multiplyScalar matrix scalar",
-        "params": "matrix: arr, scalar: num",
-        "returnType": "arr",
-        "desc": "Multiplies every element in the matrix by scalar.",
-        "aliases": "multiplyScalarFn, multiplyScalarAlias"
-      }
-    ],
-    "runnableExample": "load Matrix\n\nset id3: Matrix.identity 3\ndisplay \"3x3 Identity Matrix:\"\ndisplay id3\n\nset grid: Matrix.create 2 3 0\ndisplay \"2x3 Zero Grid: \" + grid"
-  },
-  {
-    "id": "lib-stringutil",
-    "name": "StringUtil",
-    "category": "Utilities & Text",
-    "version": "1.3.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load StringUtil",
-    "summary": "Advanced string padding, URL slugification, word counting, text repetition, and truncation.",
-    "description": "Complementing VerScript's built-in string methods (<code>.trim()</code>, <code>.toUpper()</code>, etc.), <code>StringUtil</code> provides utility algorithms for text processing and command-line interfaces.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 9,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "stringOps": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "padLeft str width char",
-        "params": "str: str, width: num, char: str",
-        "returnType": "str",
-        "desc": "Pads the beginning of str with char until it reaches width.",
-        "aliases": "padLeftFn, padLeftAlias"
-      },
-      {
-        "name": "padRight str width char",
-        "params": "str: str, width: num, char: str",
-        "returnType": "str",
-        "desc": "Pads the end of str with char until it reaches width.",
-        "aliases": "padRightFn, padRightAlias"
-      },
-      {
-        "name": "slugify str",
-        "params": "str: str",
-        "returnType": "str",
-        "desc": "Converts text to an SEO-friendly URL slug (lowercase and hyphenated).",
-        "aliases": "slug, urlSafe"
-      },
-      {
-        "name": "capitalize str",
-        "params": "str: str",
-        "returnType": "str",
-        "desc": "Capitalizes the first character of each word.",
-        "aliases": "cap, title"
-      },
-      {
-        "name": "repeat str count",
-        "params": "str: str, count: num",
-        "returnType": "str",
-        "desc": "Repeats str count times.",
-        "aliases": "repeatFn, repeatAlias"
-      },
-      {
-        "name": "wordCount str",
-        "params": "str: str",
+        "name": "enqueue items val",
+        "params": "items: arr, val: any",
         "returnType": "num",
-        "desc": "Counts whitespace-delimited words in str.",
-        "aliases": "wordCountFn, wordCountAlias"
+        "desc": "Appends a task payload onto the queue array.",
+        "aliases": "pushTask"
       },
       {
-        "name": "truncate str maxLen",
-        "params": "str: str, maxLen: num",
-        "returnType": "str",
-        "desc": "Truncates str to maxLen and appends '...' if exceeded.",
-        "aliases": "truncateFn, truncateAlias"
+        "name": "dequeue items",
+        "params": "items: arr",
+        "returnType": "any",
+        "desc": "Pops and returns the oldest task payload from the queue.",
+        "aliases": "nextTask"
       }
     ],
-    "runnableExample": "load StringUtil\n\ndisplay StringUtil.padLeft \"7\" 4 \"0\"\ndisplay StringUtil.padRight \"Title\" 20 \".\"\ndisplay StringUtil.slugify \"VerScript Core Libraries v2.0 Release!\"\ndisplay StringUtil.truncate \"This is an extremely long log message that needs brevity\" 25\ndisplay \"Word Count: \" + (StringUtil.wordCount \"The quick brown fox jumps\")"
-  },
-  {
-    "id": "lib-time",
-    "name": "Time",
-    "category": "System & Runtime",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Time",
-    "summary": "Monotonic timers, execution latency measurement, and human-readable millisecond duration formatters.",
-    "description": "The <code>Time</code> library interfaces with the host platform's monotonic clock to deliver sub-millisecond benchmarking, latency tracking, and timestamp conversions.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 2,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "timerRuns": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "now",
-        "params": "none",
-        "returnType": "num",
-        "desc": "Returns the current high-resolution monotonic timestamp in milliseconds.",
-        "aliases": "timestamp, current"
-      },
-      {
-        "name": "elapsed startTime",
-        "params": "startTime: num",
-        "returnType": "num",
-        "desc": "Calculates milliseconds elapsed since startTime.",
-        "aliases": "elapsedFn, elapsedAlias"
-      },
-      {
-        "name": "formatDuration ms",
-        "params": "ms: num",
-        "returnType": "str",
-        "desc": "Formats milliseconds into human-readable units (e.g. '120ms', '4.2s').",
-        "aliases": "formatDurationFn, formatDurationAlias"
-      },
-      {
-        "name": "toIsoString",
-        "params": "none",
-        "returnType": "str",
-        "desc": "Returns current ISO-8601 UTC timestamp string.",
-        "aliases": "toIsoStringFn, toIsoStringAlias"
-      }
-    ],
-    "runnableExample": "load Time\n\nset t0: Time.now\n\n! Simulate computation loop\nset sum: 0\niterate i from 1 to 10000\n  sum: sum + i\n\nset duration: Time.elapsed t0\ndisplay \"Computation finished in: \" + (Time.formatDuration duration)\ndisplay \"Sum Result:               \" + sum"
-  },
-  {
-    "id": "lib-benchmark",
-    "name": "Benchmark",
-    "category": "Testing & Quality",
-    "version": "1.1.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Benchmark",
-    "summary": "Automated micro-benchmarking engine, multi-iteration warm-up cycles, and comparative timing reports.",
-    "description": "<code>Benchmark</code> enables systematic performance profiling of routines, algorithms, and data structures. It runs warm-up passes to eliminate JIT bias and reports minimum, maximum, and average execution latencies.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 4,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "suitesRun": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "run label iterations routineRef",
-        "params": "label: str, iterations: num, routineRef: routine",
-        "returnType": "entity",
-        "desc": "Executes routineRef for iterations passes, reporting timing metrics.",
-        "aliases": "runFn, runAlias"
-      },
-      {
-        "name": "compare labelA routineA labelB routineB iterations",
-        "params": "labelA: str, routineA: routine, labelB: str, routineB: routine, iterations: num",
-        "returnType": "entity",
-        "desc": "Runs comparative latency tests on two rival routines.",
-        "aliases": "compareFn, compareAlias"
-      },
-      {
-        "name": "report",
-        "params": "none",
-        "returnType": "none",
-        "desc": "Prints comprehensive benchmarking results to console.",
-        "aliases": "reportFn, reportAlias"
-      }
-    ],
-    "runnableExample": "load Benchmark\n\ndisplay \"Running Micro-benchmark test...\"\n! Micro-benchmarking helper\nBenchmark.run(\"Loop Accumulation\", 1000, def func()\n  set x: 0\n  iterate j from 1 to 500\n    x: x + 1\n  reply x\n)\nBenchmark.report"
-  },
-  {
-    "id": "lib-path",
-    "name": "Path",
-    "category": "System & Runtime",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Path",
-    "summary": "Cross-platform path resolution, directory extraction, extension normalization, and absolute path guards.",
-    "description": "<code>Path</code> handles file system path string manipulations across Windows (\\) and POSIX (/) environments, standardizing path segments into canonical formats.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 5,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "pathsProcessed": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "join partA partB",
-        "params": "partA: str, partB: str",
-        "returnType": "str",
-        "desc": "Joins two path fragments using the platform-appropriate separator.",
-        "aliases": "combine, pathJoin"
-      },
-      {
-        "name": "basename filePath",
-        "params": "filePath: str",
-        "returnType": "str",
-        "desc": "Extracts the filename and extension from a path string.",
-        "aliases": "filename, base"
-      },
-      {
-        "name": "dirname filePath",
-        "params": "filePath: str",
-        "returnType": "str",
-        "desc": "Extracts the parent directory portion of a path string.",
-        "aliases": "folder, dir"
-      },
-      {
-        "name": "extname filePath",
-        "params": "filePath: str",
-        "returnType": "str",
-        "desc": "Returns the file extension including the leading dot (e.g. '.vrs').",
-        "aliases": "ext, extension"
-      },
-      {
-        "name": "normalize filePath",
-        "params": "filePath: str",
-        "returnType": "str",
-        "desc": "Resolves '.' and '..' segments and replaces redundant slashes.",
-        "aliases": "normalizeFn, normalizeAlias"
-      },
-      {
-        "name": "isAbsolute filePath",
-        "params": "filePath: str",
-        "returnType": "bool",
-        "desc": "Determines whether filePath is an absolute path.",
-        "aliases": "isAbsoluteFn, isAbsoluteAlias"
-      }
-    ],
-    "runnableExample": "load Path\n\nset p: \"src/compiler/parser.lib.vrs\"\ndisplay \"Basename:    \" + (Path.basename p)\ndisplay \"Dirname:     \" + (Path.dirname p)\ndisplay \"Extname:     \" + (Path.extname p)\ndisplay \"Path Join:   \" + (Path.join \"workspace/core\" \"math.vrs\")\ndisplay \"Is Absolute: \" + (Path.isAbsolute p)"
-  },
-  {
-    "id": "lib-env",
-    "name": "Env",
-    "category": "System & Runtime",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Env",
-    "summary": "Environment variable reader, operating system diagnostics, architecture flags, and platform detectors.",
-    "description": "<code>Env</code> provides direct access to host process environment variables and host platform diagnostics.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 3,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "envLookups": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "get key defaultVal",
-        "params": "key: str, defaultVal: str",
-        "returnType": "str",
-        "desc": "Retrieves value of environment variable key, or defaultVal if absent.",
-        "aliases": "env, readEnv"
-      },
-      {
-        "name": "has key",
-        "params": "key: str",
-        "returnType": "bool",
-        "desc": "Checks whether environment variable key is defined in the host process.",
-        "aliases": "exists, contains"
-      },
-      {
-        "name": "os",
-        "params": "none",
-        "returnType": "str",
-        "desc": "Returns host operating system identifier ('windows', 'linux', 'darwin').",
-        "aliases": "osFn, osAlias"
-      },
-      {
-        "name": "arch",
-        "params": "none",
-        "returnType": "str",
-        "desc": "Returns CPU architecture string ('x64', 'arm64').",
-        "aliases": "archFn, archAlias"
-      },
-      {
-        "name": "isWindows",
-        "params": "none",
-        "returnType": "bool",
-        "desc": "Returns true if running on Microsoft Windows.",
-        "aliases": "isWindowsFn, isWindowsAlias"
-      },
-      {
-        "name": "isLinux",
-        "params": "none",
-        "returnType": "bool",
-        "desc": "Returns true if running on Linux.",
-        "aliases": "isLinuxFn, isLinuxAlias"
-      },
-      {
-        "name": "isMacOS",
-        "params": "none",
-        "returnType": "bool",
-        "desc": "Returns true if running on Apple macOS.",
-        "aliases": "isMacOSFn, isMacOSAlias"
-      }
-    ],
-    "runnableExample": "load Env\n\ndisplay \"Host OS:       \" + (Env.os)\ndisplay \"Architecture:  \" + (Env.arch)\ndisplay \"Is Windows?    \" + (Env.isWindows)\ndisplay \"USER / HOME:   \" + (Env.get \"USER\" (Env.get \"USERNAME\" \"DefaultDev\"))"
-  },
-  {
-    "id": "lib-console",
-    "name": "Console",
-    "category": "Utilities & Text",
-    "version": "1.2.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Console",
-    "summary": "Formatted ANSI CLI rendering, banner boxes, table layout printers, divider rules, and progress bars.",
-    "description": "<code>Console</code> delivers beautiful command-line interface tools with colored boxes, dividers, tabular column alignment, and terminal status badges.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 8,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "linesDrawn": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "banner title",
-        "params": "title: str",
-        "returnType": "none",
-        "desc": "Prints a bold boxed header banner with double borders.",
-        "aliases": "bannerFn, bannerAlias"
-      },
-      {
-        "name": "divider char width",
-        "params": "char: str, width: num",
-        "returnType": "none",
-        "desc": "Prints a repeated horizontal divider rule.",
-        "aliases": "dividerFn, dividerAlias"
-      },
-      {
-        "name": "badge type text",
-        "params": "type: str, text: str",
-        "returnType": "none",
-        "desc": "Prints an ANSI-colored status badge (INFO, WARN, SUCCESS, ERROR).",
-        "aliases": "badgeFn, badgeAlias"
-      },
-      {
-        "name": "progressBar current total width",
-        "params": "current: num, total: num, width: num",
-        "returnType": "none",
-        "desc": "Prints a dynamic terminal progress bar [====>   ] 60%.",
-        "aliases": "progressBarFn, progressBarAlias"
-      }
-    ],
-    "runnableExample": "load Console\n\nConsole.banner \"VerScript Telemetry v2.0\"\nConsole.badge \"SUCCESS\" \"All build checks passed successfully!\"\nConsole.badge \"WARN\" \"Cache hit ratio below 80%\"\nConsole.divider \"-\" 40\nConsole.progressBar 75 100 25"
-  },
-  {
-    "id": "lib-json",
-    "name": "Json",
-    "category": "Utilities & Text",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Json",
-    "summary": "Lightweight JSON-like serialization, pretty-printing with indentation, and key-value string parsing.",
-    "description": "The <code>Json</code> library serializes native VerScript arrays, entities, and primitive types to formatted JSON representations and parses basic JSON key-value streams.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 3,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "parseCount": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "stringify val",
-        "params": "val: any",
-        "returnType": "str",
-        "desc": "Converts val into a compact single-line JSON string.",
-        "aliases": "encode, toJson"
-      },
-      {
-        "name": "prettify val indent",
-        "params": "val: any, indent: num",
-        "returnType": "str",
-        "desc": "Formats val into human-readable multi-line JSON with indentation.",
-        "aliases": "prettifyFn, prettifyAlias"
-      },
-      {
-        "name": "parseKeyValues rawText",
-        "params": "rawText: str",
-        "returnType": "entity",
-        "desc": "Parses simple key-value pairs into a VerScript dynamic entity.",
-        "aliases": "parseKeyValuesFn, parseKeyValuesAlias"
-      }
-    ],
-    "runnableExample": "load Json\n\nset config: [\n  \"host\": \"127.0.0.1\",\n  \"port\": 8080,\n  \"debug\": true\n]\ndisplay \"Compact JSON: \" + (Json.stringify config)\ndisplay \"Formatted JSON:\"\ndisplay Json.prettify config 2"
-  },
-  {
-    "id": "lib-regex",
-    "name": "Regex",
-    "category": "Utilities & Text",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Regex",
-    "summary": "Pattern matching helpers, email/alphanumeric guards, string escaping, and token extractors.",
-    "description": "<code>Regex</code> provides string validation utilities, token extraction routines, and regex pattern builders.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 4,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "matchesCount": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "isEmail str",
-        "params": "str: str",
-        "returnType": "bool",
-        "desc": "Validates if str matches standard email syntax.",
-        "aliases": "isEmailFn, isEmailAlias"
-      },
-      {
-        "name": "isNumeric str",
-        "params": "str: str",
-        "returnType": "bool",
-        "desc": "Validates if str consists solely of digits or valid decimals.",
-        "aliases": "isNumericFn, isNumericAlias"
-      },
-      {
-        "name": "isAlpha str",
-        "params": "str: str",
-        "returnType": "bool",
-        "desc": "Checks if str contains only alphabetic characters.",
-        "aliases": "isAlphaFn, isAlphaAlias"
-      },
-      {
-        "name": "isAlphanumeric str",
-        "params": "str: str",
-        "returnType": "bool",
-        "desc": "Checks if str contains only alphanumeric characters.",
-        "aliases": "isAlphanumericFn, isAlphanumericAlias"
-      },
-      {
-        "name": "escape str",
-        "params": "str: str",
-        "returnType": "str",
-        "desc": "Escapes regex special characters in str for literal matching.",
-        "aliases": "escapeFn, escapeAlias"
-      }
-    ],
-    "runnableExample": "load Regex\n\ndisplay \"user@domain.com is email?   \" + (Regex.isEmail \"user@domain.com\")\ndisplay \"invalid-email is email?     \" + (Regex.isEmail \"invalid-email\")\ndisplay \"'12345' is numeric?         \" + (Regex.isNumeric \"12345\")\ndisplay \"'alpha123' is alphanumeric? \" + (Regex.isAlphanumeric \"alpha123\")"
-  },
-  {
-    "id": "lib-csv",
-    "name": "Csv",
-    "category": "Data & Collections",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Csv",
-    "summary": "Tabular comma-separated values parsing, column indexing, row filtering, and CSV string generation.",
-    "description": "<code>Csv</code> parses tabular text files and comma-delimited streams into structured 2D arrays, supporting custom delimiters and row transformations.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 5,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "rowsParsed": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "parse csvText",
-        "params": "csvText: str",
-        "returnType": "arr",
-        "desc": "Parses CSV text into a 2D array of row records.",
-        "aliases": "decode, fromJson"
-      },
-      {
-        "name": "stringify records delimiter",
-        "params": "records: arr, delimiter: str",
-        "returnType": "str",
-        "desc": "Serializes a 2D array of rows into a CSV string.",
-        "aliases": "encode, toJson"
-      },
-      {
-        "name": "getColumn records colIndex",
-        "params": "records: arr, colIndex: num",
-        "returnType": "arr",
-        "desc": "Extracts an entire column across all rows as a 1D array.",
-        "aliases": "getColumnFn, getColumnAlias"
-      },
-      {
-        "name": "filterByColumn records colIndex expectedVal",
-        "params": "records: arr, colIndex: num, expectedVal: any",
-        "returnType": "arr",
-        "desc": "Filters rows where colIndex equals expectedVal.",
-        "aliases": "filterByColumnFn, filterByColumnAlias"
-      }
-    ],
-    "runnableExample": "load Csv\n\nset rawCsv: \"id,name,role\n1,Elena,Lead\n2,Marcus,Developer\n3,Sarah,Designer\"\nset table: Csv.parse rawCsv\ndisplay \"Parsed Rows: \" + table.length()\ndisplay \"Names:       \" + (Csv.getColumn table 1)"
-  },
-  {
-    "id": "lib-crypto",
-    "name": "Crypto",
-    "category": "System & Runtime",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Crypto",
-    "summary": "Checksum calculation (CRC32), fast string hashing, Caesar cipher obfuscation, and random token generators.",
-    "description": "<code>Crypto</code> provides hashing and checksum primitives for data integrity verification, cache key generation, and light data obfuscation.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 2,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "hashesCalculated": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "crc32 str",
-        "params": "str: str",
-        "returnType": "num",
-        "desc": "Calculates the 32-bit Cyclic Redundancy Check checksum.",
-        "aliases": "crc32Fn, crc32Alias"
-      },
-      {
-        "name": "hashFast str",
-        "params": "str: str",
-        "returnType": "num",
-        "desc": "Computes a 32-bit FNV-1a non-cryptographic hash for hash tables.",
-        "aliases": "hashFastFn, hashFastAlias"
-      },
-      {
-        "name": "caesar str shift",
-        "params": "str: str, shift: num",
-        "returnType": "str",
-        "desc": "Rotates alphabetic characters by shift positions.",
-        "aliases": "caesarFn, caesarAlias"
-      },
-      {
-        "name": "token length",
-        "params": "length: num",
-        "returnType": "str",
-        "desc": "Generates an alphanumeric pseudo-random verification token.",
-        "aliases": "tokenFn, tokenAlias"
-      }
-    ],
-    "runnableExample": "load Crypto\n\nset text: \"VerScript Core Payload\"\ndisplay \"CRC32 Checksum: \" + (Crypto.crc32 text)\ndisplay \"Fast Hash:      \" + (Crypto.hashFast text)\ndisplay \"Caesar (+3):    \" + (Crypto.caesar text 3)\ndisplay \"Random Token:   \" + (Crypto.token 16)"
-  },
-  {
-    "id": "lib-mock",
-    "name": "Mock",
-    "category": "Testing & Quality",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Mock",
-    "summary": "Synthetic mock data generators for unit tests, fake user profiles, synthetic transactions, and call spies.",
-    "description": "<code>Mock</code> generates realistic test fixtures for rapid prototyping and automated testing without external databases.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 3,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "mocksGenerated": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "user",
-        "params": "none",
-        "returnType": "entity",
-        "desc": "Generates a synthetic user profile with id, name, and email.",
-        "aliases": "userFn, userAlias"
-      },
-      {
-        "name": "transaction",
-        "params": "none",
-        "returnType": "entity",
-        "desc": "Generates a synthetic financial transaction record.",
-        "aliases": "transactionFn, transactionAlias"
-      },
-      {
-        "name": "records count type",
-        "params": "count: num, type: str",
-        "returnType": "arr",
-        "desc": "Generates an array of count synthetic entities.",
-        "aliases": "recordsFn, recordsAlias"
-      }
-    ],
-    "runnableExample": "load Mock\n\nset fakeUser: Mock.user\ndisplay \"Mock User:        \" + fakeUser\nset fakeTx: Mock.transaction\ndisplay \"Mock Transaction: \" + fakeTx"
-  },
-  {
-    "id": "lib-io",
-    "name": "IO",
-    "category": "System & Runtime",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load IO",
-    "summary": "File path verification, memory buffer emulation, and temporary storage abstractions.",
-    "description": "The <code>IO</code> library provides input/output abstractions and memory stream buffers for VerScript applications.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 2,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "buffersAllocated": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "exists path",
-        "params": "path: str",
-        "returnType": "bool",
-        "desc": "Checks whether a file exists at the given path.",
-        "aliases": "existsFn, existsAlias"
-      },
-      {
-        "name": "buffer size",
-        "params": "size: num",
-        "returnType": "entity",
-        "desc": "Allocates a fixed-capacity byte memory buffer.",
-        "aliases": "bufferFn, bufferAlias"
-      }
-    ],
-    "runnableExample": "load IO\n\ndisplay \"Check compiler file: \" + (IO.exists \"src/main.c\")\nset buf: IO.buffer 64\ndisplay \"Allocated Buffer:    \" + buf"
-  },
-  {
-    "id": "lib-color",
-    "name": "Color",
-    "category": "Utilities & Text",
-    "version": "1.0.0",
-    "status": "Standard Core Library",
-    "loadSyntax": "load Color",
-    "summary": "RGB, Hex, and ANSI color space calculations, color lightening, darkening, and linear blending.",
-    "description": "<code>Color</code> provides color conversions and palette blending helpers for GUI themes and ANSI terminal display formatting.",
-    "meta": {
-      "static": {
-        "author": "VerScript Core Team",
-        "revision": 3,
-        "kind": "library",
-        "origin": "core"
-      },
-      "dynamic": {
-        "colorsCalculated": 0
-      },
-      "thisstatic": {
-        "loadedAt": "runtime"
-      }
-    },
-    "functions": [
-      {
-        "name": "hexToRgb hexStr",
-        "params": "hexStr: str",
-        "returnType": "arr",
-        "desc": "Converts '#RRGGBB' to an array [r, g, b].",
-        "aliases": "hex2rgb, parseHex"
-      },
-      {
-        "name": "rgbToHex r g b",
-        "params": "r: num, g: num, b: num",
-        "returnType": "str",
-        "desc": "Converts RGB components to a hex string '#RRGGBB'.",
-        "aliases": "rgb2hex, toHex"
-      },
-      {
-        "name": "lighten hexStr percent",
-        "params": "hexStr: str, percent: num",
-        "returnType": "str",
-        "desc": "Increases color brightness by percent.",
-        "aliases": "lightenFn, lightenAlias"
-      },
-      {
-        "name": "darken hexStr percent",
-        "params": "hexStr: str, percent: num",
-        "returnType": "str",
-        "desc": "Decreases color brightness by percent.",
-        "aliases": "darkenFn, darkenAlias"
-      },
-      {
-        "name": "blend hexA hexB ratio",
-        "params": "hexA: str, hexB: str, ratio: num",
-        "returnType": "str",
-        "desc": "Linearly interpolates between two colors by ratio.",
-        "aliases": "blendFn, blendAlias"
-      }
-    ],
-    "runnableExample": "load Color\n\nset rgb: Color.hexToRgb \"#00FFCC\"\ndisplay \"Hex #00FFCC to RGB: \" + rgb\ndisplay \"Lightened (+20%):   \" + (Color.lighten \"#00FFCC\" 20)\ndisplay \"Darkened (-30%):    \" + (Color.darken \"#00FFCC\" 30)\ndisplay \"Blended:            \" + (Color.blend \"#00FFCC\" \"#9D00FF\" 0.5)"
+    "codeSnippet": "lib AsyncQueue\n  dynamic:\n    def func enqueue q item\n      reply q.push(item)\n    def func dequeue q\n      reply q.pop()\n\nset tasks: []\nAsyncQueue.enqueue(tasks, \"ProcessImageJob\")\nAsyncQueue.enqueue(tasks, \"SendEmailJob\")\ndisplay \"Queue size: \" + tasks.length()",
+    "interactiveExample": "lib AsyncQueue\n  dynamic:\n    def func enqueue q item\n      reply q.push(item)\n\nset workQueue: []\nAsyncQueue.enqueue(workQueue, \"ComputeMetrics\")\nAsyncQueue.enqueue(workQueue, \"PersistAudit\")\ndisplay \"Pending Tasks: \" + workQueue.join(\" -> \") ?color=\"cyan\""
   }
 ];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { CORE_LIBRARIES };
+}

@@ -38,7 +38,7 @@ function initLibsApp() {
 
 // ─── CATEGORY FILTER PILLS ─────────────────────────────────────────
 function renderCategoryPills() {
-    const categories = ["All", "Core & Math", "Data & Collections", "Testing & Quality", "System & Runtime", "Utilities & Text"];
+    const categories = ["All", "Authoring & Specs", "Graphics & 3D", "Data & Formats", "Game & Utilities", "Testing & Concurrency"];
     categoryPillsEl.innerHTML = categories.map(cat => `
         <button class="cat-pill ${currentCategoryFilter === cat ? 'active' : ''}" data-cat="${escapeHTML(cat)}">
             ${escapeHTML(cat)}
@@ -97,7 +97,7 @@ function renderSidebarList(libsToRender) {
             <button class="lib-item-btn ${originalIndex === currentLibIndex ? 'active' : ''}" data-idx="${originalIndex}">
                 <div class="lib-btn-main">
                     <span class="lib-btn-name">${escapeHTML(lib.name)}</span>
-                    <span class="lib-btn-badge ${lib.status === 'Embedded Core' ? 'embedded' : 'standard'}">${lib.status === 'Embedded Core' ? '⚡ Core' : '📦 Lib'}</span>
+                    <span class="lib-btn-badge ${lib.status === 'Specification' ? 'embedded' : 'standard'}">${lib.status === 'Specification' ? '📜 Spec' : '📦 Package'}</span>
                 </div>
                 <div class="lib-btn-summary">${escapeHTML(lib.summary)}</div>
             </button>
@@ -149,11 +149,25 @@ function loadLibrary(index) {
     `).join('');
 
     mainContentEl.innerHTML = `
+        <div class="graduation-banner" style="background: linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(157, 0, 255, 0.08)); border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; display: flex; gap: 16px; align-items: flex-start;">
+            <div style="font-size: 2rem; line-height: 1;">🎓</div>
+            <div>
+                <h3 style="margin: 0 0 6px 0; color: #00FFCC; font-size: 1.1rem; font-weight: 800;">Core Standard Libraries Have Graduated to Native VM Built-ins!</h3>
+                <p style="margin: 0 0 10px 0; font-size: 0.88rem; color: #E0E2EC; line-height: 1.5;">
+                    All 20 foundational standard modules (<code>Strings</code>, <code>Math</code>, <code>Arrays</code>, <code>Json</code>, <code>Crypto</code>, <code>Time</code>, <code>Fs</code>, <code>Path</code>, <code>Env</code>, <code>Regex</code>, <code>Log</code>, <code>Benchmark</code>, <code>Validate</code>, <code>Color</code>, <code>Console</code>, <code>Matrix</code>, <code>Mock</code>, <code>Http</code>, <code>Stats</code>, <code>Assert</code>) are now compiled directly into the native C virtual machine. They have zero dependencies and require no external files.
+                </p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="../index.html#ch35-standard-library-ecosystem" style="color: #00FFCC; font-size: 0.82rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(0, 255, 204, 0.4); padding: 4px 10px; border-radius: 6px; background: rgba(0, 255, 204, 0.06);">📖 Read Native Modules Academy Docs &rarr;</a>
+                    <span style="font-size: 0.82rem; color: #A0A5B5; align-self: center;">This portal now catalogs community-contributed <code>.lib.vrs</code> extension packages.</span>
+                </div>
+            </div>
+        </div>
+
         <header class="lib-header">
             <div class="lib-header-badges">
                 <span class="lib-badge-cat">${escapeHTML(lib.category)}</span>
-                <span class="lib-badge-status ${lib.status === 'Embedded Core' ? 'embedded' : 'standard'}">
-                    ${lib.status === 'Embedded Core' ? '⚡ Embedded Core (Virtual Memory)' : '📦 Standard Core Library'}
+                <span class="lib-badge-status ${lib.status === 'Specification' ? 'embedded' : 'standard'}">
+                    ${lib.status === 'Specification' ? '📜 Official Specification' : '📦 Community Extension Package'}
                 </span>
                 <span class="lib-badge-version">v${escapeHTML(lib.version)}</span>
             </div>
