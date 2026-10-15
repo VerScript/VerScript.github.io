@@ -231,6 +231,9 @@ function loadLibrary(index) {
 
 // ─── RUNBOX RENDERER ───────────────────────────────────────────────
 function renderRunBox(id, filename, initialCode) {
+    window.LIB_RUNBOX_REGISTRY = window.LIB_RUNBOX_REGISTRY || {};
+    window.LIB_RUNBOX_REGISTRY[id] = initialCode;
+
     return `
         <div class="runbox-container" id="runbox_${id}">
             <div class="runbox-header">
@@ -244,7 +247,7 @@ function renderRunBox(id, filename, initialCode) {
                 </div>
                 <div class="runbox-actions">
                     <button class="action-btn" onclick="copyRunboxCode('${id}')" title="Copy code">📋 Copy</button>
-                    <button class="action-btn" onclick="resetRunboxCode('${id}', \`${escapeTemplateString(initialCode)}\`)" title="Reset code">↺ Reset</button>
+                    <button class="action-btn" onclick="resetRunboxCode('${id}')" title="Reset code">↺ Reset</button>
                     <button class="action-btn" onclick="sendToWebIDE('${id}')" title="Open in IDE">⚡ Open in IDE</button>
                     <button class="action-btn run-btn" onclick="executeRunBox('${id}')" id="runbtn_${id}">▶ Run Code</button>
                 </div>
@@ -382,10 +385,11 @@ window.copyRunboxCode = function(id) {
     }
 };
 
-window.resetRunboxCode = function(id, originalCode) {
+window.resetRunboxCode = function(id) {
     const textarea = document.getElementById(`textarea_${id}`);
     if (textarea) {
-        textarea.value = originalCode;
+        const orig = (window.LIB_RUNBOX_REGISTRY && window.LIB_RUNBOX_REGISTRY[id]) !== undefined ? window.LIB_RUNBOX_REGISTRY[id] : '';
+        textarea.value = orig;
         const outputEl = document.getElementById(`output_${id}`);
         if (outputEl) outputEl.textContent = 'Code reset. Click "Run Code" to execute.';
         window.showToast("↺ Code editor reset", "info");

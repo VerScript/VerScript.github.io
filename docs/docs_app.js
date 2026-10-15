@@ -187,6 +187,11 @@ window.loadArticle = loadArticle;
 
 // ─── RENDER RUNBOX COMPONENT ───────────────────────────────────────
 function renderRunBox(id, title, initialCode) {
+    window.RUNBOX_REGISTRY = window.RUNBOX_REGISTRY || {};
+    window.RUNBOX_REGISTRY[id] = initialCode;
+
+    const isJS = typeof title === 'string' && title.endsWith('.js');
+
     return `
         <div class="runbox-container" id="runbox_${id}">
             <div class="runbox-header">
@@ -197,12 +202,13 @@ function renderRunBox(id, title, initialCode) {
                         <span class="w-dot green"></span>
                     </div>
                     <span>${escapeHTML(title || 'script.vrs')}</span>
+                    ${isJS ? '<span style="font-size:0.7rem; background:rgba(247,223,30,0.15); color:#f7df1e; border:1px solid rgba(247,223,30,0.3); padding:1px 6px; border-radius:4px; margin-left:8px; font-weight:600;">Node.js / JS</span>' : ''}
                 </div>
                 <div class="runbox-actions">
                     <button class="action-btn" onclick="copyRunboxCode('${id}')" title="Copy code">📋 Copy</button>
-                    <button class="action-btn" onclick="resetRunboxCode('${id}', \`${escapeTemplateString(initialCode)}\`)" title="Reset code">↺ Reset</button>
+                    <button class="action-btn" onclick="resetRunboxCode('${id}')" title="Reset code">↺ Reset</button>
                     <button class="action-btn" onclick="sendToWebIDE('${id}')" title="Open in IDE">⚡ Open in IDE</button>
-                    <button class="action-btn run-btn" onclick="executeRunBox('${id}')" id="runbtn_${id}">▶ Run Code</button>
+                    <button class="action-btn run-btn" onclick="executeRunBox('${id}', ${isJS ? 'true' : 'false'})" id="runbtn_${id}">${isJS ? '▶ Run JS' : '▶ Run Code'}</button>
                 </div>
             </div>
             <div class="code-editor-area">
@@ -213,7 +219,7 @@ function renderRunBox(id, title, initialCode) {
                     <span>Console Output</span>
                     <span id="stat_${id}">Ready</span>
                 </div>
-                <pre class="console-output" id="output_${id}">Click "Run Code" to execute...</pre>
+                <pre class="console-output" id="output_${id}">Click "${isJS ? 'Run JS' : 'Run Code'}" to execute...</pre>
             </div>
         </div>
     `;
@@ -221,6 +227,9 @@ function renderRunBox(id, title, initialCode) {
 
 // ─── RENDER EXERCISE CARD COMPONENT ────────────────────────────────
 function renderExerciseCard(ex, indexNum) {
+    window.EXERCISE_REGISTRY = window.EXERCISE_REGISTRY || {};
+    window.EXERCISE_REGISTRY[ex.id] = ex;
+
     const isCompleted = !!completedExercises[ex.id];
     return `
         <div class="exercise-card ${isCompleted ? 'completed' : ''}" id="ex_card_${ex.id}">
@@ -236,7 +245,7 @@ function renderExerciseCard(ex, indexNum) {
                         <button class="exercise-toggle-pill" onclick="toggleHint('${ex.id}')">💡 Show Hint</button>
                         <button class="exercise-toggle-pill" onclick="toggleSolution('${ex.id}')">👁️ View Solution</button>
                     </div>
-                    <button class="action-btn run-btn validate-btn" onclick="validateExercise('${ex.id}', \`${escapeTemplateString(ex.expectedMatch ? ex.expectedMatch.source : '')}\`)">✔ Validate &amp; Submit</button>
+                    <button class="action-btn run-btn validate-btn" onclick="validateExercise('${ex.id}')">✔ Validate &amp; Submit</button>
                 </div>
                 <div class="exercise-hint-content" id="hint_${ex.id}">${escapeHTML(ex.hint)}</div>
                 <div class="exercise-sol-content" id="sol_${ex.id}">
@@ -792,7 +801,7 @@ function evalSimpleExpr(expr, vars) {
 }
 
 // ─── UI ACTION HANDLERS ────────────────────────────────────────────
-window.executeRunBox = async function(id) {
+window.executeRunBox = async function(id, isJS = false) {
     const textarea = document.getElementById(`textarea_${id}`);
     const outputEl = document.getElementById(`output_${id}`);
     const statEl = document.getElementById(`stat_${id}`);
@@ -806,11 +815,38 @@ window.executeRunBox = async function(id) {
     outputEl.textContent = "Executing...";
 
     try {
-        const res = await executeCode(code);
-        outputEl.className = "console-output" + (res.error ? " error" : " success");
-        const fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
-        outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
-        statEl.textContent = res.source === 'cloud' ? "✅ Cloud VM" : "⚡ Instant VM";
+        if (isJS) {
+            // Native browser JavaScript execution with console interception
+            const logs = [];
+            const originalLog = console.log;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+            console.log = (...args) => logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '));
+            console.warn = (...args) => logs.push('[WARN] ' + args.map(a => String(a)).join(' '));
+            console.error = (...args) => logs.push('[ERROR] ' + args.map(a => String(a)).join(' '));
+            try {
+                const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+                const fn = new AsyncFunction(code);
+                await fn();
+                outputEl.className = "console-output success";
+                outputEl.innerHTML = escapeHTML(logs.join('\n')) || '<em>(Code executed successfully with no console output)</em>';
+                statEl.textContent = "⚡ Node.js / JS";
+            } catch (jsErr) {
+                outputEl.className = "console-output error";
+                outputEl.textContent = "JavaScript Error: " + jsErr.message;
+                statEl.textContent = "❌ JS Error";
+            } finally {
+                console.log = originalLog;
+                console.warn = originalWarn;
+                console.error = originalError;
+            }
+        } else {
+            const res = await executeCode(code);
+            outputEl.className = "console-output" + (res.error ? " error" : " success");
+            const fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
+            outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
+            statEl.textContent = res.source === 'cloud' ? "✅ Cloud VM" : "⚡ Instant VM";
+        }
     } catch (err) {
         outputEl.className = "console-output error";
         outputEl.textContent = "Execution error: " + err.message;
@@ -849,10 +885,11 @@ window.copyRunboxCode = function(id) {
     }
 };
 
-window.resetRunboxCode = function(id, originalCode) {
+window.resetRunboxCode = function(id) {
     const textarea = document.getElementById(`textarea_${id}`);
     if (textarea) {
-        textarea.value = originalCode;
+        const orig = (window.RUNBOX_REGISTRY && window.RUNBOX_REGISTRY[id]) !== undefined ? window.RUNBOX_REGISTRY[id] : '';
+        textarea.value = orig;
         const outputEl = document.getElementById(`output_${id}`);
         if (outputEl) outputEl.textContent = 'Code reset. Click "Run Code" to execute.';
         window.showToast("↺ Code editor reset to initial starter code", "info");
@@ -881,7 +918,7 @@ window.toggleSolution = function(exId) {
     }
 };
 
-window.validateExercise = async function(exId, expectedRegexStr) {
+window.validateExercise = async function(exId) {
     const runboxId = 'ex_' + exId;
     await window.executeRunBox(runboxId);
     
@@ -891,6 +928,9 @@ window.validateExercise = async function(exId, expectedRegexStr) {
 
     if (!outputEl) return;
     const outputText = outputEl.textContent;
+
+    const ex = (window.EXERCISE_REGISTRY && window.EXERCISE_REGISTRY[exId]) || {};
+    const expectedRegexStr = ex.expectedMatch ? ex.expectedMatch.source : '';
 
     let isMatch = false;
     if (expectedRegexStr) {
@@ -903,8 +943,8 @@ window.validateExercise = async function(exId, expectedRegexStr) {
     if (isMatch) {
         completedExercises[exId] = true;
         localStorage.setItem('vs_completed_exercises', JSON.stringify(completedExercises));
-        cardEl.classList.add('completed');
-        badgeEl.textContent = "✅ Solved";
+        if (cardEl) cardEl.classList.add('completed');
+        if (badgeEl) badgeEl.textContent = "✅ Solved";
         updateProgressDisplay();
         renderSidebarList(ARTICLES);
         window.showToast("🎉 Exercise Solved! Fantastic work!", "success");
