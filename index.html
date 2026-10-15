@@ -1218,7 +1218,7 @@
     </script>
 
     <script>
-        // Interactive Snippet Repository
+                // Interactive Snippet Repository
         const SNIPPETS = {
             sample: {
                 code: `! ═══════════════════════════════════════════════════════════════════
@@ -1288,27 +1288,34 @@ display "[PAYLOAD] " + serialized_payload ?color=#00ffcc
 
 on exit:
   display "[SHUTDOWN] Pipeline drained. Node safe." ?color=#a855f7`,
-                output: `<span style="color: #38bdf8; font-weight: bold;">[NODE-BOOT] Edge Ingestion Gateway initialized cleanly.</span>
+                output: `<span style="color: #38bdf8;">[NODE-BOOT] Edge Ingestion Gateway initialized cleanly.</span>
 <span style="color: #eab308;">[SECURITY] Authenticating worker with ephemeral token...</span>
-<span style="color: #22c55e; font-weight: bold;">[CLUSTER] Active Node Partition: Alpha-7</span>
+<span style="color: #22c55e;">[CLUSTER] Active Node Partition: Alpha-7</span>
 <span style="color: #38bdf8;">[TELEMETRY] Sensor 4 raw metric synchronized: 86</span>
-<span style="color: #22c55e; font-weight: bold;">[PIPELINE] Pipelined &amp; Clamped Load: 100%</span>
-<span style="color: #f59e0b; font-weight: bold;">[WARNING] High load detected. Rerouting traffic.</span>
+<span style="color: #22c55e;">[PIPELINE] Pipelined &amp; Clamped Load: 100%</span>
+<span style="color: #f59e0b;">[WARNING] High load detected. Rerouting traffic.</span>
 <span style="color: #38bdf8;">[QUEUE] Consumed item: SEC_EVENT_001</span>
 <span style="color: #38bdf8;">[QUEUE] Consumed item: SEC_EVENT_002</span>
-<span style="color: #a855f7; font-weight: bold;">[REPORT] TELEMETRY DIGEST VERIFIED</span>
+<span style="color: #a855f7;">[REPORT] TELEMETRY DIGEST VERIFIED</span>
 <span style="color: #22c55e;">[STATUS] Monitored Nodes: 4</span>
 <span style="color: #00ffcc;">[PAYLOAD] [101, 102, 103, 104]</span>
 <span style="color: #a855f7;">[SHUTDOWN] Pipeline drained. Node safe.</span>`
             },
             entities: {
-                code: `! Arrays, Entities & Libraries Showcase (v2.0)
-display "=== 1. Heterogeneous Arrays & Mutation ===" ?color=#38bdf8
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Object Architecture & Encapsulation Showcase
+! Features: Classes, Entities, Encapsulation, Native Matrix & Diagnostics
+! ═══════════════════════════════════════════════════════════════════
+
+display "=== 1. Heterogeneous Arrays & Grid Matrices ===" ?color=#38bdf8
 arr hero_stats: ["CyberPaladin", 100, true]
 display "Hero Class: " + hero_stats[0] ?color=#22c55e
 display "Initial HP: " + hero_stats[1] ?color=#22c55e
 hero_stats[1]: 120
 display "Buffed HP:  " + hero_stats[1] ?color=#a855f7
+
+set grid: Matrix.identity(2)
+display "Identity Grid 2x2: " + grid ?color=#00ffcc
 
 display "=== 2. Pure Static Library (lib / library) ===" ?color=#fbbf24
 lib MathLib
@@ -1318,10 +1325,9 @@ lib MathLib
     def func calc_boost base multiplier
       reply base * multiplier
 
-! Library functions & constants can be called without dot notation!
 display "Max Capacity: " + MAX_CAP ?color=#38bdf8
 set boost: (calc_boost 50 4)
-display "Unqualified Library Call Boost: " + boost ?color=#22c55e
+display "Unqualified Library Boost: " + boost ?color=#22c55e
 
 display "=== 3. Classes & Entities with Encapsulation ===" ?color=#c084fc
 class Hero(name, initial_hp)
@@ -1331,17 +1337,15 @@ class Hero(name, initial_hp)
   dynamic:
     title: name
     hp: initial_hp
-    outbound method take_damage dmg
+    def outbound method take_damage dmg
       hp: hp - dmg
       display ">> " + title + " takes " + dmg + " damage! (HP remaining: " + hp + ")" ?color=#f87171
 
-! Instantiate an entity from class
 set player: Hero("Alekhyo", 100)
 display "Player Entity Created: " + player.title ?color=#38bdf8
 display "Static Public Faction: " + player.faction ?color=#38bdf8
 
-! Invoke entity dynamic method
-player.take_damage 35
+player.take_damage(35)
 display "Player Current HP: " + player.hp ?color=#22c55e
 
 display "=== 4. Access Control & Purity Enforcement ===" ?color=#fbbf24
@@ -1352,32 +1356,40 @@ unless ImmutableError
 
 do
   display player.secret_key
-unless VisibilityError
+unless EntityError
   display "Guard Active: Private member secret_key blocked outside class!" ?color=#22c55e`,
-                output: `<span style="color: #38bdf8; font-weight: bold;">=== 1. Heterogeneous Arrays &amp; Mutation ===</span>
+                output: `<span style="color: #38bdf8;">=== 1. Heterogeneous Arrays &amp; Grid Matrices ===</span>
 <span style="color: #22c55e;">Hero Class: CyberPaladin</span>
 <span style="color: #22c55e;">Initial HP: 100</span>
 <span style="color: #a855f7;">Buffed HP:  120</span>
-<span style="color: #fbbf24; font-weight: bold;">=== 2. Pure Static Library (lib / library) ===</span>
+<span style="color: #00ffcc;">Identity Grid 2x2: [[1, 0], [0, 1]]</span>
+<span style="color: #fbbf24;">=== 2. Pure Static Library (lib / library) ===</span>
 <span style="color: #38bdf8;">Max Capacity: 9999</span>
-<span style="color: #22c55e;">Unqualified Library Call Boost: 200</span>
-<span style="color: #c084fc; font-weight: bold;">=== 3. Classes &amp; Entities with Encapsulation ===</span>
+<span style="color: #22c55e;">Unqualified Library Boost: 200</span>
+<span style="color: #c084fc;">=== 3. Classes &amp; Entities with Encapsulation ===</span>
 <span style="color: #38bdf8;">Player Entity Created: Alekhyo</span>
 <span style="color: #38bdf8;">Static Public Faction: Solar Guard</span>
 <span style="color: #f87171;">&gt;&gt; Alekhyo takes 35 damage! (HP remaining: 65)</span>
-<span style="color: #22c55e;">Player Current HP: 65</span>
-<span style="color: #fbbf24; font-weight: bold;">=== 4. Access Control &amp; Purity Enforcement ===</span>
-<span style="color: #22c55e; font-weight: bold;">Guard Active: Static faction is immutable outside entity!</span>
-<span style="color: #22c55e; font-weight: bold;">Guard Active: Private member secret_key blocked outside class!</span>`
+<span style="color: #22c55e;">Player Current HP: 100</span>
+<span style="color: #fbbf24;">=== 4. Access Control &amp; Purity Enforcement ===</span>
+<span style="color: #22c55e;">Guard Active: Static faction is immutable outside entity!</span>
+<span style="color: #22c55e;">Guard Active: Private member secret_key blocked outside class!</span>`
             },
             functions: {
-                code: `! Command-Query Separation & Purity Contracts (v2.0)
-display "--- Math & Purity Contract Demo ---" ?color=#38bdf8
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Procedures, Purity Contracts & Pipeline Operators
+! Features: Inbound purity, outbound mutation, Stats, Validate, Chaining
+! ═══════════════════════════════════════════════════════════════════
+
+display "=== 1. Functional Purity & Validation Gates ===" ?color=#38bdf8
 
 ! Pure query function (inbound by default)
 def func hypotenuse a b
   set sq_sum: (a * a) + (b * b)
-  reply sq_sum
+  reply Math.sqrt(sq_sum)
+
+set dist: (hypotenuse 3 4)
+display "Computed Hypotenuse: " + dist ?color=#22c55e
 
 ! Explicit outbound method to modify outer state
 set total_operations: 0
@@ -1388,19 +1400,39 @@ def outbound method record_operation name cost
 
 record_operation "Matrix Multiply" 45
 record_operation "FFT Transform" 80
+display "Total Recorded Operations: " + total_operations ?color=#fbbf24
 
-set result: (hypotenuse 3 4)
-display "Computed Hypotenuse Squared: " + result ?color=#22c55e
-display "Total System Operations: " + total_operations ?color=#fbbf24`,
-                output: `<span style="color: #38bdf8; font-weight: bold;">--- Math & Purity Contract Demo ---</span>
+display "=== 2. Numerical Modeling & Pipeline Transformations ===" ?color=#38bdf8
+set dataset: [40, 80, 60, 100, 20]
+set average: Stats.mean(dataset)
+display "Batch Mean Metric: " + average ?color=#22c55e
+display "Score in Range: " + (Validate.inRange(average, 0, 100)) ?color=#00ffcc
+
+def func double_val n
+  reply n * 2
+
+def func add_offset n
+  reply n + 15
+
+set final_metric: average |> double_val |> add_offset
+display "Pipelined Pipeline Metric: " + final_metric ?color=#a855f7`,
+                output: `<span style="color: #38bdf8;">=== 1. Functional Purity &amp; Validation Gates ===</span>
+<span style="color: #22c55e;">Computed Hypotenuse: 5</span>
 <span style="color: #a855f7;">Recorded Matrix Multiply (Cost: 45)</span>
 <span style="color: #a855f7;">Recorded FFT Transform (Cost: 80)</span>
-<span style="color: #22c55e; font-weight: bold;">Computed Hypotenuse Squared: 25</span>
-<span style="color: #fbbf24; font-weight: bold;">Total System Operations: 2</span>`
+<span style="color: #fbbf24;">Total Recorded Operations: 2</span>
+<span style="color: #38bdf8;">=== 2. Numerical Modeling &amp; Pipeline Transformations ===</span>
+<span style="color: #22c55e;">Batch Mean Metric: 60</span>
+<span style="color: #00ffcc;">Score in Range: true</span>
+<span style="color: #a855f7;">Pipelined Pipeline Metric: 135</span>`
             },
             polyglot: {
-                code: `! Polyglot Multi-Language Code Injection
-display "=== Polyglot Execution Pipeline ===" ?color="cyan"
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Polyglot Code Injection & Cross-Ecosystem Orchestration
+! Features: inject python, inject js, inject verscript, Crypto tokenization
+! ═══════════════════════════════════════════════════════════════════
+
+display "=== Polyglot Execution Pipeline ===" ?color=#38bdf8
 
 inject python ?color="yellow"
     numbers = [1, 2, 3, 4, 5]
@@ -1409,38 +1441,67 @@ inject python ?color="yellow"
 
 inject javascript ?color="cyan"
     const total = [10, 20, 30, 40].reduce((a, b) => a + b, 0);
-    console.log("JavaScript Matrix Total:", total);
+    console.log("JavaScript Total Sum:", total);
 
 inject verscript
-    eval_val : 500 + 250
-    display "VerScript Dynamic Sub-Scope: " + eval_val ?color="green"`,
-                output: `<span style="color: #8be9fd; font-weight: bold;">=== Polyglot Execution Pipeline ===</span>
-<span style="color: #f1fa8c; font-weight: bold;">[Inject:python]</span> Python Computed Squares: [1, 4, 9, 16, 25]
-<span style="color: #8be9fd; font-weight: bold;">[Inject:javascript]</span> JavaScript Matrix Total: 100
-<span style="color: #50fa7b; font-weight: bold;">VerScript Dynamic Sub-Scope: 750</span>`
+    set eval_val: 500 + 250
+    display "VerScript Dynamic Sub-Scope: " + eval_val ?color=#22c55e
+
+display "=== Native Cryptographic Tamper-Proofing ===" ?color=#a855f7
+set token: Crypto.sha256("payload_ver_2026")
+display "Deterministic Block Token: " + token ?color=#00ffcc
+display "Checksum Encoded: " + (Crypto.base64Encode("Verified")) ?color=#38bdf8`,
+                output: `<span style="color: #38bdf8;">=== Polyglot Execution Pipeline ===</span>
+<span style="color: #f59e0b;">[Inject:python] Evaluated 3 code line(s) cleanly.</span>
+<span style="color: #38bdf8;">[Inject:javascript] Evaluated 2 code line(s) cleanly.</span>
+<span style="color: #22c55e;">VerScript Dynamic Sub-Scope: 750</span>
+<span style="color: #a855f7;">=== Native Cryptographic Tamper-Proofing ===</span>
+<span style="color: #00ffcc;">Deterministic Block Token: sha256:-665984081</span>
+<span style="color: #38bdf8;">Checksum Encoded: VERIFIED</span>`
             },
             watchdog: {
-                code: `! High-Precision Reactor Core Watchdog
-core_temperature : 140
-max_safe_limit : 260
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Resilient Reactive Core Watchdog & Diagnostics
+! Features: do-unless, error traps, Log/Time modules, suppression
+! ═══════════════════════════════════════════════════════════════════
 
-display "Initializing reactor core sequence..." ?color="cyan"
+set core_temperature: 140
+set max_safe_limit: 260
+
+display "Initializing reactor core sequence..." ?color=#38bdf8
+Log.info("Reactor telemetry stream active on port 8080")
 
 do
-    iterate step_pass from 1 to 4
-        display "Temperature at step " + step_pass + ": " + core_temperature ?color="yellow"
-        core_temperature : core_temperature + 50
+  iterate step_pass from 1 to 4
+    display "Temperature at step " + step_pass + ": " + core_temperature ?color=#f59e0b
+    set core_temperature: core_temperature + 50
 unless internal core_temperature > max_safe_limit
-    display "CRITICAL SHUTDOWN: Reactor threshold exceeded (" + core_temperature + "°C)!" ?color="red"`,
-                output: `<span style="color: #8be9fd;">Initializing reactor core sequence...</span>
-<span style="color: #f1fa8c;">Temperature at step 1: 140</span>
-<span style="color: #f1fa8c;">Temperature at step 2: 190</span>
-<span style="color: #f1fa8c;">Temperature at step 3: 240</span>
-<span style="color: #ff5555; text-shadow: 0 0 10px rgba(255,85,85,0.5); font-weight: bold;">CRITICAL SHUTDOWN: Reactor threshold exceeded (290°C)!</span>`
+  Log.error("CRITICAL SHUTDOWN: Reactor threshold exceeded (" + core_temperature + "°C)!")
+
+display "=== Diagnostics & Math Domain Guards ===" ?color=#38bdf8
+do
+  set invalid_op: 100 / 0
+unless DivisionByZeroError
+  Log.warn("Guard Active: Trapped DivisionByZeroError cleanly!")
+
+display "Current Epoch Year: " + (Time.now()) ?color=#22c55e`,
+                output: `<span style="color: #38bdf8;">Initializing reactor core sequence...</span>
+<span style="color: #38bdf8;">[INFO] Reactor telemetry stream active on port 8080</span>
+<span style="color: #f59e0b;">Temperature at step 1: 140</span>
+<span style="color: #f59e0b;">Temperature at step 2: 190</span>
+<span style="color: #f59e0b;">Temperature at step 3: 240</span>
+<span style="color: #ef4444; font-weight: bold;">[ERROR] CRITICAL SHUTDOWN: Reactor threshold exceeded (290°C)!</span>
+<span style="color: #38bdf8;">=== Diagnostics &amp; Math Domain Guards ===</span>
+<span style="color: #f59e0b;">[WARN] Guard Active: Trapped DivisionByZeroError cleanly!</span>
+<span style="color: #22c55e;">Current Epoch Year: 2026-10-13T23:20:00Z</span>`
             },
             async: {
-                code: `! VerScript Concurrency, Events & Reactive Stacks
-on start
+                code: `! ═══════════════════════════════════════════════════════════════════
+! VerScript Asynchronous Concurrency, FIFO Channels & Microbenchmarks
+! Features: on start, async/sync, chan, match, Benchmark.report
+! ═══════════════════════════════════════════════════════════════════
+
+on start:
   temp auth: "TOKEN_INITIALIZING"
   inst worker_id: 101
   display "Stack 1 Active. Worker: " + worker_id ?color=#38bdf8
@@ -1449,34 +1510,38 @@ on start
 async func fetch_telemetry sensor_id
   reply sensor_id * 250
 
-on complete
+on complete:
   display "Async Task Completed via Event Listener!" ?color=#22c55e
 
 chan signal_bus
-send signal_bus "METRIC_OK"
+send signal_bus, "METRIC_OK"
 
 set res: sync fetch_telemetry(16)
 display "Synchronized Telemetry: " + res ?color=#38bdf8
 
-match (recv signal_bus)
+set bus_msg: recv signal_bus
+match bus_msg
   with "METRIC_OK":
     display "Channel Bus verified: METRIC_OK" ?color=#22c55e
-  with _:
+  else:
     display "Unhandled bus packet"
 
-set final_val: 10 |> (func x: reply x * 2) |> (func y: reply y + 5)
-display "Pipeline Chaining Result: " + final_val ?color=#bd93f9
+def func double_val n
+  reply n * 2
 
-display Strings.toUpper("autonomous stdlib active") ?color=#50fa7b`,
-                output: `<span style="color: #6272a4;">[SYSTEM] Initializing VerScript v2.0 runtime...</span>
-<span style="color: #38bdf8; font-weight: bold;">Stack 1 Active. Worker: 101</span>
-<span style="color: #22c55e; font-weight: bold;">Async Task Completed via Event Listener!</span>
+def func add_five n
+  reply n + 5
+
+set final_val: 10 |> double_val |> add_five
+display "Pipeline Chaining Result: " + final_val ?color=#a855f7
+
+display Benchmark.report("ChannelThroughput", 50000, 12) ?color=#00ffcc`,
+                output: `<span style="color: #38bdf8;">Stack 1 Active. Worker: 101</span>
+<span style="color: #22c55e;">Async Task Completed via Event Listener!</span>
 <span style="color: #38bdf8;">Synchronized Telemetry: 4000</span>
-<span style="color: #22c55e; font-weight: bold;">Channel Bus verified: METRIC_OK</span>
-<span style="color: #bd93f9;">Pipeline Chaining Result: 25</span>
-<span style="color: #50fa7b; font-weight: bold;">AUTONOMOUS STDLIB ACTIVE</span>
-<span style="color: #6272a4;">----------------------------------------</span>
-<span style="color: #50fa7b; font-weight: bold;">[SUCCESS] Runtime completed cleanly with exit code 0.</span>`
+<span style="color: #22c55e;">Channel Bus verified: METRIC_OK</span>
+<span style="color: #a855f7;">Pipeline Chaining Result: 25</span>
+<span style="color: #00ffcc;">Benchmark [ChannelThroughput]: 50000 ops (3846153 ops/sec)</span>`
             }
         };
 

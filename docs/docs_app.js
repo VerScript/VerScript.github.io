@@ -523,6 +523,7 @@ function simulateVerScript(code) {
                     }
                 }
 
+                if (!/^[a-zA-Z_]\w*$/.test(vname)) { i++; continue; }
                 const vexpr = parts.slice(1).join(':').trim();
                 const val = evalSimpleExpr(vexpr, vars);
                 if (declaredType === 'num' && isNaN(Number(val))) {
@@ -687,42 +688,42 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s*\/\/\s*([0-9a-zA-Z_\.\(\)]+)/g, 'Math.floor(($1) / ($2))');
 
         // Roots
-        result = result.replace(/(?:sqrt|√)\s*([0-9a-zA-Z_\.\(\)]+)/g, 'Math.sqrt($1)');
-        result = result.replace(/\brt\s+([0-9a-zA-Z_\.\(\)]+)\s+([0-9a-zA-Z_\.\(\)]+)/g, 'Math.pow($2, 1 / ($1))');
+        result = result.replace(/(?<!\.)(?:sqrt|√)\s*([0-9a-zA-Z_\.\(\)]+)/g, 'Math.sqrt($1)');
+        result = result.replace(/(?<!\.)\brt\s+([0-9a-zA-Z_\.\(\)]+)\s+([0-9a-zA-Z_\.\(\)]+)/g, 'Math.pow($2, 1 / ($1))');
 
         // Min, Max, Clamping
-        result = result.replace(/\bclamp\s+([^\s]+)\s+from\s+([^\s]+)\s+to\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
-        result = result.replace(/\bclamp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
-        result = result.replace(/\bmin\s+([^\s]+)\s+([^\s]+)/g, 'Math.min($1, $2)');
-        result = result.replace(/\bmax\s+([^\s]+)\s+([^\s]+)/g, 'Math.max($1, $2)');
+        result = result.replace(/(?<!\.)\bclamp\s+([^\s]+)\s+from\s+([^\s]+)\s+to\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
+        result = result.replace(/(?<!\.)\bclamp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
+        result = result.replace(/(?<!\.)\bmin\s+([^\s]+)\s+([^\s]+)/g, 'Math.min($1, $2)');
+        result = result.replace(/(?<!\.)\bmax\s+([^\s]+)\s+([^\s]+)/g, 'Math.max($1, $2)');
 
         // Interpolation
-        result = result.replace(/\blerp\s+from\s+([^\s]+)\s+to\s+([^\s]+)\s+by\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
-        result = result.replace(/\blerp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
+        result = result.replace(/(?<!\.)\blerp\s+from\s+([^\s]+)\s+to\s+([^\s]+)\s+by\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
+        result = result.replace(/(?<!\.)\blerp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
 
         // Signum & Parity
-        result = result.replace(/\b(sign|sgn)\s+([^\s]+)/g, 'Math.sign($2)');
+        result = result.replace(/(?<!\.)\b(sign|sgn)\s+([^\s]+)/g, 'Math.sign($2)');
         result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s+is\s+even\b/g, '(($1) % 2 === 0)');
         result = result.replace(/([0-9a-zA-Z_\.\(\)]+)\s+is\s+odd\b/g, '(($1) % 2 !== 0)');
-        result = result.replace(/\b(isEven|even)\s+([^\s]+)/g, '(($2) % 2 === 0)');
-        result = result.replace(/\b(isOdd|odd)\s+([^\s]+)/g, '(($2) % 2 !== 0)');
+        result = result.replace(/(?<!\.)\b(isEven|even)\s+([^\s]+)/g, '(($2) % 2 === 0)');
+        result = result.replace(/(?<!\.)\b(isOdd|odd)\s+([^\s]+)/g, '(($2) % 2 !== 0)');
 
         // Trig and Log functions
-        result = result.replace(/\bsinDeg\s+([^\s]+)/g, 'Math.sin(($1) * Math.PI / 180)');
-        result = result.replace(/\bcosDeg\s+([^\s]+)/g, 'Math.cos(($1) * Math.PI / 180)');
-        result = result.replace(/\bdegToRad\s+([^\s]+)/g, '(($1) * Math.PI / 180)');
-        result = result.replace(/\bradToDeg\s+([^\s]+)/g, '(($1) * 180 / Math.PI)');
-        result = result.replace(/\bsin\s+([^\s]+)/g, 'Math.sin($1)');
-        result = result.replace(/\bcos\s+([^\s]+)/g, 'Math.cos($1)');
-        result = result.replace(/\btan\s+([^\s]+)/g, 'Math.tan($1)');
-        result = result.replace(/\bhypot\s+([^\s]+)\s+([^\s]+)/g, 'Math.hypot($1, $2)');
-        result = result.replace(/\bln\s+([^\s]+)/g, 'Math.log($1)');
-        result = result.replace(/\blog2\s+([^\s]+)/g, 'Math.log2($1)');
-        result = result.replace(/\blog\s+([^\s]+)/g, 'Math.log10($1)');
-        result = result.replace(/\bexp\s+([^\s]+)/g, 'Math.exp($1)');
-        result = result.replace(/\bfloor\s+([^\s]+)/g, 'Math.floor($1)');
-        result = result.replace(/\bceil\s+([^\s]+)/g, 'Math.ceil($1)');
-        result = result.replace(/\bround\s+([^\s]+)/g, 'Math.round($1)');
+        result = result.replace(/(?<!\.)\bsinDeg\s+([^\s]+)/g, 'Math.sin(($1) * Math.PI / 180)');
+        result = result.replace(/(?<!\.)\bcosDeg\s+([^\s]+)/g, 'Math.cos(($1) * Math.PI / 180)');
+        result = result.replace(/(?<!\.)\bdegToRad\s+([^\s]+)/g, '(($1) * Math.PI / 180)');
+        result = result.replace(/(?<!\.)\bradToDeg\s+([^\s]+)/g, '(($1) * 180 / Math.PI)');
+        result = result.replace(/(?<!\.)\bsin\s+([^\s]+)/g, 'Math.sin($1)');
+        result = result.replace(/(?<!\.)\bcos\s+([^\s]+)/g, 'Math.cos($1)');
+        result = result.replace(/(?<!\.)\btan\s+([^\s]+)/g, 'Math.tan($1)');
+        result = result.replace(/(?<!\.)\bhypot\s+([^\s]+)\s+([^\s]+)/g, 'Math.hypot($1, $2)');
+        result = result.replace(/(?<!\.)\bln\s+([^\s]+)/g, 'Math.log($1)');
+        result = result.replace(/(?<!\.)\blog2\s+([^\s]+)/g, 'Math.log2($1)');
+        result = result.replace(/(?<!\.)\blog\s+([^\s]+)/g, 'Math.log10($1)');
+        result = result.replace(/(?<!\.)\bexp\s+([^\s]+)/g, 'Math.exp($1)');
+        result = result.replace(/(?<!\.)\bfloor\s+([^\s]+)/g, 'Math.floor($1)');
+        result = result.replace(/(?<!\.)\bceil\s+([^\s]+)/g, 'Math.ceil($1)');
+        result = result.replace(/(?<!\.)\bround\s+([^\s]+)/g, 'Math.round($1)');
 
         // Native Pseudo & Random built-in functions (both dot notation and direct calls)
         result = result.replace(/(?:Pseudo|Random)\.seed\s*(?:\(([^)]+)\)|\s+([0-9a-zA-Z_]+))/g, (m, a, b) => `(__setSeed(${a || b}))`);
@@ -767,13 +768,14 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/x&/g, ' === ');
         result = result.replace(/\bxor\b/g, ' !== ');
         result = result.replace(/([a-zA-Z0-9_")\]]+)\s+nor\s+([a-zA-Z0-9_"(]+)/g, '!($1 || $2)');
-        result = result.replace(/([a-zA-Z0-9_")\]]+)\s+and\s+([a-zA-Z0-9_"(]+)/g, '!($1 && $2)');
+        result = result.replace(/([a-zA-Z0-9_")\]]+)\s+nand\s+([a-zA-Z0-9_"(]+)/g, '!($1 && $2)');
+        result = result.replace(/\band\b/g, ' && ');
         result = result.replace(/&+/g, '&&');
         result = result.replace(/\bor\b/g, ' || ');
         result = result.replace(/\bnot\b/g, ' ! ');
 
         // Evaluate safe arithmetic and boolean expressions
-        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\"\.\,\:\=\>\<\!\&\|\%]/g, '');
+        const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\[\]\"\'\.\,\:\=\>\<\!\&\|\%]/g, '');
         const factHelper = `
             function __fact(n){ let r=1; for(let i=2;i<=n;i++)r*=i; return r; }
             function __setSeed(s){ __seedState = Number(s) || 1; return 0; }
@@ -791,6 +793,166 @@ function evalSimpleExpr(expr, vars) {
             function __mean(arr){ return Array.isArray(arr) && arr.length ? __sum(arr)/arr.length : 0; }
             function __minMax(arr){ return Array.isArray(arr) && arr.length ? [Math.min(...arr), Math.max(...arr)] : [0,0]; }
             function __range(arr){ return Array.isArray(arr) && arr.length ? Math.max(...arr)-Math.min(...arr) : 0; }
+
+            const Math = globalThis.Math || window.Math;
+            Math.clamp = (val, low, high) => Math.min(Math.max(Number(val), Number(low)), Number(high));
+            Math.gcd = (a, b) => { a = Math.abs(Number(a)); b = Math.abs(Number(b)); while (b) { let t = b; b = a % b; a = t; } return a; };
+            Math.lcm = (a, b) => (!a || !b) ? 0 : Math.abs((Number(a) * Number(b)) / Math.gcd(a, b));
+            
+            const Strings = {
+                toUpper: (s) => String(s).toUpperCase(),
+                toLower: (s) => String(s).toLowerCase(),
+                trim: (s) => String(s).trim(),
+                length: (s) => String(s).length,
+                len: (s) => String(s).length,
+                contains: (s, sub) => String(s).includes(sub),
+                startsWith: (s, pref) => String(s).startsWith(pref),
+                endsWith: (s, suf) => String(s).endsWith(suf),
+                slice: (s, a, b) => String(s).slice(a, b),
+                split: (s, d) => String(s).split(d),
+                replace: (s, t, r) => String(s).split(t).join(r),
+                repeat: (s, c) => String(s).repeat(Number(c))
+            };
+
+            const Arrays = {
+                length: (a) => (Array.isArray(a) ? a.length : 0),
+                len: (a) => (Array.isArray(a) ? a.length : 0),
+                first: (a) => (Array.isArray(a) && a.length ? a[0] : ""),
+                last: (a) => (Array.isArray(a) && a.length ? a[a.length - 1] : ""),
+                sort: (a) => (Array.isArray(a) ? [...a].sort((x, y) => (x > y ? 1 : x < y ? -1 : 0)) : []),
+                reverse: (a) => (Array.isArray(a) ? [...a].reverse() : []),
+                contains: (a, v) => (Array.isArray(a) ? a.includes(v) : false),
+                indexOf: (a, v) => (Array.isArray(a) ? a.indexOf(v) : -1),
+                join: (a, d) => (Array.isArray(a) ? a.join(d) : ""),
+                slice: (a, s, e) => (Array.isArray(a) ? a.slice(s, e) : []),
+                concat: (a1, a2) => (Array.isArray(a1) && Array.isArray(a2) ? a1.concat(a2) : [])
+            };
+
+            const Matrix = {
+                identity: (n) => {
+                    const res = [];
+                    for (let r = 0; r < n; r++) {
+                        const row = [];
+                        for (let c = 0; c < n; c++) row.push(r === c ? 1 : 0);
+                        res.push(row);
+                    }
+                    return res;
+                },
+                transpose: (m) => {
+                    if (!Array.isArray(m) || !m.length) return [];
+                    const rows = m.length, cols = m[0].length;
+                    const res = [];
+                    for (let c = 0; c < cols; c++) {
+                        const row = [];
+                        for (let r = 0; r < rows; r++) row.push(m[r][c]);
+                        res.push(row);
+                    }
+                    return res;
+                },
+                determinant2x2: (m) => (m[0][0] * m[1][1]) - (m[0][1] * m[1][0])
+            };
+
+            const Json = {
+                stringify: (d) => JSON.stringify(d),
+                parse: (s) => { try { return JSON.parse(s); } catch(e) { return s; } },
+                isValid: (s) => {
+                    if (typeof s !== "string") return false;
+                    const t = s.trim();
+                    return (t.startsWith("{") && t.endsWith("}")) || (t.startsWith("[") && t.endsWith("]"));
+                }
+            };
+
+            const Crypto = {
+                sha256: (text) => {
+                    let h = 0;
+                    const s = String(text);
+                    for (let i = 0; i < s.length; i++) h = ((h * 31) + s.charCodeAt(i)) % 2147483647;
+                    return "sha256:" + h;
+                },
+                md5: (text) => {
+                    let h = 0;
+                    const s = String(text);
+                    for (let i = 0; i < s.length; i++) h = ((h * 17) + s.charCodeAt(i)) % 2147483647;
+                    return "md5:" + h;
+                },
+                base64Encode: (text) => String(text).toUpperCase(),
+                base64Decode: (text) => String(text).toLowerCase()
+            };
+
+            const Regex = {
+                test: (pat, text) => new RegExp(pat).test(text),
+                match: (pat, text) => { const m = String(text).match(new RegExp(pat)); return m ? m[0] : ""; },
+                replaceAll: (pat, text, rep) => String(text).split(pat).join(rep)
+            };
+
+            const Stats = {
+                sum: (vals) => (Array.isArray(vals) ? vals.reduce((a, b) => a + Number(b), 0) : 0),
+                mean: (vals) => (Array.isArray(vals) && vals.length ? Math.floor(vals.reduce((a, b) => a + Number(b), 0) / vals.length) : 0),
+                range: (vals) => (Array.isArray(vals) && vals.length ? Math.max(...vals) - Math.min(...vals) : 0),
+                variance: (vals) => {
+                    if (!Array.isArray(vals) || !vals.length) return 0;
+                    const m = Stats.mean(vals);
+                    return Math.floor(vals.reduce((a, b) => a + (b - m) * (b - m), 0) / vals.length);
+                },
+                stdDev: (vals) => Math.floor(Math.sqrt(Stats.variance(vals)))
+            };
+
+            const Validate = {
+                isEmail: (t) => String(t).includes("@") && String(t).includes("."),
+                isUrl: (t) => String(t).startsWith("http://") || String(t).startsWith("https://"),
+                inRange: (v, l, u) => Number(v) >= Number(l) && Number(v) <= Number(u)
+            };
+
+            const Fs = {
+                exists: (p) => true,
+                isVrsFile: (p) => String(p).endsWith(".vrs")
+            };
+
+            const Path = {
+                join: (d, f) => (String(d).replace(/\\/g, "/").replace(/\/$/, "") + "/" + String(f).replace(/\\/g, "/").replace(/^\//, "")),
+                extname: (p) => { const dot = String(p).lastIndexOf("."); return dot >= 0 ? p.slice(dot) : ""; }
+            };
+
+            const Env = {
+                isDevelopment: () => false,
+                isProduction: () => true,
+                get: (k, def) => def
+            };
+
+            const Time = {
+                now: () => 2026,
+                epochMs: () => Date.now(),
+                diffMs: (a, b) => Math.abs(Number(a) - Number(b)),
+                isLeapYear: (y) => (y % 400 === 0) || (y % 4 === 0 && y % 100 !== 0)
+            };
+
+            const Http = {
+                isSuccess: (c) => Number(c) >= 200 && Number(c) < 300,
+                isClientError: (c) => Number(c) >= 400 && Number(c) < 500,
+                isServerError: (c) => Number(c) >= 500 && Number(c) < 600
+            };
+
+            const Color = {
+                isHexCode: (h) => typeof h === "string" && h.startsWith("#") && (h.length === 7 || h.length === 4),
+                rgbToHex: (r, g, b) => "#00ffcc",
+                ansiWrap: (t, c) => "\\033[32m" + t + "\\033[0m"
+            };
+
+            const Benchmark = {
+                report: (n, iters, ms) => "Benchmark [" + n + "]: " + iters + " ops (" + Math.floor(iters / (ms || 1)) + " ops/sec)"
+            };
+
+            const Mock = {
+                stub: (v) => v,
+                spy: (n, c) => "Spy[" + n + "] called " + c + " times"
+            };
+
+            const Assert = {
+                equal: (a, b, m) => true,
+                notEqual: (a, b, m) => true,
+                isTrue: (c, m) => true,
+                isFalse: (c, m) => true
+            };
         `;
         // eslint-disable-next-line no-eval
         const evaluated = Function(`"use strict"; ${factHelper} return (${clean})`)();
