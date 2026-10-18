@@ -122,7 +122,7 @@ function loadArticle(index) {
         codeBlocksHTML = `
             <h2>Interactive Code Sandbox</h2>
             <p>Run, edit, and experiment with the live runnable code below:</p>
-        ` + article.codeBlocks.map(cb => renderRunBox(cb.id, cb.title, cb.code)).join('');
+        ` + article.codeBlocks.map(cb => renderRunBox(cb.id, cb.title, cb.code, cb.files)).join('');
     }
 
     // Build Exercises HTML
@@ -186,14 +186,47 @@ function loadArticle(index) {
 window.loadArticle = loadArticle;
 
 // ─── RENDER RUNBOX COMPONENT ───────────────────────────────────────
-function renderRunBox(id, title, initialCode) {
+function renderRunBox(id, title, initialCode, files) {
     window.RUNBOX_REGISTRY = window.RUNBOX_REGISTRY || {};
-    window.RUNBOX_REGISTRY[id] = initialCode;
+    window.RUNBOX_FILES_REGISTRY = window.RUNBOX_FILES_REGISTRY || {};
+    window.RUNBOX_ACTIVE_TAB = window.RUNBOX_ACTIVE_TAB || {};
+
+    const hasFiles = Array.isArray(files) && files.length > 0;
+    if (hasFiles) {
+        window.RUNBOX_FILES_REGISTRY[id] = files;
+        window.RUNBOX_ACTIVE_TAB[id] = 0;
+        window.RUNBOX_REGISTRY[id] = files[0].code;
+    } else {
+        window.RUNBOX_REGISTRY[id] = initialCode;
+    }
 
     const isJS = typeof title === 'string' && title.endsWith('.js');
 
+    const tabsHTML = hasFiles ? `
+        <div class="runbox-tabs" id="tabs_${id}">
+            ${files.map((f, idx) => `
+                <button class="runbox-tab-btn ${idx === 0 ? 'active' : ''}" onclick="switchRunboxTab('${id}', ${idx})" id="tabbtn_${id}_${idx}">
+                    ${f.name.endsWith('.h.vrs') ? '<span class="header-badge">HEADER</span>' : ''}
+                    <span>${escapeHTML(f.name)}</span>
+                </button>
+            `).join('')}
+        </div>
+    ` : `<span>${escapeHTML(title || 'script.vrs')}</span>`;
+
+    const editorsHTML = hasFiles ? `
+        <div class="code-editor-area" id="editor_area_${id}">
+            ${files.map((f, idx) => `
+                <textarea class="code-textarea" aria-label="Code editor for ${escapeHTML(f.name)}" id="textarea_${id}_${idx}" style="${idx === 0 ? '' : 'display: none;'}" spellcheck="false">${escapeHTML(f.code)}</textarea>
+            `).join('')}
+        </div>
+    ` : `
+        <div class="code-editor-area">
+            <textarea class="code-textarea" aria-label="Code editor" id="textarea_${id}" spellcheck="false">${escapeHTML(initialCode)}</textarea>
+        </div>
+    `;
+
     return `
-        <div class="runbox-container" id="runbox_${id}">
+        <div class="runbox-container ${hasFiles ? 'multi-file-runbox' : ''}" id="runbox_${id}">
             <div class="runbox-header">
                 <div class="runbox-title">
                     <div class="window-dots">
@@ -201,7 +234,7 @@ function renderRunBox(id, title, initialCode) {
                         <span class="w-dot yellow"></span>
                         <span class="w-dot green"></span>
                     </div>
-                    <span>${escapeHTML(title || 'script.vrs')}</span>
+                    ${tabsHTML}
                     ${isJS ? '<span style="font-size:0.7rem; background:rgba(247,223,30,0.15); color:#f7df1e; border:1px solid rgba(247,223,30,0.3); padding:1px 6px; border-radius:4px; margin-left:8px; font-weight:600;">Node.js / JS</span>' : ''}
                 </div>
                 <div class="runbox-actions">
@@ -211,9 +244,7 @@ function renderRunBox(id, title, initialCode) {
                     <button class="action-btn run-btn" onclick="executeRunBox('${id}', ${isJS ? 'true' : 'false'})" id="runbtn_${id}">${isJS ? '▶ Run JS' : '▶ Run Code'}</button>
                 </div>
             </div>
-            <div class="code-editor-area">
-                <textarea class="code-textarea" aria-label="Code editor" id="textarea_${id}" spellcheck="false">${escapeHTML(initialCode)}</textarea>
-            </div>
+            ${editorsHTML}
             <div class="runbox-console" id="console_${id}">
                 <div class="console-header">
                     <span>Console Output</span>
@@ -224,6 +255,19 @@ function renderRunBox(id, title, initialCode) {
         </div>
     `;
 }
+
+window.switchRunboxTab = function(id, tabIdx) {
+    window.RUNBOX_ACTIVE_TAB = window.RUNBOX_ACTIVE_TAB || {};
+    window.RUNBOX_ACTIVE_TAB[id] = tabIdx;
+    const files = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    if (!files) return;
+    files.forEach((_, idx) => {
+        const btn = document.getElementById(`tabbtn_${id}_${idx}`);
+        if (btn) btn.classList.toggle('active', idx === tabIdx);
+        const ta = document.getElementById(`textarea_${id}_${idx}`);
+        if (ta) ta.style.display = (idx === tabIdx ? 'block' : 'none');
+    });
+};
 
 // ─── RENDER EXERCISE CARD COMPONENT ────────────────────────────────
 function renderExerciseCard(ex, indexNum) {
@@ -239,7 +283,7 @@ function renderExerciseCard(ex, indexNum) {
             </div>
             <div class="exercise-body">
                 <div class="exercise-prompt">${ex.prompt}</div>
-                ${renderRunBox('ex_' + ex.id, `exercise_${indexNum}.vrs`, ex.starterCode)}
+                ${ex.starterFiles ? renderRunBox('ex_' + ex.id, null, null, ex.starterFiles) : renderRunBox('ex_' + ex.id, `exercise_${indexNum}.vrs`, ex.starterCode)}
                 <div class="exercise-actions-bar">
                     <div class="exercise-toggles">
                         <button class="exercise-toggle-pill" onclick="toggleHint('${ex.id}')">💡 Show Hint</button>
@@ -493,8 +537,26 @@ function simulateVerScript(code) {
                 vars[vname] = defMatch ? defMatch[1] : 'SampleInput';
                 i++;
             }
-            // DataType definition block
-            else if (line.startsWith('DataType ')) {
+            // Header / Config / Enum / Struct / DataType definition blocks
+            else if (line.startsWith('DataType ') || line.startsWith('config:') || line.startsWith('struct:') || line.startsWith('struct ') || line.startsWith('header ')) {
+                i++;
+                while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                    i++;
+                }
+                continue;
+            }
+            // First-class Enum declaration
+            else if (line.startsWith('enum ') || line.startsWith('enum:')) {
+                if (line.includes(':')) {
+                    const colonIdx = line.indexOf(':');
+                    const pairs = line.substring(colonIdx + 1).split(',');
+                    const enumName = line.substring(5, colonIdx).trim();
+                    vars[enumName] = {};
+                    pairs.forEach(p => {
+                        const [k, v] = p.split('=').map(s => s ? s.trim() : '');
+                        if (k && v !== undefined) vars[enumName][k] = isNaN(Number(v)) ? v : Number(v);
+                    });
+                }
                 i++;
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
                     i++;
@@ -964,13 +1026,26 @@ function evalSimpleExpr(expr, vars) {
 
 // ─── UI ACTION HANDLERS ────────────────────────────────────────────
 window.executeRunBox = async function(id, isJS = false) {
-    const textarea = document.getElementById(`textarea_${id}`);
     const outputEl = document.getElementById(`output_${id}`);
     const statEl = document.getElementById(`stat_${id}`);
     const runBtn = document.getElementById(`runbtn_${id}`);
 
-    if (!textarea || !outputEl) return;
-    const code = textarea.value;
+    if (!outputEl) return;
+
+    let code = '';
+    const multiFiles = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    if (multiFiles && multiFiles.length > 0) {
+        const fileChunks = [];
+        multiFiles.forEach((f, idx) => {
+            const ta = document.getElementById(`textarea_${id}_${idx}`);
+            fileChunks.push(ta ? ta.value : f.code);
+        });
+        code = fileChunks.join('\n\n');
+    } else {
+        const textarea = document.getElementById(`textarea_${id}`);
+        if (!textarea) return;
+        code = textarea.value;
+    }
 
     statEl.textContent = "⏳ Running...";
     runBtn.disabled = true;
@@ -1040,28 +1115,60 @@ window.showToast = function(message, type = 'info', duration = 3200) {
 };
 
 window.copyRunboxCode = function(id) {
-    const textarea = document.getElementById(`textarea_${id}`);
-    if (textarea) {
-        navigator.clipboard?.writeText(textarea.value);
-        window.showToast("📋 Code snippet copied to clipboard!", "info");
+    const multiFiles = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    if (multiFiles && multiFiles.length > 0) {
+        const activeIdx = (window.RUNBOX_ACTIVE_TAB && window.RUNBOX_ACTIVE_TAB[id]) || 0;
+        const activeTa = document.getElementById(`textarea_${id}_${activeIdx}`);
+        if (activeTa) {
+            navigator.clipboard?.writeText(activeTa.value);
+            const fileName = multiFiles[activeIdx] ? multiFiles[activeIdx].name : 'file';
+            window.showToast(`📋 Copied ${fileName} to clipboard!`, "info");
+        }
+    } else {
+        const textarea = document.getElementById(`textarea_${id}`);
+        if (textarea) {
+            navigator.clipboard?.writeText(textarea.value);
+            window.showToast("📋 Code snippet copied to clipboard!", "info");
+        }
     }
 };
 
 window.resetRunboxCode = function(id) {
-    const textarea = document.getElementById(`textarea_${id}`);
-    if (textarea) {
-        const orig = (window.RUNBOX_REGISTRY && window.RUNBOX_REGISTRY[id]) !== undefined ? window.RUNBOX_REGISTRY[id] : '';
-        textarea.value = orig;
+    const multiFiles = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    if (multiFiles && multiFiles.length > 0) {
+        multiFiles.forEach((f, idx) => {
+            const ta = document.getElementById(`textarea_${id}_${idx}`);
+            if (ta) ta.value = f.code;
+        });
         const outputEl = document.getElementById(`output_${id}`);
         if (outputEl) outputEl.textContent = 'Code reset. Click "Run Code" to execute.';
-        window.showToast("↺ Code editor reset to initial starter code", "info");
+        window.showToast("↺ All editor files reset to initial starter code", "info");
+    } else {
+        const textarea = document.getElementById(`textarea_${id}`);
+        if (textarea) {
+            const orig = (window.RUNBOX_REGISTRY && window.RUNBOX_REGISTRY[id]) !== undefined ? window.RUNBOX_REGISTRY[id] : '';
+            textarea.value = orig;
+            const outputEl = document.getElementById(`output_${id}`);
+            if (outputEl) outputEl.textContent = 'Code reset. Click "Run Code" to execute.';
+            window.showToast("↺ Code editor reset to initial starter code", "info");
+        }
     }
 };
 
 window.sendToWebIDE = function(id) {
-    const textarea = document.getElementById(`textarea_${id}`);
-    if (textarea) {
-        const encoded = btoa(encodeURIComponent(textarea.value));
+    let code = '';
+    const multiFiles = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    if (multiFiles && multiFiles.length > 0) {
+        code = multiFiles.map((f, idx) => {
+            const ta = document.getElementById(`textarea_${id}_${idx}`);
+            return ta ? ta.value : f.code;
+        }).join('\n\n');
+    } else {
+        const textarea = document.getElementById(`textarea_${id}`);
+        if (textarea) code = textarea.value;
+    }
+    if (code) {
+        const encoded = btoa(encodeURIComponent(code));
         window.open(`https://verscript.github.io/IDE/?code=${encoded}`, '_blank');
     }
 };

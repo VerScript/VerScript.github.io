@@ -525,6 +525,44 @@
             align-items: center;
             gap: 8px;
         }
+        .runbox-tabs {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .runbox-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.76rem;
+            font-family: 'Fira Code', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .runbox-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+        }
+        .runbox-tab-btn.active {
+            background: rgba(56, 189, 248, 0.16);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+        .header-badge {
+            font-size: 0.62rem;
+            background: #7c3aed;
+            color: #ffffff;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
         .window-dots {
             display: flex;
             gap: 6px;
