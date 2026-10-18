@@ -1771,9 +1771,46 @@ const ARTICLES = [
       }
     ]
   },
+{
+    "id": "ch54-headers-enums-ergonomics",
+    "number": 54,
+    "section": "Section 9: Data Structures & Object Architecture",
+    "title": "VerScript Headers (.h.vrs), First-Class Enums & Modern Language Ergonomics",
+    "category": "Language Architecture",
+    "readTime": "7 min read",
+    "summary": "Master VerScript's dual-role header architecture (.h.vrs) for compiler configuration and prototypes, companion auto-resolution, first-class enums, typed structs, pipeline operator (|>) chaining, and ternary expressions.",
+    "body": "\n            <h2>Dual-Role VerScript Headers (.h.vrs)</h2>\n            <p><strong>VerScript Headers</strong> (files ending with <code>.h.vrs</code>) serve two vital roles in the VerScript ecosystem:</p>\n            <ol>\n                <li><strong>Compiler &amp; Runtime Configuration</strong>: Declaring <code>config:</code> blocks that set compiler flags (such as <code>strict_mode: true</code>, <code>error_mode: \"strict\"</code>, and <code>timeout_ms: 5000</code>).</li>\n                <li><strong>Public Interfaces &amp; Constants</strong>: Declaring shared global constants, enum types, struct definitions, and routine prototypes across multiple modules.</li>\n            </ol>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Zero-Boilerplate Companion Auto-Detection</div>\n                <p>When running any VerScript file (e.g. <code>verscript server.vrs</code>), the compiler automatically searches for a companion header with the same stem (<code>server.h.vrs</code>) in the same directory. If found, it preloads and executes the header before running the script—requiring zero <code>include</code> statements!</p>\n            </div>\n\n            <h2>Explicit Inclusion with <code>include</code></h2>\n            <p>You can also explicitly load any header or library file using the <code>include</code> statement:</p>\n            <pre><code class=\"language-verscript\">include \"config/app_config.h.vrs\"\ninclude \"shared/models.h.vrs\"\n\ndisplay APP_VERSION ?color=\"cyan\"</code></pre>\n\n            <h2>First-Class Enums (<code>enum</code>)</h2>\n            <p>VerScript enums define strongly typed enumeration constants. Under the hood, they are sealed entity instances that integrate seamlessly with dot-property access and pattern matching:</p>\n            <pre><code class=\"language-verscript\">! Block definition with auto-incrementing values (0, 1, 2)\nenum TaskStatus:\n    Pending\n    Active\n    Completed\n\n! Inline definition with explicit integer values\nenum HttpCode: OK = 200, NotFound = 404, ServerError = 500\n\ndisplay TaskStatus.Active ! outputs 1\ndisplay HttpCode.OK       ! outputs 200</code></pre>\n\n            <h2>Lightweight Typed Structs (<code>struct</code>)</h2>\n            <p>Structs provide lightweight record types with automatic constructor argument binding and declared type constraints:</p>\n            <pre><code class=\"language-verscript\">struct Point:\n    x: num\n    y: num\n\n! Automatic constructor instantiation\nset pt: Point(10, 25)\ndisplay pt.x ?color=\"green\"\ndisplay pt.y ?color=\"yellow\"</code></pre>\n\n            <h2>Ternary Expressions</h2>\n            <p>Ternary expressions allow inline conditional evaluations without cumbersome multi-line branch blocks:</p>\n            <pre><code class=\"language-verscript\">set status: if score >= 75 then \"Passed\" else \"Retry\"\nset clamped: if val > 100 then 100 else (if val < 0 then 0 else val)</code></pre>\n\n            <h2>The Pipeline Operator (<code>|></code>)</h2>\n            <p>The pipeline operator passes the result of the left-hand expression as the first argument to the right-hand function or library method, enabling clean functional chaining:</p>\n            <pre><code class=\"language-verscript\">def func double(x):\n    reply x * 2\n\ndef func add_five(x):\n    reply x + 5\n\nset result: 10 |> double |> add_five\ndisplay result ! outputs 25\n\nset formatted: \"verscript\" |> Strings.toUpper\ndisplay formatted ! outputs \"VERSCRIPT\"</code></pre>\n\n            <h2>Enhanced Pattern Matching with <code>case</code> &amp; Guards</h2>\n            <p>The <code>match</code> statement supports <code>case</code> keywords, wildcard <code>_</code> matching, and conditional guard clauses (<code>if condition</code>):</p>\n            <pre><code class=\"language-verscript\">match response_code:\n    case 200:\n        display \"Success\" ?color=\"green\"\n    case 404:\n        display \"Resource Missing\" ?color=\"yellow\"\n    case _ if response_code >= 500:\n        display \"Critical Server Outage\" ?color=\"red\"\n    else:\n        display \"Unknown Code\"</code></pre>\n  ",
+    "codeBlocks": [
+        {
+            "id": "cb_ch54_1",
+            "title": "headers_and_features.vrs",
+            "code": "! VerScript Modern Language Ergonomics Demo\n\nenum Priority: Low = 1, Medium = 2, High = 3\n\nstruct Job:\n    id: num\n    priority: num\n\ndef func describe_job(p):\n    set label: if p == Priority.High then \"CRITICAL\" else \"STANDARD\"\n    reply label\n\nset task: Job(101, Priority.High)\nset tag: task.priority |> describe_job\ndisplay \"Job #\" + task.id + \" Status: \" + tag ?color=\"green\""
+        }
+    ],
+    "exercises": [
+        {
+            "id": "ex_ch54_1",
+            "title": "Exercise 54.1: First-Class Enum & Ternary",
+            "prompt": "Define an enum <code>Mode</code> with values <code>Debug = 0</code> and <code>Release = 1</code>. Then create variable <code>current_mode : Mode.Release</code> and use a ternary expression to display <code>\"Production\"</code> if <code>current_mode == Mode.Release</code> else <code>\"Development\"</code>.",
+            "starterCode": "! TODO: Define enum Mode and use ternary expression\n",
+            "hint": "Use `enum Mode: Debug = 0, Release = 1` and `display (if current_mode == Mode.Release then \"Production\" else \"Development\")`.",
+            "solution": "enum Mode: Debug = 0, Release = 1\nset current_mode: Mode.Release\nset out_str: if current_mode == Mode.Release then \"Production\" else \"Development\"\ndisplay out_str",
+            "expectedMatch": {}
+        },
+        {
+            "id": "ex_ch54_2",
+            "title": "Exercise 54.2: Pipeline Chaining with Structs",
+            "prompt": "Declare a struct <code>Coordinate: x: num, y: num</code>. Instantiate <code>c: Coordinate(4, 9)</code>. Write a function <code>def func get_sum(coord): reply coord.x + coord.y</code> and pipe <code>c |> get_sum</code> to display the sum.",
+            "starterCode": "! TODO: Declare Coordinate, instantiate it, and pipe to get_sum\n",
+            "hint": "Use `struct Coordinate: x: num, y: num`, `def func get_sum(coord): reply coord.x + coord.y`, and `set total: c |> get_sum`.",
+            "solution": "struct Coordinate: x: num, y: num\ndef func get_sum(coord):\n    reply coord.x + coord.y\nset c: Coordinate(4, 9)\nset total: c |> get_sum\ndisplay total",
+            "expectedMatch": {}
+        }
+    ]
+},
   {
     "id": "ch20-master-cheatsheet",
-    "number": 54,
+    "number": 55,
     "section": "Section 15: Reference & Complete Language Specification",
     "title": "Master Language Specification & Complete Attribute Cheatsheet",
     "category": "Quick Reference",
