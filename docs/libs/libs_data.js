@@ -12,6 +12,234 @@
 
 const CORE_LIBRARIES = [
   {
+    "id": "lib-xml",
+    "name": "Xml",
+    "category": "Data & Formats",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load Xml as xml",
+    "summary": "Lightweight XML and HTML DOM parser, node tree builder, and hierarchical query selector.",
+    "description": "<code>Xml</code> provides structured document parsing for XML and HTML feeds, configuration files, and web scraping. Features nested sub-libraries <code>Xml.Node</code> and <code>Xml.Query</code> for tree extraction and tag search. Requires explicit loading with <code>load Xml [as xml]</code>.",
+    "meta": {
+      "static": { "author": "Web & Data WG", "standard": "W3C-XML", "distribution": "packages/Xml.lib.vrs" },
+      "dynamic": { "nodesParsed": 0, "architecture": "Sub-Libraries (Xml.Node, Xml.Query)" },
+      "thisstatic": { "spec": "XML 1.0" }
+    },
+    "subLibraries": [
+      {
+        "name": "Xml.Node",
+        "importSyntax": "from Xml import Node  ! or: import Xml.Node as node",
+        "desc": "Sub-library for constructing and inspecting XML tag and text nodes.",
+        "functions": [
+          { "name": "createTag tag attrs children", "params": "tag: str, attrs: arr, children: arr", "returnType": "arr", "desc": "Constructs a tag node descriptor [\"tag\", tag, attrs, children]." },
+          { "name": "createText text", "params": "text: str", "returnType": "arr", "desc": "Constructs a raw text node descriptor [\"text\", text, [], []]." },
+          { "name": "getTag node", "params": "node: arr", "returnType": "str", "desc": "Returns the tag name string of the target node." },
+          { "name": "getChildren node", "params": "node: arr", "returnType": "arr", "desc": "Returns an array of child nodes inside target element." },
+          { "name": "isTag node", "params": "node: arr", "returnType": "bool", "desc": "Returns true if node is an element tag node." }
+        ]
+      },
+      {
+        "name": "Xml.Query",
+        "importSyntax": "from Xml import Query  ! or: import Xml.Query as q",
+        "desc": "Sub-library for hierarchical tag query matching and recursive text extraction.",
+        "functions": [
+          { "name": "findByTag node targetTag", "params": "node: arr, targetTag: str", "returnType": "arr", "desc": "Recursively collects all nodes matching targetTag." },
+          { "name": "extractText node", "params": "node: arr", "returnType": "str", "desc": "Recursively concatenates inner text content of node and its descendants." }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "parse xmlStr", "params": "xmlStr: str", "returnType": "arr", "desc": "Parses XML/HTML text into an in-memory node hierarchy.", "aliases": "loadXml" },
+      { "name": "stringify node", "params": "node: arr", "returnType": "str", "desc": "Serializes an XML node tree back into a formatted XML string.", "aliases": "serialize" },
+      { "name": "find node targetTag", "params": "node: arr, targetTag: str", "returnType": "arr", "desc": "Finds all descendant elements matching tag name.", "aliases": "selectTags" },
+      { "name": "text node", "params": "node: arr", "returnType": "str", "desc": "Extracts inner text content from element.", "aliases": "textContent" }
+    ],
+    "codeSnippet": "load Xml as xml\nfrom Xml import Query\n\nset doc: xml.parse(\"<article><title>VerScript Architecture</title><author>Core</author></article>\")\nset titleNode: xml.find(doc, \"title\")[0]\ndisplay \"Title: \" + Query.extractText(titleNode)",
+    "interactiveExample": "load Xml as xml\nfrom Xml import Query\n\nset xmlData: \"<config><server><host>127.0.0.1</host><port>8080</port></server></config>\"\nset doc: xml.parse(xmlData)\nset hostNode: xml.find(doc, \"host\")[0]\ndisplay \"Configured Host: \" + Query.extractText(hostNode) ?color=\"green\""
+  },
+  {
+    "id": "lib-sql",
+    "name": "Sql",
+    "category": "Data & Formats",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load Sql as sql",
+    "summary": "Fluent SQL query generator, parameter sanitization, and in-memory mock table store.",
+    "description": "<code>Sql</code> enables type-safe, fluent SQL query construction without string concatenation errors. Houses sub-libraries <code>Sql.Query</code> (fluent builder) and <code>Sql.Table</code> (in-memory relational store). Requires explicit loading with <code>load Sql [as sql]</code>.",
+    "meta": {
+      "static": { "author": "Database WG", "dialect": "ANSI-SQL", "distribution": "packages/Sql.lib.vrs" },
+      "dynamic": { "queriesBuilt": 0, "architecture": "Sub-Libraries (Sql.Query, Sql.Table)" },
+      "thisstatic": { "quoting": "Single Quote Sanitization" }
+    },
+    "subLibraries": [
+      {
+        "name": "Sql.Query",
+        "importSyntax": "from Sql import Query  ! or: import Sql.Query as sq",
+        "desc": "Sub-library for declarative fluent query generation.",
+        "functions": [
+          { "name": "select fields", "params": "fields: arr", "returnType": "arr", "desc": "Initiates query with projection columns." },
+          { "name": "from q table", "params": "q: arr, table: str", "returnType": "arr", "desc": "Sets target source table for query." },
+          { "name": "where q condition", "params": "q: arr, condition: str", "returnType": "arr", "desc": "Appends WHERE filter predicate to query." },
+          { "name": "limit q maxRows", "params": "q: arr, maxRows: num", "returnType": "arr", "desc": "Appends LIMIT ceiling to query." },
+          { "name": "build q", "params": "q: arr", "returnType": "str", "desc": "Compiles structured query record into formatted SQL string." }
+        ]
+      },
+      {
+        "name": "Sql.Table",
+        "importSyntax": "from Sql import Table  ! or: import Sql.Table as tbl",
+        "desc": "Sub-library for in-memory mock table storage and record insertion.",
+        "functions": [
+          { "name": "create name columns", "params": "name: str, columns: arr", "returnType": "arr", "desc": "Allocates table descriptor [name, columns, rows]." },
+          { "name": "insert table row", "params": "table: arr, row: arr", "returnType": "bool", "desc": "Appends row tuple to table." },
+          { "name": "all table", "params": "table: arr", "returnType": "arr", "desc": "Retrieves all rows in table." },
+          { "name": "count table", "params": "table: arr", "returnType": "num", "desc": "Returns row count in table." }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "query table cols", "params": "table: str, cols: arr", "returnType": "arr", "desc": "Shorthand for initializing query builder with table and columns." },
+      { "name": "sanitize val", "params": "val: any", "returnType": "str", "desc": "Escapes single quotes and formats SQL literals.", "aliases": "escape" },
+      { "name": "createTable name cols", "params": "name: str, cols: arr", "returnType": "arr", "desc": "Creates in-memory mock relational table.", "aliases": "table" }
+    ],
+    "codeSnippet": "load Sql as sql\nimport Sql.Query as sq\n\nset q: sq.select([\"id\", \"email\", \"status\"])\nset q2: sq.from(q, \"users\")\nset q3: sq.where(q2, \"status = 'active'\")\ndisplay \"Query: \" + sq.build(q3)",
+    "interactiveExample": "load Sql as sql\nimport Sql.Query as sq\n\nset q: sq.select([\"order_id\", \"amount\", \"created_at\"])\nset q2: sq.from(q, \"orders\")\nset q3: sq.where(q2, \"amount > 100\")\ndisplay \"Generated SQL: \" + sq.build(q3) ?color=\"yellow\""
+  },
+  {
+    "id": "lib-terminalui",
+    "name": "TerminalUI",
+    "category": "Game & Utilities",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load TerminalUI as tui",
+    "summary": "Console framing, banners, stylized visual boxes, animated spinners, and ASCII progress bars.",
+    "description": "<code>TerminalUI</code> provides command-line dashboard styling, status cards, and visual progress indicators for CLI tools and build monitors. Houses sub-libraries <code>TerminalUI.Box</code> and <code>TerminalUI.Bar</code>. Requires explicit loading with <code>load TerminalUI [as tui]</code>.",
+    "meta": {
+      "static": { "author": "CLI Experience WG", "encoding": "ASCII & UTF-8", "distribution": "packages/TerminalUI.lib.vrs" },
+      "dynamic": { "framesRendered": 0, "architecture": "Sub-Libraries (TerminalUI.Box, TerminalUI.Bar)" },
+      "thisstatic": { "boxStyle": "Single & Double Line Borders" }
+    },
+    "subLibraries": [
+      {
+        "name": "TerminalUI.Box",
+        "importSyntax": "from TerminalUI import Box  ! or: import TerminalUI.Box as box",
+        "desc": "Sub-library for generating bordered status cards and announcement frames.",
+        "functions": [
+          { "name": "single text title", "params": "text: str, title: str", "returnType": "str", "desc": "Wraps text in a single-line bordered box with header title." },
+          { "name": "double text title", "params": "text: str, title: str", "returnType": "str", "desc": "Wraps text in a double-line bordered box with header title." }
+        ]
+      },
+      {
+        "name": "TerminalUI.Bar",
+        "importSyntax": "from TerminalUI import Bar  ! or: import TerminalUI.Bar as bar",
+        "desc": "Sub-library for visual horizontal percentage progress bars and gauge meters.",
+        "functions": [
+          { "name": "progress percent width", "params": "percent: num, width: num", "returnType": "str", "desc": "Renders a percentage progress bar [=====    ] 50%." },
+          { "name": "meter val min max width", "params": "val: num, min: num, max: num, width: num", "returnType": "str", "desc": "Renders normalized meter bar between bounds." }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "banner title subtitle", "params": "title: str, subtitle: str", "returnType": "str", "desc": "Renders high-impact console banner header.", "aliases": "header" },
+      { "name": "spinner frameIdx", "params": "frameIdx: num", "returnType": "str", "desc": "Returns cyclic animation spinner character (-, \\, |, /).", "aliases": "tick" },
+      { "name": "badge label", "params": "label: str", "returnType": "str", "desc": "Wraps label in bracketed badge [STATUS].", "aliases": "pill" }
+    ],
+    "codeSnippet": "load TerminalUI as tui\nimport TerminalUI.Box as box\nimport TerminalUI.Bar as bar\n\ndisplay box.single(\"BUILD PIPELINE SUCCESSFUL\", \"STATUS\")\ndisplay bar.progress(85, 20)",
+    "interactiveExample": "load TerminalUI as tui\nimport TerminalUI.Bar as bar\n\ndisplay tui.banner(\"VERSCRIPT ARCHITECTURE\", \"Community Package Hub\") ?color=\"cyan\"\ndisplay \"Download Progress: \" + bar.progress(90, 24) ?color=\"green\""
+  },
+  {
+    "id": "lib-archive",
+    "name": "Archive",
+    "category": "Testing & Concurrency",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load Archive as arc",
+    "summary": "Multi-file packaging archives and semantic versioning parser and comparison utilities.",
+    "description": "<code>Archive</code> delivers in-memory archive bundling and semantic version (SemVer) comparison for package distribution. Features sub-libraries <code>Archive.Zip</code> and <code>Archive.Semver</code>. Requires explicit loading with <code>load Archive [as arc]</code>.",
+    "meta": {
+      "static": { "author": "Package Taskforce", "standard": "SemVer 2.0 & Bundle", "distribution": "packages/Archive.lib.vrs" },
+      "dynamic": { "bundlesCreated": 0, "architecture": "Sub-Libraries (Archive.Zip, Archive.Semver)" },
+      "thisstatic": { "compression": "In-Memory Stream" }
+    },
+    "subLibraries": [
+      {
+        "name": "Archive.Zip",
+        "importSyntax": "from Archive import Zip  ! or: import Archive.Zip as zip",
+        "desc": "Sub-library for in-memory file packing, extraction, and file cataloging.",
+        "functions": [
+          { "name": "create", "params": "none", "returnType": "arr", "desc": "Creates empty zip archive record [\\\"zip\\\", [], []]." },
+          { "name": "add archive path content", "params": "archive: arr, path: str, content: str", "returnType": "bool", "desc": "Adds virtual file to archive." },
+          { "name": "get archive path", "params": "archive: arr, path: str", "returnType": "str", "desc": "Reads content of file inside archive." },
+          { "name": "files archive", "params": "archive: arr", "returnType": "arr", "desc": "Returns list of file paths inside archive." }
+        ]
+      },
+      {
+        "name": "Archive.Semver",
+        "importSyntax": "from Archive import Semver  ! or: import Archive.Semver as sem",
+        "desc": "Sub-library for semantic version string parsing and major.minor.patch comparisons.",
+        "functions": [
+          { "name": "parse verStr", "params": "verStr: str", "returnType": "arr", "desc": "Deconstructs semantic version string into [major, minor, patch] components." },
+          { "name": "compare v1 v2", "params": "v1: str, v2: str", "returnType": "num", "desc": "Returns 1 if v1 > v2, -1 if v1 < v2, or 0 if equal." },
+          { "name": "isGreater v1 v2", "params": "v1: str, v2: str", "returnType": "bool", "desc": "Returns true if version v1 is strictly newer than v2." }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "bundle fileNames fileContents", "params": "fileNames: arr, fileContents: arr", "returnType": "str", "desc": "Bundles multiple files and contents into serialized package string.", "aliases": "pack" },
+      { "name": "extract bundleStr", "params": "bundleStr: str", "returnType": "arr", "desc": "Unpacks serialized bundle string into array of [path, content] pairs.", "aliases": "unpack" }
+    ],
+    "codeSnippet": "load Archive as arc\nfrom Archive import Semver\n\nset newer: Semver.isGreater(\"2.0.0\", \"1.9.9\")\ndisplay \"2.0.0 > 1.9.9: \" + newer",
+    "interactiveExample": "load Archive as arc\nfrom Archive import Semver\nfrom Archive import Zip\n\nset z: Zip.create()\nZip.add(z, \"index.vrs\", \"display 'Hello World'\")\ndisplay \"Archive Files: \" + Zip.files(z).join(\", \") ?color=\"cyan\"\ndisplay \"SemVer Check (3.0.0 > 2.5.0): \" + Semver.isGreater(\"3.0.0\", \"2.5.0\") ?color=\"green\""
+  },
+  {
+    "id": "lib-tensor",
+    "name": "Tensor",
+    "category": "Graphics & 3D",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load Tensor as tensor",
+    "summary": "Vector and matrix linear algebra primitives, activation functions, and neural dot products.",
+    "description": "<code>Tensor</code> delivers foundational numerical mathematics for neural networks, game physics vectors, and data transformations. Houses sub-libraries <code>Tensor.Ops</code> and <code>Tensor.Activation</code>. Requires explicit loading with <code>load Tensor [as tensor]</code>.",
+    "meta": {
+      "static": { "author": "AI & Math WG", "domain": "Linear Algebra & Neural", "distribution": "packages/Tensor.lib.vrs" },
+      "dynamic": { "opsExecuted": 0, "architecture": "Sub-Libraries (Tensor.Ops, Tensor.Activation)" },
+      "thisstatic": { "precision": "Fixed/Floating Numeric Arrays" }
+    },
+    "subLibraries": [
+      {
+        "name": "Tensor.Ops",
+        "importSyntax": "from Tensor import Ops  ! or: import Tensor.Ops as ops",
+        "desc": "Sub-library for elementwise vector mathematics and vector dot products.",
+        "functions": [
+          { "name": "add a b", "params": "a: arr, b: arr", "returnType": "arr", "desc": "Computes elementwise addition of two vectors." },
+          { "name": "sub a b", "params": "a: arr, b: arr", "returnType": "arr", "desc": "Computes elementwise subtraction of two vectors." },
+          { "name": "mul a b", "params": "a: arr, b: arr", "returnType": "arr", "desc": "Computes elementwise multiplication of two vectors." },
+          { "name": "dot a b", "params": "a: arr, b: arr", "returnType": "num", "desc": "Computes dot product sum(a[i] * b[i]) of two vectors." },
+          { "name": "scale arr factor", "params": "arr: arr, factor: num", "returnType": "arr", "desc": "Multiplies each vector element by scalar factor." }
+        ]
+      },
+      {
+        "name": "Tensor.Activation",
+        "importSyntax": "from Tensor import Activation  ! or: import Tensor.Activation as act",
+        "desc": "Sub-library for neural activation functions and numerical clamping.",
+        "functions": [
+          { "name": "relu x", "params": "x: num", "returnType": "num", "desc": "Rectified Linear Unit: returns max(0, x)." },
+          { "name": "step x", "params": "x: num", "returnType": "num", "desc": "Heaviside step function: returns 1 if x >= 0, else 0." },
+          { "name": "clampVal x minVal maxVal", "params": "x: num, minVal: num, maxVal: num", "returnType": "num", "desc": "Constrains value between minVal and maxVal bounds." }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "zeros count", "params": "count: num", "returnType": "arr", "desc": "Creates vector filled with count zeros.", "aliases": "zeroVector" },
+      { "name": "ones count", "params": "count: num", "returnType": "arr", "desc": "Creates vector filled with count ones.", "aliases": "oneVector" },
+      { "name": "dot a b", "params": "a: arr, b: arr", "returnType": "num", "desc": "Computes dot product of two vectors." },
+      { "name": "relu x", "params": "x: num", "returnType": "num", "desc": "Applies ReLU non-linear activation." }
+    ],
+    "codeSnippet": "load Tensor as tensor\nimport Tensor.Ops as ops\nfrom Tensor import Activation\n\nset dot: ops.dot([1, 2, 3], [4, 5, 6])\ndisplay \"Dot Product: \" + dot\ndisplay \"ReLU(-5): \" + Activation.relu(-5)\ndisplay \"ReLU(10): \" + Activation.relu(10)",
+    "interactiveExample": "load Tensor as tensor\nimport Tensor.Ops as ops\nfrom Tensor import Activation\n\nset v1: [2, 4, 6]\nset v2: [1, 3, 5]\nset dot: ops.dot(v1, v2)\ndisplay \"Vector Dot Product: \" + dot ?color=\"cyan\"\ndisplay \"ReLU Active: \" + Activation.relu(dot) ?color=\"green\""
+  },
+
+
+  {
     "id": "lib-virtualfs",
     "name": "VirtualFS",
     "category": "File & Storage",
