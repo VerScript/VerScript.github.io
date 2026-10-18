@@ -107,6 +107,61 @@ function renderSidebarList(libsToRender) {
 }
 
 // ─── LOAD LIBRARY VIEW ─────────────────────────────────────────────
+
+function renderBeginnerGuide(lib) {
+    if (!lib.beginnerGuide) return '';
+    const bg = lib.beginnerGuide;
+    return `
+    <section class="lib-section">
+        <div class="beginner-card">
+            <div class="beginner-title">
+                <span>🌱</span>
+                <span>Beginner's Fast Track &amp; Mental Model</span>
+            </div>
+            <div class="analogy-box">
+                <strong>💡 Intuitive Analogy:</strong> ${escapeHTML(bg.analogy)}
+            </div>
+            <div class="fast-track-grid">
+                ${bg.fastTrack.map(st => `
+                    <div class="fast-track-step">
+                        <span class="step-num">${st.step}</span>
+                        <span class="step-desc">${st.desc}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="callout-row">
+                <div class="tip-callout">
+                    <strong>💡 Pro-Tip:</strong> ${bg.proTip}
+                </div>
+                <div class="gotcha-callout">
+                    <strong>⚠️ Common Gotcha:</strong> ${bg.gotcha}
+                </div>
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+function renderInteractiveCodeBlocks(lib) {
+    if (!lib.codeBlocks || lib.codeBlocks.length === 0) return '';
+    return `
+    <section class="lib-section">
+        <div class="section-title-row">
+            <h2>Interactive Code Walkthroughs</h2>
+            <span class="meta-protection-tag" style="background: rgba(0, 255, 204, 0.15); color: #00FFCC; border-color: rgba(0, 255, 204, 0.3);">▶ Live Execution</span>
+        </div>
+        <p>Each example below is an interactive, fully runnable program. Click <strong>▶ Run Code</strong> on any block to see real-time output, or modify the code directly to test your own ideas!</p>
+        ${lib.codeBlocks.map((cb) => `
+            <div style="margin-bottom: 28px;">
+                <h3 style="margin: 0 0 6px 0; color: #00FFCC; font-size: 1.15rem;">${escapeHTML(cb.title)}</h3>
+                <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: var(--text-muted);">${escapeHTML(cb.desc)}</p>
+                ${renderRunBox(cb.id, `${cb.id}.vrs`, cb.code)}
+            </div>
+        `).join('')}
+    </section>
+    `;
+}
+
 function loadLibrary(index) {
     if (index < 0 || index >= CORE_LIBRARIES.length) return;
     currentLibIndex = index;
@@ -263,7 +318,7 @@ function loadLibrary(index) {
         <section class="lib-section">
             <h2>Interactive Sandbox</h2>
             <p>Run, test, and modify live VerScript code utilizing <code>${escapeHTML(lib.name)}</code> directly in your browser:</p>
-            ${renderRunBox('sandbox_' + lib.id, `test_${lib.name.toLowerCase()}.vrs`, lib.runnableExample)}
+            ${renderRunBox('sandbox_' + lib.id, `playground_${lib.name.toLowerCase()}.vrs`, lib.interactiveExample || lib.codeSnippet || '')}
         </section>
 
         <nav class="page-nav">
