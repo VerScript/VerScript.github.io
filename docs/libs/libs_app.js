@@ -38,7 +38,7 @@ function initLibsApp() {
 
 // ─── CATEGORY FILTER PILLS ─────────────────────────────────────────
 function renderCategoryPills() {
-    const categories = ["All", "Authoring & Specs", "Graphics & 3D", "Data & Formats", "Game & Utilities", "Testing & Concurrency"];
+    const categories = ["All", "File & Storage", "Authoring & Specs", "Graphics & 3D", "Data & Formats", "Game & Utilities", "Testing & Concurrency"];
     categoryPillsEl.innerHTML = categories.map(cat => `
         <button class="cat-pill ${currentCategoryFilter === cat ? 'active' : ''}" data-cat="${escapeHTML(cat)}">
             ${escapeHTML(cat)}
@@ -147,6 +147,46 @@ function loadLibrary(index) {
             <td>${escapeHTML(f.desc)}</td>
         </tr>
     `).join('');
+
+    
+    let subLibsHtml = '';
+    if (lib.subLibraries && lib.subLibraries.length > 0) {
+        subLibsHtml = `
+        <section class="lib-section">
+            <div class="section-title-row">
+                <h2>Nested Sub-Libraries Architecture</h2>
+                <span class="meta-protection-tag" style="background: rgba(0, 255, 204, 0.15); color: #00FFCC; border-color: rgba(0, 255, 204, 0.3);">⚡ Sub-Lib Feature</span>
+            </div>
+            <p>VerScript allows libraries to define nested sub-libraries inside their body. Sub-libraries can be accessed via qualified dot notation (<code>${escapeHTML(lib.name)}.SubLib.func()</code>) or selectively imported using <code>from ${escapeHTML(lib.name)} import SubLib</code> or <code>import ${escapeHTML(lib.name)}.SubLib as alias</code>.</p>
+            ${lib.subLibraries.map(sub => `
+                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px 20px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <h3 style="margin: 0; color: #00FFCC; font-size: 1.15rem; font-family: 'Fira Code', monospace;">${escapeHTML(sub.name)}</h3>
+                        <code style="background: rgba(0, 0, 0, 0.4); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #FFD166;">${escapeHTML(sub.importSyntax)}</code>
+                    </div>
+                    <p style="margin: 0 0 14px 0; font-size: 0.9rem; color: var(--text-muted);">${escapeHTML(sub.desc)}</p>
+                    <div class="table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Method</th><th>Parameters</th><th>Return</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                ${sub.functions.map(sf => `
+                                    <tr>
+                                        <td style="font-family: 'Fira Code', monospace; color: var(--primary); font-weight: 600;">${escapeHTML(sf.name)}</td>
+                                        <td style="font-family: 'Fira Code', monospace; color: #FFD166;">${escapeHTML(sf.params)}</td>
+                                        <td><span class="return-type-pill">${escapeHTML(sf.returnType)}</span></td>
+                                        <td>${escapeHTML(sf.desc)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `).join('')}
+        </section>
+        `;
+    }
 
     mainContentEl.innerHTML = `
         <div class="graduation-banner" style="background: linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(157, 0, 255, 0.08)); border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; display: flex; gap: 16px; align-items: flex-start;">
@@ -314,6 +354,19 @@ function simulateVerScript(code) {
     const lines = code.split('\n');
     let out = [];
     const vars = {};
+
+    const simVfs = {
+        dirs: ['/'],
+        files: {},
+        pwd: '/',
+        mkdir(p) { if (!this.dirs.includes(p)) this.dirs.push(p); return true; },
+        writeFile(p, c) { this.files[p] = c; return true; },
+        readFile(p) { return this.files[p] !== undefined ? this.files[p] : ''; },
+        exists(p) { return this.dirs.includes(p) || (p in this.files); },
+        pwdMethod() { return this.pwd; },
+        ls(p) { return Object.keys(this.files).filter(k => k.startsWith(p)); }
+    };
+
 
     function evalLibExpr(expr) {
         let clean = expr;

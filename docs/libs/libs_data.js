@@ -12,6 +12,74 @@
 
 const CORE_LIBRARIES = [
   {
+    "id": "lib-virtualfs",
+    "name": "VirtualFS",
+    "category": "File & Storage",
+    "version": "1.0.0",
+    "status": "Loaded Community Package",
+    "loadSyntax": "load VirtualFS as vfs",
+    "summary": "In-memory hierarchical virtual filesystem with nested sub-libraries (VirtualFS.Path, VirtualFS.Node), isolated sandboxing, file CRUD, directory listing, and state persistence.",
+    "description": "<code>VirtualFS</code> is the premier VerScript community package for in-memory file trees and sandboxed virtual environments. It demonstrates VerScript's <strong>Sub-Library Architecture</strong> (nested libraries inside libraries), selective imports (<code>from VirtualFS import Path</code>, <code>import VirtualFS.Path as p</code>), and stateful dynamic routines. Requires explicit loading with <code>load VirtualFS [as vfs]</code>.",
+    "meta": {
+      "static": {
+        "author": "VerScript Community Ecosystem",
+        "standard": "VRS-VFS-2026",
+        "distribution": "packages/VirtualFS.lib.vrs"
+      },
+      "dynamic": {
+        "activeMount": "/",
+        "architecture": "Sub-Libraries (VirtualFS.Path, VirtualFS.Node)"
+      },
+      "thisstatic": {
+        "storage": "In-Memory RAM Tree"
+      }
+    },
+    "subLibraries": [
+      {
+        "name": "VirtualFS.Path",
+        "importSyntax": "from VirtualFS import Path  ! or: import VirtualFS.Path as p",
+        "desc": "Sub-library for path normalization, concatenation, directory name resolution, extension extraction, and basename calculation.",
+        "functions": [
+          { "name": "join a b", "params": "a: str, b: str", "returnType": "str", "desc": "Joins two path segments with standard forward slashes.", "aliases": "combine" },
+          { "name": "normalize path", "params": "path: str", "returnType": "str", "desc": "Resolves redundant trailing slashes and ensures standard root prefix.", "aliases": "cleanPath" },
+          { "name": "dirname path", "params": "path: str", "returnType": "str", "desc": "Returns directory path of target file or folder.", "aliases": "parentDir" },
+          { "name": "basename path", "params": "path: str", "returnType": "str", "desc": "Returns filename or final path component.", "aliases": "fileName" },
+          { "name": "extname path", "params": "path: str", "returnType": "str", "desc": "Returns file extension (including dot) or empty string.", "aliases": "fileExt" }
+        ]
+      },
+      {
+        "name": "VirtualFS.Node",
+        "importSyntax": "from VirtualFS import Node  ! or: import VirtualFS.Node as n",
+        "desc": "Sub-library for constructing file and directory AST/inode node records.",
+        "functions": [
+          { "name": "createFile name content", "params": "name: str, content: str", "returnType": "arr", "desc": "Constructs a file descriptor node [\"file\", name, content].", "aliases": "mkFileNode" },
+          { "name": "createDir name", "params": "name: str", "returnType": "arr", "desc": "Constructs a directory descriptor node [\"dir\", name, []].", "aliases": "mkDirNode" },
+          { "name": "isDirNode node", "params": "node: arr", "returnType": "bool", "desc": "Returns true if node represents a directory node.", "aliases": "checkDir" }
+        ]
+      }
+    ],
+    "functions": [
+      { "name": "pwd", "params": "none", "returnType": "str", "desc": "Returns the current working directory inside the virtual filesystem.", "aliases": "cwd" },
+      { "name": "cd target", "params": "target: str", "returnType": "str", "desc": "Changes working directory to target (supports '..' and absolute/relative paths).", "aliases": "chdir" },
+      { "name": "mkdir path", "params": "path: str", "returnType": "bool", "desc": "Creates directory recursively in virtual filesystem tree.", "aliases": "makeDirectory" },
+      { "name": "writeFile path content", "params": "path: str, content: str", "returnType": "bool", "desc": "Writes content string to path, auto-creating parent directories.", "aliases": "write" },
+      { "name": "readFile path", "params": "path: str", "returnType": "str", "desc": "Reads and returns content string of virtual file. Throws FileError if absent.", "aliases": "read" },
+      { "name": "appendFile path text", "params": "path: str, text: str", "returnType": "bool", "desc": "Appends text to existing virtual file, creating if nonexistent.", "aliases": "append" },
+      { "name": "deleteFile path", "params": "path: str", "returnType": "bool", "desc": "Deletes file or directory from virtual file system.", "aliases": "rm" },
+      { "name": "ls path", "params": "path: str", "returnType": "arr", "desc": "Returns child file and folder names inside target directory.", "aliases": "list" },
+      { "name": "exists path", "params": "path: str", "returnType": "bool", "desc": "Returns true if virtual file or directory exists at path.", "aliases": "has" },
+      { "name": "isDir path", "params": "path: str", "returnType": "bool", "desc": "Returns true if path exists and is a directory.", "aliases": "directoryExists" },
+      { "name": "isFile path", "params": "path: str", "returnType": "bool", "desc": "Returns true if path exists and is a regular file.", "aliases": "fileExists" },
+      { "name": "size path", "params": "path: str", "returnType": "num", "desc": "Returns character length of virtual file.", "aliases": "fileLength" },
+      { "name": "exportJson", "params": "none", "returnType": "str", "desc": "Serializes virtual filesystem state into persistent snapshot string.", "aliases": "snapshot" },
+      { "name": "importJson snapshot", "params": "snapshot: str", "returnType": "bool", "desc": "Restores virtual filesystem tree from snapshot string.", "aliases": "restore" },
+      { "name": "reset", "params": "none", "returnType": "bool", "desc": "Resets virtual filesystem to clean root directory with no files.", "aliases": "clear" }
+    ],
+    "codeSnippet": "! Loading VirtualFS with alias and using sub-library\nload VirtualFS as vfs\nfrom VirtualFS import Path\n\nvfs.mkdir(\"/etc/nginx\")\nvfs.writeFile(\"/etc/nginx/nginx.conf\", \"worker_processes 4;\")\nset conf: vfs.readFile(\"/etc/nginx/nginx.conf\")\ndisplay \"Read Config: \" + conf\n\nset joined: Path.join(\"/var/log\", \"vfs.log\")\ndisplay \"Joined Path: \" + joined",
+    "interactiveExample": "! Interactive VirtualFS Demo\nload VirtualFS as vfs\n\nvfs.mkdir(\"/var/www\")\nvfs.writeFile(\"/var/www/index.html\", \"<h1>Welcome to VerScript VFS!</h1>\")\n\ndisplay \"PWD: \" + vfs.pwd() ?color=\"cyan\"\ndisplay \"File Exists: \" + vfs.exists(\"/var/www/index.html\") ?color=\"green\"\ndisplay \"Content: \" + vfs.readFile(\"/var/www/index.html\") ?color=\"yellow\""
+  },
+
+  {
     "id": "lib-package-spec",
     "name": "CommunityPackageSpec",
     "category": "Authoring & Specs",
