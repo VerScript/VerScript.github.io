@@ -312,7 +312,7 @@ function renderExerciseCard(ex, indexNum) {
 }
 
 // ─── CODE EXECUTION ENGINE (CLOUD + SIMULATOR FALLBACK) ────────────
-async function executeCode(code) {
+async function executeCode(code, files = null) {
     // 1. Try PolyServer remote C binary execution
     try {
         const controller = new AbortController();
@@ -320,7 +320,7 @@ async function executeCode(code) {
         const res = await fetch(`${POLYSERVER_API}/run`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
+            body: JSON.stringify({ code, files }),
             signal: controller.signal
         });
         clearTimeout(timeoutId);
@@ -339,7 +339,7 @@ async function executeCode(code) {
     }
 
     // 2. Client-side VerScript Simulator
-    return simulateVerScript(code);
+    return simulateVerScript(code, files);
 }
 
 // ─── ANSI TO HTML CONVERTER ─────────────────────────────────────────
@@ -547,8 +547,15 @@ function simulateVerScript(code) {
                 vars[vname] = defMatch ? defMatch[1] : 'SampleInput';
                 i++;
             }
-            // Header / Config / Enum / Struct / DataType definition blocks
-            else if (line.startsWith('DataType ') || line.startsWith('config:') || line.startsWith('struct:') || line.startsWith('struct ') || line.startsWith('header ')) {
+            // Header / Config / Enum / Struct / DataType definition blocks, pragmas, export, includes
+            else if (line.startsWith('pragma ') || line.startsWith('include ') || line.startsWith('export ') || line.startsWith('DataType ') || line.startsWith('config:') || line.startsWith('struct:') || line.startsWith('struct ') || line.startsWith('header ')) {
+                if (line.startsWith('pragma ') || line.startsWith('include ')) {
+                    i++;
+                    continue;
+                }
+                if (line.startsWith('export ')) {
+                    line = line.substring(7).trim();
+                }
                 i++;
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
                     i++;
@@ -1110,11 +1117,15 @@ window.executeRunBox = async function(id, isJS = false) {
 
     let code = '';
     const multiFiles = window.RUNBOX_FILES_REGISTRY && window.RUNBOX_FILES_REGISTRY[id];
+    let filesPayload = null;
     if (multiFiles && multiFiles.length > 0) {
         const fileChunks = [];
+        filesPayload = [];
         multiFiles.forEach((f, idx) => {
             const ta = document.getElementById(`textarea_${id}_${idx}`);
-            fileChunks.push(ta ? ta.value : f.code);
+            const content = ta ? ta.value : f.code;
+            filesPayload.push({ name: f.name, content });
+            fileChunks.push(content);
         });
         code = fileChunks.join('\n\n');
     } else {
@@ -1154,7 +1165,7 @@ window.executeRunBox = async function(id, isJS = false) {
                 console.error = originalError;
             }
         } else {
-            const res = await executeCode(code);
+            const res = await executeCode(code, filesPayload);
             outputEl.className = "console-output" + (res.error ? " error" : " success");
             const fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
             outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
