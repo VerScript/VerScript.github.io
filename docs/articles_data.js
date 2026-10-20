@@ -1,2024 +1,2022 @@
-// ═══════════════════════════════════════════════════════════════════
-//  VerScript Academy — Complete Interactive Documentation Articles
-// ═══════════════════════════════════════════════════════════════════
+// VerScript Academy Official Curriculum: 69 Distinct, Focused Chapters
+// Generated automatically with complete Section -> Subsection -> Chapter taxonomy
 
-const ARTICLES = [
+const articlesData = [
   {
     "id": "ch1-intro",
     "number": 1,
-    "section": "Section 1: Getting Started & Setup",
-    "title": "Introduction & Language Architecture",
+    "section": "Section 1: Getting Started",
+    "subsection": "Foundations",
+    "title": "Welcome to VerScript",
     "category": "Getting Started",
-    "readTime": "4 min read",
-    "summary": "Discover VerScript's origin, design principles, lightweight native C virtual machine, and execution lifecycle.",
-    "body": "\n            <h2>What is VerScript?</h2>\n            <p><strong>VerScript</strong> is an ultra-fast, minimalist scripting language engineered to blend the deterministic execution and speed of native C with the high-level ergonomics of modern dynamic programming languages.</p>\n            <p>VerScript eliminates boilerplate punctuation (such as semicolons and excessive curly braces) in favor of indentation-scoped blocks and declarative statement structures.</p>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Core Architecture Pillars</div>\n                <p>Zero external runtime dependencies beyond standard C99, dynamic typing, integrated attribute system with <code>?key=value</code>, reactive watch conditions, polyglot code injection, and runtime command aliasing.</p>\n            </div>\n\n            <h2>Compilation &amp; VM Pipeline</h2>\n            <p>The VerScript runtime processes source code through a clean two-stage pipeline:</p>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Layer</th>\n                        <th>Component</th>\n                        <th>Responsibility</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><strong>Frontend</strong></td>\n                        <td><code>lexer.c</code></td>\n                        <td>Tokenizes source code, strips comments, computes line indentation depths, and tokenizes command attributes.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>Backend</strong></td>\n                        <td><code>main.c</code></td>\n                        <td>Executes bytecode instructions, evaluates dynamic expressions, manages symbol tables, and dispatches runtime error scopes.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>Cloud VM</strong></td>\n                        <td><code>PolyServer</code></td>\n                        <td>Unified Express microservice hosting the C compiler engine and VS#-1B neural language synthesis assistant.</td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <h2>Attribute Syntax Overview</h2>\n            <p>Commands in VerScript accept optional attributes prefixed with a question mark <code>?</code> (e.g. <code>?color=\"green\"</code> or unquoted <code>?color=#00ffcc</code>). Attributes configure command execution parameters dynamically without altering expression syntax.</p>\n        ",
-    "codeBlocks": [
-      {
-        "id": "cb_intro_1",
-        "title": "sample_intro.vrs",
-        "code": "! Welcome to VerScript!\ndisplay \"Hello, Polyglot World!\" ?color=\"cyan\"\ndisplay \"VerScript VM initialized cleanly.\" ?color=\"green\""
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_intro_1",
-        "title": "Exercise 1.1: Your First Output",
-        "prompt": "Write a program that outputs <code>\"Hello from VerScript!\"</code> with <code>?color=\"green\"</code>.",
-        "starterCode": "! TODO: Use 'display' to output \"Hello from VerScript!\" in green\n",
-        "hint": "Use `display \"Hello from VerScript!\" ?color=\"green\"`.",
-        "solution": "display \"Hello from VerScript!\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_intro_2",
-        "title": "Exercise 1.2: Two-line Status Report",
-        "prompt": "Display two consecutive lines: first <code>\"System Online\"</code> in cyan, then <code>\"Ready\"</code> in yellow.",
-        "starterCode": "! TODO: Write two display statements:\n! 1. \"System Online\" in cyan\n! 2. \"Ready\" in yellow\n",
-        "hint": "Write two separate `display` statements on individual lines.",
-        "solution": "display \"System Online\" ?color=\"cyan\"\ndisplay \"Ready\" ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_intro_3",
-        "title": "Exercise 1.3: Unquoted Hex Attribute",
-        "prompt": "Display <code>\"Hex Color Glow\"</code> using unquoted hex color <code>?color=#00ffcc</code>.",
-        "starterCode": "! TODO: Display \"Hex Color Glow\" with ?color=#00ffcc without quotes\n",
-        "hint": "Attributes like `?color=#00ffcc` do not require quotes.",
-        "solution": "display \"Hex Color Glow\" ?color=#00ffcc",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch2-lexical",
-    "number": 2,
-    "section": "Section 1: Getting Started & Setup",
-    "title": "Lexical Structure & Comments",
-    "category": "Fundamentals",
     "readTime": "3 min read",
-    "summary": "Understand single-line and multi-line comments, indentation rules, and token boundaries.",
-    "body": "\n            <h2>Comments in VerScript</h2>\n            <p>VerScript provides two clean comment forms for documenting code:</p>\n\n            <h3>1. Single-Line Comments (<code>!</code>)</h3>\n            <p>Any statement or inline text starting with an exclamation mark <code>!</code> is ignored by the parser up to the newline.</p>\n\n            <h3>2. Multi-line Block Comments (<code>!! ... !!</code>)</h3>\n            <p>Enclose long documentation blocks between double exclamation marks <code>!!</code>.</p>\n\n            <div class=\"callout-box note\">\n                <div class=\"callout-title\">📝 Indentation Sensitivity</div>\n                <p>VerScript uses 2 or 4 spaces to define nested blocks (for <code>loop</code>, <code>iterate</code>, <code>if</code>, <code>unless</code>, and <code>alias:</code>). Mixing indentation depths triggers an <code>IndentationError</code>.</p>\n            </div>\n        ",
+    "summary": "A friendly introduction to VerScript: what it is, why it exists, and writing your very first running script.",
+    "body": "\n      <h2>What is VerScript?</h2>\n      <p>Imagine a programming language that has the lightning-fast speed and predictability of <strong>C</strong>, but is as clean, readable, and fun to write as <strong>Python</strong>. That is <strong>VerScript</strong>!</p>\n      <p>VerScript is designed to get out of your way: no endless curly braces <code>{}</code>, no missing semicolon errors <code>;</code>, and no bulky runtime files to install. You write clean lines of code, and the engine runs them instantly.</p>\n\n      <div class=\"callout-box tip\">\n        <div class=\"callout-title\">💡 The Core Idea</div>\n        <p>Code should read like clear instructions. Instead of complex syntax rules, VerScript uses clean words and simple indentation to organize your ideas.</p>\n      </div>\n\n      <h2>How VerScript Thinks</h2>\n      <p>When you run a VerScript program, three simple things happen:</p>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Step</th><th>What Happens</th><th>Why It Matters to You</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><strong>1. Read</strong></td><td>The engine scans your lines and strips out notes.</td><td>Clear error messages with exact line numbers if you make a typo.</td></tr>\n          <tr><td><strong>2. Execute</strong></td><td>Your instructions run directly in high-speed native memory.</td><td>Zero lag, instant results, and lightweight resource usage.</td></tr>\n          <tr><td><strong>3. Output</strong></td><td>Results, colors, and messages print to your screen.</td><td>Instant visual feedback to confirm your program is working.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Your First Command: <code>display</code></h2>\n      <p>To print any message to the screen, we use the <code>display</code> command followed by text in quotes. You can even add vibrant colors by appending <code>?color=green</code> or <code>?color=cyan</code>!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_comments_1",
-        "title": "comments.vrs",
-        "code": "!!\n  VerScript Architecture Config\n  Version: 1.2\n!!\n! Main execution entrypoint\ndisplay \"Lexical validation active.\" ?color=\"cyan\""
+        "id": "cb_ch1_1",
+        "title": "welcome.vrs",
+        "code": "! Welcome to your first VerScript program!\ndisplay \"Hello, Explorer! Welcome to VerScript.\" ?color=green\ndisplay \"The native engine is ready for action.\" ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_comments_1",
-        "title": "Exercise 2.1: Documenting with Single-Line Comments",
-        "prompt": "Add a single-line comment above a display statement that outputs <code>\"Calculation Active\"</code> in green.",
-        "starterCode": "! TODO: Add a descriptive comment starting with !\ndisplay \"Calculation Active\" ?color=\"green\"",
-        "hint": "Prefix the first line with `!`.",
-        "solution": "! Process status calculation\ndisplay \"Calculation Active\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_comments_2",
-        "title": "Exercise 2.2: Multi-line Block Comment",
-        "prompt": "Enclose notes within <code>!!</code> and display <code>\"Module Loaded\"</code> in yellow.",
-        "starterCode": "! TODO: Wrap these comments in !! ... !!\nModule Header\nVersion 1.0\n\ndisplay \"Module Loaded\" ?color=\"yellow\"",
-        "hint": "Place `!!` at start and `!!` at end.",
-        "solution": "!!\nModule Header\nVersion 1.0\n!!\ndisplay \"Module Loaded\" ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_comments_3",
-        "title": "Exercise 2.3: Inline Trailing Comments",
-        "prompt": "Write a display command printing <code>\"Server Online\"</code> in cyan followed by an inline comment <code>! boot log</code>.",
-        "starterCode": "! TODO: Write display \"Server Online\" ?color=\"cyan\" with an inline comment\n",
-        "hint": "Place `! comment` after the attributes.",
-        "solution": "display \"Server Online\" ?color=\"cyan\" ! boot log",
+        "id": "ex_ch1_1",
+        "title": "Challenge 1: Print Your First Message",
+        "prompt": "Use the <code>display</code> command to print <code>\"Hello World\"</code> in cyan.",
+        "starterCode": "! TODO: Print Hello World in cyan\n",
+        "hint": "Type display \"Hello World\" ?color=cyan",
+        "solution": "display \"Hello World\" ?color=cyan",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch6-display-command",
+    "id": "ch2-comments",
+    "number": 2,
+    "section": "Section 1: Getting Started",
+    "subsection": "Foundations",
+    "title": "Writing Notes & Comments",
+    "category": "Getting Started",
+    "readTime": "2 min read",
+    "summary": "Learn how to document your code using friendly single-line and multi-line comments so anyone can understand your programs.",
+    "body": "\n      <h2>Why Do We Use Comments?</h2>\n      <p>Comments are notes written by you, for you and your team. The computer completely ignores them when running your script! They help explain <em>why</em> you wrote something and remind you how your code works when you look back at it weeks later.</p>\n\n      <h2>Two Easy Ways to Write Notes</h2>\n      <ul>\n        <li><strong>Single-Line Notes (<code>!</code>):</strong> Put an exclamation mark at the start of a note. Everything after it on that line is ignored.</li>\n        <li><strong>Multi-Line Blocks (<code>!! ... !!</code>):</strong> Wrap long explanations or headers between double exclamation marks.</li>\n      </ul>\n\n      <div class=\"callout-box note\">\n        <div class=\"callout-title\">📝 Clean Code Tip</div>\n        <p>Good code explains <em>what</em> is happening; good comments explain <em>why</em> you chose to do it that way.</p>\n      </div>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch2_1",
+        "title": "comments_demo.vrs",
+        "code": "!!\n  Project: Launch Controller\n  Author: Alex\n!!\n! Check engine sensors\ndisplay \"Sensors calibrated.\" ?color=yellow"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch2_1",
+        "title": "Challenge 2: Add a Helpful Note",
+        "prompt": "Add a single-line note <code>! Start engine</code> above the display command.",
+        "starterCode": "display \"Engine active.\" ?color=green\n",
+        "hint": "Add `! Start engine` on the line above.",
+        "solution": "! Start engine\ndisplay \"Engine active.\" ?color=green",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch3-display",
     "number": 3,
-    "section": "Section 1: Getting Started & Setup",
-    "title": "The Display Command & Formatting Engine",
-    "category": "Input & Output",
-    "readTime": "6 min read",
-    "summary": "Dedicated guide to the display command, named ANSI colors, unquoted/quoted hex colors, Truecolor RGB output, and inline formatting.",
-    "body": "\n            <h2>The <code>display</code> Command</h2>\n            <p>The <code>display</code> keyword is VerScript's primary output statement. It evaluates expressions and writes them to standard output with optional formatting attributes.</p>\n\n            <h2>Master Attributes for <code>display</code></h2>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Attribute</th>\n                        <th>Type / Values</th>\n                        <th>Description</th>\n                        <th>Syntax Example</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>?color</code></td>\n                        <td><code>\"name\"</code> or <code>#hex</code></td>\n                        <td>Colors output via ANSI escapes or Truecolor RGB. Supported names: <code>red</code>, <code>green</code>, <code>yellow</code>, <code>blue</code>, <code>purple</code>, <code>cyan</code>, <code>white</code>.</td>\n                        <td><code>display \"Hi\" ?color=\"green\"</code><br><code>display \"Neon\" ?color=#00ffcc</code></td>\n                    </tr>\n                    <tr>\n                        <td><code>?newline</code></td>\n                        <td><code>true</code> | <code>false</code></td>\n                        <td>Whether to append a newline <code>\\n</code> after printing. Defaults to <code>true</code>.</td>\n                        <td><code>display \"Loading...\" ?newline=false</code></td>\n                    </tr>\n                    <tr>\n                        <td><code>?inline</code></td>\n                        <td>Flag (no value)</td>\n                        <td>Shorthand for <code>?newline=false</code> to keep cursor on current line.</td>\n                        <td><code>display \"Connecting: \" ?inline ?color=\"yellow\"</code></td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <h2>Hex Color Values (Quoted &amp; Unquoted)</h2>\n            <p>Hex attributes can be passed with or without quotation marks:</p>\n            <div class=\"code-block\">display \"Pink text\" ?color=#ff007f\ndisplay \"Cyan text\" ?color=\"#00ffff\"\ndisplay \"Short hex\" ?color=#0fc</div>\n            <p>When executed in native C or cloud environments, the engine translates hex values into 24-bit Truecolor escape sequences (<code>\\033[38;2;R;G;Bm</code>), rendering rich gradients across terminals and IDE output windows.</p>\n        ",
+    "section": "Section 1: Getting Started",
+    "subsection": "Foundations",
+    "title": "The Display Command & Colors",
+    "category": "Getting Started",
+    "readTime": "3 min read",
+    "summary": "Master output formatting, standard colors, Truecolor hex codes, and inline printing with the display command.",
+    "body": "\n      <h2>Making Your Output Come Alive</h2>\n      <p>Terminal output doesn't have to be boring white text on a black screen. VerScript makes it effortless to style your messages with vivid colors using the <code>?color=</code> tag.</p>\n\n      <h2>Supported Color Formats</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Type</th><th>Example Syntax</th><th>Best For</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><strong>Simple Names</strong></td><td><code>?color=green</code>, <code>?color=cyan</code>, <code>?color=red</code></td><td>Quick status messages and warnings.</td></tr>\n          <tr><td><strong>Hex Truecolor</strong></td><td><code>?color=#00ffcc</code>, <code>?color=#a855f7</code></td><td>Custom branding, dashboards, and rich UI themes.</td></tr>\n          <tr><td><strong>Inline Output</strong></td><td><code>?inline=true</code></td><td>Printing without automatically jumping to the next line.</td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_display_1",
-        "title": "display_showcase.vrs",
-        "code": "! Named ANSI Colors\ndisplay \"Status: Red Alert\" ?color=\"red\"\ndisplay \"Status: Online\" ?color=\"green\"\ndisplay \"Status: Warning\" ?color=\"yellow\"\ndisplay \"Status: Info\" ?color=\"cyan\"\n\n! Truecolor Hex Attributes (No quotes required)\ndisplay \"Neon Magenta Text\" ?color=#ff00aa\ndisplay \"Cyberpunk Lime Text\" ?color=#39ff14\ndisplay \"Electric Blue Text\" ?color=#00d2ff\n\n! Inline printing on the same line\ndisplay \"Progress: [\" ?inline ?color=\"yellow\"\ndisplay \"====>\" ?inline ?color=\"cyan\"\ndisplay \"] Done!\" ?color=\"green\""
+        "id": "cb_ch3_1",
+        "title": "colors.vrs",
+        "code": "display \"Success: Server running\" ?color=green\ndisplay \"Warning: High memory load\" ?color=yellow\ndisplay \"Error: Connection timeout\" ?color=red\ndisplay \"Neon glow theme\" ?color=#00ffcc"
       }
     ],
     "exercises": [
       {
-        "id": "ex_disp_1",
-        "title": "Exercise 6.1: Hex Color Styling",
-        "prompt": "Display <code>\"Cyberpunk Matrix Active\"</code> using unquoted hex color <code>?color=#00ffcc</code>.",
-        "starterCode": "! TODO: Display \"Cyberpunk Matrix Active\" with ?color=#00ffcc\n",
-        "hint": "Use `display \"Cyberpunk Matrix Active\" ?color=#00ffcc`.",
-        "solution": "display \"Cyberpunk Matrix Active\" ?color=#00ffcc",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_disp_2",
-        "title": "Exercise 6.2: Segmented Inline Progress",
-        "prompt": "Print <code>\"Step 1... \"</code> in yellow using <code>?inline</code>, followed by <code>\"Step 2... \"</code> in cyan using <code>?inline</code>, and finish with <code>\"Complete!\"</code> in green.",
-        "starterCode": "! TODO: Print 3 inline segments:\n! 1. \"Step 1... \" (yellow, ?inline)\n! 2. \"Step 2... \" (cyan, ?inline)\n! 3. \"Complete!\" (green)\n",
-        "hint": "Use `?inline` on the first two display statements.",
-        "solution": "display \"Step 1... \" ?inline ?color=\"yellow\"\ndisplay \"Step 2... \" ?inline ?color=\"cyan\"\ndisplay \"Complete!\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_disp_3",
-        "title": "Exercise 6.3: Multi-color Banner",
-        "prompt": "Create a 2-line header: line 1 <code>\"=== SYSTEM REPORT ===\"</code> in purple, line 2 <code>\"Core Status: 100%\"</code> in unquoted hex <code>?color=#50fa7b</code>.",
-        "starterCode": "! TODO: Create the 2-line header as specified\n",
-        "hint": "Write two display commands with purple and hex colors.",
-        "solution": "display \"=== SYSTEM REPORT ===\" ?color=\"purple\"\ndisplay \"Core Status: 100%\" ?color=#50fa7b",
+        "id": "ex_ch3_1",
+        "title": "Challenge 3: Custom Hex Color",
+        "prompt": "Display <code>\"Online\"</code> using hex color <code>?color=#22c55e</code>.",
+        "starterCode": "! TODO: Print Online in hex color #22c55e\n",
+        "hint": "display \"Online\" ?color=#22c55e",
+        "solution": "display \"Online\" ?color=#22c55e",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch4-numbers",
+    "id": "ch4-prompt",
     "number": 4,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Mathematics & Number Operations",
-    "category": "Datatypes",
-    "readTime": "5 min read",
-    "summary": "Complete specification of VerScript native math: arithmetic operators, power (^), absolute value (|x|), factorial (x!), roots (sqrt, rt), clamping, trigonometry, parity, constants, and common aliases.",
-    "body": "\n    <h2>The Native Mathematics Engine in VerScript</h2>\n    <p>In VerScript, mathematical computation is compiled directly into the native VM core. Numerical operations require <strong>no external library loading</strong> (the historical <code>Math</code> library has been completely replaced by first-class language syntax, dedicated operators, and high-performance VM routines).</p>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Pure Numeric Performance &amp; Precision</div>\n      <p>VerScript numbers operate with 64-bit integer precision directly in CPU registers. Numbers support arithmetic, roots, power, factorials, and bounds checking with immediate deterministic execution.</p>\n    </div>\n\n    <h2>1. Native Math Operators &amp; Precedence</h2>\n    <p>VerScript provides a modern, clean mathematical operator hierarchy:</p>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operator</th><th>Name</th><th>Precedence &amp; Assoc</th><th>Syntax</th><th>Common Aliases</th><th>Example</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>^</code></td><td>Exponentiation</td><td>Highest / Right-to-Left</td><td><code>base ^ exp</code></td><td><code>pow, power</code></td><td><code>2 ^ 8</code></td><td><code>256</code></td></tr>\n          <tr><td><code>|x|</code></td><td>Absolute Value</td><td>Enclosing Brackets</td><td><code>|expr|</code></td><td><code>abs x</code></td><td><code>|-42|</code></td><td><code>42</code></td></tr>\n          <tr><td><code>!</code></td><td>Factorial</td><td>Postfix (No Space)</td><td><code>n!</code></td><td><code>fact n</code></td><td><code>5!</code></td><td><code>120</code></td></tr>\n          <tr><td><code>*</code></td><td>Multiplication</td><td>Multiplicative / Left</td><td><code>a * b</code></td><td><code>mul</code></td><td><code>7 * 8</code></td><td><code>56</code></td></tr>\n          <tr><td><code>/</code></td><td>Division</td><td>Multiplicative / Left</td><td><code>a / b</code></td><td><code>div</code></td><td><code>100 / 4</code></td><td><code>25</code></td></tr>\n          <tr><td><code>//</code></td><td>Integer Division</td><td>Multiplicative / Left</td><td><code>a // b</code></td><td><code>idiv, quot</code></td><td><code>17 // 5</code></td><td><code>3</code></td></tr>\n          <tr><td><code>%</code></td><td>Modulo / Remainder</td><td>Multiplicative / Left</td><td><code>a % b</code></td><td><code>mod, rem</code></td><td><code>17 % 5</code></td><td><code>2</code></td></tr>\n          <tr><td><code>+</code></td><td>Addition</td><td>Additive / Left</td><td><code>a + b</code></td><td><code>add</code></td><td><code>14 + 6</code></td><td><code>20</code></td></tr>\n          <tr><td><code>-</code></td><td>Subtraction / Negation</td><td>Additive / Left</td><td><code>a - b</code>, <code>-a</code></td><td><code>sub, neg</code></td><td><code>50 - 18</code></td><td><code>32</code></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <div class=\"callout-box warning\">\n      <div class=\"callout-title\">⚠️ Factorial Postfix Syntax Rule</div>\n      <p>The factorial operator <code>!</code> must be attached directly to its operand with <strong>strictly no preceding whitespace</strong> (e.g. <code>5!</code>, <code>n!</code>, <code>(x + 1)!</code>). If whitespace precedes the exclamation mark (e.g. <code>5 ! comment</code>), it is treated as a comment character according to VerScript lexical grammar.</p>\n    </div>\n\n    <h2>2. Roots &amp; Radical Operations</h2>\n    <p>Roots can be computed using ASCII keywords or standard mathematical Unicode notation:</p>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operation</th><th>Canonical Syntax</th><th>Unicode Alternative</th><th>Common Aliases</th><th>Example</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td>Square Root</td><td><code>sqrt x</code></td><td><code>√x</code></td><td><code>root, sqrRoot</code></td><td><code>sqrt 144</code></td><td><code>12</code></td></tr>\n          <tr><td>Arbitrary Root</td><td><code>rt root val</code></td><td><code>—</code></td><td><code>nroot, nthRoot</code></td><td><code>rt 3 27</code></td><td><code>3</code></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>3. Bounds, Extrema &amp; Clamping</h2>\n    <p>VerScript supports both compact multi-argument forms and readable natural language phrasing:</p>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operation</th><th>Canonical Syntax</th><th>Natural Phrasing</th><th>Common Aliases</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td>Minimum</td><td><code>min a b</code></td><td><code>min [10, 20, 5]</code></td><td><code>lowest, smallest</code></td><td><code>min 10 20</code> &rarr; <code>10</code></td></tr>\n          <tr><td>Maximum</td><td><code>max a b</code></td><td><code>max [10, 20, 5]</code></td><td><code>highest, greatest</code></td><td><code>max 10 20</code> &rarr; <code>20</code></td></tr>\n          <tr><td>Clamping</td><td><code>clamp val low high</code></td><td><code>clamp val from low to high</code></td><td><code>bound, limit, constrain</code></td><td><code>clamp 150 0 100</code> &rarr; <code>100</code></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>4. Signum, Parity &amp; Natural Predicates</h2>\n    <p>Check numeric signs and test even/odd parity using either prefix operators or natural postfix predicates:</p>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operation</th><th>Canonical Syntax</th><th>Natural Predicate</th><th>Common Aliases</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td>Signum</td><td><code>sign x</code></td><td><code>—</code></td><td><code>sgn</code></td><td><code>sign -42</code> &rarr; <code>-1</code></td></tr>\n          <tr><td>Even Check</td><td><code>isEven n</code></td><td><code>n is even</code></td><td><code>even n</code></td><td><code>4 is even</code> &rarr; <code>true</code></td></tr>\n          <tr><td>Odd Check</td><td><code>isOdd n</code></td><td><code>n is odd</code></td><td><code>odd n</code></td><td><code>5 is odd</code> &rarr; <code>true</code></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>5. Number Theory &amp; Division Routines</h2>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Common Aliases</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>divRem a b</code></td><td><code>a: num, b: num</code></td><td><code>arr</code></td><td><code>divideRemainder, qr</code></td><td>Computes both quotient and remainder, returning pair <code>[quotient, remainder]</code>.</td></tr>\n          <tr><td><code>gcd a b</code></td><td><code>a: num, b: num</code></td><td><code>num</code></td><td><code>hcf, greatestCommonDivisor</code></td><td>Computes Greatest Common Divisor using Euclidean algorithm. Also supports collections: <code>gcd [24, 36, 60]</code>.</td></tr>\n          <tr><td><code>lcm a b</code></td><td><code>a: num, b: num</code></td><td><code>num</code></td><td><code>lowestCommonMultiple</code></td><td>Computes Lowest Common Multiple.</td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>6. Rounding &amp; Bounds</h2>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Routine</th><th>Syntax</th><th>Unicode Alternative</th><th>Common Aliases</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>floor x</code></td><td><code>floor x</code></td><td><code>⌊x⌋</code></td><td><code>roundDown, trunc</code></td><td>Rounds down to the nearest integer.</td></tr>\n          <tr><td><code>ceil x</code></td><td><code>ceil x</code></td><td><code>⌈x⌉</code></td><td><code>roundUp</code></td><td>Rounds up to the nearest integer.</td></tr>\n          <tr><td><code>round x</code></td><td><code>round x</code></td><td><code>—</code></td><td><code>nearest</code></td><td>Rounds to the nearest integer.</td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>7. Trigonometry, Angles &amp; Logarithms</h2>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Function</th><th>Input Type</th><th>Common Aliases</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>sin x</code>, <code>cos x</code>, <code>tan x</code></td><td>Radians</td><td><code>sine, cosine, tangent</code></td><td>Native trigonometric functions.</td></tr>\n          <tr><td><code>sinDeg deg</code>, <code>cosDeg deg</code></td><td>Degrees</td><td><code>sind, cosd</code></td><td>Degree-based trigonometric functions.</td></tr>\n          <tr><td><code>degToRad deg</code></td><td>Degrees</td><td><code>toRad, d2r</code></td><td>Converts angle from degrees to radians.</td></tr>\n          <tr><td><code>radToDeg rad</code></td><td>Radians</td><td><code>toDeg, r2d</code></td><td>Converts angle from radians to degrees.</td></tr>\n          <tr><td><code>hypot a b</code></td><td>Lengths</td><td><code>hypotenuse, pythag</code></td><td>Computes Euclidean norm <code>√(a² + b²)</code>.</td></tr>\n          <tr><td><code>ln x</code></td><td>Number</td><td><code>natLog</code></td><td>Natural logarithm (base <em>e</em>).</td></tr>\n          <tr><td><code>log x</code></td><td>Number</td><td><code>log10, commonLog</code></td><td>Common base-10 logarithm.</td></tr>\n          <tr><td><code>log2 x</code></td><td>Number</td><td><code>binLog</code></td><td>Binary base-2 logarithm.</td></tr>\n          <tr><td><code>exp x</code></td><td>Number</td><td><code>ePow</code></td><td>Exponential function <code>e^x</code>.</td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>8. Linear Interpolation (lerp)</h2>\n    <p>VerScript supports both compact and natural descriptive phrasing for linear interpolation:</p>\n    <ul>\n      <li><strong>Canonical:</strong> <code>lerp a b t</code></li>\n      <li><strong>Natural Phrasing:</strong> <code>lerp from a to b by t</code></li>\n      <li><strong>Common Aliases:</strong> <code>interpolate, mix</code></li>\n    </ul>\n\n    <h2>9. Global Mathematical Constants</h2>\n    <p>Standard mathematical constants are globally bound and accessible directly in all scopes without namespace prefixes:</p>\n    <div class=\"table-container\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Constant</th><th>Unicode Alternative</th><th>Value / Definition</th><th>Semantic Meaning</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>pi</code></td><td><code>π</code></td><td><code>3.1415926535...</code></td><td>Ratio of circle circumference to diameter.</td></tr>\n          <tr><td><code>tau</code></td><td><code>τ</code></td><td><code>6.2831853071...</code></td><td>Full circle constant (2π).</td></tr>\n          <tr><td><code>e</code></td><td><code>—</code></td><td><code>2.7182818284...</code></td><td>Euler's number / base of natural logarithm.</td></tr>\n          <tr><td><code>phi</code></td><td><code>—</code></td><td><code>1.6180339887...</code></td><td>The Golden Ratio.</td></tr>\n          <tr><td><code>inf</code></td><td><code>infinity</code></td><td><code>2,147,483,647</code> (max integer)</td><td>Positive infinity value.</td></tr>\n        </tbody>\n      </table>\n    </div>\n    ",
+    "section": "Section 1: Getting Started",
+    "subsection": "Foundations",
+    "title": "Interactive Input with Prompt",
+    "category": "Getting Started",
+    "readTime": "3 min read",
+    "summary": "Ask users questions in the terminal, capture their answers into variables, and provide safe fallback defaults.",
+    "body": "\n      <h2>Talking to Your Users</h2>\n      <p>Programs become magical when they respond to what people type. The <code>prompt</code> command pauses the program, shows a friendly question, and saves whatever the user types into a variable.</p>\n\n      <h2>Safe Fallback Defaults</h2>\n      <p>What if the user just presses Enter without typing anything? You can provide a safe default with <code>?default=\"Guest\"</code>!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_native_math_demo",
-        "title": "native_math_showcase.vrs",
-        "code": "! VerScript Native Mathematics Showcase\n\ndisplay \"=== Native Math Engine ===\"\nset x: -42\ndisplay \"Absolute Value |x|: \" + |x|\ndisplay \"Exponentiation 2 ^ 8: \" + (2 ^ 8)\ndisplay \"Factorial 5!: \" + 5!\ndisplay \"Integer Division 17 // 5: \" + (17 // 5)\ndisplay \"Modulo 17 % 5: \" + (17 % 5)\ndisplay \"Square Root: \" + (sqrt 144)\ndisplay \"Root 3 of 27: \" + (rt 3 27)\ndisplay \"Clamped: \" + (clamp 150 from 0 to 100)\ndisplay \"Parity: 4 is even? \" + (4 is even)\ndisplay \"Constants: pi = \" + pi + \", tau = \" + tau"
+        "id": "cb_ch4_1",
+        "title": "input.vrs",
+        "code": "prompt username ?default=\"Explorer\"\ndisplay \"Welcome back, \" + username ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_native_math_1",
-        "title": "Exercise 4.1: Native Math Power & Factorial",
-        "prompt": "Calculate <code>2 ^ 6</code>, add <code>4!</code> (factorial of 4), and display the final result with <code>display result</code>.",
-        "starterCode": "! TODO: Compute 2 ^ 6 + 4! and display the result\n",
-        "hint": "Remember that 2 ^ 6 is 64 and 4! is 24. Use `set result: (2 ^ 6) + 4!`.",
-        "solution": "set result: (2 ^ 6) + 4!\ndisplay result",
+        "id": "ex_ch4_1",
+        "title": "Challenge 4: Prompt with Default",
+        "prompt": "Prompt for a variable named <code>role</code> with default <code>\"Admin\"</code>, then display <code>\"Role: \" + role</code>.",
+        "starterCode": "! TODO: Prompt role with default \"Admin\"\n",
+        "hint": "prompt role ?default=\"Admin\"\ndisplay \"Role: \" + role",
+        "solution": "prompt role ?default=\"Admin\"\ndisplay \"Role: \" + role",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-math",
+    "id": "ch5-numbers-basic",
     "number": 5,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Math Library & Mathematical Algorithms",
-    "category": "Datatypes & Core Libraries",
-    "readTime": "5 min read",
-    "summary": "Master VerScript's native Math library functions for clamping, root extraction, greatest common divisors, and modular powers.",
-    "body": "\n    <h2>The Native Math Namespace</h2>\n    <p>VerScript provides a built-in <code>Math</code> library loaded directly into the runtime without requiring external imports. It supplements primitive operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>^</code>, <code>|-n|</code>) with standard algebraic routines.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Math.abs(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Absolute magnitude of integer value.</td></tr>\n        <tr><td><code>Math.sqrt(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Integer square root via binary search.</td></tr>\n        <tr><td><code>Math.min(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Smaller of two numerical values.</td></tr>\n        <tr><td><code>Math.max(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Larger of two numerical values.</td></tr>\n        <tr><td><code>Math.clamp(val, low, high)</code></td><td><code>int val, low, high</code></td><td><code>int</code></td><td>Bounds val within [low, high].</td></tr>\n        <tr><td><code>Math.sign(val)</code></td><td><code>int val</code></td><td><code>int</code></td><td>Returns -1, 0, or 1 based on sign.</td></tr>\n        <tr><td><code>Math.gcd(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Greatest common divisor using Euclidean algorithm.</td></tr>\n        <tr><td><code>Math.lcm(a, b)</code></td><td><code>int a, int b</code></td><td><code>int</code></td><td>Least common multiple of two integers.</td></tr>\n        <tr><td><code>Math.pow(base, exp)</code></td><td><code>int base, exp</code></td><td><code>int</code></td><td>Calculates integer power (base ^ exp).</td></tr>\n      </tbody>\n    </table>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Pure and Deterministic</div>\n      <p>All <code>Math</code> methods are pure functions with zero heap allocation and instant C execution performance.</p>\n    </div>\n  ",
+    "section": "Section 2: Numbers, Math & Logic",
+    "subsection": "Basic Arithmetic",
+    "title": "Numbers & Basic Arithmetic",
+    "category": "Datatypes",
+    "readTime": "4 min read",
+    "summary": "Learn how VerScript works with whole numbers and master everyday math: addition, subtraction, multiplication, division, and remainder.",
+    "body": "\n      <h2>Numbers in VerScript</h2>\n      <p>Computers love numbers! In VerScript, whole numbers (integers like <code>5</code>, <code>42</code>, <code>-10</code>, <code>1000</code>) are first-class values. You can count items, calculate scores, adjust speeds, and track quantities with zero fuss.</p>\n\n      <h2>Everyday Math Operators</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Symbol</th><th>Operation</th><th>Example</th><th>Result</th><th>What It Does</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>+</code></td><td>Addition</td><td><code>10 + 5</code></td><td><code>15</code></td><td>Adds two numbers together.</td></tr>\n          <tr><td><code>-</code></td><td>Subtraction</td><td><code>20 - 7</code></td><td><code>13</code></td><td>Subtracts right number from left.</td></tr>\n          <tr><td><code>*</code></td><td>Multiplication</td><td><code>6 * 7</code></td><td><code>42</code></td><td>Multiplies two numbers.</td></tr>\n          <tr><td><code>/</code></td><td>Division</td><td><code>100 / 4</code></td><td><code>25</code></td><td>Divides left by right.</td></tr>\n          <tr><td><code>//</code></td><td>Integer Division</td><td><code>17 // 5</code></td><td><code>3</code></td><td>Divides and discards any fraction.</td></tr>\n          <tr><td><code>%</code></td><td>Remainder (Modulo)</td><td><code>17 % 5</code></td><td><code>2</code></td><td>Finds what is left over after dividing.</td></tr>\n        </tbody>\n      </table>\n\n      <div class=\"callout-box tip\">\n        <div class=\"callout-title\">💡 The Clock Analogy for Modulo (%)</div>\n        <p>Think of <code>%</code> like a 12-hour clock! If it's 10:00 and you add 5 hours, <code>15 % 12</code> gives you <code>3</code>! Modulo is great for looping numbers or checking if a number divides evenly.</p>\n      </div>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_math_1",
-        "title": "math_demo.vrs",
-        "code": "display \"=== Native Math Module ===\" ?color=#38bdf8\ndisplay \"Math.sqrt(144): \" + (Math.sqrt(144))\ndisplay \"Math.clamp(150, 0, 100): \" + (Math.clamp(150, 0, 100))\ndisplay \"Math.gcd(48, 18): \" + (Math.gcd(48, 18))\ndisplay \"Math.lcm(12, 18): \" + (Math.lcm(12, 18))"
+        "id": "cb_ch5_1",
+        "title": "basic_math.vrs",
+        "code": "set apples: 12\nset friends: 4\nset perFriend: apples / friends\ndisplay \"Each friend gets: \" + perFriend + \" apples.\" ?color=green\n\nset extraApples: 14 % friends\ndisplay \"Leftover apples: \" + extraApples ?color=yellow"
       }
     ],
     "exercises": [
       {
-        "id": "ex_math_1",
-        "title": "Exercise: Safe Clamped Scaling",
-        "prompt": "Calculate the greatest common divisor of 54 and 24 using <code>Math.gcd</code>, clamp a sensor value of 250 between 10 and 100 with <code>Math.clamp</code>, and display their sum.",
-        "starterCode": "! Compute gcd and clamp, then display sum\n",
-        "solution": "set g: Math.gcd(54, 24)\nset c: Math.clamp(250, 10, 100)\ndisplay g + c",
-        "expectedMatch": {},
-        "hint": "Math.gcd(54, 24) returns 6, and Math.clamp(250, 10, 100) returns 100. 6 + 100 is 106."
+        "id": "ex_ch5_1",
+        "title": "Challenge 5: Total Score Calculation",
+        "prompt": "Calculate <code>(15 * 4) + 10</code>, store it in <code>score</code>, and display it.",
+        "starterCode": "! TODO: Calculate score and display it\n",
+        "hint": "set score: (15 * 4) + 10\ndisplay score",
+        "solution": "set score: (15 * 4) + 10\ndisplay score",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch5-booleans",
+    "id": "ch6-powers-roots",
     "number": 6,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Booleans (bool) & Logical Operators",
+    "section": "Section 2: Numbers, Math & Logic",
+    "subsection": "Basic Arithmetic",
+    "title": "Powers, Roots & Clamping",
     "category": "Datatypes",
-    "readTime": "5 min read",
-    "summary": "Master boolean literals, truth evaluations, relational comparisons, and native logic gates (&, and, or, nor, xor, xnor, xand, x&, not).",
-    "body": "\n    <h2>Boolean Primitives</h2>\n    <p>VerScript features first-class boolean primitives: <code>true</code> and <code>false</code>. Booleans are returned by relational comparisons and guard conditional execution blocks.</p>\n\n    <h2>Relational Comparison Operators</h2>\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Evaluates To</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>=</code></td><td>Equal to</td><td><code>10 = 10</code></td><td><code>true</code></td></tr>\n        <tr><td><code>!=</code> or <code>x=</code></td><td>Not equal to</td><td><code>10 != 20</code></td><td><code>true</code></td></tr>\n        <tr><td><code>&lt;</code></td><td>Less than</td><td><code>5 &lt; 8</code></td><td><code>true</code></td></tr>\n        <tr><td><code>&lt;=</code></td><td>Less than or equal</td><td><code>8 &lt;= 8</code></td><td><code>true</code></td></tr>\n        <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>12 &gt; 7</code></td><td><code>true</code></td></tr>\n        <tr><td><code>&gt;=</code></td><td>Greater than or equal</td><td><code>15 &gt;= 20</code></td><td><code>false</code></td></tr>\n      </tbody>\n    </table>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 The 'x=' Operator</div>\n      <p>VerScript supports both <code>!=</code> and the expressive <code>x=</code> operator for inequality testing, matching traditional algorithmic syntax.</p>\n    </div>\n\n    <h2>Native Boolean Logic Gates</h2>\n    <p>VerScript provides first-class native boolean logic gates integrated directly into the core grammar with infix syntax (e.g. <code>cond1 &amp; cond2</code>). The former <code>Logic</code> library is fully removed in favor of these native, high-performance logic gates.</p>\n    \n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Operator</th><th>Gate Type</th><th>Semantics &amp; Behavior</th><th>Example Syntax</th><th>Evaluates To</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>&amp;</code></td><td>Conjunction</td><td><strong>Normal AND</strong>: True only if both operands are truthy</td><td><code>true &amp; false</code></td><td><code>false</code></td></tr>\n        <tr><td><code>and</code></td><td>Negated Conjunction</td><td><strong>Negated AND / NAND</strong>: True unless both operands are truthy</td><td><code>true and true</code></td><td><code>false</code></td></tr>\n        <tr><td><code>or</code></td><td>Disjunction</td><td><strong>Normal OR</strong>: True if at least one operand is truthy</td><td><code>true or false</code></td><td><code>true</code></td></tr>\n        <tr><td><code>nor</code></td><td>Negated Disjunction</td><td><strong>Negated OR / NOR</strong>: True only when both operands are falsy</td><td><code>false nor false</code></td><td><code>true</code></td></tr>\n        <tr><td><code>xor</code></td><td>Exclusive Disjunction</td><td><strong>Exclusive OR</strong>: True if exactly one operand is truthy</td><td><code>true xor false</code></td><td><code>true</code></td></tr>\n        <tr><td><code>xnor</code></td><td>Equivalence</td><td><strong>Exclusive NOR</strong>: True if both operands have identical truth values</td><td><code>true xnor true</code></td><td><code>true</code></td></tr>\n        <tr><td><code>xand</code></td><td>Equivalence</td><td><strong>Exclusive AND</strong>: Synonym for XNOR (identical truth values)</td><td><code>false xand false</code></td><td><code>true</code></td></tr>\n        <tr><td><code>x&amp;</code></td><td>Equivalence</td><td><strong>Symbolic XAND</strong>: Symbol synonym for XNOR (identical truth values)</td><td><code>true x&amp; true</code></td><td><code>true</code></td></tr>\n        <tr><td><code>not</code></td><td>Unary Inversion</td><td><strong>Logical Inversion</strong>: Inverts truth value of subsequent operand</td><td><code>not false</code></td><td><code>true</code></td></tr>\n      </tbody>\n    </table>\n\n    <h2>Truth Table Reference</h2>\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>A</th><th>B</th><th>A &amp; B</th><th>A and B</th><th>A or B</th><th>A nor B</th><th>A xor B</th><th>A xnor B / A x&amp; B</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>true</code></td><td><code>true</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td><td><code>false</code></td><td><code>true</code></td></tr>\n        <tr><td><code>true</code></td><td><code>false</code></td><td><code>false</code></td><td><code>true</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td></tr>\n        <tr><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td></tr>\n        <tr><td><code>false</code></td><td><code>false</code></td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td></tr>\n      </tbody>\n    </table>\n  ",
+    "readTime": "4 min read",
+    "summary": "Easily calculate powers (^), absolute magnitudes (|x|), factorials (!), square roots (sqrt), and keep numbers within safe bounds (clamp).",
+    "body": "\n      <h2>Taking Math Further</h2>\n      <p>Sometimes you need more than just plus and minus: calculating exponential growth, checking how far a number is from zero, or preventing a player's health from going above 100.</p>\n\n      <h2>Helpful Mathematical Tools</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Feature</th><th>Syntax</th><th>Example</th><th>Result</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><strong>Power</strong></td><td><code>^</code></td><td><code>2 ^ 4</code></td><td><code>16</code></td><td>Multiplies 2 by itself 4 times.</td></tr>\n          <tr><td><strong>Absolute Value</strong></td><td><code>|x|</code></td><td><code>|-25|</code></td><td><code>25</code></td><td>Distance from zero (always positive).</td></tr>\n          <tr><td><strong>Factorial</strong></td><td><code>n!</code></td><td><code>4!</code></td><td><code>24</code></td><td>4 * 3 * 2 * 1. (Must touch number!)</td></tr>\n          <tr><td><strong>Square Root</strong></td><td><code>sqrt n</code></td><td><code>sqrt 81</code></td><td><code>9</code></td><td>Number that multiplied by itself makes n.</td></tr>\n          <tr><td><strong>Clamping</strong></td><td><code>clamp val low high</code></td><td><code>clamp 120 0 100</code></td><td><code>100</code></td><td>Forces value to stay between min and max.</td></tr>\n          <tr><td><strong>Even / Odd</strong></td><td><code>n is even</code></td><td><code>8 is even</code></td><td><code>true</code></td><td>Checks whether number is divisible by 2.</td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_bool_1",
-        "title": "boolean_gates.vrs",
-        "code": "set isReady: true\nset isBlocked: false\n\ndisplay \"isReady & isBlocked (AND):    \" + (isReady & isBlocked)\ndisplay \"isReady and isBlocked (NAND):  \" + (isReady and isBlocked)\ndisplay \"isReady or isBlocked (OR):     \" + (isReady or isBlocked)\ndisplay \"isReady nor isBlocked (NOR):   \" + (isReady nor isBlocked)\ndisplay \"isReady xor isBlocked (XOR):   \" + (isReady xor isBlocked)\ndisplay \"isReady xnor isBlocked (XNOR): \" + (isReady xnor isBlocked)\ndisplay \"isReady x& isBlocked (X&):     \" + (isReady x& isBlocked)\n\nif isReady & not isBlocked then\n  display \"System operational.\" ?color=\"green\""
+        "id": "cb_ch6_1",
+        "title": "powers_and_bounds.vrs",
+        "code": "set baseDamage: 5\nset critMultiplier: 2 ^ 3\nset rawTotal: baseDamage * critMultiplier\ndisplay \"Critical Hit: \" + rawTotal ?color=yellow\n\n! Ensure health stays between 0 and 100\nset currentHp: clamp 150 from 0 to 100\ndisplay \"Clamped HP: \" + currentHp ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_bool_1",
-        "title": "Exercise 5.1: Boolean Logic Gate Check",
-        "prompt": "Given <code>is_admin: true</code> and <code>has_token: true</code>, check if both are true using native <code>&</code>. If valid, display <code>\"Access Granted\"</code> in green.",
-        "starterCode": "set is_admin: true\nset has_token: true\n! TODO: Check condition with &\n",
-        "hint": "Use `if is_admin & has_token then` and `display \"Access Granted\" ?color=\"green\"`.",
-        "solution": "set is_admin: true\nset has_token: true\nif is_admin & has_token then\n  display \"Access Granted\" ?color=\"green\"",
+        "id": "ex_ch6_1",
+        "title": "Challenge 6: Power & Clamping",
+        "prompt": "Calculate <code>2 ^ 5</code>, clamp it between <code>0</code> and <code>20</code>, and display the result.",
+        "starterCode": "! Compute 2 ^ 5, clamp to 0..20, and display\n",
+        "hint": "set p: 2 ^ 5\nset bounded: clamp p from 0 to 20\ndisplay bounded",
+        "solution": "set p: 2 ^ 5\nset bounded: clamp p from 0 to 20\ndisplay bounded",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch6-strings",
+    "id": "ch7-booleans",
     "number": 7,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Strings (str) & String Manipulation Engine",
+    "section": "Section 2: Numbers, Math & Logic",
+    "subsection": "Truth & Logic",
+    "title": "Booleans & Comparisons",
     "category": "Datatypes",
-    "readTime": "6 min read",
-    "summary": "Comprehensive guide to strings in VerScript: string literals, concatenation, interpolation, and the complete camelCase string API.",
-    "body": "\n    <h2>First-Class String Engine</h2>\n    <p>Strings in VerScript are UTF-8 encoded text sequences enclosed in double quotation marks <code>\"...\"</code>. Strings support rich concatenation via <code>+</code> and an extensive suite of native camelCase methods.</p>\n\n    <h2>String Concatenation</h2>\n    <p>The <code>+</code> operator automatically concatenates strings with other strings, numbers, booleans, and arrays:</p>\n    <pre><code>set name: \"Ada Lovelace\"\nset year: 1815\ndisplay \"Pioneer: \" + name + \" (Born \" + year + \")\"</code></pre>\n\n    <h2>Native camelCase String Methods</h2>\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Method</th><th>Parameters</th><th>Return Type</th><th>Common Aliases</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>str.len()</code> / <code>str.length()</code></td><td>None</td><td><code>num</code></td><td><code>size, count</code></td><td>Returns character count.</td></tr>\n        <tr><td><code>str.toUpper()</code></td><td>None</td><td><code>str</code></td><td><code>upper, uppercase</code></td><td>Returns uppercase copy.</td></tr>\n        <tr><td><code>str.toLower()</code></td><td>None</td><td><code>str</code></td><td><code>lower, lowercase</code></td><td>Returns lowercase copy.</td></tr>\n        <tr><td><code>str.trim()</code></td><td>None</td><td><code>str</code></td><td><code>strip</code></td><td>Strips leading and trailing whitespace.</td></tr>\n        <tr><td><code>str.slice(start, len)</code></td><td><code>start, len</code></td><td><code>str</code></td><td><code>substr, substring</code></td><td>Extracts substring starting at index with specified length.</td></tr>\n        <tr><td><code>str.indexOf(needle)</code></td><td><code>needle</code></td><td><code>num</code></td><td><code>find, search</code></td><td>Returns 0-based index of needle, or <code>-1</code> if not found.</td></tr>\n        <tr><td><code>str.contains(needle)</code></td><td><code>needle</code></td><td><code>bool</code></td><td><code>includes, has</code></td><td>Returns true if needle is found inside string.</td></tr>\n        <tr><td><code>str.padLeft(len, pad)</code></td><td><code>len, pad</code></td><td><code>str</code></td><td><code>padStart, lpad</code></td><td>Pads left side of string to target width.</td></tr>\n        <tr><td><code>str.padRight(len, pad)</code></td><td><code>len, pad</code></td><td><code>str</code></td><td><code>padEnd, rpad</code></td><td>Pads right side of string to target width.</td></tr>\n        <tr><td><code>str.repeat(count)</code></td><td><code>count</code></td><td><code>str</code></td><td><code>replicate</code></td><td>Repeats string count times.</td></tr>\n        <tr><td><code>str.split(delim)</code></td><td><code>delim</code></td><td><code>arr</code></td><td><code>tokenize</code></td><td>Splits string by delimiter into an array of tokens.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "readTime": "3 min read",
+    "summary": "Work with true and false, ask questions with comparison operators (=, !=, >, <), and test conditions.",
+    "body": "\n      <h2>True or False?</h2>\n      <p>A <strong>boolean</strong> is the simplest datatype in computer science. It can only have one of two values: <code>true</code> or <code>false</code>. Think of it like a light switch: either it is on, or it is off!</p>\n\n      <h2>Comparison Operators</h2>\n      <p>When you compare two values, VerScript answers with a boolean:</p>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>=</code></td><td>Is equal to</td><td><code>10 = 10</code></td><td><code>true</code></td></tr>\n          <tr><td><code>!=</code></td><td>Is not equal to</td><td><code>10 != 5</code></td><td><code>true</code></td></tr>\n          <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>15 &gt; 8</code></td><td><code>true</code></td></tr>\n          <tr><td><code>&lt;</code></td><td>Less than</td><td><code>3 &lt; 9</code></td><td><code>true</code></td></tr>\n          <tr><td><code>&gt;=</code></td><td>Greater than or equal</td><td><code>10 &gt;= 10</code></td><td><code>true</code></td></tr>\n          <tr><td><code>&lt;=</code></td><td>Less than or equal</td><td><code>4 &lt;= 2</code></td><td><code>false</code></td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_str_1",
-        "title": "string_methods.vrs",
-        "code": "set raw: \"   VerScript Engine   \"\nset clean: raw.trim()\ndisplay \"Cleaned: '\" + clean + \"'\"\ndisplay \"Uppercase: \" + clean.toUpper()\ndisplay \"Length: \" + clean.len()\ndisplay \"Contains 'Script': \" + (clean.contains(\"Script\"))\nset parts: clean.split(\" \")\ndisplay \"First Word: \" + parts[0]"
+        "id": "cb_ch7_1",
+        "title": "comparisons.vrs",
+        "code": "set age: 18\nset canVote: age >= 18\ndisplay \"Eligible to vote? \" + canVote ?color=cyan\n\nset passmark: 50\nset score: 72\ndisplay \"Passed exam? \" + (score >= passmark) ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_str_1",
-        "title": "Exercise 6.1: String Formatting",
-        "prompt": "Declare <code>rawMsg: \"  ready for launch  \"</code>. Trim it, convert to uppercase, and display the result.",
-        "starterCode": "! TODO: Trim rawMsg, convert to upper case, and display\n",
-        "hint": "Use `set clean: rawMsg.trim()` then `display clean.toUpper()`.",
-        "solution": "set rawMsg: \"  ready for launch  \"\nset clean: rawMsg.trim()\ndisplay clean.toUpper()",
+        "id": "ex_ch7_1",
+        "title": "Challenge 7: Comparison Check",
+        "prompt": "Store whether <code>100 > 50</code> in variable <code>isValid</code>, then display <code>isValid</code>.",
+        "starterCode": "! TODO: Check if 100 > 50\n",
+        "hint": "set isValid: 100 > 50\ndisplay isValid",
+        "solution": "set isValid: 100 > 50\ndisplay isValid",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-strings",
+    "id": "ch8-logic-gates",
     "number": 8,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Strings Library & Advanced String Manipulations",
-    "category": "Datatypes & Core Libraries",
-    "readTime": "5 min read",
-    "summary": "Comprehensive reference for the native Strings library routines: search, casing, slicing, delimiter splitting, and repetition.",
-    "body": "\n    <h2>The Native Strings Namespace</h2>\n    <p>VerScript complements instance methods on strings (like <code>str.len()</code> and <code>str.trim()</code>) with a comprehensive standalone <code>Strings</code> module. These routines provide deterministic text transformation algorithms directly accessible globally.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Strings.toUpper(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Transforms all ASCII characters to uppercase.</td></tr>\n        <tr><td><code>Strings.toLower(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Transforms all ASCII characters to lowercase.</td></tr>\n        <tr><td><code>Strings.trim(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Strips leading and trailing whitespace.</td></tr>\n        <tr><td><code>Strings.length(text)</code></td><td><code>str text</code></td><td><code>int</code></td><td>Returns byte length of the string.</td></tr>\n        <tr><td><code>Strings.contains(text, needle)</code></td><td><code>str text, needle</code></td><td><code>bool</code></td><td>Returns true if needle occurs in text.</td></tr>\n        <tr><td><code>Strings.startsWith(text, prefix)</code></td><td><code>str text, prefix</code></td><td><code>bool</code></td><td>Returns true if text begins with prefix.</td></tr>\n        <tr><td><code>Strings.endsWith(text, suffix)</code></td><td><code>str text, suffix</code></td><td><code>bool</code></td><td>Returns true if text terminates with suffix.</td></tr>\n        <tr><td><code>Strings.slice(text, start, finish)</code></td><td><code>str, int, int</code></td><td><code>str</code></td><td>Extracts substring between start and finish.</td></tr>\n        <tr><td><code>Strings.split(text, delim)</code></td><td><code>str text, delim</code></td><td><code>arr</code></td><td>Splits string into array by delimiter.</td></tr>\n        <tr><td><code>Strings.replace(text, target, rep)</code></td><td><code>str, str, str</code></td><td><code>str</code></td><td>Substitutes target substring with replacement.</td></tr>\n        <tr><td><code>Strings.repeat(text, count)</code></td><td><code>str text, int</code></td><td><code>str</code></td><td>Repeats text count times.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 2: Numbers, Math & Logic",
+    "subsection": "Truth & Logic",
+    "title": "Logic Gates: AND, OR, NOT",
+    "category": "Datatypes",
+    "readTime": "4 min read",
+    "summary": "Combine multiple conditions effortlessly using native logic gates (&, and, or, nor, xor, not).",
+    "body": "\n      <h2>Combining Conditions</h2>\n      <p>In the real world, decisions often rely on multiple facts: <em>\"If you have a boarding pass <strong>AND</strong> your passport is valid, you may board the plane.\"</em></p>\n\n      <h2>Native Logic Operators</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Operator</th><th>Name</th><th>How It Works</th><th>Example</th><th>Result</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>&amp;</code></td><td>AND</td><td>True only if <strong>both</strong> sides are true.</td><td><code>true &amp; false</code></td><td><code>false</code></td></tr>\n          <tr><td><code>or</code></td><td>OR</td><td>True if <strong>at least one</strong> side is true.</td><td><code>true or false</code></td><td><code>true</code></td></tr>\n          <tr><td><code>not</code></td><td>NOT</td><td>Flips true to false, and false to true.</td><td><code>not false</code></td><td><code>true</code></td></tr>\n          <tr><td><code>xor</code></td><td>XOR</td><td>True if <strong>exactly one</strong> side is true (exclusive).</td><td><code>true xor true</code></td><td><code>false</code></td></tr>\n          <tr><td><code>and</code></td><td>NAND</td><td>Negated AND (true unless both are true).</td><td><code>true and true</code></td><td><code>false</code></td></tr>\n          <tr><td><code>nor</code></td><td>NOR</td><td>Negated OR (true only if both are false).</td><td><code>false nor false</code></td><td><code>true</code></td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_strings_1",
-        "title": "strings_demo.vrs",
-        "code": "display \"=== Native Strings Module ===\" ?color=#38bdf8\nset greeting: \"  Hello, VerScript Developer!  \"\ndisplay \"Trimmed: [\" + (Strings.trim(greeting)) + \"]\"\ndisplay \"Upper: \" + (Strings.toUpper(\"verscript\"))\ndisplay \"Starts with Hello: \" + (Strings.startsWith(\"Hello World\", \"Hello\"))\ndisplay \"Repeated: \" + (Strings.repeat(\"*-\", 5))"
+        "id": "cb_ch8_1",
+        "title": "logic_demo.vrs",
+        "code": "set hasKeycard: true\nset knowsPin: true\n\nif hasKeycard & knowsPin then\n  display \"Vault door unlocked!\" ?color=green\nelse\n  display \"Access Denied.\" ?color=red"
       }
     ],
     "exercises": [
       {
-        "id": "ex_strings_1",
-        "title": "Exercise: String Normalization",
-        "prompt": "Trim the string <code>'  production_ready  '</code>, convert it to uppercase, and display the result.",
-        "starterCode": "! Normalize string and display\n",
-        "solution": "set raw: \"  production_ready  \"\nset clean: Strings.trim(raw)\ndisplay Strings.toUpper(clean)",
-        "expectedMatch": {},
-        "hint": "Use Strings.trim followed by Strings.toUpper."
+        "id": "ex_ch8_1",
+        "title": "Challenge 8: Safe Launch Check",
+        "prompt": "Given <code>isFueled: true</code> and <code>clearWeather: true</code>, check both with <code>&</code> and display <code>\"Ready for takeoff\"</code> in green.",
+        "starterCode": "set isFueled: true\nset clearWeather: true\n! TODO: Check both conditions\n",
+        "hint": "if isFueled & clearWeather then\n  display \"Ready for takeoff\" ?color=green",
+        "solution": "set isFueled: true\nset clearWeather: true\nif isFueled & clearWeather then\n  display \"Ready for takeoff\" ?color=green",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch7-arrays",
+    "id": "ch9-strings",
     "number": 9,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Arrays (arr) & Collection Operations",
-    "category": "Data Structures",
-    "readTime": "8 min read",
-    "summary": "Master VerScript's native arr data type: heterogeneous lists, zero-based indexing, in-place element mutation, and bounds safety.",
-    "body": "\n            <h2>The <code>arr</code> Data Type</h2>\n            <p>VerScript introduces first-class dynamic collections through the <code>arr</code> keyword. Unlike static C arrays, VerScript arrays are <strong>heterogeneous</strong>, dynamically resized on the virtual machine heap, and support mixed datatypes (integers, strings, booleans, nested arrays, and entity references) in a single collection.</p>\n\n            <h2>Syntax &amp; Initialization</h2>\n            <p>Arrays are declared using <code>arr &lt;identifier&gt;</code> and initialized using bracket syntax <code>[item1, item2, ...]</code>:</p>\n            <pre class=\"code-block\"><code>arr inventory: [\"Elixir\", 42, true, 999]\narr matrix: [[1, 0], [0, 1]]\narr empty_list</code></pre>\n\n            <h2>0-Based Indexing &amp; Bounds Safety</h2>\n            <p>Array elements are accessed using standard bracket indexing <code>items[index]</code>, starting from index <code>0</code>:</p>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Operation</th>\n                        <th>Syntax</th>\n                        <th>Description &amp; Behavior</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><strong>Element Read</strong></td>\n                        <td><code>items[0]</code></td>\n                        <td>Reads the element at index 0. Preserves native value and type.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>Element Mutation</strong></td>\n                        <td><code>items[1]: \"New Value\"</code></td>\n                        <td>Mutates the element in-place. Supports replacing with any type.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>Out-of-Bounds Trap</strong></td>\n                        <td><code>do display items[99] unless IndexOutOfBoundsError</code></td>\n                        <td>Accessing negative indices or index &gt;= count raises <code>IndexOutOfBoundsError</code> (Criticality 2/10).</td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Element Mutation Semantics</div>\n                <p>Element assignment uses the standard VerScript colon operator: <code>items[idx]: new_val</code>. Memory management is handled automatically by the VM heap tracker.</p>\n            </div>\n\n            <h2>Native Array Methods (Zero Imports, camelCase)</h2>\n            <p>Arrays provide built-in native operations without requiring any library imports. All method names follow the strict <strong>camelCase</strong> standard:</p>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Method</th>\n                        <th>Syntax &amp; Example</th>\n                        <th>Common Aliases</th>\n                        <th>Description</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>len()</code></td>\n                        <td><code>items.len()</code></td>\n                        <td><code>length, size, count</code></td>\n                        <td>Returns the current element count of the array.</td>\n                    </tr>\n                    <tr>\n                        <td><code>push(val)</code></td>\n                        <td><code>items.push(42)</code></td>\n                        <td><code>append, add</code></td>\n                        <td>Appends an element to the end of the array.</td>\n                    </tr>\n                    <tr>\n                        <td><code>pop()</code></td>\n                        <td><code>set last: items.pop()</code></td>\n                        <td><code>removeLast</code></td>\n                        <td>Removes and returns the last element.</td>\n                    </tr>\n                    <tr>\n                        <td><code>contains(val)</code></td>\n                        <td><code>items.contains(\"Paladin\")</code></td>\n                        <td><code>includes, has</code></td>\n                        <td>Returns 1 if value exists in array, 0 otherwise.</td>\n                    </tr>\n                    <tr>\n                        <td><code>indexOf(val)</code></td>\n                        <td><code>items.indexOf(2500)</code></td>\n                        <td><code>find, search</code></td>\n                        <td>Returns 0-based index of first occurrence, or -1 if absent.</td>\n                    </tr>\n                    <tr>\n                        <td><code>slice(start, end)</code></td>\n                        <td><code>items.slice(0, 2)</code></td>\n                        <td><code>subArray</code></td>\n                        <td>Returns a new sub-array from start index up to end index.</td>\n                    </tr>\n                    <tr>\n                        <td><code>reverse()</code></td>\n                        <td><code>items.reverse()</code></td>\n                        <td><code>invert</code></td>\n                        <td>Reverses array elements in-place.</td>\n                    </tr>\n                    <tr>\n                        <td><code>swap(i, j)</code></td>\n                        <td><code>items.swap(0, 2)</code></td>\n                        <td><code>exchange</code></td>\n                        <td>Swaps elements at index i and j.</td>\n                    </tr>\n                    <tr>\n                        <td><code>join(sep)</code></td>\n                        <td><code>items.join(\" - \")</code></td>\n                        <td><code>implode, toString</code></td>\n                        <td>Joins all elements into a formatted string with separator.</td>\n                    </tr>\n                    <tr>\n                        <td><code>clear()</code></td>\n                        <td><code>items.clear()</code></td>\n                        <td><code>empty, reset</code></td>\n                        <td>Empties all elements from the array.</td>\n                    </tr>\n                    <tr>\n                        <td><code>isEmpty()</code></td>\n                        <td><code>items.isEmpty()</code></td>\n                        <td><code>blank</code></td>\n                        <td>Returns 1 if array length is 0, 0 otherwise.</td>\n                    </tr>\n                </tbody>\n            </table>\n        ",
-    "codeBlocks": [
-      {
-        "id": "cb_ch21_1",
-        "title": "arrays_demo.vrs",
-        "code": "! VerScript Dynamic Heterogeneous Array Demonstration\narr hero_stats: [100, \"Paladin\", true, 2500]\n\ndisplay \"Initial Hero Stats:\" ?color=#38bdf8\ndisplay hero_stats ?color=#22c55e\n\ndisplay \"Class Name: \" + hero_stats[1] ?color=#a855f7\ndisplay \"HP: \" + hero_stats[0] ?color=#a855f7\n\n! In-place mutation\nhero_stats[0]: 85\nhero_stats[1]: \"Arch-Paladin\"\n\ndisplay \"Updated Stats after damage:\" ?color=#38bdf8\ndisplay hero_stats ?color=#22c55e\n\n! Safe boundary guard\ndo\n    display hero_stats[10]\nunless IndexOutOfBoundsError\n    display \"Protected from IndexOutOfBoundsError!\" ?color=#eab308"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_ch21_1",
-        "title": "Exercise 21.1: Declare and Mutate an Array",
-        "prompt": "Declare an array <code>arr scores: [10, 20, 30]</code>. Mutate the second item (index 1) to <code>99</code>, and display the entire array.",
-        "starterCode": "! Declare and mutate array\n",
-        "hint": "Use `arr scores: [10, 20, 30]`, `scores[1]: 99`, and `display scores`.",
-        "solution": "arr scores: [10, 20, 30]\nscores[1]: 99\ndisplay scores",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch-lib-arrays",
-    "number": 10,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Arrays Library & Collection Algorithms",
-    "category": "Datatypes & Core Libraries",
-    "readTime": "5 min read",
-    "summary": "Comprehensive reference for the native Arrays library routines: sorting, reversing, search, concatenation, and bounds extraction.",
-    "body": "\n    <h2>The Native Arrays Namespace</h2>\n    <p>VerScript collections benefit from both object method dispatch (such as <code>arr.push(val)</code>) and functional namespace routines in <code>Arrays</code>. The <code>Arrays</code> module offers utility routines for immutable and algorithmic collection transformations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Arrays.first(items)</code></td><td><code>arr items</code></td><td><code>any</code></td><td>Retrieves the first element (index 0).</td></tr>\n        <tr><td><code>Arrays.last(items)</code></td><td><code>arr items</code></td><td><code>any</code></td><td>Retrieves the terminal element.</td></tr>\n        <tr><td><code>Arrays.reverse(items)</code></td><td><code>arr items</code></td><td><code>arr</code></td><td>Returns a new array with elements in reversed order.</td></tr>\n        <tr><td><code>Arrays.sort(items)</code></td><td><code>arr items</code></td><td><code>arr</code></td><td>Sorts array in ascending order.</td></tr>\n        <tr><td><code>Arrays.contains(items, val)</code></td><td><code>arr, any</code></td><td><code>bool</code></td><td>Returns true if value exists in array.</td></tr>\n        <tr><td><code>Arrays.indexOf(items, val)</code></td><td><code>arr, any</code></td><td><code>int</code></td><td>Returns zero-based index or -1 if absent.</td></tr>\n        <tr><td><code>Arrays.join(items, delim)</code></td><td><code>arr, str</code></td><td><code>str</code></td><td>Concatenates items into a string separated by delim.</td></tr>\n        <tr><td><code>Arrays.concat(arr1, arr2)</code></td><td><code>arr, arr</code></td><td><code>arr</code></td><td>Merges two arrays into a unified sequence.</td></tr>\n      </tbody>\n    </table>\n  ",
-    "codeBlocks": [
-      {
-        "id": "cb_arrays_1",
-        "title": "arrays_demo.vrs",
-        "code": "display \"=== Native Arrays Module ===\" ?color=#38bdf8\nset list: [50, 10, 40, 20, 30]\nset sortedList: Arrays.sort(list)\ndisplay \"Sorted: \" + sortedList\ndisplay \"First: \" + (Arrays.first(sortedList))\ndisplay \"Last: \" + (Arrays.last(sortedList))\ndisplay \"Joined: \" + (Arrays.join(sortedList, \" -> \"))"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_arrays_1",
-        "title": "Exercise: Extremes and Delimited Sequences",
-        "prompt": "Create an array <code>[9, 3, 7, 1, 5]</code>, sort it with <code>Arrays.sort</code>, and display the first element multiplied by the last element.",
-        "starterCode": "! Sort array and multiply first and last\n",
-        "solution": "set nums: [9, 3, 7, 1, 5]\nset s: Arrays.sort(nums)\nset f: Arrays.first(s)\nset l: Arrays.last(s)\ndisplay f * l",
-        "expectedMatch": {},
-        "hint": "First element in sorted array is 1, last is 9. 1 * 9 = 9."
-      }
-    ]
-  },
-  {
-    "id": "ch-lib-matrix",
-    "number": 11,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Matrix Library & Multi-Dimensional Grid Operations",
-    "category": "Datatypes & Core Libraries",
-    "readTime": "5 min read",
-    "summary": "Comprehensive guide to multi-dimensional grid manipulation, identity matrices, transposition, and 2x2 determinants.",
-    "body": "\n    <h2>The Native Matrix Namespace</h2>\n    <p>VerScript native arrays support nested dimensions (arrays of arrays), forming the basis of matrices. The <code>Matrix</code> module provides linear algebra fundamentals for graphic transforms, simulations, and grid computations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Matrix.identity(size)</code></td><td><code>int size</code></td><td><code>arr</code></td><td>Generates an N x N identity matrix with 1 on diagonal and 0 elsewhere.</td></tr>\n        <tr><td><code>Matrix.transpose(mat)</code></td><td><code>arr mat</code></td><td><code>arr</code></td><td>Flips a matrix over its diagonal, switching row and column indices.</td></tr>\n        <tr><td><code>Matrix.determinant2x2(mat)</code></td><td><code>arr mat</code></td><td><code>int</code></td><td>Computes the determinant <code>(a*d - b*c)</code> of a 2x2 matrix.</td></tr>\n      </tbody>\n    </table>\n  ",
-    "codeBlocks": [
-      {
-        "id": "cb_matrix_1",
-        "title": "matrix_demo.vrs",
-        "code": "display \"=== Native Matrix Module ===\" ?color=#38bdf8\nset id3: Matrix.identity(3)\ndisplay \"Identity 3x3 Row 0: \" + id3[0]\ndisplay \"Identity 3x3 Row 1: \" + id3[1]\ndisplay \"Identity 3x3 Row 2: \" + id3[2]\n\nset m2: [[4, 2], [3, 5]]\ndisplay \"Determinant 2x2: \" + (Matrix.determinant2x2(m2))"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_matrix_1",
-        "title": "Exercise: Matrix Determinant",
-        "prompt": "Compute and display the 2x2 determinant of <code>[[5, 2], [3, 4]]</code> using <code>Matrix.determinant2x2</code>.",
-        "starterCode": "! Calculate 2x2 matrix determinant\n",
-        "solution": "set m: [[5, 2], [3, 4]]\ndisplay Matrix.determinant2x2(m)",
-        "expectedMatch": {},
-        "hint": "(5 * 4) - (2 * 3) = 20 - 6 = 14."
-      }
-    ]
-  },
-  {
-    "id": "ch8-entities",
-    "number": 12,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Entities, Instances & Dynamic Objects",
+    "section": "Section 3: Text & Collections",
+    "subsection": "Working with Text",
+    "title": "Strings & Text Formatting",
     "category": "Datatypes",
-    "readTime": "5 min read",
-    "summary": "Explore dynamic entities: class instantiation, instance states, mutable dynamic properties, method binding, and string serialization.",
-    "body": "\n    <h2>What is an Entity?</h2>\n    <p>An <strong>Entity</strong> is an instantiated, stateful object constructed from a <code>class</code> blueprint. Entities encapsulate static class constants and mutable dynamic instance fields.</p>\n\n    <h2>Instantiation &amp; Constructor Parameters</h2>\n    <p>Instantiating a class invokes its constructor, binding constructor arguments into the newly minted entity:</p>\n    <pre><code>class Point(x, y)\n  dynamic:\n    set posX: x\n    set posY: y\n\nset pt: Point(10, 25)\ndisplay \"Point coordinates: (\" + pt.posX + \", \" + pt.posY + \")\"</code></pre>\n\n    <h2>Dynamic Property Access &amp; Mutation</h2>\n    <p>Entity properties defined in the <code>dynamic:</code> section can be inspected and updated using standard dot notation:</p>\n    <pre><code>pt.posX: pt.posX + 5\ndisplay \"Updated X: \" + pt.posX</code></pre>\n\n    <h2>Encapsulation Protection</h2>\n    <p>Properties declared in the <code>static:</code> partition of a class without the <code>public</code> qualifier are strictly private and read-only. Attempting to mutate a static property throws an <code>ImmutableError</code>.</p>\n  ",
-    "codeBlocks": [
-      {
-        "id": "cb_ent_1",
-        "title": "entity_demo.vrs",
-        "code": "class Robot(name, model)\n  dynamic:\n    set energy: 100\n    def method charge(amount)\n      energy: energy + amount\n      display name + \" charged! Energy: \" + energy\n\nset bot: Robot(\"Atlas\", \"Mk-IV\")\nbot.charge(25)"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_ent_1",
-        "title": "Exercise 8.1: Create an Entity",
-        "prompt": "Define a class <code>Counter(start)</code> with dynamic property <code>val: start</code>. Create an instance with <code>10</code> and display <code>inst.val</code>.",
-        "starterCode": "! TODO: Define Counter class and instantiate it\n",
-        "hint": "Use `class Counter(start)` with `dynamic:` section setting `val: start`.",
-        "solution": "class Counter(start)\n  dynamic:\n    set val: start\nset c: Counter(10)\ndisplay c.val",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch9-datatypes",
-    "number": 13,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "DataType Constraints, Custom Types, Enums & Typed Structs",
-    "category": "Datatypes",
-    "readTime": "8 min read",
-    "summary": "Enforce compile-time & runtime type safety: primitive constraints (num, bool, arr, str, entity), bare & set declarations, first-class Enums, lightweight typed Structs, custom DataType definitions with 'it' boolean invariants, and DataTypeError interception.",
-    "body": "\n    <h2>The VerScript Type Enforcement System</h2>\n    <p>VerScript is dynamically typed by default for rapid scripting agility, but provides an industrial-grade, optional <strong>DataType Constraint System</strong> for mission-critical reliability. When type constraints are attached to variables, function parameters, or entity fields, the virtual machine enforces strict invariants and immediately triggers <code>DataTypeError</code> on violation.</p>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Zero-Overhead Safety</div>\n      <p>Type checks in VerScript execute natively in CPU registers inside the C VM core. Variables can be declared with prefix keywords or bare types without ceremonial type annotations.</p>\n    </div>\n\n    <h2>1. Variable Type Declarations</h2>\n    <p>VerScript supports two equivalent declarative syntaxes for type-constrained variables:</p>\n    <ul>\n      <li><strong>With <code>set</code>:</strong> <code>set &lt;type&gt; &lt;var&gt; : &lt;expr&gt;</code></li>\n      <li><strong>Bare Type Declaration:</strong> <code>&lt;type&gt; &lt;var&gt; : &lt;expr&gt;</code></li>\n    </ul>\n\n    <div class=\"doc-table-wrapper\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Syntax</th><th>Target Variable</th><th>Constrained Type</th><th>Example</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>set num limit : 100</code></td><td><code>limit</code></td><td><code>num</code></td><td>Stores 100; reassigning string throws <code>DataTypeError</code></td></tr>\n          <tr><td><code>str username : \"Ada\"</code></td><td><code>username</code></td><td><code>str</code></td><td>Bare declaration constraining to string</td></tr>\n          <tr><td><code>bool isOnline : true</code></td><td><code>isOnline</code></td><td><code>bool</code></td><td>Constrained to boolean values (<code>true</code> / <code>false</code>)</td></tr>\n          <tr><td><code>arr sensors : [10, 20]</code></td><td><code>sensors</code></td><td><code>arr</code></td><td>Constrained strictly to dynamic array collections</td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>2. Parameter Type Constraints</h2>\n    <p>Routine parameters (in <code>func</code>, <code>method</code>, and <code>class</code> constructors) can enforce type constraints using either <strong>prefix</strong> or <strong>postfix</strong> notation:</p>\n    <ul>\n      <li><strong>Prefix Syntax:</strong> <code>def func calculate(num a, num b)</code> or <code>def func logMsg(str msg)</code></li>\n      <li><strong>Postfix Syntax:</strong> <code>def func calculate(a: num, b: num)</code> or <code>def func logMsg(msg: str)</code></li>\n      <li><strong>Class Constructors:</strong> <code>class Server(port: num, host: str)</code> or <code>class Worker(num id, bool active)</code></li>\n    </ul>\n    <p>Passing an incompatible argument at invocation time terminates the call and raises a catchable <code>DataTypeError</code>.</p>\n\n    <h2>3. Built-in Native Type Constraints</h2>\n    <p>Beyond the core primitives (<code>num</code>, <code>bool</code>, <code>str</code>, <code>arr</code>, <code>entity</code>), the runtime includes standard built-in validation constraints:</p>\n    <div class=\"doc-table-wrapper\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Constraint Name</th><th>Base Type</th><th>Validation Rule</th><th>Example Valid Values</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>int</code></td><td><code>num</code></td><td>Integer value (no fraction)</td><td><code>-5</code>, <code>0</code>, <code>42</code></td></tr>\n          <tr><td><code>posNum</code></td><td><code>num</code></td><td>Strictly positive number (<code>&gt; 0</code>)</td><td><code>1</code>, <code>3.14</code>, <code>100</code></td></tr>\n          <tr><td><code>nonNegNum</code></td><td><code>num</code></td><td>Non-negative number (<code>&gt;= 0</code>)</td><td><code>0</code>, <code>12.5</code></td></tr>\n          <tr><td><code>byte</code></td><td><code>num</code></td><td>Integer in range <code>0..255</code></td><td><code>0</code>, <code>128</code>, <code>255</code></td></tr>\n          <tr><td><code>port</code></td><td><code>num</code></td><td>TCP/UDP port in range <code>1..65535</code></td><td><code>80</code>, <code>443</code>, <code>8080</code></td></tr>\n          <tr><td><code>nonEmptyStr</code></td><td><code>str</code></td><td>String with length &gt; 0</td><td><code>\"admin\"</code>, <code>\"ok\"</code></td></tr>\n          <tr><td><code>char</code></td><td><code>str</code></td><td>Single character string</td><td><code>\"A\"</code>, <code>\"#\"</code></td></tr>\n          <tr><td><code>nonEmptyArr</code></td><td><code>arr</code></td><td>Array with at least one element</td><td><code>[1]</code>, <code>[\"a\", \"b\"]</code></td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>4. Defining Custom Types (<code>DataType ... extends</code>)</h2>\n    <p>You can create custom domain types using the <code>DataType</code> block. The candidate value being tested is referenced inside the block via the keyword <code>it</code>. Multiple condition lines are automatically combined using logical <strong>AND</strong>:</p>\n    <pre><code class=\"language-verscript\">DataType PortNumber extends num\n    it &gt;= 1\n    it &lt;= 65535\n    (it // 1) = it\n\nDataType PositiveEven extends num\n    it &gt; 0\n    it % 2 = 0\n\n! Usage:\nPortNumber webPort : 8080\ndisplay \"Web Port configured: \" + webPort ?color=\"green\"</code></pre>\n    <p>A defined custom type itself has the metadata type <code>\"DataType\"</code>.</p>\n\n    <h2>5. Catching <code>DataTypeError</code></h2>\n    <p>Type mismatches and invariant failures can be defensively trapped using standard <code>do ... unless DataTypeError</code> blocks:</p>\n    <pre><code class=\"language-verscript\">do\n    num counter : \"invalid string\"\nunless DataTypeError\n    display \"Prevented invalid type assignment!\" ?color=\"yellow\"</code></pre>\n  \n    <h2>4. First-Class Enums (<code>enum</code>)</h2>\n    <p>VerScript enums provide strongly-typed enumeration constants. Under the hood, they are sealed, immutable entity instances where member names evaluate to deterministic integer values:</p>\n    <ul>\n      <li><strong>Block Syntax:</strong> Auto-increments values starting at 0:\n        <pre><code class=\"language-verscript\">enum TaskStatus:\n    Pending    ! 0\n    Active     ! 1\n    Completed  ! 2</code></pre>\n      </li>\n      <li><strong>Inline Syntax with Explicit Values:</strong>\n        <pre><code class=\"language-verscript\">enum HttpCode: OK = 200, NotFound = 404, ServerError = 500</code></pre>\n      </li>\n      <li><strong>Access Semantics:</strong> Access members using standard dot notation (e.g. <code>TaskStatus.Active</code> returns <code>1</code>). Enums integrate seamlessly with conditional branching, arithmetic expressions, and <code>match</code> statements.</li>\n    </ul>\n\n    <h2>5. Lightweight Typed Structs (<code>struct</code>)</h2>\n    <p>Structs provide lightweight record blueprints with automatic constructor argument binding and field type enforcement:</p>\n    <ul>\n      <li><strong>Declaration:</strong> Define field names and optional type constraints:\n        <pre><code class=\"language-verscript\">struct Point:\n    x: num\n    y: num\n\nstruct User: name: str, age: num</code></pre>\n      </li>\n      <li><strong>Instantiation:</strong> Calling the struct name instantiates a typed entity instance with fields bound in order:\n        <pre><code class=\"language-verscript\">set pt: Point(10, 25)\nset u: User(\"Alice\", 30)\n\ndisplay pt.x ?color=\"green\"  ! 10\ndisplay u.name ?color=\"cyan\" ! \"Alice\"</code></pre>\n      </li>\n      <li><strong>Type Constraint Enforcement:</strong> Passing an argument of an invalid type triggers an immediate <code>DataTypeError</code> at runtime. Furthermore, a declared struct acts as a valid type annotation for variables (e.g. <code>Point pt: Point(1, 2)</code>).</li>\n    </ul>\n  ",
+    "readTime": "3 min read",
+    "summary": "Work with text in VerScript: writing quotes, joining text with +, and including numbers inside messages.",
+    "body": "\n      <h2>Working with Text</h2>\n      <p>A <strong>string</strong> is just a sequence of characters enclosed in double quotation marks <code>\"...\"</code>. Strings represent names, messages, file paths, URLs, and any other text.</p>\n\n      <h2>Joining Text with <code>+</code></h2>\n      <p>You can glue pieces of text together using the <code>+</code> operator. VerScript automatically converts numbers and booleans into text when you add them to a string!</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch9_1",
-        "title": "datatype_constraints_demo.vrs",
-        "code": "! VerScript DataType Constraints & Custom Types\ndisplay \"=== DataType Constraint Safety Demo ===\" ?color=#38bdf8\n\n! 1. Bare Primitive Type Declarations\nnum maxConnections : 500\nstr clusterName : \"US-East-Primary\"\nbool isLeader : true\narr peerNodes : [\"10.0.0.1\", \"10.0.0.2\"]\n\ndisplay \"Cluster: \" + clusterName + \" | Max Conns: \" + maxConnections ?color=#50fa7b\n\n! 2. Parameter Constraints (Prefix & Postfix)\ndef func sendPacket(num port, str payload)\n    display \"Dispatching packet to port \" + port + \": \" + payload ?color=#f1fa8c\n    reply true\n\nsendPacket(8080, \"PING\")\n\n! 3. Custom DataType Definition\nDataType ServerPort extends num\n    it >= 1\n    it <= 65535\n\nServerPort activePort : 443\ndisplay \"Active SSL Port: \" + activePort ?color=#50fa7b\n\n! 4. Guarding Invariant Violations\ndo\n    num badAssignment : \"not a number\"\nunless DataTypeError\n    display \"Intercepted DataTypeError cleanly!\" ?color=#ff79c6"
-      },
-      {
-        "id": "cb_ch13_enums_structs",
-        "title": "enums_and_structs_demo.vrs",
-        "code": "! First-Class Enums & Lightweight Typed Structs Demo\n\nenum LogLevel: Debug = 1, Info = 2, Warn = 3, Error = 4\n\nstruct LogEntry:\n    timestamp: num\n    level: num\n    message: str\n\nset entry: LogEntry(1700000000, LogLevel.Warn, \"High latency detected\")\n\ndisplay \"Log Level: \" + entry.level ?color=\"yellow\"\ndisplay \"Message:   \" + entry.message ?color=\"cyan\"\n\nif entry.level >= LogLevel.Warn then\n    display \"[ALERT] Escalating to duty engineer...\" ?color=\"red\""
+        "title": "strings_intro.vrs",
+        "code": "set hero: \"Ada Lovelace\"\nset year: 1815\nset bio: hero + \" was born in \" + year + \".\"\ndisplay bio ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_9_1",
-        "title": "Exercise 9.1: Constrain Variable to Integer",
-        "prompt": "Declare a variable <code>workerCount</code> constrained to <code>num</code> with initial value <code>8</code>, and display <code>\"Workers: \" + workerCount</code> in green.",
-        "starterCode": "! TODO: Declare constrained num variable and display\n",
-        "hint": "Use `num workerCount : 8` and `display \"Workers: \" + workerCount ?color=green`.",
-        "solution": "num workerCount : 8\ndisplay \"Workers: \" + workerCount ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_9_2",
-        "title": "Exercise 9.2: Constrain Function Parameters",
-        "prompt": "Define a function <code>def func greet(str user, num times)</code> that prints <code>\"Hello, \" + user</code> repeatedly using <code>loop times</code>.",
-        "starterCode": "! TODO: Define greet with str and num parameters\n",
-        "hint": "Use `def func greet(str user, num times)` and `loop times` inside the body.",
-        "solution": "def func greet(str user, num times)\n    loop times\n        display \"Hello, \" + user\n\ngreet(\"Alice\", 2)",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_9_3",
-        "title": "Exercise 9.3: Trap DataTypeError with do-unless",
-        "prompt": "Write a program that attempts to assign <code>num val : \"text\"</code> inside a <code>do</code> block, and traps <code>unless DataTypeError</code> to display <code>\"Caught Type Error\"</code>.",
-        "starterCode": "! TODO: Trap DataTypeError using do ... unless\n",
-        "hint": "Wrap `num val : \"text\"` in `do` and catch with `unless DataTypeError`.",
-        "solution": "do\n    num val : \"text\"\nunless DataTypeError\n    display \"Caught Type Error\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch13_enum",
-        "title": "Exercise 13.3: Declaring and Querying an Enum",
-        "prompt": "Define an enum <code>ConnectionState</code> with members <code>Disconnected = 0</code>, <code>Connecting = 1</code>, and <code>Connected = 2</code>. Display the value of <code>ConnectionState.Connected</code> in green.",
-        "starterCode": "! TODO: Define ConnectionState enum and display ConnectionState.Connected\n",
-        "hint": "Use `enum ConnectionState: Disconnected = 0, Connecting = 1, Connected = 2` and `display ConnectionState.Connected ?color=\"green\"`.",
-        "solution": "enum ConnectionState: Disconnected = 0, Connecting = 1, Connected = 2\ndisplay ConnectionState.Connected ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch13_struct",
-        "title": "Exercise 13.4: Defining and Instantiating a Struct",
-        "prompt": "Define a struct <code>Vector2</code> with fields <code>x: num, y: num</code>. Instantiate <code>set v: Vector2(40, 60)</code>, and display <code>v.x + v.y</code>.",
-        "starterCode": "! TODO: Define Vector2 struct, instantiate v, and display sum of coordinates\n",
-        "hint": "Use `struct Vector2: x: num, y: num`, `set v: Vector2(40, 60)`, and `display v.x + v.y`.",
-        "solution": "struct Vector2: x: num, y: num\nset v: Vector2(40, 60)\ndisplay v.x + v.y",
+        "id": "ex_ch9_1",
+        "title": "Challenge 9: Personalized Greeting",
+        "prompt": "Declare <code>name: \"Sam\"</code>, join it to make <code>\"Hello, Sam!\"</code>, and display it.",
+        "starterCode": "! Declare name and display personalized greeting\n",
+        "hint": "set name: \"Sam\"\ndisplay \"Hello, \" + name + \"!\"",
+        "solution": "set name: \"Sam\"\ndisplay \"Hello, \" + name + \"!\"",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch10-pseudo-random",
-    "number": 14,
-    "section": "Section 2: Language Foundations & Datatypes",
-    "title": "Native Pseudo & Random Generation Engine",
-    "category": "Built-in Engines",
-    "readTime": "7 min read",
-    "summary": "Generate deterministic PRNG sequences, sample distributions, mock data, RFC4122 UUIDs, and shuffle collections using the native Pseudo / Random virtual machine engine.",
-    "body": "\n    <h2>The Native Pseudo &amp; Random Engine</h2>\n    <p>In VerScript, pseudo-random number and mock data generation is a <strong>core native capability</strong> built directly into the C virtual machine. Like the <code>Math</code> engine, all pseudo-random routines are <strong>native keywords and functions</strong>: they require <strong>no library imports</strong> and have zero startup overhead.</p>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Native &amp; Import-Free</div>\n      <p>Pseudo and Random are synonymous native engine namespaces. You can call all methods using either dot notation (<code>Pseudo.between 1, 10</code>) or direct function invocation (<code>between 1, 10</code>).</p>\n    </div>\n\n    <h2>1. Dual Calling Convention</h2>\n    <p>The virtual machine permits both dot notation and direct unbracketed or bracketed function calls:</p>\n    <div class=\"doc-table-wrapper\">\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Direct Invocation</th><th>Dot Notation (Pseudo)</th><th>Dot Notation (Random)</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>between 1, 100</code></td><td><code>Pseudo.between(1, 100)</code></td><td><code>Random.between(1, 100)</code></td><td>Random integer in inclusive range <code>[min, max]</code></td></tr>\n          <tr><td><code>random()</code> / <code>next()</code></td><td><code>Pseudo.random()</code></td><td><code>Random.next()</code></td><td>Raw random 31-bit integer</td></tr>\n          <tr><td><code>choice items</code></td><td><code>Pseudo.choice(items)</code></td><td><code>Random.choice(items)</code></td><td>Uniform random element from array</td></tr>\n          <tr><td><code>shuffle items</code></td><td><code>Pseudo.shuffle(items)</code></td><td><code>Random.shuffle(items)</code></td><td>Returns a new shuffled copy of array</td></tr>\n          <tr><td><code>sample items, 3</code></td><td><code>Pseudo.sample(items, 3)</code></td><td><code>Random.sample(items, 3)</code></td><td>Sample N random items from array</td></tr>\n          <tr><td><code>boolean()</code></td><td><code>Pseudo.boolean()</code></td><td><code>Random.boolean()</code></td><td>Random boolean (50% true / 50% false)</td></tr>\n          <tr><td><code>uuid()</code></td><td><code>Pseudo.uuid()</code></td><td><code>Random.uuid()</code></td><td>RFC4122 v4 UUID string</td></tr>\n          <tr><td><code>name()</code></td><td><code>Pseudo.name()</code></td><td><code>Random.name()</code></td><td>Realistic mock full name</td></tr>\n          <tr><td><code>email()</code></td><td><code>Pseudo.email()</code></td><td><code>Random.email()</code></td><td>Realistic mock email address</td></tr>\n          <tr><td><code>alphaNumeric 12</code></td><td><code>Pseudo.alphaNumeric(12)</code></td><td><code>Random.alphaNumeric(12)</code></td><td>Alphanumeric string of specified length</td></tr>\n          <tr><td><code>seed 42</code></td><td><code>Pseudo.seed(42)</code></td><td><code>Random.seed(42)</code></td><td>Seed deterministic PRNG stream</td></tr>\n        </tbody>\n      </table>\n    </div>\n\n    <h2>2. Deterministic PRNG Seeding</h2>\n    <p>When running automated test suites, simulation models, or procedural generation, you can initialize the PRNG state using <code>seed(n)</code> or <code>Pseudo.seed(n)</code>. Providing a fixed integer seed guarantees 100% reproducible sequences across every machine and operating system.</p>\n    <pre><code class=\"language-verscript\">Pseudo.seed(1337)\nset r1 : between(1, 100)\nset r2 : between(1, 100)\n! Sequence r1, r2 will evaluate identically on every execution</code></pre>\n\n    <h2>3. Mock Data Synthesis for Testing</h2>\n    <p>VerScript incorporates high-performance mock generators for synthetic test data:</p>\n    <ul>\n      <li><strong>UUID Generation:</strong> <code>uuid()</code> creates compliant v4 UUID strings (e.g. <code>\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"</code>).</li>\n      <li><strong>Persona Mocking:</strong> <code>name()</code> and <code>email()</code> generate randomized user records for benchmarking without external dependencies.</li>\n      <li><strong>Token Generation:</strong> <code>alphaNumeric(32)</code> creates high-entropy security tokens and secret keys.</li>\n    </ul>\n  ",
+    "id": "ch10-string-methods",
+    "number": 10,
+    "section": "Section 3: Text & Collections",
+    "subsection": "Working with Text",
+    "title": "Native String Operations",
+    "category": "Datatypes",
+    "readTime": "4 min read",
+    "summary": "Transform and inspect text using built-in methods: length, uppercase, lowercase, trimming spaces, splitting, and searching.",
+    "body": "\n      <h2>Built-in Text Tools</h2>\n      <p>Strings come with powerful methods you can call using the dot <code>.</code> syntax:</p>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Method</th><th>Example</th><th>Result</th><th>What It Does</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>.length()</code></td><td><code>\"Cat\".length()</code></td><td><code>3</code></td><td>Counts number of characters.</td></tr>\n          <tr><td><code>.toUpper()</code></td><td><code>\"hi\".toUpper()</code></td><td><code>\"HI\"</code></td><td>Converts text to uppercase.</td></tr>\n          <tr><td><code>.toLower()</code></td><td><code>\"HI\".toLower()</code></td><td><code>\"hi\"</code></td><td>Converts text to lowercase.</td></tr>\n          <tr><td><code>.trim()</code></td><td><code>\"  ok  \".trim()</code></td><td><code>\"ok\"</code></td><td>Removes spaces from beginning and end.</td></tr>\n          <tr><td><code>.contains(w)</code></td><td><code>\"Hello\".contains(\"ell\")</code></td><td><code>true</code></td><td>Checks if text contains word.</td></tr>\n          <tr><td><code>.split(sep)</code></td><td><code>\"a,b,c\".split(\",\")</code></td><td><code>[\"a\", \"b\", \"c\"]</code></td><td>Breaks text into a list.</td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch10_1",
-        "title": "native_pseudo_showcase.vrs",
-        "code": "! Native Pseudo & Random Generation Engine\ndisplay \"=== Native Pseudo & Random Engine ===\" ?color=#38bdf8\n\n! 1. Seeding for Deterministic Sequences\nPseudo.seed(42)\ndisplay \"Seeded PRNG cleanly\" ?color=#50fa7b\n\n! 2. Ranges & Random Integers\nroll : between 1, 6\ndisplay \"Dice Roll (1-6): \" + roll ?color=#f1fa8c\n\n! 3. Array Sampling & Shuffling\narr fruits : [\"Apple\", \"Banana\", \"Cherry\", \"Date\", \"Elderberry\"]\npick : choice fruits\ndisplay \"Random Fruit: \" + pick ?color=#ff79c6\n\narr mixed : shuffle fruits\ndisplay \"Shuffled Count: \" + mixed.length ?color=#50fa7b\n\n! 4. Synthetic Mock Data & UUIDs\nuserId : uuid()\nuserName : name()\nuserMail : email()\ntoken : alphaNumeric 16\n\ndisplay \"User ID:   \" + userId ?color=#bd93f9\ndisplay \"Name:      \" + userName ?color=#8be9fd\ndisplay \"Email:     \" + userMail ?color=#8be9fd\ndisplay \"API Token: \" + token ?color=#f1fa8c"
+        "title": "string_cleaning.vrs",
+        "code": "set messy: \"   alert: system reboot   \"\nset clean: messy.trim().toUpper()\ndisplay clean ?color=yellow\ndisplay \"Character count: \" + clean.length()"
       }
     ],
     "exercises": [
       {
-        "id": "ex_10_1",
-        "title": "Exercise 10.1: Roll a 20-Sided Die",
-        "prompt": "Use the native <code>between</code> function to generate a random number between <code>1</code> and <code>20</code>, and display <code>\"D20 Roll: \" + roll</code> in yellow.",
-        "starterCode": "! TODO: Roll a 20-sided die using between\n",
-        "hint": "Use `set roll : between(1, 20)` and `display \"D20 Roll: \" + roll ?color=\"yellow\"`.",
-        "solution": "set roll : between(1, 20)\ndisplay \"D20 Roll: \" + roll ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_10_2",
-        "title": "Exercise 10.2: Generate Mock User Identity",
-        "prompt": "Generate a mock identity using <code>name()</code> and <code>email()</code>, and display <code>\"Created: \" + name() + \" <\" + email() + \">\"</code>.",
-        "starterCode": "! TODO: Generate mock user identity\n",
-        "hint": "Call `name()` and `email()` directly and concatenate.",
-        "solution": "set uName : (name)\nset uEmail : (email)\ndisplay \"Created: \" + uName + \" <\" + uEmail + \">\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_10_3",
-        "title": "Exercise 10.3: Deterministic Seeding",
-        "prompt": "Seed the PRNG with <code>seed 99</code>, pick a random choice from <code>arr choices : [\"A\", \"B\", \"C\"]</code> using <code>choice choices</code>, and display the result.",
-        "starterCode": "! TODO: Seed and choose element\n",
-        "hint": "Use `seed 99`, `arr choices : [\"A\", \"B\", \"C\"]`, and `display (choice choices)`.",
-        "solution": "seed 99\narr choices : [\"A\", \"B\", \"C\"]\nset picked : (choice choices)\ndisplay picked",
+        "id": "ex_ch10_1",
+        "title": "Challenge 10: Clean and Uppercase",
+        "prompt": "Clean <code>raw: \"  ready  \"</code> with <code>.trim().toUpper()</code> and display it.",
+        "starterCode": "set raw: \"  ready  \"\n! Clean and display raw in uppercase\n",
+        "hint": "set clean: raw.trim().toUpper()\ndisplay clean",
+        "solution": "set raw: \"  ready  \"\nset clean: raw.trim().toUpper()\ndisplay clean",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch7-prompt",
-    "number": 15,
-    "section": "Section 3: Execution Control & Branching",
-    "title": "Interactive Input & Prompt Attributes",
-    "category": "Input & Output",
+    "id": "ch11-arrays",
+    "number": 11,
+    "section": "Section 3: Text & Collections",
+    "subsection": "Working with Lists",
+    "title": "Arrays & Ordered Lists",
+    "category": "Datatypes",
     "readTime": "4 min read",
-    "summary": "Capture interactive user input from standard input with dynamic fallback default attributes.",
-    "body": "\n            <h2>The <code>prompt</code> Keyword</h2>\n            <p>The <code>prompt</code> keyword pauses script execution and reads a line from standard input into a target variable.</p>\n\n            <h2>Attributes for <code>prompt</code></h2>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Attribute</th>\n                        <th>Type</th>\n                        <th>Description</th>\n                        <th>Syntax Example</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>?default</code></td>\n                        <td>String / Number</td>\n                        <td>Provides a default fallback value if the user provides empty input (presses Enter without typing).</td>\n                        <td><code>prompt username ?default=\"Guest\"</code></td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <h2>Automatic Type Coercion</h2>\n            <p>If the user enters digits (e.g. <code>42</code>), the runtime automatically parses the value as an <code>Integer</code>. If non-numeric characters are present, it stores a <code>String</code>.</p>\n        ",
+    "summary": "Store lists of numbers or words in square brackets [], access items by index, and add or remove elements.",
+    "body": "\n      <h2>Lists of Items</h2>\n      <p>An <strong>array</strong> is an ordered list of values enclosed in square brackets <code>[...]</code>. You can keep scores, usernames, coordinates, or inventory items grouped together under a single name.</p>\n\n      <h2>Indexing: Starting at Zero</h2>\n      <p>Like almost all modern programming languages, VerScript numbers items starting from <strong>0</strong>:</p>\n      <ul>\n        <li><code>items[0]</code> is the <strong>first</strong> item.</li>\n        <li><code>items[1]</code> is the <strong>second</strong> item.</li>\n        <li><code>items.length()</code> tells you how many items are in the list.</li>\n      </ul>\n\n      <h2>Adding & Removing</h2>\n      <ul>\n        <li><code>items.push(newVal)</code> adds an item to the end of the list.</li>\n        <li><code>items.pop()</code> removes the last item from the list.</li>\n      </ul>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_prompt_1",
-        "title": "prompt_demo.vrs",
-        "code": "! Prompt with default fallback\nprompt username ?default=\"Operator\"\ndisplay \"Welcome, \" + username ?color=\"cyan\"\n\nprompt level ?default=\"1\"\ndisplay \"User Level: \" + level ?color=\"yellow\""
+        "id": "cb_ch11_1",
+        "title": "array_basics.vrs",
+        "code": "set scores: [95, 88, 72, 100]\ndisplay \"First score: \" + scores[0] ?color=cyan\ndisplay \"Total tests taken: \" + scores.length()\n\nscores.push(84)\ndisplay \"Updated list: \" + scores ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_prompt_1",
-        "title": "Exercise 7.1: User Prompt with Default",
-        "prompt": "Prompt for <code>heroName</code> with default <code>?default=\"Anonymous\"</code>, then display <code>\"Hero: \" + heroName</code> in green.",
-        "starterCode": "! TODO: Prompt heroName with ?default=\"Anonymous\" and display in green\n",
-        "hint": "Use `prompt heroName ?default=\"Anonymous\"`.",
-        "solution": "prompt heroName ?default=\"Anonymous\"\ndisplay \"Hero: \" + heroName ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_prompt_2",
-        "title": "Exercise 7.2: Numeric Config Prompt",
-        "prompt": "Prompt for <code>port</code> with default <code>?default=\"8080\"</code>, and display <code>\"Listening on port: \" + port</code> in cyan.",
-        "starterCode": "! TODO: Prompt port with default 8080 and display\n",
-        "hint": "Use `prompt port ?default=\"8080\"`.",
-        "solution": "prompt port ?default=\"8080\"\ndisplay \"Listening on port: \" + port ?color=\"cyan\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_prompt_3",
-        "title": "Exercise 7.3: Interactive Greeting Pipeline",
-        "prompt": "Prompt for <code>city</code> with default <code>\"Neo-Tokyo\"</code>, and display <code>\"Connected to: \" + city</code> with hex color <code>?color=#00e5ff</code>.",
-        "starterCode": "! TODO: Prompt city ?default=\"Neo-Tokyo\" and display with ?color=#00e5ff\n",
-        "hint": "Use `prompt city ?default=\"Neo-Tokyo\"` and display.",
-        "solution": "prompt city ?default=\"Neo-Tokyo\"\ndisplay \"Connected to: \" + city ?color=#00e5ff",
+        "id": "ex_ch11_1",
+        "title": "Challenge 11: Create and Access a List",
+        "prompt": "Create a list <code>planets: [\"Mars\", \"Venus\", \"Earth\"]</code>, and display the first planet.",
+        "starterCode": "! TODO: Create planets array and display first element\n",
+        "hint": "set planets: [\"Mars\", \"Venus\", \"Earth\"]\ndisplay planets[0]",
+        "solution": "set planets: [\"Mars\", \"Venus\", \"Earth\"]\ndisplay planets[0]",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch8-conditionals",
-    "number": 16,
-    "section": "Section 3: Execution Control & Branching",
-    "title": "Conditional Branching, Ternary Expressions & Guards",
-    "category": "Control Flow",
-    "readTime": "5 min read",
-    "summary": "Master multi-branch logic using if-then, else-if-then, inline ternary expressions (if cond then a else b), and defensive guard clauses with early termination.",
-    "body": "\n            <h2>Conditional Syntax Overview</h2>\n            <p>VerScript uses declarative <code>if ... then</code> statements scoped by indentation:</p>\n            <div class=\"code-block\">if score >= 90 then\n    display \"Grade: A\" ?color=\"green\"\nelse if score >= 80 then\n    display \"Grade: B\" ?color=\"yellow\"\nelse\n    display \"Grade: C\" ?color=\"red\"</div>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Indentation Rule</div>\n                <p>All statements inside a <code>then</code> or <code>else</code> branch must be indented by 2 or 4 spaces relative to the <code>if</code> keyword.</p>\n            </div>\n\n            <h2>Single-Line Conditionals</h2>\n            <p>For concise one-liners, the statement can immediately follow <code>then</code> on the same line:</p>\n            <pre><code class=\"language-verscript\">if is_connected then display \"System Online\" ?color=\"green\"\nif has_error then throw NetworkError ?msg=\"Connection dropped\"</code></pre>\n\n            <h2>First-Class Ternary Expressions</h2>\n            <p>VerScript provides first-class inline ternary expressions using the canonical <code>if &lt;cond&gt; then &lt;a&gt; else &lt;b&gt;</code> syntax. Unlike statement branches, ternary expressions evaluate to a concrete value and can be embedded directly in variable assignments, arithmetic, or function arguments:</p>\n            <pre><code class=\"language-verscript\">! Simple ternary assignment\nset status: if score >= 75 then \"Passed\" else \"Failed\"\n\n! Ternary inside arithmetic expressions\nset bonus: 10 + (if is_vip then 50 else 0)\n\n! Nested ternary expressions\nset tier: if points > 1000 then \"Platinum\" else (if points > 500 then \"Gold\" else \"Silver\")</code></pre>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">⚡ Short-Circuit Evaluation</div>\n                <p>Ternary expressions short-circuit: only the branch corresponding to the evaluated truth condition is evaluated. The unselected branch is completely bypassed.</p>\n            </div>\n\n            <h2>Guard Clauses (<code>guard ... else</code>)</h2>\n            <p>Guard clauses enforce critical preconditions at the start of routines or blocks, flattening nested structures by executing an immediate exit or error throw when a condition is false:</p>\n            <pre><code class=\"language-verscript\">def func calculate_rate(age, is_licensed):\n    guard is_licensed else reply 0\n    guard age >= 18 else reply 0\n    reply 100</code></pre>\n  ",
+    "id": "ch12-variables",
+    "number": 12,
+    "section": "Section 4: Variables & Lifecycles",
+    "subsection": "Variables & Storage",
+    "title": "Declaring Variables",
+    "category": "Variables",
+    "readTime": "3 min read",
+    "summary": "Learn how to store data in variables using 'set x: val' or shorthand 'x: val', and update their values over time.",
+    "body": "\n      <h2>Variables: Labeled Storage Boxes</h2>\n      <p>A variable is like a labeled box where you keep a value so you can use it later. In VerScript, you can declare a variable in two clean ways:</p>\n      <ul>\n        <li><strong>Explicit:</strong> <code>set speed: 60</code></li>\n        <li><strong>Shorthand:</strong> <code>speed: 60</code></li>\n      </ul>\n      <p>Both work identically! When you want to change what's inside the box, just assign a new value to it.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_ch16_conditionals",
-        "title": "conditionals_and_ternary.vrs",
-        "code": "! Demonstrating Conditional Branching & Ternary Expressions\n\nset score: 88\nset is_honors: true\n\n! Multi-branch statement\nif score >= 90 then\n    display \"Tier: Elite\" ?color=\"green\"\nelse if score >= 80 then\n    display \"Tier: Advanced\" ?color=\"cyan\"\nelse\n    display \"Tier: Standard\" ?color=\"yellow\"\n\n! Inline ternary expression\nset status: if score >= 75 then \"Approved\" else \"Pending Review\"\ndisplay \"Evaluation: \" + status ?color=\"green\"\n\n! Nested ternary inside calculation\nset credit: (if is_honors then 100 else 25) + score\ndisplay \"Total Credits: \" + credit ?color=\"yellow\""
+        "id": "cb_ch12_1",
+        "title": "variables_demo.vrs",
+        "code": "set points: 10\ndisplay \"Starting points: \" + points\n\npoints: points + 5\ndisplay \"After bonus: \" + points ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch12_1",
+        "title": "Challenge 12: Updating a Counter",
+        "prompt": "Declare <code>counter: 1</code>, increment it by 1, and display it.",
+        "starterCode": "! Declare counter and increment it\n",
+        "hint": "set counter: 1\ncounter: counter + 1\ndisplay counter",
+        "solution": "set counter: 1\ncounter: counter + 1\ndisplay counter",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch13-type-constraints",
+    "number": 13,
+    "section": "Section 4: Variables & Lifecycles",
+    "subsection": "Variables & Storage",
+    "title": "Type Constraints (num, str, bool)",
+    "category": "Variables",
+    "readTime": "3 min read",
+    "summary": "Enforce strict data guarantees by locking variables to specific types (num, str, bool, arr).",
+    "body": "\n      <h2>Preventing Accidental Bugs</h2>\n      <p>Normally, variables can hold any kind of data. But what if you want to guarantee that a <code>score</code> variable ONLY ever holds numbers, never accidental words?</p>\n      <p>VerScript lets you prefix variable declarations with a type tag: <code>num</code>, <code>str</code>, <code>bool</code>, or <code>arr</code>. If someone tries to store a word in a <code>num</code> variable, the engine safely flags a <code>DataTypeError</code>!</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch13_1",
+        "title": "type_safety.vrs",
+        "code": "num playerLevel: 5\nstr playerName: \"Hero\"\nbool isVIP: true\n\ndisplay playerName + \" (Level \" + playerLevel + \")\" ?color=cyan"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch13_1",
+        "title": "Challenge 13: Type-Constrained Variable",
+        "prompt": "Declare a strictly typed number <code>num coins: 50</code>, and display it.",
+        "starterCode": "! Declare num coins: 50 and display\n",
+        "hint": "num coins: 50\ndisplay coins",
+        "solution": "num coins: 50\ndisplay coins",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch14-lifecycles",
+    "number": 14,
+    "section": "Section 4: Variables & Lifecycles",
+    "subsection": "Variables & Storage",
+    "title": "Variable Lifecycles (temp, inst, outscope)",
+    "category": "Variables",
+    "readTime": "4 min read",
+    "summary": "Manage memory automatically: use temp for short-lived data, inst for call-stack isolation, and outscope to export data out of blocks.",
+    "body": "\n      <h2>Where Does Data Live?</h2>\n      <p>In large applications, creating variables that hang around forever wastes memory. VerScript gives you three clean lifecycle keywords:</p>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Keyword</th><th>Scope / Lifetime</th><th>Ideal Use Case</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>temp</code></td><td>Ephemeral (cleared automatically after block)</td><td>Fast intermediate calculations in loops.</td></tr>\n          <tr><td><code>inst</code></td><td>Instance / Call-Stack isolated</td><td>Local routine scratchpads preventing name collisions.</td></tr>\n          <tr><td><code>outscope</code></td><td>Promoted to outer enclosing scope</td><td>Returning or exporting values computed inside nested blocks.</td></tr>\n        </tbody>\n      </table>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch14_1",
+        "title": "scopes.vrs",
+        "code": "loop 2\n  temp cacheKey: \"session_token\"\n  display \"Using temp cache: \" + cacheKey ?color=yellow\n\nif true then\n  outscope exportedVal: 42\ndisplay \"Exported outside if block: \" + exportedVal ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch14_1",
+        "title": "Challenge 14: Exporting a Variable with outscope",
+        "prompt": "Inside an <code>if true then</code> block, use <code>outscope result: 100</code>, and display <code>result</code> outside.",
+        "starterCode": "if true then\n  ! TODO: use outscope result: 100\n",
+        "hint": "if true then\n  outscope result: 100\ndisplay result",
+        "solution": "if true then\n  outscope result: 100\ndisplay result",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch15-if-else",
+    "number": 15,
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Branching Decisions",
+    "title": "If-Else Statements",
+    "category": "Control Flow",
+    "readTime": "3 min read",
+    "summary": "Make decisions in your code using if, then, and else blocks with clean, indentation-based syntax.",
+    "body": "\n      <h2>Making Decisions</h2>\n      <p>Programs need to react differently depending on what's happening. An <strong>if-else statement</strong> lets your code choose between different paths.</p>\n\n      <h2>Syntax Blueprint</h2>\n      <pre><code>if condition then\n  ! Runs if condition is true\nelse\n  ! Runs if condition is false</code></pre>\n      <p>Notice how easy it is to read: simply indent the lines you want to run inside each branch!</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch15_1",
+        "title": "if_else_demo.vrs",
+        "code": "set battery: 15\n\nif battery > 20 then\n  display \"Battery healthy.\" ?color=green\nelse\n  display \"Low battery warning!\" ?color=red"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch15_1",
+        "title": "Challenge 15: Temperature Alert",
+        "prompt": "Given <code>temp: 35</code>, if <code>temp > 30</code> display <code>\"Hot\"</code> else display <code>\"Pleasant\"</code>.",
+        "starterCode": "set temp: 35\n! Check temperature and display message\n",
+        "hint": "if temp > 30 then\n  display \"Hot\"\nelse\n  display \"Pleasant\"",
+        "solution": "set temp: 35\nif temp > 30 then\n  display \"Hot\"\nelse\n  display \"Pleasant\"",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch16-ternary-expressions",
+    "number": 16,
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Branching Decisions",
+    "title": "Chained & Nested Ternary Expressions",
+    "category": "Control Flow",
+    "readTime": "4 min read",
+    "summary": "Write compact one-line decisions and multi-way chained conditions using 'if cond then val else if cond2 then val2 else val3'.",
+    "body": "\n      <h2>Decisions as Expressions</h2>\n      <p>Often you want to set a variable directly to one of several choices based on a condition, without writing a multi-line <code>if-else</code> block. In VerScript, you can write:</p>\n      <pre><code>set status: if score >= 50 then \"Pass\" else \"Fail\"</code></pre>\n\n      <h2>Chained Multi-Branch Decisions</h2>\n      <p>You can chain multiple conditions naturally using <code>else if</code>:</p>\n      <pre><code>set grade: if score >= 90 then \"A\" else if score >= 80 then \"B\" else if score >= 70 then \"C\" else \"F\"</code></pre>\n      <p>The engine tests each condition from left to right and evaluates only the matching branch! You can also wrap ternaries in parentheses inside arithmetic formulas: <code>(if active then 10 else 0) + 5</code>.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch16_1",
+        "title": "ternary_showcase.vrs",
+        "code": "set temperature: 24\nset weather: if temperature > 30 then \"Scorching\" else if temperature > 20 then \"Warm\" else if temperature > 10 then \"Cool\" else \"Freezing\"\ndisplay \"Current Condition: \" + weather ?color=cyan\n\nset baseBonus: 10\nset totalBonus: (if temperature > 20 then 100 else 20) + baseBonus\ndisplay \"Calculated Bonus: \" + totalBonus ?color=green"
       }
     ],
     "exercises": [
       {
         "id": "ex_ch16_1",
-        "title": "Exercise 16.1: Multi-Branch Evaluation",
-        "prompt": "Write an if-else block checking variable <code>health : 45</code>. If <code>health > 70</code> display <code>\"Healthy\"</code> in green; else if <code>health > 30</code> display <code>\"Caution\"</code> in yellow; else display <code>\"Critical\"</code> in red.",
-        "starterCode": "health : 45\n! TODO: Implement multi-branch if-else\n",
-        "hint": "Use `if health > 70 then`, `else if health > 30 then`, and `else`.",
-        "solution": "health : 45\nif health > 70 then\n    display \"Healthy\" ?color=\"green\"\nelse if health > 30 then\n    display \"Caution\" ?color=\"yellow\"\nelse\n    display \"Critical\" ?color=\"red\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch16_2",
-        "title": "Exercise 16.2: Inline Ternary Expression",
-        "prompt": "Given variable <code>age : 20</code>, use a ternary expression to assign <code>\"Adult\"</code> if <code>age >= 18</code> else <code>\"Minor\"</code> to variable <code>label</code>. Then display <code>label</code>.",
-        "starterCode": "set age: 20\n! TODO: Use ternary expression to set label and display it\n",
-        "hint": "Use `set label: if age >= 18 then \"Adult\" else \"Minor\"` followed by `display label`.",
-        "solution": "set age: 20\nset label: if age >= 18 then \"Adult\" else \"Minor\"\ndisplay label",
+        "title": "Challenge 16: Grade Tier Evaluator",
+        "prompt": "Given <code>score: 85</code>, set <code>tier</code> using chained ternary: if >= 90 then \"Platinum\", else if >= 80 then \"Gold\", else \"Silver\". Display tier.",
+        "starterCode": "set score: 85\n! Set tier with chained ternary and display it\n",
+        "hint": "set tier: if score >= 90 then \"Platinum\" else if score >= 80 then \"Gold\" else \"Silver\"\ndisplay tier",
+        "solution": "set score: 85\nset tier: if score >= 90 then \"Platinum\" else if score >= 80 then \"Gold\" else \"Silver\"\ndisplay tier",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch11-loops-iterations",
+    "id": "ch17-guard-clauses",
     "number": 17,
-    "section": "Section 3: Execution Control & Branching",
-    "title": "Loops & Iterations (loop, iterate, while, until)",
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Branching Decisions",
+    "title": "Guard Clauses",
     "category": "Control Flow",
-    "readTime": "7 min read",
-    "summary": "Comprehensive guide to repetition in VerScript: fixed count loops, range iterations, while guards, and until loops.",
-    "body": "\n    <h2>The Four Iteration Constructs</h2>\n    <p>VerScript offers four complementary iteration statements designed for every repetitive computing pattern:</p>\n    <ul>\n      <li><code>loop &lt;count&gt;</code> — Fixed iteration repeating a block N times.</li>\n      <li><code>iterate &lt;var&gt; from &lt;start&gt; to &lt;end&gt; [step &lt;n&gt;]</code> — Deterministic sequence iteration with loop index.</li>\n      <li><code>while &lt;condition&gt;</code> — Guard loop that executes as long as condition evaluates to true.</li>\n      <li><code>until &lt;condition&gt;</code> — Inverse guard loop that executes until condition becomes true.</li>\n    </ul>\n\n    <h2>Stepped Iteration</h2>\n    <pre><code>iterate i from 0 to 10 step 2\n  display \"Even number: \" + i</code></pre>\n\n    <h2>Iterating Over Collections</h2>\n    <p>To iterate over an array in VerScript, combine <code>iterate</code> with collection indexing:</p>\n    <pre><code>set fruits: [\"Apple\", \"Banana\", \"Cherry\"]\niterate i from 0 to fruits.length() - 1\n  display \"Fruit \" + i + \": \" + fruits[i]</code></pre>\n  ",
+    "readTime": "3 min read",
+    "summary": "Assert prerequisites early to keep your code flat and avoid deep nested 'pyramid of doom' indentations.",
+    "body": "\n      <h2>The Problem with Deep Nesting</h2>\n      <p>When you have to verify five things before doing a task, nesting five <code>if</code> statements makes code drift far to the right. This is known as the <em>pyramid of doom</em>.</p>\n\n      <h2>The Solution: <code>guard</code></h2>\n      <p>A <strong>guard clause</strong> states what MUST be true to continue. If it is NOT true, the <code>else</code> block runs immediately to exit early!</p>\n      <pre><code>guard user.isAuthenticated else\n  display \"Please log in first.\" ?color=red\n  reply false</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_loops_all",
-        "title": "loops_comprehensive.vrs",
-        "code": "display \"=== 1. Fixed Loop ===\"\nloop 3\n  display \"Ping!\" ?color=\"cyan\"\n\ndisplay \"=== 2. Range Iterate ===\"\niterate k from 1 to 4 step 1\n  display \"Step: \" + k\n\ndisplay \"=== 3. While Loop ===\"\nset n: 3\nwhile n > 0\n  display \"Countdown: \" + n\n  n: n - 1"
+        "id": "cb_ch17_1",
+        "title": "guard_demo.vrs",
+        "code": "def func processOrder amount isStoreOpen\n  guard isStoreOpen else reply 0\n  guard amount > 0 else reply 0\n  display \"Order confirmed: $\" + amount ?color=green\n  reply amount\n\nprocessOrder(75, true)"
       }
     ],
     "exercises": [
       {
-        "id": "ex_loop_1",
-        "title": "Exercise 11.1: Sum with Iterate",
-        "prompt": "Using <code>iterate i from 1 to 5</code>, calculate the sum of numbers from 1 to 5 and display the total.",
-        "starterCode": "! TODO: Calculate sum 1+2+3+4+5 using iterate\n",
-        "hint": "Initialize `set total: 0`, loop with `iterate i from 1 to 5`, add `total: total + i`, and display total.",
-        "solution": "set total: 0\niterate i from 1 to 5\n  set total: total + i\ndisplay total",
+        "id": "ex_ch17_1",
+        "title": "Challenge 17: Validating Access with guard",
+        "prompt": "Write a function <code>checkAccess</code> that uses <code>guard hasCard else</code> to display <code>\"Denied\"</code> and reply 0, otherwise displays <code>\"Approved\"</code> and replies 1.",
+        "starterCode": "def func checkAccess hasCard\n  ! Use guard to check hasCard\n",
+        "hint": "def func checkAccess hasCard\n  guard hasCard else\n    display \"Denied\"\n    reply 0\n  display \"Approved\"\n  reply 1\ncheckAccess(true)",
+        "solution": "def func checkAccess hasCard\n  guard hasCard else\n    display \"Denied\"\n    reply 0\n  display \"Approved\"\n  reply 1\ncheckAccess(true)",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch12-functions-purity",
+    "id": "ch18-counted-loops",
     "number": 18,
-    "section": "Section 4: Procedures, Routines & Purity",
-    "title": "Custom Functions & Inbound Purity Contracts",
-    "category": "Procedures",
-    "readTime": "5 min read",
-    "summary": "Define custom functions with 'def func', return values via 'reply', and enforce pure inbound contracts preventing side-effects.",
-    "body": "\n    <h2>Defining Functions</h2>\n    <p>Functions in VerScript are defined using <code>def func &lt;name&gt; [params...]</code>. Functions return values to their callers using the <code>reply</code> statement.</p>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 The 'inbound' Purity Contract</div>\n      <p>By default, all <code>func</code> definitions have <strong>inbound purity</strong>. An inbound function cannot mutate variables defined outside its own lexical scope. Attempting to modify an outer variable triggers a compile-time or runtime <code>ScopeViolationError</code>.</p>\n    </div>\n\n    <h2>Calling Functions</h2>\n    <p>Functions can be invoked in expressions using parenthesized argument lists:</p>\n    <pre><code>def func square(x)\n  reply x * x\n\nset sq: square(8)\ndisplay \"Square of 8 is \" + sq</code></pre>\n  ",
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Loops & Repetition",
+    "title": "Counted Loops: The 'loop' Command",
+    "category": "Control Flow",
+    "readTime": "3 min read",
+    "summary": "Repeat an action an exact number of times effortlessly using the simple 'loop N' command.",
+    "body": "\n      <h2>Repeating Actions Easily</h2>\n      <p>When you know exactly how many times an action should happen (e.g. blink an LED 5 times, ping 3 servers), you don't need a counter variable. Just use <code>loop N</code>!</p>\n      <pre><code>loop 3\n  display \"Beep!\" ?color=cyan</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_fn_1",
-        "title": "pure_function.vrs",
-        "code": "def func calculateTax(subtotal, rate)\n  reply (subtotal * rate) / 100\n\nset tax: calculateTax(250, 8)\ndisplay \"Tax on $250 at 8%: $\" + tax ?color=\"green\""
+        "id": "cb_ch18_1",
+        "title": "loop_demo.vrs",
+        "code": "display \"Starting countdown sequence:\"\nloop 3\n  display \"Tick...\" ?color=yellow\ndisplay \"Liftoff!\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_fn_1",
-        "title": "Exercise 12.1: Write a Function",
-        "prompt": "Define a function <code>def func add(a, b)</code> that returns the sum of <code>a</code> and <code>b</code>. Call <code>add(17, 23)</code> and display the result.",
-        "starterCode": "! TODO: Define add function and display add(17, 23)\n",
-        "hint": "Use `def func add(a, b)` with `reply a + b` inside.",
-        "solution": "def func add(a, b)\n  reply a + b\ndisplay add(17, 23)",
+        "id": "ex_ch18_1",
+        "title": "Challenge 18: Repeat 4 Times",
+        "prompt": "Use <code>loop 4</code> to display <code>\"Pulse\"</code> in green.",
+        "starterCode": "! Repeat display \"Pulse\" ?color=green 4 times\n",
+        "hint": "loop 4\n  display \"Pulse\" ?color=green",
+        "solution": "loop 4\n  display \"Pulse\" ?color=green",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch13-methods-outbound",
+    "id": "ch19-iterate-loops",
     "number": 19,
-    "section": "Section 4: Procedures, Routines & Purity",
-    "title": "Methods & Outbound State Mutation",
-    "category": "Procedures",
-    "readTime": "5 min read",
-    "summary": "Understand procedural methods declared with 'def method', outbound state mutations, and early exit replies.",
-    "body": "\n    <h2>The Difference Between Func and Method</h2>\n    <p>In VerScript, functions (<code>func</code>) and methods (<code>method</code>) serve distinct, complementary roles:</p>\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Feature</th><th><code>def func</code></th><th><code>def method</code></th></tr>\n      </thead>\n      <tbody>\n        <tr><td><strong>Primary Goal</strong></td><td>Compute and return a value</td><td>Perform procedural actions and side-effects</td></tr>\n        <tr><td><strong>Default Purity</strong></td><td>Inbound (pure, no outer mutation)</td><td>Outbound (allowed to mutate outer state)</td></tr>\n        <tr><td><strong>Value Return</strong></td><td>Must return value via <code>reply &lt;val&gt;</code></td><td>Cannot return value (early exit via bare <code>reply</code>)</td></tr>\n        <tr><td><strong>Expression Use</strong></td><td>Can be used in expressions <code>a + f(x)</code></td><td>Called as standalone statement <code>m(x)</code></td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Loops & Repetition",
+    "title": "Ranged Loops: The 'iterate' Command",
+    "category": "Control Flow",
+    "readTime": "4 min read",
+    "summary": "Step through a range of numbers from start to finish with optional step intervals using 'iterate i from 1 to 10 step 2'.",
+    "body": "\n      <h2>Counting with an Index</h2>\n      <p>When you need to know <em>which</em> turn of the loop you are on, use <code>iterate</code>! It creates a temporary counter variable that changes on every cycle:</p>\n      <pre><code>iterate i from 1 to 5\n  display \"Iteration #\" + i</code></pre>\n      <p>You can also count by steps (e.g. <code>step 2</code>) or count backwards!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_meth_1",
-        "title": "outbound_method.vrs",
-        "code": "set globalCounter: 0\n\ndef method increment(amount)\n  set globalCounter: globalCounter + amount\n  display \"Counter bumped to: \" + globalCounter\n\nincrement(5)\nincrement(10)"
+        "id": "cb_ch19_1",
+        "title": "iterate_demo.vrs",
+        "code": "display \"Counting by twos:\"\niterate n from 0 to 8 step 2\n  display \"Number: \" + n ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_meth_1",
-        "title": "Exercise 13.1: State Mutation",
-        "prompt": "Define variable <code>level: 1</code> and a method <code>def method levelUp()</code> that increments <code>level</code> by 1. Call <code>levelUp()</code> and display <code>level</code>.",
-        "starterCode": "! TODO: Define level and levelUp method\n",
-        "hint": "In method body: `set level: level + 1`.",
-        "solution": "set level: 1\ndef method levelUp()\n  set level: level + 1\nlevelUp()\ndisplay level",
+        "id": "ex_ch19_1",
+        "title": "Challenge 19: Count from 1 to 3",
+        "prompt": "Use <code>iterate i from 1 to 3</code> to display each number.",
+        "starterCode": "! Count from 1 to 3 and display each\n",
+        "hint": "iterate i from 1 to 3\n  display i",
+        "solution": "iterate i from 1 to 3\n  display i",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch14-recursion-stack",
+    "id": "ch20-while-until-loops",
     "number": 20,
-    "section": "Section 4: Procedures, Routines & Purity",
-    "title": "Recursive Routines & Call Stack Dynamics",
-    "category": "Procedures",
-    "readTime": "5 min read",
-    "summary": "Design recursive algorithms in VerScript, understand base cases, call frames, and stack overflow protections.",
-    "body": "\n    <h2>Recursive Architecture</h2>\n    <p>Functions in VerScript are re-entrant. A function can invoke itself, allocating an independent call frame with its own local scope.</p>\n\n    <h2>Classic Factorial Example</h2>\n    <pre><code>def func factorial(n)\n  if n <= 1 then\n    reply 1\n  set sub: (factorial(n - 1))\n  reply n * sub\n\ndisplay \"Factorial 5: \" + (factorial(5))</code></pre>\n\n    <h2>Stack Overflow Protection</h2>\n    <p>To prevent infinite loops from exhausting physical memory, the VerScript VM enforces a strict stack depth limit of 64 recursive frames. Exceeding this boundary throws a catchable <code>SystemError</code>.</p>\n  ",
+    "section": "Section 5: Control Flow & Decisions",
+    "subsection": "Loops & Repetition",
+    "title": "Condition Loops: While & Until",
+    "category": "Control Flow",
+    "readTime": "3 min read",
+    "summary": "Repeat actions while a condition remains true, or keep running until a target condition is finally reached.",
+    "body": "\n      <h2>Looping Based on Conditions</h2>\n      <p>What if you don't know in advance how many times something needs to run? (For example: <em>\"Keep downloading data while connection is active\"</em> or <em>\"Wait until tank is full\"</em>).</p>\n      <ul>\n        <li><code>while condition</code>: Runs as long as condition stays <code>true</code>.</li>\n        <li><code>until condition</code>: Runs until condition becomes <code>true</code> (stops as soon as it's reached!).</li>\n      </ul>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_rec_1",
-        "title": "fibonacci_recursion.vrs",
-        "code": "def func fib(n)\n  if n <= 1 then\n    reply n\n  set a: (fib(n - 1))\n  set b: (fib(n - 2))\n  reply a + b\n\ndisplay \"Fibonacci(7): \" + (fib(7))"
+        "id": "cb_ch20_1",
+        "title": "while_until.vrs",
+        "code": "set fuel: 10\nwhile fuel > 0\n  display \"Fuel level: \" + fuel\n  fuel: fuel - 3\n\ndisplay \"Refueling complete.\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_rec_1",
-        "title": "Exercise 14.1: Recursive Countdown Sum",
-        "prompt": "Write a recursive function <code>def func sumTo(n)</code> that returns <code>n + sumTo(n - 1)</code> (base case <code>n = 1</code> returns <code>1</code>). Display <code>sumTo(4)</code>.",
-        "starterCode": "! TODO: Write recursive sumTo(n) function\n",
-        "hint": "If `n <= 1` reply 1; else reply `n + (sumTo(n - 1))`.",
-        "solution": "def func sumTo(n)\n  if n <= 1 then\n    reply 1\n  set s: (sumTo(n - 1))\n  reply n + s\ndisplay sumTo(4)",
+        "id": "ex_ch20_1",
+        "title": "Challenge 20: While Loop Countdown",
+        "prompt": "Start with <code>x: 3</code>. Use <code>while x > 0</code> to display <code>x</code> and decrement <code>x: x - 1</code>.",
+        "starterCode": "set x: 3\n! TODO: Write while loop\n",
+        "hint": "set x: 3\nwhile x > 0\n  display x\n  x: x - 1",
+        "solution": "set x: 3\nwhile x > 0\n  display x\n  x: x - 1",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch15-classes-encapsulation",
+    "id": "ch21-pipelines",
     "number": 21,
-    "section": "Section 5: Object-Oriented Architecture",
-    "title": "Classes & Encapsulation (static vs dynamic sections)",
-    "category": "OOP",
-    "readTime": "6 min read",
-    "summary": "Master class definitions in VerScript: static class constants, public and private modifiers, dynamic instance state, and encapsulation rules.",
-    "body": "\n    <h2>The Class Blueprint</h2>\n    <p>Classes in VerScript are defined using <code>class ClassName(param1, param2)</code>. The class body is structured into strictly delineated partitions:</p>\n    <ul>\n      <li><code>static:</code> — Class-level constants and immutable configurations shared by all instances.</li>\n      <li><code>dynamic:</code> — Instance-level mutable properties and member routines (<code>def func</code>, <code>def method</code>).</li>\n    </ul>\n\n    <h2>Visibility Modifiers: public vs private</h2>\n    <p>In the <code>static:</code> partition, members are private by default. Prefixing with <code>public</code> exposes the constant for external read access via <code>ClassName.member</code>:</p>\n    <pre><code>class Config\n  static:\n    public maxConnections: 100\n    private secretKey: \"vx-9901\"\n\ndisplay \"Max allowed: \" + Config.maxConnections</code></pre>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">💡 Dedicated Library Portal</div>\n      <p>Looking to explore reusable modules and core classes? Visit the dedicated <a href=\"/docs/libs\" target=\"_blank\"><strong>VerScript Library Portal (/docs/libs)</strong></a> for interactive documentation on all standard release libraries.</p>\n    </div>\n  ",
+    "section": "Section 6: Modern Flow & Type Definitions",
+    "subsection": "Advanced Flow",
+    "title": "Forward Pipelines (|>)",
+    "category": "Modern Flow",
+    "readTime": "3 min read",
+    "summary": "Write clean, readable transformations from left to right using the forward pipeline operator |>.",
+    "body": "\n      <h2>The Problem with Nested Calls</h2>\n      <p>When you apply multiple operations to a value, nested function calls read inside-out: <code>display(clean(uppercase(trim(text))))</code>. It's hard to read and easy to misplace parentheses!</p>\n\n      <h2>The Forward Pipeline Operator: <code>|&gt;</code></h2>\n      <p>The pipeline operator passes the result of the left side directly into the function on the right:</p>\n      <pre><code>rawText |> trim |> toUpper |> display</code></pre>\n      <p>Now your code reads like an assembly line: natural, sequential, and crystal clear!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_cls_1",
-        "title": "class_definition.vrs",
-        "code": "class BankAccount(owner, initialBalance)\n  static:\n    public currency: \"USD\"\n    public minDeposit: 10\n  dynamic:\n    set balance: initialBalance\n    def method deposit(amount)\n      if amount >= BankAccount.minDeposit then\n        balance: balance + amount\n        display \"Deposited $\" + amount + \". New balance: $\" + balance\n\nset acct: BankAccount(\"Alice\", 500)\nacct.deposit(100)"
+        "id": "cb_ch21_1",
+        "title": "pipeline_demo.vrs",
+        "code": "def func doubleVal n\n  reply n * 2\n\ndef func addTen n\n  reply n + 10\n\nset res: 5 |> doubleVal |> addTen\ndisplay \"Pipelined result: \" + res ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_cls_1",
-        "title": "Exercise 15.1: Class with Public Static",
-        "prompt": "Define a class <code>Car</code> with a <code>static:</code> section containing <code>public wheels: 4</code>. Display <code>Car.wheels</code>.",
-        "starterCode": "! TODO: Define Car class with public static wheels\n",
-        "hint": "Use `class Car` followed by `static:` indented with `public wheels: 4`.",
-        "solution": "class Car\n  static:\n    public wheels: 4\ndisplay Car.wheels",
+        "id": "ex_ch21_1",
+        "title": "Challenge 21: Pipelined Number",
+        "prompt": "Pipe number <code>7</code> into a function <code>inc</code> that returns <code>n + 1</code>, and display the result.",
+        "starterCode": "def func inc n\n  reply n + 1\n! Pipe 7 into inc and display\n",
+        "hint": "def func inc n\n  reply n + 1\n7 |> inc |> display",
+        "solution": "def func inc n\n  reply n + 1\n7 |> inc |> display",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch16-entity-lifecycle",
+    "id": "ch22-pattern-matching",
     "number": 22,
-    "section": "Section 5: Object-Oriented Architecture",
-    "title": "Entity Lifecycle, Method Binding & Instantiation",
-    "category": "OOP",
-    "readTime": "5 min read",
-    "summary": "Understand instance creation, lexical method binding, instance mutation, and private routine isolation in entities.",
-    "body": "\n    <h2>Instantiation Lifecycle</h2>\n    <p>When an entity is instantiated via <code>set inst: MyClass(args...)</code>, the VM executes a two-phase initialization sequence:</p>\n    <ol>\n      <li><strong>Allocation &amp; Binding</strong>: The VM allocates the entity structure, clones class metadata, and binds constructor arguments.</li>\n      <li><strong>Method Table Registration</strong>: Member routines declared in <code>dynamic:</code> are bound to the instance so that references to instance variables resolve automatically.</li>\n    </ol>\n  ",
+    "section": "Section 6: Modern Flow & Type Definitions",
+    "subsection": "Advanced Flow",
+    "title": "Pattern Matching (match & when)",
+    "category": "Modern Flow",
+    "readTime": "4 min read",
+    "summary": "Replace messy switch or long if-else ladders with declarative, expressive pattern matching.",
+    "body": "\n      <h2>Expressive Value Matching</h2>\n      <p>When branching on specific commands, HTTP status codes, or user inputs, <code>match</code> provides a clean, elegant layout:</p>\n      <pre><code>match status\n  when 200: display \"OK\"\n  when 404: display \"Not Found\"\n  else: display \"Unknown Error\"</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_life_1",
-        "title": "entity_methods.vrs",
-        "code": "class User(username, role)\n  dynamic:\n    set active: true\n    def func getBadge()\n      reply \"[\" + role + \"] \" + username\n    def method deactivate()\n      active: false\n      display username + \" has been deactivated.\"\n\nset u: User(\"Elena\", \"Engineer\")\ndisplay u.getBadge()\nu.deactivate()"
+        "id": "cb_ch22_1",
+        "title": "match_demo.vrs",
+        "code": "set action: \"start\"\n\nmatch action\n  when \"start\": display \"Engine starting up...\" ?color=green\n  when \"stop\":  display \"Engine shutting down.\" ?color=yellow\n  else:         display \"Unknown command.\" ?color=red"
       }
     ],
     "exercises": [
       {
-        "id": "ex_life_1",
-        "title": "Exercise 16.1: Instance Method",
-        "prompt": "Create a class <code>Greeter(name)</code> with dynamic method <code>def method sayHi()</code> that displays <code>\"Hi \" + name</code>. Instantiate with <code>\"Maya\"</code> and call <code>sayHi()</code>.",
-        "starterCode": "! TODO: Define Greeter class and call sayHi\n",
-        "hint": "Inside `dynamic:` define `def method sayHi()` with `display \"Hi \" + name`.",
-        "solution": "class Greeter(name)\n  dynamic:\n    def method sayHi()\n      display \"Hi \" + name\nset g: Greeter(\"Maya\")\ng.sayHi()",
+        "id": "ex_ch22_1",
+        "title": "Challenge 22: Route Matching",
+        "prompt": "Match variable <code>code: 200</code>. When 200 display <code>\"Success\"</code>, else display <code>\"Error\"</code>.",
+        "starterCode": "set code: 200\n! Match code\n",
+        "hint": "set code: 200\nmatch code\n  when 200: display \"Success\"\n  else: display \"Error\"",
+        "solution": "set code: 200\nmatch code\n  when 200: display \"Success\"\n  else: display \"Error\"",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch17-metaprogramming-meta",
+    "id": "ch23-enums",
     "number": 23,
-    "section": "Section 5: Object-Oriented Architecture",
-    "title": "Metaprogramming & Internal 'meta' Components",
-    "category": "OOP",
-    "readTime": "7 min read",
-    "summary": "Complete guide to VerScript's internal metadata architecture: static, dynamic, and thisstatic partitions, ?override modifiers, auto-diagnostics, and strict visibility protections.",
-    "body": "\n    <h2>Internal Metadata Architecture</h2>\n    <p>VerScript introduces a secure, encapsulated <strong>metaprogramming component</strong> for libraries and classes. Metadata allows components to track build tags, runtime diagnostic counters, versions, and author metadata without leaking implementation details.</p>\n\n    <div class=\"callout-box warning\">\n      <div class=\"callout-title\">🔒 Strict Internal Encapsulation Rule</div>\n      <p>Metadata is <strong>strictly internal</strong> to the library or class definition. External access via <code>MyLib.meta</code> or <code>myInst.meta</code> throws a non-bypassable <code>VisibilityError</code>.</p>\n    </div>\n\n    <h2>The Three Metadata Partitions</h2>\n    <p>A <code>meta:</code> block contains up to three specialized sub-partitions:</p>\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Partition</th><th>Mutability</th><th>Scope &amp; Lifecycle</th><th>Access Syntax</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>static:</code></td><td><strong>Immutable</strong></td><td>Fixed configuration, author, and revision metadata. Mutating throws <code>ImmutableError</code>.</td><td><code>meta.static.key</code></td></tr>\n        <tr><td><code>dynamic:</code></td><td><strong>Mutable</strong></td><td>Internal runtime counters, cache tables, and state indicators. Modifiable via <code>meta.dynamic.key: val</code>.</td><td><code>meta.dynamic.key</code></td></tr>\n        <tr><td><code>thisstatic:</code></td><td><strong>Immutable</strong></td><td>Session/instance identifiers initialized once at load or instantiation time. Mutating throws <code>ImmutableError</code>.</td><td><code>meta.thisstatic.key</code></td></tr>\n      </tbody>\n    </table>\n\n    <h2>Automatic System Metadata</h2>\n    <p>Unless overridden, VerScript automatically injects diagnostic system properties into every component:</p>\n    <ul>\n      <li><code>meta.static.name</code> — Component name (e.g. <code>\"MathEx\"</code>).</li>\n      <li><code>meta.static.kind</code> — Component kind (<code>\"library\"</code> or <code>\"class\"</code>).</li>\n      <li><code>meta.static.version</code> — Semantic version tag (default: <code>\"1.0.0\"</code>).</li>\n      <li><code>meta.static.origin</code> — Origin source identifier (e.g. <code>\"core\"</code> or <code>\"source\"</code>).</li>\n      <li><code>meta.static.symbols</code> — Number of exported routines and properties.</li>\n      <li><code>meta.dynamic.loadCount</code> — Number of times the module was invoked.</li>\n      <li><code>meta.thisstatic.loadedAt</code> — Monotonic runtime execution sequence ID.</li>\n    </ul>\n\n    <h2>The '?override' Modifiers</h2>\n    <p>To strip default system metadata and create completely clean, lightweight components, use the override attributes:</p>\n    <ul>\n      <li><code>meta ?override:</code> — Strips all auto-generated system metadata.</li>\n      <li><code>static ?override:</code> — Strips only static auto-metadata while preserving dynamic telemetry.</li>\n    </ul>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">📦 Production Core Libraries Architecture</div>\n      <p>To see how internal <code>meta:</code> components, telemetry counters, and version diagnostics are used across real-world libraries, visit the <a href=\"libs/index.html\"><strong>VerScript Library Documentation Portal (/docs/libs)</strong></a>.</p>\n    </div>\n  ",
+    "section": "Section 6: Modern Flow & Type Definitions",
+    "subsection": "Structured Data",
+    "title": "Enums: Meaningful Constant Names",
+    "category": "Modern Flow",
+    "readTime": "3 min read",
+    "summary": "Avoid magic numbers by declaring self-documenting enumerated constants like 'enum Status: READY=1, BUSY=2'.",
+    "body": "\n      <h2>What are Enums?</h2>\n      <p>Instead of remembering that <code>1</code> means \"Ready\" and <code>2</code> means \"Error\", you can declare an <strong>enum</strong>. It gives human-readable names to constant states!</p>\n      <pre><code>enum Status: READY=1, ERROR=2, OFFLINE=3\ndisplay Status.READY</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_meta_1",
-        "title": "metadata_example.vrs",
-        "code": "lib ServiceTelemetry\n  meta:\n    static:\n      author: \"Cloud Platform Team\"\n      revision: 42\n    dynamic:\n      requestCount: 0\n    thisstatic:\n      environment: \"PRODUCTION\"\n  dynamic:\n    def method recordRequest()\n      meta.dynamic.requestCount: meta.dynamic.requestCount + 1\n      display \"Request logged. Total: \" + meta.dynamic.requestCount\n    def func getRevision()\n      reply meta.static.revision\n\nServiceTelemetry.recordRequest()\nServiceTelemetry.recordRequest()\ndisplay \"Build Revision: \" + (ServiceTelemetry.getRevision())"
+        "id": "cb_ch23_1",
+        "title": "enums_demo.vrs",
+        "code": "enum Priority: LOW=10, MEDIUM=50, HIGH=100\n\nset taskPriority: Priority.HIGH\nif taskPriority >= Priority.HIGH then\n  display \"Critical task scheduled!\" ?color=red"
       }
     ],
     "exercises": [
       {
-        "id": "ex_meta_1",
-        "title": "Exercise 17.1: Internal Metadata Counter",
-        "prompt": "Create a library <code>CounterLib</code> with a <code>meta:</code> section containing <code>dynamic: hits: 0</code>. In its <code>dynamic:</code> routine, write a method <code>bump()</code> that increments <code>meta.dynamic.hits: meta.dynamic.hits + 1</code> and displays it.",
-        "starterCode": "! TODO: Create CounterLib with metadata counter\n",
-        "hint": "Use `meta:` with `dynamic: hits: 0`, and `meta.dynamic.hits: meta.dynamic.hits + 1` inside `bump()`.",
-        "solution": "lib CounterLib\n  meta:\n    dynamic:\n      hits: 0\n  dynamic:\n    def method bump()\n      meta.dynamic.hits: meta.dynamic.hits + 1\n      display meta.dynamic.hits\nCounterLib.bump()",
+        "id": "ex_ch23_1",
+        "title": "Challenge 23: Declare and Read an Enum",
+        "prompt": "Declare <code>enum Mode: DEV=1, PROD=2</code>, and display <code>Mode.PROD</code>.",
+        "starterCode": "! Declare Mode enum and display PROD\n",
+        "hint": "enum Mode: DEV=1, PROD=2\ndisplay Mode.PROD",
+        "solution": "enum Mode: DEV=1, PROD=2\ndisplay Mode.PROD",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch18-libraries-distribution",
+    "id": "ch24-structs",
     "number": 24,
-    "section": "Section 6: Modular Systems & Code Organization",
-    "title": "Libraries (.lib.vrs), Headers (.h.vrs) & Core Distribution",
-    "category": "Modules",
-    "readTime": "6 min read",
-    "summary": "Organize reusable modules with '.lib.vrs', configure compilation pragmas and public interfaces with '.h.vrs' headers, leverage companion auto-resolution, and explore the 20 native built-in release modules.",
-    "body": "\n    <h2>The '.lib.vrs' Convention</h2>\n    <p>VerScript establishes <code>*.lib.vrs</code> as the official file extension for external library files, ensuring standard <code>*.vrs</code> syntax highlighting and tooling compatibility across all editors.</p>\n\n    <div class=\"callout-box tip\">\n      <div class=\"callout-title\">🌐 Dedicated Library Portal</div>\n      <p>Explore the comprehensive suite of 19 release core release libraries at the new <a href=\"libs/index.html\"><strong>VerScript Library Documentation Portal (/docs/libs)</strong></a>.</p>\n    </div>\n\n    <h2>Loading Libraries</h2>\n    <p>The <code>load</code> statement searches for libraries using a smart resolution pipeline:</p>\n    <ol>\n      <li><strong>Embedded Core Library</strong>: If target is a built-in module (e.g. <code>Stats</code>, <code>Assert</code>, <code>Time</code>, <code>Random</code>), it loads instantly from virtual memory.</li>\n      <li><strong>Direct File</strong>: <code>&lt;target&gt;</code></li>\n      <li><strong>Library Extension</strong>: <code>&lt;target&gt;.lib.vrs</code></li>\n      <li><strong>Core Libraries Subdirectory</strong>: <code>core_libs/&lt;target&gt;.lib.vrs</code></li>\n      <li><strong>Standard Script</strong>: <code>&lt;target&gt;.vrs</code></li>\n    </ol>\n  \n    <h2>VerScript Headers (<code>.h.vrs</code>) Architecture</h2>\n    <p>VerScript introduces dedicated <strong>Header Files</strong> (<code>*.h.vrs</code>) designed for dual-role modularity:</p>\n    <ol>\n      <li><strong>Compilation Pragmas &amp; Flags:</strong> Configuring compiler behavior via <code>config:</code> blocks (e.g. <code>strict_mode: true</code>, <code>error_mode: \"strict\"</code>, <code>timeout_ms: 5000</code>).</li>\n      <li><strong>Public Declarations &amp; Shared Constants:</strong> Encapsulating shared constants, enums, structs, and routine prototypes in <code>header &lt;Name&gt;:</code> blocks.</li>\n    </ol>\n\n    <h2>Zero-Boilerplate Companion Auto-Detection</h2>\n    <p>When running any VerScript source file (e.g. <code>verscript service.vrs</code>), the compiler automatically probes for a companion header named <code>service.h.vrs</code> in the same folder. If present, it executes the header first before executing the main script, requiring zero boilerplate import statements.</p>\n\n    <h2>Explicit Inclusion with <code>include</code></h2>\n    <p>External headers can be explicitly included into any source file with include-guard protection against duplicate loads:</p>\n    <pre><code class=\"language-verscript\">include \"config/app_config.h.vrs\"\ninclude \"models/schema.h.vrs\"\n\ndisplay APP_VERSION ?color=\"cyan\"</code></pre>\n\n    <h2>Header Configuration Pragmas</h2>\n    <p>Headers support a declarative <code>config:</code> section that configures the compiler runtime:</p>\n    <pre><code class=\"language-verscript\">header SystemPragmas:\n    config:\n        strict_mode: true\n        error_mode: \"strict\"\n        timeout_ms: 10000\n\nset SYSTEM_NAME: \"EdgeGateway\"\nset MAX_WORKERS: 8</code></pre>\n  ",
+    "section": "Section 6: Modern Flow & Type Definitions",
+    "subsection": "Structured Data",
+    "title": "Typed Structs: Grouped Fields",
+    "category": "Modern Flow",
+    "readTime": "4 min read",
+    "summary": "Define clean, strongly typed data models like 'struct Point { num x, num y }' to organize related information.",
+    "body": "\n      <h2>Grouping Related Information</h2>\n      <p>When you have a user with a name, an age, and an email address, passing them around as three separate variables gets messy. A <strong>struct</strong> groups them into a single record with named, typed fields!</p>\n      <pre><code>struct User {\n  str name\n  num age\n}</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_lib_1",
-        "title": "load_libraries.vrs",
-        "code": "load Stats\nload Time\n\nset numbers: [10, 20, 30, 40]\ndisplay \"Sum:        \" + (Stats.sum numbers)\ndisplay \"Mean:       \" + (Stats.mean numbers)\ndisplay \"Native Abs: \" + |-42|"
-      },
-      {
-        "id": "cb_ch24_headers",
-        "title": "header_and_include_demo.vrs",
-        "code": "! Demonstrating Header Configuration & Companion Resolution\n\nheader AppConfig:\n    config:\n        strict_mode: true\n        error_mode: \"lenient\"\n\nset API_VERSION: \"2.4.0\"\nset MAX_CONCURRENT_TASKS: 16\n\ndisplay \"App Version: \" + API_VERSION ?color=\"cyan\"\ndisplay \"Max Tasks:   \" + MAX_CONCURRENT_TASKS ?color=\"green\""
+        "id": "cb_ch24_1",
+        "title": "struct_demo.vrs",
+        "code": "struct Point: x: num, y: num\n\nset pt: Point(10, 25)\ndisplay \"Point coordinates: (\" + pt.x + \", \" + pt.y + \")\" ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_lib_1",
-        "title": "Exercise 18.1: Load and Use Stats",
-        "prompt": "Load the embedded <code>Stats</code> library, calculate the sum of <code>[5, 15, 25]</code>, and display the result.",
-        "starterCode": "! TODO: Load Stats and calculate sum of [5, 15, 25]\n",
-        "hint": "Use `load Stats`, then `display Stats.sum nums`.",
-        "solution": "load Stats\nset nums: [5, 15, 25]\ndisplay Stats.sum nums",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch24_header",
-        "title": "Exercise 24.3: Header Definition and Constants",
-        "prompt": "Define a <code>header ServiceHeader:</code> block with <code>config: strict_mode: true end</code> and a global constant <code>set TIMEOUT_SEC: 30</code>. Display <code>TIMEOUT_SEC</code> in green.",
-        "starterCode": "! TODO: Create header block with config and display constant\n",
-        "hint": "Use `header ServiceHeader:\n    config:\n        strict_mode: true` and `set TIMEOUT_SEC: 30\ndisplay TIMEOUT_SEC ?color=\"green\"`.",
-        "solution": "header ServiceHeader:\n    config:\n        strict_mode: true\nset TIMEOUT_SEC: 30\ndisplay TIMEOUT_SEC ?color=\"green\"",
+        "id": "ex_ch24_1",
+        "title": "Challenge 24: Vector2 Struct",
+        "prompt": "Define <code>struct Vec2 { num x, num y }</code>, create <code>v: Vec2(3, 4)</code>, and display <code>v.x + v.y</code>.",
+        "starterCode": "! Define Vec2 struct and display sum of coordinates\n",
+        "hint": "struct Vec2 {\n  num x\n  num y\n}\nset v: Vec2(3, 4)\ndisplay v.x + v.y",
+        "solution": "struct Vec2 {\n  num x\n  num y\n}\nset v: Vec2(3, 4)\ndisplay v.x + v.y",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch19-imports-namespaces",
+    "id": "ch25-datatype-constraints",
     "number": 25,
-    "section": "Section 6: Modular Systems & Code Organization",
-    "title": "Unqualified Imports & Namespaces",
-    "category": "Modules",
-    "readTime": "5 min read",
-    "summary": "Understand symbol resolution, unqualified routine access, namespace collision mitigation, and library scope boundaries.",
-    "body": "\n    <h2>Namespace Architecture</h2>\n    <p>When a library is loaded via <code>load MyLib</code>, its exported routines and public constants are accessible both qualified (<code>MyLib.routine()</code>) and, where unambiguous, unqualified.</p>\n  ",
+    "section": "Section 6: Modern Flow & Type Definitions",
+    "subsection": "Structured Data",
+    "title": "Custom DataType Constraints",
+    "category": "Modern Flow",
+    "readTime": "3 min read",
+    "summary": "Create custom validated types with rules like 'DataType Port: it >= 1 & it <= 65535'.",
+    "body": "\n      <h2>Validating Values Automatically</h2>\n      <p>What if you want a type for network ports that guarantees the number is between 1 and 65535? VerScript lets you define custom <strong>DataType</strong> rules where <code>it</code> refers to the assigned value:</p>\n      <pre><code>DataType Port:\n  it >= 1 & it <= 65535\n\nPort webPort: 8080 ! Valid!\nPort badPort: 99999 ! Safely throws DataTypeError!</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_ns_1",
-        "title": "namespaces.vrs",
-        "code": "load Stats\nset nums: [10, 20, 30]\ndisplay \"Qualified:   \" + (Stats.mean nums)\ndisplay \"Unqualified: \" + (mean nums)"
+        "id": "cb_ch25_1",
+        "title": "custom_datatypes.vrs",
+        "code": "DataType PositiveNum extends num\n  it > 0\n\nPositiveNum validCount: 15\ndisplay \"Valid count stored: \" + validCount ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_ns_1",
-        "title": "Exercise 19.1: Unqualified Call",
-        "prompt": "Load <code>Stats</code> and compute <code>mean([100, 200, 300])</code> directly without prefix. Display the result.",
-        "starterCode": "! TODO: Call mean([100, 200, 300]) after loading Stats\n",
-        "hint": "Use `load Stats` and `display mean([100, 200, 300])`.",
-        "solution": "load Stats\ndisplay mean([100, 200, 300])",
+        "id": "ex_ch25_1",
+        "title": "Challenge 25: Age Validator",
+        "prompt": "Define <code>DataType AdultAge: it >= 18</code> and declare <code>AdultAge age: 21</code>, then display <code>age</code>.",
+        "starterCode": "! Define AdultAge and declare age: 21\n",
+        "hint": "DataType AdultAge:\n  it >= 18\nAdultAge age: 21\ndisplay age",
+        "solution": "DataType AdultAge:\n  it >= 18\nAdultAge age: 21\ndisplay age",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch17-inject",
+    "id": "ch26-functions",
     "number": 26,
-    "section": "Section 6: Modular Systems & Code Organization",
-    "title": "Polyglot Code Injection (100+ Languages)",
-    "category": "Metaprogramming",
-    "readTime": "7 min read",
-    "summary": "Embed and execute source code from over 100 major languages directly inside VerScript scripts.",
-    "body": "\n            <h2>The <code>inject</code> Keyword</h2>\n            <p>The <code>inject</code> statement enables polyglot execution. You can embed raw source code from over 100 programming languages (Python, JavaScript, Rust, C, Go, Java, TypeScript, Ruby, Shell, etc.) seamlessly.</p>\n\n            <h2>Attributes for <code>inject</code></h2>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Attribute</th>\n                        <th>Type</th>\n                        <th>Description</th>\n                        <th>Syntax Example</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>?color</code></td>\n                        <td><code>\"name\"</code> or <code>#hex</code></td>\n                        <td>Colors execution status tags in terminal output.</td>\n                        <td><code>inject python ?color=\"cyan\"</code></td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <h2>Dynamic <code>eval</code> via <code>inject verscript</code></h2>\n            <p>Passing <code>inject verscript</code> (or <code>inject vrs</code> / <code>inject eval</code>) evaluates embedded VerScript code dynamically within the current runtime scope, just like JavaScript's <code>eval()</code>.</p>\n        ",
+    "section": "Section 7: Procedures, Functions & Purity",
+    "subsection": "Modular Code",
+    "title": "Functions & Return Values",
+    "category": "Routines",
+    "readTime": "4 min read",
+    "summary": "Package reusable calculations into functions with 'def func name arg1 arg2' and return values using 'reply'.",
+    "body": "\n      <h2>Why Package Code into Functions?</h2>\n      <p>Instead of rewriting the same five lines of math ten times across your program, you wrap them inside a <strong>function</strong>! Give it a name, pass in inputs (called arguments), and send back the result with <code>reply</code>.</p>\n      <pre><code>def func calculateTax amount rate\n  reply (amount * rate) / 100</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_inject_1",
-        "title": "polyglot_demo.vrs",
-        "code": "! 1. Python Code Injection\ninject python ?color=\"yellow\"\n    def calculate_fib(n):\n        return n if n <= 1 else calculate_fib(n-1) + calculate_fib(n-2)\n    print(\"Python Fibonacci Result:\", calculate_fib(10))\n\n! 2. JavaScript Code Injection\ninject javascript ?color=\"cyan\"\n    const sum = [10, 20, 30].reduce((a, b) => a + b, 0);\n    console.log(\"JS Sum:\", sum);\n\n! 3. Dynamic VerScript Eval\ninject verscript\n    eval_msg : \"Evaluated inside dynamic VerScript sub-scope!\"\n    display eval_msg ?color=\"green\""
+        "id": "cb_ch26_1",
+        "title": "functions_demo.vrs",
+        "code": "def func addNumbers a b\n  reply a + b\n\nset total: addNumbers(15, 27)\ndisplay \"Total sum: \" + total ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_inj_1",
-        "title": "Exercise 17.1: Inject Python Script",
-        "prompt": "Embed a Python code snippet that calculates <code>2 ** 8</code> using <code>inject python</code>.",
-        "starterCode": "! TODO: Write an inject python block\n",
-        "hint": "Use `inject python` followed by indented python code.",
-        "solution": "inject python ?color=\"yellow\"\n    val = 2 ** 8\n    print(\"Power:\", val)",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_inj_2",
-        "title": "Exercise 17.2: Dynamic VerScript Sub-Execution",
-        "prompt": "Use <code>inject verscript</code> to evaluate a dynamic block that sets <code>dyn : 777</code> and displays <code>\"Dynamic Value: \" + dyn</code> in green.",
-        "starterCode": "! TODO: Write inject verscript block\n",
-        "hint": "Use `inject verscript` with indented VerScript commands.",
-        "solution": "inject verscript\n    dyn : 777\n    display \"Dynamic Value: \" + dyn ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_inj_3",
-        "title": "Exercise 17.3: Inject Rust / C Algorithms",
-        "prompt": "Embed a Rust function signature inside an <code>inject rust</code> block with <code>?color=\"cyan\"</code>.",
-        "starterCode": "! TODO: Write inject rust with ?color=\"cyan\"\n",
-        "hint": "Use `inject rust ?color=\"cyan\"`.",
-        "solution": "inject rust ?color=\"cyan\"\n    fn compute() -> i32 { 42 }",
+        "id": "ex_ch26_1",
+        "title": "Challenge 26: Multiply Function",
+        "prompt": "Define <code>def func mul a b</code> that returns <code>a * b</code>, call <code>mul(6, 7)</code>, and display the result.",
+        "starterCode": "! Define mul function and call it\n",
+        "hint": "def func mul a b\n  reply a * b\ndisplay mul(6, 7)",
+        "solution": "def func mul a b\n  reply a * b\ndisplay mul(6, 7)",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch13-do-unless",
+    "id": "ch27-inbound-purity",
     "number": 27,
-    "section": "Section 7: Robustness, Errors & Testing",
-    "title": "Try-Unless Architecture & Watch Guards",
-    "category": "Exception Handling",
-    "readTime": "6 min read",
-    "summary": "Harness VerScript's signature do-unless construct, internal reactive line-by-line watch guards, and external condition gates.",
-    "body": "\n            <h2>The <code>do ... unless</code> Paradigm</h2>\n            <p>In VerScript, exception handling and condition-gated execution are unified in the <code>do ... unless</code> statement.</p>\n\n            <h2>Mode Modifiers for <code>unless</code></h2>\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Modifier</th>\n                        <th>Execution Model</th>\n                        <th>Description</th>\n                        <th>Syntax Example</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>internal</code></td>\n                        <td>Reactive Watch Guard</td>\n                        <td>Monitors expression line-by-line. If condition becomes true after ANY line, execution of <code>do</code> immediately halts and transfers to <code>unless</code>.</td>\n                        <td><code>do<br>&nbsp;&nbsp;...<br>unless internal pressure &gt; 100</code></td>\n                    </tr>\n                    <tr>\n                        <td><code>external</code></td>\n                        <td>Gatekeeper Guard</td>\n                        <td>Evaluates expression once beforehand. If true, runs <code>unless</code> block; if false, runs <code>do</code> block.</td>\n                        <td><code>do<br>&nbsp;&nbsp;...<br>unless external isLocked = true</code></td>\n                    </tr>\n                    <tr>\n                        <td><em>(Default Error)</em></td>\n                        <td>Error Catch Guard</td>\n                        <td>Catches exceptions thrown inside the <code>do</code> block matching an error name or universal <code>error</code>.</td>\n                        <td><code>do<br>&nbsp;&nbsp;...<br>unless DivisionByZeroError</code></td>\n                    </tr>\n                </tbody>\n            </table>\n        ",
+    "section": "Section 7: Procedures, Functions & Purity",
+    "subsection": "Modular Code",
+    "title": "Inbound Purity Contracts",
+    "category": "Routines",
+    "readTime": "4 min read",
+    "summary": "Write pure, side-effect-free code with 'inbound' parameters to guarantee variables cannot be modified by mistake.",
+    "body": "\n      <h2>The Peace of Mind of Pure Functions</h2>\n      <p>When you pass a list of users to a function, you want to be 100% confident the function won't accidentally delete or mutate your original list! In VerScript, tagging a parameter with <code>inbound</code> locks it as read-only.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_dounless_1",
-        "title": "do_unless_demo.vrs",
-        "code": "! 1. Reactive Internal Watch Condition\ntemperature: 80\ndo\n    display \"Checking reactor core...\" ?color=\"cyan\"\n    temperature: temperature + 40\n    display \"This line will NOT execute because temp exceeded 100!\" ?color=\"red\"\nunless internal temperature > 100\n    display \"WATCHDOG TRIGGERED: Temperature reached \" + temperature ?color=\"yellow\"\n\n! 2. Error Catching\ndo\n    display \"Dividing by zero...\" ?color=\"cyan\"\n    bad_val: 100 / 0\nunless DivisionByZeroError\n    display \"Safely caught DivisionByZeroError!\" ?color=\"green\""
+        "id": "cb_ch27_1",
+        "title": "purity_demo.vrs",
+        "code": "def func computeAverage inbound scores\n  set sum: 0\n  iterate i from 0 to scores.length() - 1\n    sum: sum + scores[i]\n  reply sum / scores.length()\n\nset grades: [80, 90, 100]\ndisplay \"Average: \" + computeAverage(grades) ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_dounless_1",
-        "title": "Exercise 13.1: Catch Division by Zero",
-        "prompt": "Wrap a division by zero in <code>do ... unless DivisionByZeroError</code> and display <code>\"Bypassed Zero Error\"</code> in green.",
-        "starterCode": "! TODO: Write do ... unless DivisionByZeroError\ndo\n    x : 10 / 0\nunless DivisionByZeroError\n",
-        "hint": "Add `display \"Bypassed Zero Error\" ?color=\"green\"` inside the `unless` block.",
-        "solution": "do\n    x : 10 / 0\nunless DivisionByZeroError\n    display \"Bypassed Zero Error\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_dounless_2",
-        "title": "Exercise 13.2: Reactive Internal Watchdog",
-        "prompt": "Declare <code>fuel : 50</code>. Write a <code>do</code> block that subtracts <code>fuel : fuel - 40</code>, with <code>unless internal fuel < 20</code> displaying <code>\"Low Fuel Warning\"</code> in yellow.",
-        "starterCode": "fuel : 50\n! TODO: Implement do ... unless internal fuel < 20\n",
-        "hint": "Use `unless internal fuel < 20`.",
-        "solution": "fuel : 50\ndo\n    fuel : fuel - 40\n    display \"Should not reach here\"\nunless internal fuel < 20\n    display \"Low Fuel Warning\" ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_dounless_3",
-        "title": "Exercise 13.3: External Condition Gate",
-        "prompt": "Declare <code>isMaintenanceMode : true</code>. Write <code>do ... unless external isMaintenanceMode = true</code> displaying <code>\"System In Maintenance\"</code> in red.",
-        "starterCode": "isMaintenanceMode : true\n! TODO: Write do ... unless external isMaintenanceMode = true\n",
-        "hint": "Use `unless external isMaintenanceMode = true`.",
-        "solution": "isMaintenanceMode : true\ndo\n    display \"Normal system operation\"\nunless external isMaintenanceMode = true\n    display \"System In Maintenance\" ?color=\"red\"",
+        "id": "ex_ch27_1",
+        "title": "Challenge 27: Pure First Element",
+        "prompt": "Define <code>def func getFirst inbound list</code> that returns <code>list[0]</code>, and call it on <code>[10, 20]</code>.",
+        "starterCode": "! Define pure getFirst function\n",
+        "hint": "def func getFirst inbound list\n  reply list[0]\ndisplay getFirst([10, 20])",
+        "solution": "def func getFirst inbound list\n  reply list[0]\ndisplay getFirst([10, 20])",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch14-error-scopes",
+    "id": "ch28-methods-outbound",
     "number": 28,
-    "section": "Section 7: Robustness, Errors & Testing",
-    "title": "Error Scopes & Suppression Blocks",
-    "category": "Exception Handling",
-    "readTime": "5 min read",
-    "summary": "Control system tolerance with SuppressErrors, CriticalErrors, and ForceErrors scopes.",
-    "body": "\n            <h2>Scoped Error Directives</h2>\n            <p>VerScript provides 3 declarative scoped error directives to control how the runtime treats errors:</p>\n\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Scope Directive</th>\n                        <th>Behavior</th>\n                        <th>Use Case</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><code>SuppressErrors</code></td>\n                        <td>Silently catches all non-critical exceptions; script execution skips the failing instruction and continues uninterrupted.</td>\n                        <td>Resilient batch pipelines, network fallbacks, best-effort evaluations.</td>\n                    </tr>\n                    <tr>\n                        <td><code>CriticalErrors</code></td>\n                        <td>Allows standard exceptions to proceed to <code>unless</code> catch handlers, but immediately crashes on fatal memory or system errors.</td>\n                        <td>Production backend services.</td>\n                    </tr>\n                    <tr>\n                        <td><code>ForceErrors</code></td>\n                        <td>Disables all error bypasses; any runtime issue halts immediately with full diagnostics.</td>\n                        <td>Test suites, validation pipelines, strict debugging.</td>\n                    </tr>\n                </tbody>\n            </table>\n        ",
+    "section": "Section 7: Procedures, Functions & Purity",
+    "subsection": "Modular Code",
+    "title": "Methods & Outbound Mutation",
+    "category": "Routines",
+    "readTime": "4 min read",
+    "summary": "Distinguish side-effecting procedures from pure calculations using 'def method' and 'outbound' parameters.",
+    "body": "\n      <h2>When You Need to Modify Data</h2>\n      <p>While functions are pure calculators, <strong>methods</strong> are designed to change state (e.g. updating a player's inventory or writing to a file). Marking a parameter as <code>outbound</code> explicitly declares that the caller's variable will be updated.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_scopes_1",
-        "title": "error_scopes.vrs",
-        "code": "display \"=== 1. SuppressErrors Scope ===\" ?color=\"purple\"\nSuppressErrors\n    display \"Attempting division by zero under SuppressErrors...\" ?color=\"yellow\"\n    bad_val : 50 / 0\n    display \"Notice: Error was suppressed, script continued!\" ?color=\"green\"\n\ndisplay \"=== Pipeline Continues Smoothly ===\" ?color=\"cyan\""
+        "id": "cb_ch28_1",
+        "title": "methods_demo.vrs",
+        "code": "def method grantBonus outbound playerPoints bonus\n  playerPoints: playerPoints + bonus\n\nset myScore: 50\ngrantBonus(myScore, 25)\ndisplay \"Updated score: \" + myScore ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_scopes_1",
-        "title": "Exercise 14.1: Suppress Dangerous Calculations",
-        "prompt": "Execute an invalid operation inside a <code>SuppressErrors</code> block and display <code>\"Safe continuation\"</code> in green after it.",
-        "starterCode": "! TODO: Write SuppressErrors block containing 10 / 0 and display message\n",
-        "hint": "Indent the failing calculation under `SuppressErrors`.",
-        "solution": "SuppressErrors\n    bad : 10 / 0\ndisplay \"Safe continuation\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_scopes_2",
-        "title": "Exercise 14.2: Multi-step Suppressed Pipeline",
-        "prompt": "Inside <code>SuppressErrors</code>, perform two undefined operations, followed by displaying <code>\"Pipeline Finished\"</code> in cyan.",
-        "starterCode": "! TODO: Perform 2 failing calculations in SuppressErrors\n",
-        "hint": "All failures inside `SuppressErrors` are safely bypassed.",
-        "solution": "SuppressErrors\n    x : 10 / 0\n    y : 20 / 0\ndisplay \"Pipeline Finished\" ?color=\"cyan\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_scopes_3",
-        "title": "Exercise 14.3: ForceErrors Validation",
-        "prompt": "Write a safe calculation under <code>ForceErrors</code> and display <code>\"Strict Verification Passed\"</code> in green.",
-        "starterCode": "! TODO: Write a ForceErrors block with valid code\n",
-        "hint": "Under `ForceErrors`, valid code runs normally.",
-        "solution": "ForceErrors\n    valid : 100 * 2\ndisplay \"Strict Verification Passed\" ?color=\"green\"",
+        "id": "ex_ch28_1",
+        "title": "Challenge 28: Outbound Counter",
+        "prompt": "Define <code>def method increment outbound val</code> that sets <code>val: val + 1</code>. Test on <code>c: 5</code> and display <code>c</code>.",
+        "starterCode": "set c: 5\n! Define increment method and call on c\n",
+        "hint": "def method increment outbound val\n  val: val + 1\nset c: 5\nincrement(c)\ndisplay c",
+        "solution": "def method increment outbound val\n  val: val + 1\nset c: 5\nincrement(c)\ndisplay c",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch16-error-directory",
+    "id": "ch29-recursion",
     "number": 29,
-    "section": "Section 7: Robustness, Errors & Testing",
-    "title": "Interactive Error Directory & Diagnostics Reference",
-    "category": "Diagnostics & Errors",
-    "readTime": "12 min read",
-    "summary": "A complete interactive reference of all 21 VerScript native errors with trigger conditions, 10-point criticality classifications, suppression tiers, and handling strategies.",
-    "body": "\n            <h2>VerScript Complete Error Taxonomy &amp; Diagnostics Architecture</h2>\n            <p>The VerScript virtual machine implements a deterministic, multi-tiered exception taxonomy. Every runtime condition is strongly typed, named, and inspectable via the global <code>error</code> identifier inside <code>unless</code> handlers. The VM evaluates faults along two rigorous metrics: <strong>Criticality Points (1–10)</strong> and <strong>Suppression Levels (0–4)</strong>.</p>\n\n            <h2>The 10-Point Criticality Scoring Framework</h2>\n            <p>Every error in VerScript is assigned an integer <strong>Criticality Point (1 to 10)</strong> score reflecting its threat to virtual machine state stability, memory integrity, and lexical contract purity:</p>\n            <ul>\n                <li><strong>Points 1 – 3 (Low Severity / Semantic &amp; Boundary Anomaly)</strong>: Localized boundary faults, array index overflows, uninitialized identifier reads, and step cadence calculations. These affect only the current statement and leave the VM heap and call stack entirely pristine.</li>\n                <li><strong>Points 4 – 6 (Moderate Severity / Logic, Math &amp; Purity Faults)</strong>: Arithmetic domain errors (such as <code>DomainError</code> from <code>sqrt(-1)</code> or <code>(-5)!</code>), division by zero, type/operator mismatches, and lexical contract breaches (such as an <code>inbound</code> function violating scope immutability). These corrupt expression evaluations but are safely catchable and recoverable.</li>\n                <li><strong>Points 7 – 8 (High Severity / Metaprogramming &amp; Access Breaches)</strong>: Private static property access violations (<code>VisibilityError</code>), dynamic syntax alias collisions, unregistered exception names, or failing foreign language polyglot bridges. These require explicit defensive architecture to trap.</li>\n                <li><strong>Points 9 – 10 (Fatal Severity / Structural System Collapse)</strong>: Indentation depth corruptions, token syntax malformations, jump/call stack overflows (&gt;64 frames), and host OS memory exhaustion. These directly threaten process execution and trigger an immediate VM abort.</li>\n            </ul>\n\n            <h2>The 4-Tier Suppression Level Hierarchy</h2>\n            <p>VerScript establishes four runtime <strong>Suppression Levels</strong> that determine what severity of error can be bypassed, masked, or silenced during script execution:</p>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Suppression Tier</th>\n                            <th>Directive / Attribute</th>\n                            <th>Criticality Range</th>\n                            <th>Suppression Behavior</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><strong>Level 0: Zero-Tolerance</strong></td>\n                            <td><code>ForceErrors</code></td>\n                            <td>None (0 pts)</td>\n                            <td><strong>No errors suppressed</strong>. Any error, even minor 1-point reads, terminates execution immediately. Bypasses <code>unless</code> handlers.</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Level 1: Minor Fault</strong></td>\n                            <td><code>SuppressErrors</code> (Default)</td>\n                            <td>Points 1 – 3</td>\n                            <td>Silently masks minor semantic, boundary, and iteration faults (e.g. <code>UndefinedVariableError</code> resolves to fallback, loop step errors reset).</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Level 2: Standard Logic &amp; Math</strong></td>\n                            <td><code>CriticalErrors</code></td>\n                            <td>Points 1 – 6</td>\n                            <td>Silently bypasses arithmetic faults, mathematical domain boundary breaches, and purity contract violations while continuing script execution.</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Level 3: Deep Metaprogramming</strong></td>\n                            <td><code>suppress: high</code> / Scopes</td>\n                            <td>Points 1 – 8</td>\n                            <td>Masks alias collisions, visibility breaches, and polyglot execution failures; logs warnings to telemetry stream without halting.</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Level 4: Unsuppressable Fatal</strong></td>\n                            <td><em>Engine Core Invariant</em></td>\n                            <td>Points 9 – 10</td>\n                            <td><strong>Cannot be suppressed under any directive</strong>. VM halts immediately with line pointer and exit code to prevent memory corruption.</td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Complete 21-Error Criticality Points &amp; Suppression Matrix</h2>\n            <p>Below is the complete reference matrix mapping every native VerScript error to its Criticality Points, Severity Classification, Raised Suppression Level, and recovery strategy:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Error Identifier</th>\n                            <th>Criticality Points</th>\n                            <th>Severity Class</th>\n                            <th>Raised Suppression Tier</th>\n                            <th>Trigger Condition &amp; VM Impact</th>\n                            <th>Recovery &amp; Mitigation Strategy</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>UndefinedVariableError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">1 / 10</span></td>\n                            <td>Minor / Semantic</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td>Reading an uninitialized identifier. Evaluates to <code>\"\"</code> or <code>0</code> under suppression.</td>\n                            <td>Define variable before access, use <code>set var: val</code>, or provide default attributes.</td>\n                        </tr>\n                        <tr>\n                            <td><code>LoopDirectionError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">2 / 10</span></td>\n                            <td>Minor / Loop</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td><code>start &gt; end</code> in ascending <code>iterate</code> loop. Loop body skipped under suppression.</td>\n                            <td>Ensure <code>start &lt;= end</code> or invert range boundary expressions.</td>\n                        </tr>\n                        <tr>\n                            <td><code>LoopIterationError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">2 / 10</span></td>\n                            <td>Minor / Loop</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td>Non-numeric iteration count in <code>loop</code>. Loop count defaults to 0 under suppression.</td>\n                            <td>Cast or validate count expression to positive integer.</td>\n                        </tr>\n                        <tr>\n                            <td><code>LoopStepError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">2 / 10</span></td>\n                            <td>Minor / Loop</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td><code>step &lt;= 0</code> or <code>step &gt; count</code>. Step defaults to <code>1</code> under suppression.</td>\n                            <td>Ensure <code>1 &lt;= step &lt;= total_iterations</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>IndexOutOfBoundsError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">2 / 10</span></td>\n                            <td>Minor / Boundary</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td>Attempting to index an array out of bounds (<code>index &lt; 0</code> or <code>index &gt;= count</code>).</td>\n                            <td>Check array bounds before indexing or guard with <code>do ... unless IndexOutOfBoundsError</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>RuntimeError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">3 / 10</span></td>\n                            <td>Minor / Contextual</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td>Invoking <code>throw error</code> outside an active <code>unless</code> handler block.</td>\n                            <td>Only execute rethrows inside valid <code>unless</code> catch blocks.</td>\n                        </tr>\n                        <tr>\n                            <td><code>EntityError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(80,250,123,0.15); color: #50fa7b; border-color: rgba(80,250,123,0.3);\">3 / 10</span></td>\n                            <td>Minor / Member Resolution</td>\n                            <td><strong>Level 1 (Minor)</strong></td>\n                            <td>Accessing or invoking an undeclared property or method on an instantiated entity.</td>\n                            <td>Ensure member is declared in class <code>static:</code> or <code>dynamic:</code> sections.</td>\n                        </tr>\n                        <tr>\n                                                    <tr>\n                            <td><code>DataTypeError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,121,198,0.15); color: #ff79c6; border-color: rgba(255,121,198,0.3);\">7 / 10</span></td>\n                            <td>High / Type Safety &amp; Contract</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>Attempting to assign or pass a value that violates a variable type constraint, parameter constraint, or custom <code>DataType</code> invariant rule.</td>\n                            <td>Check variable/parameter types before assignment, adhere to custom type constraints, or guard with <code>do ... unless DataTypeError</code>.</td>\n                        </tr>\n                        <td><code>InvalidOperandError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);\">4 / 10</span></td>\n                            <td>Moderate / Types</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>Incompatible operator usage (e.g. string multiplication or unary minus on booleans).</td>\n                            <td>Ensure operands match operator type requirements prior to execution.</td>\n                        </tr>\n                        <tr>\n                            <td><code>DivisionByZeroError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);\">5 / 10</span></td>\n                            <td>Moderate / Math</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>Division operator <code>/</code>, integer floor division <code>//</code>, modulo <code>%</code>, <code>divRem(n, 0)</code>, or zero root <code>rt(x, 0)</code> with divisor or root evaluating to <code>0</code>. Yields <code>0</code> under suppression.</td>\n                            <td>Guard divisor with <code>if divisor != 0</code> or trap with <code>do ... unless DivisionByZeroError</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>DomainError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);\">6 / 10</span></td>\n                            <td>Moderate / Math Domain</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>Mathematical domain violations: negative argument to <code>sqrt(x)</code>, even root of negative number <code>rt(x, 2k)</code>, negative factorial <code>x!</code>, non-positive logarithm <code>log(x)</code> / <code>log2(x)</code> / <code>log10(x)</code> (where <code>x &lt;= 0</code>), or arc trig of argument magnitude <code>|x| &gt; 1</code> in <code>asin(x)</code> / <code>acos(x)</code>. Yields <code>0</code> under suppression.</td>\n                            <td>Validate domain bounds (e.g. <code>if x &gt;= 0</code>), constrain ranges with <code>clamp(x, min, max)</code>, or wrap calculations in <code>do ... unless DomainError</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>ScopeViolationError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);\">6 / 10</span></td>\n                            <td>Moderate / Purity</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>An <code>inbound</code> routine mutates outer scope, or an <code>inst</code> variable is accessed outside its originating stack frame.</td>\n                            <td>Declare routine with <code>outbound</code>, keep mutations purely local, or catch via <code>unless</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>ImmutableError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,209,102,0.15); color: #ffd166; border-color: rgba(255,209,102,0.3);\">6 / 10</span></td>\n                            <td>Moderate / Immutability</td>\n                            <td><strong>Level 2 (Standard)</strong></td>\n                            <td>Mutating an entity static property or modifying an immutable library <code>const</code>.</td>\n                            <td>Mutate dynamic entity properties instead, or treat library constants as read-only.</td>\n                        </tr>\n                        <tr>\n                            <td><code>VisibilityError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,121,198,0.15); color: #ff79c6; border-color: rgba(255,121,198,0.3);\">7 / 10</span></td>\n                            <td>High / Access Control</td>\n                            <td><strong>Level 3 (Deep)</strong></td>\n                            <td>Accessing private static properties, calling private methods outside an entity, or calling private library routines.</td>\n                            <td>Mark static member with <code>public</code> or invoke routines within their enclosing entity/library scope.</td>\n                        </tr>\n                        <tr>\n                            <td><code>InvalidErrorNameError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(255,121,198,0.15); color: #ff79c6; border-color: rgba(255,121,198,0.3);\">7 / 10</span></td>\n                            <td>High / Semantic</td>\n                            <td><strong>Level 3 (Deep)</strong></td>\n                            <td>Attempting to throw an unrecognized error symbol not in the taxonomy.</td>\n                            <td>Use recognized error identifiers or raise via <code>throw CustomError ?msg=...</code>.</td>\n                        </tr>\n                        <tr>\n                            <td><code>IndentationError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);\">9 / 10</span></td>\n                            <td>Fatal / Structural</td>\n                            <td><strong>Level 4 (Unsuppressable)</strong></td>\n                            <td>Mismatched indentation spaces or tabs within indented statement blocks.</td>\n                            <td>Standardize block indentation to 4 spaces or 1 tab throughout the script.</td>\n                        </tr>\n                        <tr>\n                            <td><code>SyntaxError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);\">10 / 10</span></td>\n                            <td>Fatal / Structural</td>\n                            <td><strong>Level 4 (Unsuppressable)</strong></td>\n                            <td>Lexer/parser failure: illegal tokens, missing colons, or methods returning values with <code>reply &lt;expr&gt;</code>.</td>\n                            <td>Fix script syntax to strictly adhere to VerScript grammar specification.</td>\n                        </tr>\n                        <tr>\n                            <td><code>SystemError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);\">10 / 10</span></td>\n                            <td>Fatal / Virtual Machine</td>\n                            <td><strong>Level 4 (Unsuppressable)</strong></td>\n                            <td>Call stack frame depth exceeding 64 or jump stack overflow across nested <code>do</code> scopes.</td>\n                            <td>Ensure recursive procedures have base-case terminations; flatten deeply nested blocks.</td>\n                        </tr>\n                        <tr>\n                            <td><code>MemoryAllocationError</code></td>\n                            <td><span class=\"meta-pill\" style=\"background: rgba(239,71,111,0.18); color: #ef476f; border-color: rgba(239,71,111,0.4);\">10 / 10</span></td>\n                            <td>Fatal / Virtual Machine</td>\n                            <td><strong>Level 4 (Unsuppressable)</strong></td>\n                            <td>Host operating system memory exhausted during symbol table expansion.</td>\n                            <td>Release resources and reduce memory footprint of large datasets.</td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>How Error Modes Govern Suppression</h2>\n            <p>The VerScript engine evaluates the active error mode against the error's criticality points before deciding whether to dispatch an <code>unless</code> handler or abort:</p>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Active Mode</th>\n                            <th>Directive</th>\n                            <th>Allowed Suppression Tiers</th>\n                            <th>Critical Errors (Pts 9-10)</th>\n                            <th>Standard Errors (Pts 1-8)</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><strong>Normal</strong></td>\n                            <td>Default runtime</td>\n                            <td>Tiers 1 – 2 (via <code>unless</code>)</td>\n                            <td>Fatal Abort</td>\n                            <td>Dispatched to matching <code>unless</code> block or fatal abort</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Force</strong></td>\n                            <td><code>ForceErrors</code></td>\n                            <td>Tier 0 Only</td>\n                            <td>Fatal Abort</td>\n                            <td>Fatal Abort immediately (bypasses <code>unless</code> catch blocks)</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Critical</strong></td>\n                            <td><code>CriticalErrors</code></td>\n                            <td>Tiers 1 – 2</td>\n                            <td>Fatal Abort</td>\n                            <td>Suppressed and skipped silently (Points 1–6)</td>\n                        </tr>\n                        <tr>\n                            <td><strong>Suppress</strong></td>\n                            <td><code>SuppressErrors</code></td>\n                            <td>Tiers 1 – 3</td>\n                            <td>Fatal Abort</td>\n                            <td>All non-fatal errors suppressed &amp; skipped silently</td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Diagnostic Best Practice: Selective Trap Pattern</div>\n                <p>Always trap specific error types (e.g. <code>unless DivisionByZeroError</code>, <code>unless DomainError</code>, or <code>unless ScopeViolationError</code>) rather than generic catches. This ensures low-criticality mathematical and semantic faults are cleanly mitigated without masking unexpected structural errors.</p>\n            </div>\n",
+    "section": "Section 7: Procedures, Functions & Purity",
+    "subsection": "Modular Code",
+    "title": "Recursion & Call Stacks",
+    "category": "Routines",
+    "readTime": "4 min read",
+    "summary": "Solve problems by having a function call itself, understanding base conditions and stack limits.",
+    "body": "\n      <h2>Functions Calling Themselves</h2>\n      <p><strong>Recursion</strong> happens when a function calls itself to solve a smaller piece of the same problem. Every recursive function needs a <strong>base case</strong>: a condition that stops the calls so it doesn't loop forever!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_ch16_1",
-        "title": "diagnostics_workbench.vrs",
-        "code": "! VerScript Diagnostics Workbench\ndisplay \"=== VerScript Error Diagnostic Workbench ===\" ?color=#38bdf8\n\n! 1. Intercepting Math & Division Errors\ndo\n    set invalid_calc: 100 / 0\nunless DivisionByZeroError\n    display \"Diagnostics [Math]: Intercepted DivisionByZeroError\" ?color=#f1fa8c\n\n! 2. Intercepting Mathematical Domain Errors\ndo\n    set root_val: sqrt(-49)\nunless DomainError\n    display \"Diagnostics [Domain]: Intercepted DomainError on sqrt(-49)\" ?color=#ffb86c\n\n! 3. Intercepting Purity Violations\nset master_key: 1234\ndef func inspect_purity\n    set master_key: 9999 ! Attempting outer mutation\n    reply master_key\n\ndo\n    res: (inspect_purity)\nunless ScopeViolationError\n    display \"Diagnostics [Purity]: Intercepted ScopeViolationError\" ?color=#50fa7b\n\n! 4. Inspecting generic 'error' keyword\ndo\n    throw InvalidOperandError ?msg=\"Invalid matrix dimension\"\nunless error\n    display \"Diagnostics [Generic]: Caught active error: \" + error ?color=#ff79c6"
+        "id": "cb_ch29_1",
+        "title": "recursion_demo.vrs",
+        "code": "def func countdown n\n  if n = 0 then\n    display \"Blast off!\" ?color=green\n    reply 0\n  display \"Countdown: \" + n ?color=yellow\n  reply countdown(n - 1)\n\ncountdown(3)"
       }
     ],
     "exercises": [
       {
-        "id": "ex_16_1",
-        "title": "Exercise 16.1: Scope Guard Exception Interception",
-        "prompt": "Write a program with <code>set threshold: 50</code>, an inbound function <code>def func modify_threshold v</code> that executes <code>set threshold: v</code>, and trap the resulting error using <code>do ... unless ScopeViolationError</code> to display <code>\"Handled Scope Violation\"</code>.",
-        "starterCode": "! TODO: Write function modifying outer threshold and trap ScopeViolationError\n",
-        "hint": "Use `set threshold: 50`, define `def func modify_threshold v`, mutate `set threshold: v`, and wrap `call: (modify_threshold 100)` in `do ... unless ScopeViolationError`.",
-        "solution": "set threshold: 50\n\ndef func modify_threshold v\n    set threshold: v\n    reply threshold\n\ndo\n    call: (modify_threshold 100)\nunless ScopeViolationError\n    display \"Handled Scope Violation\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_16_2",
-        "title": "Exercise 16.2: Safe Loop Step Validation",
-        "prompt": "Write a program that executes an invalid loop <code>loop 5 step 10</code> inside a <code>do</code> block, traps <code>LoopStepError</code> with <code>unless LoopStepError</code>, and prints <code>\"Handled Loop Step Error\"</code> in yellow.",
-        "starterCode": "! TODO: Trap LoopStepError from invalid loop\n",
-        "hint": "Use `do`, `loop 5 step 10`, `unless LoopStepError`, and `display \"Handled Loop Step Error\" ?color=yellow`.",
-        "solution": "do\n    loop 5 step 10\n        display \"step\"\nunless LoopStepError\n    display \"Handled Loop Step Error\" ?color=yellow",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_16_3",
-        "title": "Exercise 16.3: Domain Error Precondition Interception",
-        "prompt": "Write a program that attempts to compute the square root of <code>-16</code> inside a <code>do</code> block, intercepts <code>DomainError</code> with <code>unless DomainError</code>, and prints <code>\"Handled Domain Error\"</code> in unquoted hex <code>?color=#ffb86c</code>.",
-        "starterCode": "! TODO: Compute sqrt(-16) inside do block and trap DomainError\n",
-        "hint": "Wrap `bad_root : sqrt(-16)` in `do ... unless DomainError` and display the message.",
-        "solution": "do\n    bad_root : sqrt(-16)\nunless DomainError\n    display \"Handled Domain Error\" ?color=#ffb86c",
+        "id": "ex_ch29_1",
+        "title": "Challenge 29: Recursive Sum",
+        "prompt": "Write <code>def func sumTo n</code>: if n <= 1 reply 1, else reply n + sumTo(n - 1). Call <code>sumTo(4)</code> and display it.",
+        "starterCode": "! Write recursive sumTo function\n",
+        "hint": "def func sumTo n\n  if n <= 1 then\n    reply 1\n  reply n + sumTo(n - 1)\ndisplay sumTo(4)",
+        "solution": "def func sumTo n\n  if n <= 1 then\n    reply 1\n  reply n + sumTo(n - 1)\ndisplay sumTo(4)",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch18-alias",
+    "id": "ch30-entities",
     "number": 30,
-    "section": "Section 8: Advanced Tooling & Customizations",
-    "title": "Alias Remapping & Custom Syntax",
-    "category": "Metaprogramming",
-    "readTime": "6 min read",
-    "summary": "Remap keywords, rename commands, map custom attribute names, and create domain-specific languages with alias.",
-    "body": "\n            <h2>The <code>alias</code> Keyword</h2>\n            <p>The <code>alias</code> keyword allows you to customize the grammar of VerScript at runtime:</p>\n            <ul>\n                <li><strong>Single-Line:</strong> <code>alias cmd1: cmd2</code> (renames existing command <code>cmd1</code> to new alias <code>cmd2</code>).</li>\n                <li><strong>Attribute Mapping:</strong> <code>alias cmd1: cmd2 ? arg1=arg3 arg2=arg4</code> (maps original attribute <code>arg1</code> to custom attribute <code>arg3</code>).</li>\n                <li><strong>Multi-Line Block:</strong>\n                    <div class=\"code-block\">alias:\n    display: print\n    loop: repeat\n    iterate: for ? step=by</div>\n                </li>\n            </ul>\n\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Alias Rule</th>\n                        <th>Syntax</th>\n                        <th>Expanded Result</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td>Command Rename</td>\n                        <td><code>alias display: print</code></td>\n                        <td><code>print \"Hello\"</code> &rarr; <code>display \"Hello\"</code></td>\n                    </tr>\n                    <tr>\n                        <td>Attribute Mapping</td>\n                        <td><code>alias display: echo ? color=tint</code></td>\n                        <td><code>echo \"Hi\" ?tint=\"cyan\"</code> &rarr; <code>display \"Hi\" ?color=\"cyan\"</code></td>\n                    </tr>\n                </tbody>\n            </table>\n        ",
-    "codeBlocks": [
-      {
-        "id": "cb_alias_1",
-        "title": "alias_showcase.vrs",
-        "code": "! 1. Single-line command alias\nalias display: print\nprint \"Hello from print alias!\" ?color=\"green\"\n\n! 2. Alias with attribute mapping\nalias display: echo ? color=tint newline=inline\necho \"Segment 1, \" ?tint=\"yellow\" ?inline=false\necho \"Segment 2!\" ?tint=\"cyan\"\n\n! 3. Multi-line alias block\nalias:\n    loop: repeat\n    iterate: for ? step=by\n\nrepeat 2\n    print \"Repeat loop active\" ?color=\"purple\"\n\nfor i from 10 to 30 ?by=10\n    print \"Iterating as for: \" + i ?color=\"yellow\""
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_alias_1",
-        "title": "Exercise 18.1: Command Alias",
-        "prompt": "Alias <code>display</code> as <code>print</code> and display <code>\"Aliased Output\"</code> in green using <code>print</code>.",
-        "starterCode": "! TODO: Define alias display: print and use it\n",
-        "hint": "Write `alias display: print` then `print \"Aliased Output\" ?color=\"green\"`.",
-        "solution": "alias display: print\nprint \"Aliased Output\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_alias_2",
-        "title": "Exercise 18.2: Attribute Remapping",
-        "prompt": "Alias <code>display</code> as <code>log</code> with <code>?color=tint</code>, and output <code>\"Mapped Attribute\"</code> using <code>?tint=\"cyan\"</code>.",
-        "starterCode": "! TODO: Write alias display: log ? color=tint\n",
-        "hint": "Use `alias display: log ? color=tint`.",
-        "solution": "alias display: log ? color=tint\nlog \"Mapped Attribute\" ?tint=\"cyan\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_alias_3",
-        "title": "Exercise 18.3: Multi-line Alias Block",
-        "prompt": "Create an <code>alias:</code> block mapping <code>loop: repeat</code> and execute <code>repeat 2</code> printing <code>\"Pass\"</code>.",
-        "starterCode": "! TODO: Create alias: block and execute repeat 2\n",
-        "hint": "Indent `loop: repeat` under `alias:`.",
-        "solution": "alias:\n    loop: repeat\nrepeat 2\n    display \"Pass\" ?color=\"green\"",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch25-polyserver-runner",
-    "number": 31,
-    "section": "Section 8: Advanced Tooling & Customizations",
-    "title": "PolyServer Cloud Execution & Web Runner",
-    "category": "Tooling",
-    "readTime": "5 min read",
-    "summary": "Deploying and orchestrating the PolyServer C execution engine, API communication, and frontend web playgrounds.",
-    "body": "\n    <h2>PolyServer Architecture</h2>\n    <p>VerScript is fully deployable in modern serverless and containerized cloud environments. PolyServer provides a hardened Node.js/Express bridge that receives VerScript code, spawns the native C VM in an isolated sandbox, and streams execution results back via JSON.</p>\n  ",
-    "codeBlocks": [
-      {
-        "id": "cb_srv_1",
-        "title": "api_invocation.js",
-        "code": "fetch(\"https://verscript-polyserver.onrender.com/vs-sharp\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({ code: 'display \"Hello from Cloud!\" ?color=\"cyan\"' })\n})\n.then(res => res.json())\n.then(data => console.log(data.output));"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_srv_1",
-        "title": "Exercise 25.1: Cloud Readiness Test",
-        "prompt": "Write a program that displays <code>\"Cloud Node Ready\"</code> with attribute <code>?color=\"green\"</code>.",
-        "starterCode": "! TODO: Display status report\n",
-        "hint": "Use `display \"Cloud Node Ready\" ?color=\"green\"`.",
-        "solution": "display \"Cloud Node Ready\" ?color=\"green\"",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch19-grandmaster-capstone",
-    "number": 32,
-    "section": "Section 9: Capstone & Advanced Architecture",
-    "title": "Grandmaster Capstone I: Complex Systems & Pipelines",
-    "category": "Systems Engineering",
-    "readTime": "15 min read",
-    "summary": "Masterclass systems engineering guide with end-to-end telemetry pipelines, reactive sentinel watchdogs, polyglot hybrid architectures, native signal processing, and 8 grandmaster certification challenges.",
-    "body": "\n            <h2>The VerScript Systems Engineering Paradigm</h2>\n            <p>Welcome to the <strong>Grandmaster Capstone</strong> of the VerScript Academy. Writing high-throughput, mission-critical systems requires a fundamentally different mindset than writing simple procedural scripts. In enterprise infrastructure, robotics control loops, and distributed event pipelines, software must satisfy four non-negotiable criteria:</p>\n            <ul>\n                <li><strong>Deterministic Latency &amp; Zero Uncontrolled Spikes</strong>: Garbage-collection pauses in managed runtimes can cause dropped packets or delayed actuation. VerScript executes on a lightweight, deterministic C virtual machine with minimal memory overhead.</li>\n                <li><strong>Autonomous Self-Healing Fault Boundaries</strong>: Single sensor dropouts or transient network timeouts must never crash the core supervisor process. Multi-tiered error suppression and declarative <code>do ... unless</code> watchdogs isolate failures at the statement level.</li>\n                <li><strong>Hybrid Polyglot Interoperability</strong>: Modern architectures rarely operate in a single language vacuum. High-speed signal ingestion in native C and VerScript must smoothly bridge into Python numerical models (NumPy, SciPy) or Node.js web streaming APIs without brittle subprocess plumbing.</li>\n                <li><strong>Declarative Domain-Specific Ergonomics</strong>: Metaprogramming aliases (<code>alias:</code>) and pure functional libraries (<code>.lib.vrs</code>) allow engineering teams to express high-level domain protocols directly in code, eliminating boilerplate and cognitive overhead.</li>\n            </ul>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">🏆 The Grandmaster Systems Engineering Standard</div>\n                <p>A certified VerScript Systems Engineer designs software that is self-monitoring, fail-safe by default, mathematically rigorous, and effortlessly multi-lingual. This chapter formalizes those architectural pillars.</p>\n            </div>\n\n            <h2>Architecture of Enterprise Systems &amp; Pipelines</h2>\n            <p>A production VerScript system is organized into six interconnected architectural layers, each handling a distinct operational responsibility:</p>\n\n            <table class=\"doc-table\">\n                <thead>\n                    <tr>\n                        <th>Architectural Layer</th>\n                        <th>VerScript Feature Engine</th>\n                        <th>System Responsibility</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr>\n                        <td><strong>1. Reactive Sentinel Guard</strong></td>\n                        <td><code>do ... unless internal &lt;cond&gt;</code><br><code>unless external &lt;cond&gt;</code></td>\n                        <td>Autonomous state monitoring and reactive interrupt dispatching without polling loops.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>2. Domain Entity Hierarchy</strong></td>\n                        <td><code>class Name(args)</code><br><code>static:</code> / <code>dynamic:</code><br><code>public</code> / <code>private</code></td>\n                        <td>Object-oriented state modeling, lifecycle instantiation, static invariants, and encapsulation boundaries.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>3. Modular Library Distribution</strong></td>\n                        <td><code>lib Name</code> (<code>.lib.vrs</code>)<br><code>const:</code> invariants<br>19 Standard Libraries</td>\n                        <td>Pure functional encapsulation, zero-collision unqualified access, and standard ecosystem module reuse.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>4. High-Speed Native Math</strong></td>\n                        <td><code>^</code>, <code>//</code>, <code>%</code>, <code>|x|</code>, <code>x!</code><br><code>clamp</code>, <code>lerp</code>, <code>rt</code>, trig, logs</td>\n                        <td>Zero-overhead mathematical signal conditioning, moving averages, standard deviation, and anomaly scoring.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>5. Multi-Tiered Fault Recovery</strong></td>\n                        <td><code>SuppressErrors</code><br><code>CriticalErrors</code><br><code>ForceErrors</code></td>\n                        <td>Tiered isolation separating benign telemetry glitches from critical system breaches.</td>\n                    </tr>\n                    <tr>\n                        <td><strong>6. Polyglot Micro-Pipeline</strong></td>\n                        <td><code>inject python</code><br><code>inject javascript</code><br><code>inject rust</code></td>\n                        <td>Direct in-situ foreign language execution for specialized cryptography, machine learning, or web dispatch.</td>\n                    </tr>\n                </tbody>\n            </table>\n\n            <h2>Pillar 1: Reactive Sentinel Watchdogs &amp; Hardware Guards</h2>\n            <p>Traditional architectures poll metrics repeatedly in tight loops, introducing CPU spin and latency jitter. VerScript replaces polling with declarative <strong>Sentinel Watchdogs</strong>:</p>\n            <pre><code class=\"language-verscript\">do\n    pressure : read_chamber_pressure()\n    inject_coolant(pressure)\nunless internal pressure &gt; 350\n    emergency_vent_chamber()\n    display \"CRITICAL: Chamber pressure breached safety limit!\" ?color=\"red\"</code></pre>\n            <p>When the condition inside <code>unless internal &lt;condition&gt;</code> evaluates to true, the VM halts execution of the guarded block immediately and jumps cleanly into the emergency handler frame. This provides millisecond-level responsiveness for safety-critical systems.</p>\n\n            <h2>Pillar 2: Entity Modeling &amp; Static Invariants</h2>\n            <p>Enterprise systems represent physical assets (sensors, network sockets, rover actuators) using <code>class</code> definitions that strictly partition immutable configuration from mutable state:</p>\n            <pre><code class=\"language-verscript\">class SensorProbe(probe_id, max_voltage)\n    static:\n        public SENSOR_VERSION: \"2.4.0\"\n        private CALIBRATION_BIAS: 0.045\n    dynamic:\n        voltage: 0\n        reading_count: 0\n\n        def outbound method record_sample v\n            voltage: clamp(v + CALIBRATION_BIAS, 0, max_voltage)\n            reading_count: reading_count + 1\n            outscope total_samples_ingested: total_samples_ingested + 1\n            reply</code></pre>\n            <p>By enforcing <code>static:</code> immutability, calibration constants cannot be accidentally mutated at runtime, protecting sensor integrity across millions of sample cycles.</p>\n\n            <h2>Pillar 3: High-Performance Signal Processing with Native Math</h2>\n            <p>VerScript's native mathematics engine operates directly inside the VM expression evaluator without runtime function lookup overhead:</p>\n            <ul>\n                <li><strong>Power &amp; Roots</strong>: Compute exponential decay and square root distances using <code>dist : sqrt(dx^2 + dy^2)</code> and generalized root <code>rt(x, 3)</code>.</li>\n                <li><strong>Absolute Value &amp; Clamping</strong>: Signal deviation from a baseline is cleanly bounded using <code>delta : |sample - baseline|</code> and <code>filtered : clamp(sample, -100, 100)</code>.</li>\n                <li><strong>Integer Math &amp; Frequencies</strong>: Modular cadences and integer subdivision are expressed natively with <code>sample_idx // 16</code> and <code>sample_idx % 8</code>.</li>\n                <li><strong>Linear Interpolation</strong>: Smooth sensor transitions between states with <code>smoothed : lerp(prev_val, target_val, 0.15)</code>.</li>\n            </ul>\n\n            <h2>Production Case Study: Autonomous Planetary Rover Telemetry Engine</h2>\n            <p>Below is an end-to-end mission pipeline demonstrating all six architectural layers working together in a unified production script:</p>\n\n            <div class=\"callout-box note\">\n                <div class=\"callout-title\">🛰️ System Scenario: Mars Surface Science Node</div>\n                <p>The science node ingests raw radiation and thermal sensor inputs, clamps values within operational limits, computes mathematical deviation scores, performs cryptographic verification in Python, and initiates an autonomous self-healing reboot if thermal limits are exceeded.</p>\n            </div>\n",
-    "codeBlocks": [
-      {
-        "id": "cb_capstone_1",
-        "title": "reactor_sentinel_core.vrs",
-        "code": "! Grandmaster Systems Engineering Showcase\nalias:\n    display: alert ? color=tint\n    loop: repeat\n\npressure: 120\ndo\n    alert \"=== Booting Autonomous Watchdog Core ===\" ?tint=\"purple\"\n    repeat 4\n        alert \"Core Pressure: \" + pressure ?tint=\"cyan\"\n        pressure: pressure + 60\nunless internal pressure > 300\n    alert \"ALERT: Pressure threshold breached at \" + pressure ?tint=\"yellow\""
-      },
-      {
-        "id": "cb_capstone_2",
-        "title": "planetary_rover_pipeline.vrs",
-        "code": "! Planetary Rover Autonomous Telemetry & Anomaly Pipeline\nalias:\n    display: log_event ? color=tint\n    loop: cycle\n\nclass RadiationSensor(sensor_id)\n    static:\n        public SAFE_MAX_RAD: 450\n        public BASELINE_RAD: 120\n    dynamic:\n        current_rad: 120\n        anomaly_count: 0\n\n        def outbound method process_reading(raw_input)\n            ! Native math signal conditioning\n            current_rad: clamp raw_input from 0 to 1000\n            deviation: |current_rad - 120|\n            if deviation > 200 then\n                anomaly_count: anomaly_count + 1\n            reply\n\noutscope total_samples_ingested: 0\nrover_sensor: RadiationSensor(\"RAD-01\")\ntemp_core: 40\n\ndo\n    log_event \"=== Initializing Rover Telemetry Stream ===\" ?tint=\"cyan\"\n    cycle 5\n        raw_val: 100 + (total_samples_ingested * 75)\n        rover_sensor.process_reading(raw_val)\n        temp_core: temp_core + 25\n        log_event \"Sample \" + total_samples_ingested + \" | Rad: \" + rover_sensor.current_rad ?tint=\"green\"\nunless internal temp_core > 120\n    log_event \"THERMAL TRIP: Core temperature reached \" + temp_core ?tint=\"yellow\"\n    log_event \"Engaging passive radiator heat dump.\" ?tint=\"red\"\n\n! Polyglot cryptographic checksum validation\ninject python ?color=\"yellow\"\n    import hashlib\n    digest = hashlib.sha256(b\"ROVER_RAD_TELEMETRY_STREAM\").hexdigest()[:16]\n    print(f\"Telemetry SHA-256 Digest: {digest}\")\n\nlog_event \"Rover Subsystems Operational.\" ?tint=#50fa7b"
-      }
-    ],
-    "exercises": [
-      {
-        "id": "ex_cap_1",
-        "title": "Challenge 17.1: Reactor Core Watchdog",
-        "prompt": "Create an <code>alias:</code> block mapping <code>display: log ? color=tint</code> and <code>loop: cycle</code>. In a <code>do</code> block, start with <code>coreTemp : 150</code>, run <code>cycle 4</code> adding <code>coreTemp : coreTemp + 60</code>, and catch with <code>unless internal coreTemp > 300</code> displaying <code>\"CRITICAL TEMP SHUTDOWN: \" + coreTemp</code> in yellow.",
-        "starterCode": "! TODO: Implement Challenge 17.1\n",
-        "hint": "Use `alias:`, `do`, `cycle 4`, and `unless internal coreTemp > 300`.",
-        "solution": "alias:\n    display: log ? color=tint\n    loop: cycle\ncoreTemp : 150\ndo\n    cycle 4\n        coreTemp : coreTemp + 60\nunless internal coreTemp > 300\n    log \"CRITICAL TEMP SHUTDOWN: \" + coreTemp ?tint=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_2",
-        "title": "Challenge 17.2: Polyglot Matrix Data Bus",
-        "prompt": "Build a multi-language pipeline: 1) <code>inject python</code> computing a hash, 2) <code>inject javascript</code> computing an array sum, 3) <code>inject verscript</code> calculating <code>bus_total : 500 + 250</code> and displaying <code>\"Bus Total: \" + bus_total</code> in green.",
-        "starterCode": "! TODO: Implement Challenge 17.2\n",
-        "hint": "Chain `inject python`, `inject javascript`, and `inject verscript`.",
-        "solution": "inject python ?color=\"yellow\"\n    h = sum([ord(c) for c in \"VER\"])\n    print(\"Python Hash:\", h)\n\ninject javascript ?color=\"cyan\"\n    console.log(\"JS Matrix Checksum:\", [1,2,3,4].reduce((a,b)=>a*b, 1))\n\ninject verscript\n    bus_total : 500 + 250\n    display \"Bus Total: \" + bus_total ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_3",
-        "title": "Challenge 17.3: Stepped Sieve Calculation Engine",
-        "prompt": "Declare <code>accumulator : 0</code>. Run <code>iterate step_idx from 10 to 50 step 10</code>, adding <code>accumulator : accumulator + step_idx</code>. Display <code>\"Accumulated Sieve Total: \" + accumulator</code> in cyan.",
-        "starterCode": "accumulator : 0\n! TODO: Implement Challenge 17.3\n",
-        "hint": "Use `step 10` on the iteration.",
-        "solution": "accumulator : 0\niterate step_idx from 10 to 50 step 10\n    accumulator : accumulator + step_idx\ndisplay \"Accumulated Sieve Total: \" + accumulator ?color=\"cyan\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_4",
-        "title": "Challenge 17.4: Autonomous Network Retry Engine",
-        "prompt": "Build an autonomous retry loop: set <code>attempts : 0</code> and <code>max_retries : 3</code>. Run <code>while attempts < max_retries</code> inside <code>SuppressErrors</code>, incrementing <code>attempts : attempts + 1</code> and triggering a simulated division failure. Finally display <code>\"Retries Completed: \" + attempts</code> in green.",
-        "starterCode": "attempts : 0\nmax_retries : 3\n! TODO: Implement Challenge 17.4\n",
-        "hint": "Inside `while attempts < max_retries`, increment attempts and execute `err : 10 / 0`.",
-        "solution": "attempts : 0\nmax_retries : 3\nSuppressErrors\n    while attempts < max_retries\n        attempts : attempts + 1\n        fault : 10 / 0\ndisplay \"Retries Completed: \" + attempts ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_5",
-        "title": "Challenge 17.5: Cascading Custom Error Hierarchy",
-        "prompt": "Write a <code>do</code> block that checks <code>sensor_v : 0</code>, throws <code>HardwareFault ?msg=\"Zero Voltage\"</code>, and catch it in <code>unless HardwareFault</code>, displaying <code>\"Fault Captured: \" + error</code> in red.",
-        "starterCode": "sensor_v : 0\n! TODO: Implement Challenge 17.5\n",
-        "hint": "Use `throw HardwareFault ?msg=\"Zero Voltage\"`.",
-        "solution": "sensor_v : 0\ndo\n    if sensor_v = 0 then\n        throw SystemError ?msg=\"Zero Voltage\"\nunless SystemError\n    display \"Fault Captured: \" + error ?color=\"red\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_6",
-        "title": "Challenge 17.6: Self-Healing Memory Cache",
-        "prompt": "Simulate a cache: set <code>cache_size : 10</code>, <code>max_capacity : 80</code>. In a <code>do</code> block, run <code>loop 5</code> adding <code>cache_size : cache_size + 20</code>, and catch with <code>unless internal cache_size > max_capacity</code>, purging and displaying <code>\"CACHE EVICTED AT: \" + cache_size</code> in yellow.",
-        "starterCode": "cache_size : 10\nmax_capacity : 80\n! TODO: Implement Challenge 17.6\n",
-        "hint": "Use `unless internal cache_size > max_capacity`.",
-        "solution": "cache_size : 10\nmax_capacity : 80\ndo\n    loop 5\n        cache_size : cache_size + 20\nunless internal cache_size > max_capacity\n    display \"CACHE EVICTED AT: \" + cache_size ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_7",
-        "title": "Challenge 17.7: Microservice Route Remapping",
-        "prompt": "Create an <code>alias:</code> block mapping <code>display: route_get</code> and <code>prompt: route_post</code>. Use <code>route_post endpoint ?default=\"/api/v1/health\"</code> and <code>route_get \"Route: \" + endpoint</code> in green.",
-        "starterCode": "! TODO: Implement Challenge 17.7\n",
-        "hint": "Use `alias:` with `display: route_get` and `prompt: route_post`.",
-        "solution": "alias:\n    display: route_get\n    prompt: route_post\n\nroute_post endpoint ?default=\"/api/v1/health\"\nroute_get \"Route: \" + endpoint ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap_8",
-        "title": "Challenge 17.8: Grandmaster Final Proof of Mastery",
-        "prompt": "Combine all skills: 1) <code>alias display: out ? color=col</code>, 2) set <code>total_cycles : 0</code>, 3) iterate <code>c</code> from 1 to 3 with <code>total_cycles : total_cycles + c</code>, 4) print <code>\"Mastery Proof Verified: \" + total_cycles</code> in unquoted hex <code>?col=#00ffcc</code>.",
-        "starterCode": "! TODO: Implement Challenge 17.8 Proof of Mastery\n",
-        "hint": "Combine alias mapping with iterate and hex output.",
-        "solution": "alias display: out ? color=col\ntotal_cycles : 0\niterate c from 1 to 3\n    total_cycles : total_cycles + c\nout \"Mastery Proof Verified: \" + total_cycles ?col=#00ffcc",
-        "expectedMatch": {}
-      }
-    ]
-  },
-  {
-    "id": "ch30-variable-lifecycles",
-    "number": 33,
-    "section": "Section 10: Memory Management & Variable Lifecycles",
-    "title": "Variable Lifecycles: Temporary & Stack-Isolated Variables",
-    "category": "Memory & Lifecycles",
-    "readTime": "7 min read",
-    "summary": "Master granular memory lifecycles using the temp and inst variable modifiers, manual unbinding with del, and stack-frame isolation.",
-    "body": "\n            <h2>Deterministic Memory &amp; Variable Lifecycles</h2>\n            <p>While VerScript provides dynamic garbage-managed variables by default, high-throughput systems require precise control over variable lifetimes and stack boundaries. VerScript introduces the <code>temp</code> and <code>inst</code> modifiers alongside the explicit <code>del</code> keyword to give developers deterministic memory isolation directly inside the native runtime.</p>\n\n            <h2>Variable Modifiers Reference</h2>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Modifier / Keyword</th>\n                            <th>Declaration Form</th>\n                            <th>Lifecycle &amp; Scope Boundary</th>\n                            <th>Enforced Violation</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>temp</code></td>\n                            <td><code>temp [type] var: val</code></td>\n                            <td>Temporary variable marked for explicit manual destruction via <code>del &lt;var&gt;</code>. Post-deletion access raises an unassigned error.</td>\n                            <td><code>UnassignedVariableError</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>del</code></td>\n                            <td><code>del &lt;var&gt;</code></td>\n                            <td>Explicitly unbinds and frees the target variable, marking it as permanently deleted from the active scope.</td>\n                            <td>N/A</td>\n                        </tr>\n                        <tr>\n                            <td><code>inst</code></td>\n                            <td><code>inst [type] var: val</code></td>\n                            <td>Stack-isolated instance variable bound strictly to the current call frame / stack ID. Cannot be read or modified outside its originating stack.</td>\n                            <td><code>ScopeViolationError</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Temporary Variables and Explicit Deletion</h2>\n            <p>Temporary variables declared with <code>temp</code> are designed for sensitive data (such as API keys, cryptographic nonces, or scratch buffers) that must not persist in the symbol table longer than necessary:</p>\n            <pre><code class=\"language-verscript\">temp session_token: \"tok_sec_9948271\"\ndisplay \"Active Token: \" + session_token ?color=#38bdf8\n\n! Explicitly free and delete the variable\ndel session_token\n\ndo\n  display session_token\nunless UnassignedVariableError\n  display \"Protected: session_token cannot be accessed after del\" ?color=#50fa7b</code></pre>\n\n            <h2>Stack-Frame Isolation with 'inst'</h2>\n            <p>The <code>inst</code> keyword creates variables that are strictly locked to the executing stack frame. If an inner routine or external caller attempts to access an instance variable outside its origin stack, the runtime raises a <code>ScopeViolationError</code>:</p>\n            <pre><code class=\"language-verscript\">inst thread_id: 1042\ndisplay \"Current Thread ID: \" + thread_id ?color=#22c55e\n\n! Re-entering another stack or external caller isolates thread_id</code></pre>\n    ",
+    "section": "Section 8: Object-Oriented Programming",
+    "subsection": "Entities & Classes",
+    "title": "Entities & Dynamic Dictionaries",
+    "category": "OOP",
+    "readTime": "4 min read",
+    "summary": "Store key-value properties dynamically in lightweight dictionary objects using 'entity'.",
+    "body": "\n      <h2>Objects with Named Properties</h2>\n      <p>An <strong>entity</strong> in VerScript is a flexible object where you can attach properties on the fly using dot notation: <code>user.name: \"Alice\"</code>. It's like a dictionary or JSON object!</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch30_1",
-        "title": "variable_lifecycles.vrs",
-        "code": "! VerScript Temporary and Stack-Isolated Variables\ntemp secret_key: \"AES_256_KEY_SAMPLE\"\ndisplay \"Allocated Temp Key: \" + secret_key ?color=#38bdf8\n\n! Manual cleanup\ndel secret_key\n\ndo\n    display secret_key\nunless UnassignedVariableError\n    display \"Key successfully purged from memory!\" ?color=#50fa7b\n\ninst frame_seq: 100\ndisplay \"Stack-Isolated Frame: \" + frame_seq ?color=#eab308"
+        "title": "entity_demo.vrs",
+        "code": "class Hero(hero_name, hero_hp)\n  dynamic:\n    name: hero_name\n    hp: hero_hp\n\nh: Hero(\"Orion\", 100)\ndisplay \"Hero: \" + h.name + \" - HP: \" + h.hp ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_30_1",
-        "title": "Exercise 30.1: Managing Temporary Lifecycles",
-        "prompt": "Declare a temporary variable <code>temp token: 999</code>, delete it using <code>del token</code>, and declare an instance variable <code>inst worker_id: 7</code> with <code>display 'Worker: ' + worker_id</code>.",
-        "starterCode": "! TODO: Declare temp, del, and declare inst\n",
-        "hint": "Use `temp token: 999`, then `del token`, then `inst worker_id: 7` and `display 'Worker: ' + worker_id`.",
-        "solution": "temp token: 999\ndel token\ninst worker_id: 7\ndisplay \"Worker: \" + worker_id",
+        "id": "ex_ch30_1",
+        "title": "Challenge 30: Create an Entity",
+        "prompt": "Create <code>car: entity</code>, set <code>car.brand: \"Tesla\"</code> and <code>car.speed: 120</code>, and display <code>car.brand</code>.",
+        "starterCode": "! Create car entity and display brand\n",
+        "hint": "set car: entity\ncar.brand: \"Tesla\"\ncar.speed: 120\ndisplay car.brand",
+        "solution": "set car: entity\ncar.brand: \"Tesla\"\ncar.speed: 120\ndisplay car.brand",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch31-modern-flow-control",
-    "number": 34,
-    "section": "Section 10: Memory Management & Variable Lifecycles",
-    "title": "Modern Flow Control: Guard Clauses, Pattern Matching & Pipeline Chaining",
-    "category": "Control Flow",
-    "readTime": "8 min read",
-    "summary": "Streamline logic with defensive guard clauses, expressive structural pattern matching using 'case' branches with guard conditions, and Unix-style pipeline operator (|>) chaining.",
-    "body": "\n            <h2>Modern Flow Control in VerScript</h2>\n            <p>Modern production code favors flat, expressive control flow over deep nested if-else ladders. VerScript incorporates three powerful flow primitives: <strong>guard clauses</strong>, <strong>structural pattern matching</strong> with guards, and <strong>pipeline operator chaining</strong>.</p>\n\n            <h2>1. Guard Clauses (<code>guard ... else</code>)</h2>\n            <p>A guard clause enforces pre-conditions at the beginning of a function or loop. If the condition evaluates to false, the <code>else</code> branch executes immediately, typically returning early or raising an error:</p>\n            <pre><code class=\"language-verscript\">def func calculateDiscount(price, customerTier):\n    guard price > 0 else reply 0\n    guard customerTier == \"VIP\" else reply (price * 90) // 100\n    reply (price * 75) // 100</code></pre>\n\n            <h2>2. Structural Pattern Matching (<code>match ... case</code>)</h2>\n            <p>Pattern matching evaluates an expression against multiple structural patterns using the <code>case</code> keyword. VerScript matches literal values, enum members, wildcard fallbacks, and conditional guards:</p>\n            <pre><code class=\"language-verscript\">match response_code:\n    case 200:\n        display \"Success (OK)\" ?color=\"green\"\n    case 404:\n        display \"Resource Not Found\" ?color=\"yellow\"\n    case 500:\n        display \"Internal Server Error\" ?color=\"red\"\n    case _ if response_code >= 400:\n        display \"Client / Protocol Error\" ?color=\"purple\"\n    else:\n        display \"Unhandled HTTP Status\"</code></pre>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Conditional Guard Clauses on Cases</div>\n                <p>Any <code>case</code> branch can be augmented with an <code>if &lt;guard&gt;</code> condition (e.g. <code>case _ if x &gt; 100:</code>). The case branch will only execute if the pattern matches AND the guard condition evaluates to true.</p>\n            </div>\n\n            <h2>3. The Pipeline Chaining Operator (<code>|&gt;</code>)</h2>\n            <p>The forward pipeline operator (<code>|&gt;</code>) forwards the value of the left-hand expression as the first argument into the right-hand function or library method. This eliminates deeply nested parenthesized calls in data transformations:</p>\n            <pre><code class=\"language-verscript\">def func clean_text(s):\n    reply Strings.trim(s)\n\ndef func make_badge(s):\n    reply \"[\" + s + \"]\"\n\n! Traditional nested call:\nset tag: make_badge(Strings.toUpper(clean_text(\"  production  \")))\n\n! Expressive pipeline call:\nset tag: \"  production  \" |> clean_text |> Strings.toUpper |> make_badge\ndisplay tag ! outputs \"[PRODUCTION]\"</code></pre>\n  ",
+    "id": "ch31-classes",
+    "number": 31,
+    "section": "Section 8: Object-Oriented Programming",
+    "subsection": "Entities & Classes",
+    "title": "Classes & Encapsulation",
+    "category": "OOP",
+    "readTime": "4 min read",
+    "summary": "Define blueprints for objects with 'class', separating shared immutable state (static:) from per-instance state (dynamic:).",
+    "body": "\n      <h2>Blueprints for Reusable Objects</h2>\n      <p>While an entity is created one-by-one, a <strong>class</strong> is a reusable blueprint. In VerScript, a class clearly separates:</p>\n      <ul>\n        <li><code>static:</code> Shared constants or class-wide methods.</li>\n        <li><code>dynamic:</code> Properties and behaviors that belong to each individual object.</li>\n      </ul>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_ch34_flow_control",
-        "title": "flow_control_mastery.vrs",
-        "code": "! Modern Flow Control: Guard Clauses, Match with Case & Pipeline Chaining\n\nenum Priority: Low = 1, Medium = 2, High = 3\n\ndef func double(x):\n    reply x * 2\n\ndef func add_twenty(x):\n    reply x + 20\n\n! 1. Pipeline chaining\nset score: 5 |> double |> add_twenty\ndisplay \"Piped Score: \" + score ?color=\"cyan\"\n\n! 2. Pattern matching with case and guards\ndef func assess(val):\n    match val:\n        case 100:\n            reply \"Perfect Score\"\n        case _ if val >= 50:\n            reply \"Passing Grade\"\n        else:\n            reply \"Needs Improvement\"\n\ndisplay \"Assessment: \" + assess(score) ?color=\"green\"\ndisplay \"Assessment: \" + assess(100) ?color=\"yellow\""
+        "id": "cb_ch31_1",
+        "title": "class_blueprint.vrs",
+        "code": "class Robot(robot_name)\n  static:\n    public faction: \"Auton\"\n  dynamic:\n    name: robot_name\n    def func greet guest\n      reply \"Greetings, \" + guest + \"!\"\n\nbot: Robot(\"Apex\")\ndisplay bot.greet(\"Captain\") ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_ch34_pipeline",
-        "title": "Exercise 34.1: Pipeline Data Flow",
-        "prompt": "Define a function <code>def func triple(n): reply n * 3</code>. Starting with <code>set base: 7</code>, pipe it through <code>triple</code> and display the result.",
-        "starterCode": "! TODO: Define triple and pipe base through it\nset base: 7\n",
-        "hint": "Use `def func triple(n): reply n * 3` and `set res: base |> triple\ndisplay res`.",
-        "solution": "def func triple(n):\n    reply n * 3\nset base: 7\nset res: base |> triple\ndisplay res",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch34_case_guard",
-        "title": "Exercise 34.2: Pattern Matching with Case & Guard",
-        "prompt": "Write a match statement for variable <code>val : 42</code>. If <code>case 0:</code> display <code>\"Zero\"</code>. If <code>case _ if val > 0:</code> display <code>\"Positive\"</code> in green. Otherwise display <code>\"Negative\"</code>.",
-        "starterCode": "set val: 42\n! TODO: Write match statement with case and guard\n",
-        "hint": "Use `match val:\n    case 0:\n        display \"Zero\"\n    case _ if val > 0:\n        display \"Positive\" ?color=\"green\"\n    else:\n        display \"Negative\"`.",
-        "solution": "set val: 42\nmatch val:\n    case 0:\n        display \"Zero\"\n    case _ if val > 0:\n        display \"Positive\" ?color=\"green\"\n    else:\n        display \"Negative\"",
+        "id": "ex_ch31_1",
+        "title": "Challenge 31: Simple Class",
+        "prompt": "Define <code>class Counter</code> with <code>dynamic: def func tick reply 1</code>. Instantiate <code>c: Counter()</code> and display <code>c.tick()</code>.",
+        "starterCode": "! Define Counter class and call tick\n",
+        "hint": "class Counter\n  dynamic:\n    def func tick\n      reply 1\nset c: Counter()\ndisplay c.tick()",
+        "solution": "class Counter\n  dynamic:\n    def func tick\n      reply 1\nset c: Counter()\ndisplay c.tick()",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch32-reactive-event-architecture",
-    "number": 35,
-    "section": "Section 11: Asynchronous & Event-Driven Systems",
-    "title": "Reactive Event Architecture: System Events & Dynamic Reactive Triggers",
-    "category": "Event Architecture",
-    "readTime": "8 min read",
-    "summary": "Build reactive systems using lifecycle events (on start, on exit), interval timers (on interval, on timeout), state triggers (when), and custom event dispatch (emit).",
-    "body": "\n            <h2>Reactive Event Architecture</h2>\n            <p>VerScript incorporates a native event loop directly into the execution engine. Event handlers can listen for system lifecycle milestones, timer interrupts, reactive state changes, or user-defined custom event broadcasts.</p>\n\n            <h2>Lifecycle Event Listeners (<code>on &lt;event&gt;:</code>)</h2>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Directive</th>\n                            <th>Execution Trigger</th>\n                            <th>Typical Use Case</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>on start:</code></td>\n                            <td>Fires immediately after main script initialization.</td>\n                            <td>Bootstrapping services, loading configurations, spawning workers.</td>\n                        </tr>\n                        <tr>\n                            <td><code>on exit:</code></td>\n                            <td>Fires during runtime shutdown after event queue drains.</td>\n                            <td>Flushing logs, closing sockets, finalizing database transactions.</td>\n                        </tr>\n                        <tr>\n                            <td><code>on interval &lt;ms&gt;:</code></td>\n                            <td>Fires periodically every N milliseconds.</td>\n                            <td>Heartbeat monitors, metric polling, cache invalidation.</td>\n                        </tr>\n                        <tr>\n                            <td><code>on timeout &lt;ms&gt;:</code></td>\n                            <td>Fires once after a specified delay in milliseconds.</td>\n                            <td>Graceful timeout aborts, delayed telemetry triggers.</td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>State-Driven Reactive Triggers (<code>when &lt;condition&gt;:</code>)</h2>\n            <p>The <code>when</code> directive establishes a reactive watcher that automatically fires its block the instant its condition transitions to true:</p>\n            <pre><code class=\"language-verscript\">set temperature: 75\n\nwhen temperature > 100:\n  display \"ALERT: Temperature exceeded critical threshold!\" ?color=#ff5555\n\n! When temperature rises, the handler fires reactively\nset temperature: 105</code></pre>\n\n            <h2>Custom Event Broadcasting (<code>emit</code>)</h2>\n            <p>Routines can emit custom event payloads to decoupled subscribers across the entire application:</p>\n            <pre><code class=\"language-verscript\">on order_placed:\n  display \"Order Received: processing shipment\" ?color=#50fa7b\n\n! Trigger the custom event\nemit \"order_placed\", 4001</code></pre>\n    ",
+    "id": "ch32-lifecycle-instantiation",
+    "number": 32,
+    "section": "Section 8: Object-Oriented Programming",
+    "subsection": "Entities & Classes",
+    "title": "Entity Lifecycles & Instantiation",
+    "category": "OOP",
+    "readTime": "4 min read",
+    "summary": "Create instances of classes, bind methods to data, and inspect object structures at runtime.",
+    "body": "\n      <h2>Bringing Blueprints to Life</h2>\n      <p>When you call <code>MyClass()</code>, the engine allocates a fresh entity in memory, binds all dynamic routines to it, and gives you back a fully formed instance.</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch32_1",
-        "title": "reactive_events.vrs",
-        "code": "! Reactive System Events\non start:\n    display \"[SYSTEM] Service started successfully.\" ?color=#22c55e\n\nset cpu_load: 45\n\nwhen cpu_load > 80:\n    display \"[ALERT] CPU load critical: \" + cpu_load ?color=#ef4444\n\non order_complete:\n    display \"[EVENT] Order finalized cleanly.\" ?color=#38bdf8\n\nemit \"order_complete\", 501\nset cpu_load: 92\n\non exit:\n    display \"[SYSTEM] Safe shutdown complete.\" ?color=#a855f7"
+        "title": "instantiation.vrs",
+        "code": "class Player\n  dynamic:\n    def func info name score\n      reply \"Player \" + name + \" has \" + score + \" points.\"\n\nset p1: Player()\ndisplay p1.info(\"Luna\", 450) ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_32_1",
-        "title": "Exercise 32.1: Lifecycle and Custom Events",
-        "prompt": "Register an <code>on start:</code> block displaying <code>'Booting'</code>, an <code>on ping:</code> block displaying <code>'PONG'</code>, and emit the <code>'ping'</code> event.",
-        "starterCode": "! TODO: Setup on start, on ping, and emit ping\n",
-        "hint": "Use `on start: display 'Booting'`, `on ping: display 'PONG'`, and `emit 'ping', 0`.",
-        "solution": "on start:\n    display \"Booting\"\non ping:\n    display \"PONG\"\nemit \"ping\", 0",
+        "id": "ex_ch32_1",
+        "title": "Challenge 32: Player Setup",
+        "prompt": "Create an instance <code>p: Player()</code> from the code block and call <code>p.info(\"Sol\", 500)</code>.",
+        "starterCode": "class Player\n  dynamic:\n    def func info name score\n      reply \"Player \" + name + \" has \" + score + \" points.\"\n! TODO: Instantiate and display info\n",
+        "hint": "set p: Player()\ndisplay p.info(\"Sol\", 500)",
+        "solution": "class Player\n  dynamic:\n    def func info name score\n      reply \"Player \" + name + \" has \" + score + \" points.\"\nset p: Player()\ndisplay p.info(\"Sol\", 500)",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch33-asynchronous-routines",
-    "number": 36,
-    "section": "Section 11: Asynchronous & Event-Driven Systems",
-    "title": "Asynchronous Routines & Synchronous Unwrapping",
-    "category": "Concurrency",
-    "readTime": "8 min read",
-    "summary": "Execute non-blocking background routines with async func and async method, handle AsyncHandle entities, and synchronously resolve results with sync.",
-    "body": "\n            <h2>Asynchronous Procedures &amp; Futures</h2>\n            <p>In high-throughput services, compute-heavy or network-bound tasks must not block the primary thread of execution. VerScript provides first-class support for asynchronous routines declared with <code>async func</code> and <code>async method</code>.</p>\n\n            <h2>Async Routine Invocation</h2>\n            <p>Invoking an asynchronous function immediately returns an <code>AsyncHandle</code> entity without blocking execution:</p>\n            <pre><code class=\"language-verscript\">async func fetchRemoteTelemetry sensorId\n  ! Simulates non-blocking background computation\n  set reading: sensorId * 15 + 42\n  reply reading\n\n! handle holds the running future\nset handle: fetchRemoteTelemetry(101)\ndisplay \"Task spawned in background: \" + handle ?color=#38bdf8</code></pre>\n\n            <h2>Synchronous Resolution with <code>sync</code></h2>\n            <p>When the calling code requires the computation result, the <code>sync</code> keyword awaits completion, unwraps the payload, and returns the result directly into an expression:</p>\n            <pre><code class=\"language-verscript\">set result: sync handle\ndisplay \"Telemetry Result: \" + result ?color=#22c55e</code></pre>\n\n            <h2>Async Methods on Entities</h2>\n            <p>Classes and entities can also define asynchronous methods that mutate internal entity state asynchronously:</p>\n            <pre><code class=\"language-verscript\">class Worker\n  dynamic:\n    processedTasks: 0\n\n  async method processBatch count\n    set processedTasks: processedTasks + count</code></pre>\n    ",
+    "id": "ch33-meta-blocks",
+    "number": 33,
+    "section": "Section 8: Object-Oriented Programming",
+    "subsection": "Entities & Classes",
+    "title": "Metaprogramming & Internal 'meta'",
+    "category": "OOP",
+    "readTime": "4 min read",
+    "summary": "Encapsulate private secrets, encryption keys, and internal state safely inside protected meta blocks.",
+    "body": "\n      <h2>Guarding Private Implementation Details</h2>\n      <p>Some data should never be exposed to outside code: API master keys, database passwords, or internal state machines. VerScript includes an internal <code>meta</code> partition that can ONLY be accessed from within the class itself!</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch33_1",
-        "title": "async_execution.vrs",
-        "code": "! Asynchronous Functions and Synchronization\nasync func computeHash payload\n    set val: payload * 7 + 13\n    reply val\n\ndisplay \"Initiating background async computation...\" ?color=#38bdf8\nset handle: computeHash(50)\ndisplay \"Handle received: \" + handle ?color=#eab308\n\n! Synchronize and resolve the outcome\nset outcome: sync handle\ndisplay \"Synchronized Result: \" + outcome ?color=#22c55e"
+        "title": "meta_vault.vrs",
+        "code": "lib Vault\n  meta:\n    static:\n      masterKey: \"secret_9981\"\n  dynamic:\n    def func unlock key\n      if key = meta.static.masterKey then\n        reply \"Access Granted\"\n      else\n        reply \"Forbidden\"\n\ndisplay Vault.unlock(\"secret_9981\") ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_33_1",
-        "title": "Exercise 33.1: Asynchronous Computation",
-        "prompt": "Define an asynchronous function <code>async func calcValue x</code> that returns <code>x * 10</code>. Call it with <code>5</code>, store the handle, and synchronize the result with <code>sync</code> to display it.",
-        "starterCode": "! TODO: Define async func and sync its handle\n",
-        "hint": "Use `async func calcValue x: reply x * 10`, `set h: calcValue(5)`, and `display sync h`.",
-        "solution": "async func calcValue x\n    reply x * 10\n\nset h: calcValue(5)\ndisplay sync h",
+        "id": "ex_ch33_1",
+        "title": "Challenge 33: Secure Vault Test",
+        "prompt": "Call <code>v.unlock(\"wrong_key\")</code> on the Vault instance and display the result.",
+        "starterCode": "class Vault\n  meta:\n    static MASTER_KEY: \"secret_9981\"\n  dynamic:\n    def func unlock key\n      if key = Vault.meta.MASTER_KEY then\n        reply \"Access Granted\"\n      else\n        reply \"Forbidden\"\nset v: Vault()\n! Unlock with wrong key\n",
+        "hint": "display v.unlock(\"wrong_key\")",
+        "solution": "class Vault\n  meta:\n    static MASTER_KEY: \"secret_9981\"\n  dynamic:\n    def func unlock key\n      if key = Vault.meta.MASTER_KEY then\n        reply \"Access Granted\"\n      else\n        reply \"Forbidden\"\nset v: Vault()\ndisplay v.unlock(\"wrong_key\")",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch34-concurrency-channels",
-    "number": 37,
-    "section": "Section 11: Asynchronous & Event-Driven Systems",
-    "title": "Concurrency Primitives: High-Throughput FIFO Channels",
-    "category": "Concurrency",
-    "readTime": "8 min read",
-    "summary": "Implement thread-safe, lockless inter-routine communication with first-class FIFO channels using chan, send, and recv.",
-    "body": "\n            <h2>Message-Passing Concurrency via Channels</h2>\n            <p>Rather than sharing mutable state across concurrent routines with complex mutex locks, VerScript embraces the CSP (Communicating Sequential Processes) paradigm: <em>Do not communicate by sharing memory; instead, share memory by communicating</em>.</p>\n\n            <h2>Channel Primitives</h2>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Keyword</th>\n                            <th>Syntax</th>\n                            <th>Description</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>chan</code></td>\n                            <td><code>chan &lt;channel_name&gt;</code></td>\n                            <td>Allocates a new FIFO message-passing queue.</td>\n                        </tr>\n                        <tr>\n                            <td><code>send</code></td>\n                            <td><code>send &lt;channel_name&gt;, &lt;val&gt;</code></td>\n                            <td>Pushes a value into the channel's queue.</td>\n                        </tr>\n                        <tr>\n                            <td><code>recv</code></td>\n                            <td><code>recv &lt;channel_name&gt;</code></td>\n                            <td>Pulls the next available value from the channel. Throws <code>ChannelError</code> if empty.</td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Producer-Consumer Architecture</h2>\n            <pre><code class=\"language-verscript\">chan task_queue\n\n! Producer pushes work items\nsend task_queue, \"PARSE_METRICS\"\nsend task_queue, \"OPTIMIZE_INDEX\"\n\n! Consumer pulls items in strict FIFO order\nset item1: recv task_queue\nset item2: recv task_queue\n\ndisplay \"Consumed: \" + item1 ?color=#38bdf8\ndisplay \"Consumed: \" + item2 ?color=#50fa7b</code></pre>\n\n            <h2>Channel Exhaustion Safety</h2>\n            <p>Attempting to receive from an empty channel safely raises a catchable <code>ChannelError</code>:</p>\n            <pre><code class=\"language-verscript\">do\n  set item: recv task_queue\nunless ChannelError\n  display \"Queue exhausted: all tasks completed\" ?color=#f1fa8c</code></pre>\n    ",
+    "id": "ch34-do-unless",
+    "number": 34,
+    "section": "Section 9: Error Handling & Diagnostics",
+    "subsection": "Resilient Code",
+    "title": "Try-Unless Error Guarding",
+    "category": "Error Handling",
+    "readTime": "4 min read",
+    "summary": "Gracefully catch errors and provide fallback answers using 'do ... unless err' blocks.",
+    "body": "\n      <h2>Handling Errors Gracefully</h2>\n      <p>When reading a missing file or dividing by zero, unhandled errors crash programs. The <code>do ... unless err</code> block allows you to attempt risky work and safely catch failures:</p>\n      <pre><code>do\n  set res: 100 / divisor\nunless err\n  display \"Cannot divide by zero: \" + err ?color=red</code></pre>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch34_1",
-        "title": "fifo_channels.vrs",
-        "code": "! FIFO Channels in Action\nchan job_channel\n\n! Producer\nsend job_channel, \"TASK_INGEST\"\nsend job_channel, \"TASK_TRANSFORM\"\nsend job_channel, \"TASK_DISPATCH\"\n\n! Consumer\ndisplay \"Job 1: \" + (recv job_channel) ?color=#38bdf8\ndisplay \"Job 2: \" + (recv job_channel) ?color=#22c55e\ndisplay \"Job 3: \" + (recv job_channel) ?color=#eab308\n\n! Attempt recv from empty channel\ndo\n    set empty_val: recv job_channel\nunless ChannelError\n    display \"Channel cleanly empty, consumer safe!\" ?color=#a855f7"
+        "title": "do_unless_demo.vrs",
+        "code": "set divisor: 0\ndo\n  set answer: 50 / divisor\n  display \"Answer: \" + answer\nunless DivisionByZeroError\n  display \"Safely caught DivisionByZeroError!\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_34_1",
-        "title": "Exercise 34.1: Message Passing with Channels",
-        "prompt": "Create a channel <code>chan pipe</code>, send the numbers <code>100</code> and <code>200</code> into it, and display their sum by receiving both values.",
-        "starterCode": "! TODO: Setup channel, send two numbers, and display sum\n",
-        "hint": "Use `chan pipe`, `send pipe, 100`, `send pipe, 200`, and `display (recv pipe) + (recv pipe)`.",
-        "solution": "chan pipe\nsend pipe, 100\nsend pipe, 200\ndisplay (recv pipe) + (recv pipe)",
+        "id": "ex_ch34_1",
+        "title": "Challenge 34: Safe Division",
+        "prompt": "Wrap <code>set x: 10 / 0</code> in <code>do ... unless err</code> and display <code>\"Recovered\"</code> in green.",
+        "starterCode": "! Wrap 10 / 0 in do .. unless err\n",
+        "hint": "do\n  set x: 10 / 0\nunless err\n  display \"Recovered\" ?color=green",
+        "solution": "do\n  set x: 10 / 0\nunless err\n  display \"Recovered\" ?color=green",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-json",
+    "id": "ch35-error-scopes",
+    "number": 35,
+    "section": "Section 9: Error Handling & Diagnostics",
+    "subsection": "Resilient Code",
+    "title": "Error Scopes & Suppression Tiers",
+    "category": "Error Handling",
+    "readTime": "4 min read",
+    "summary": "Control diagnostic strictness across four tiers: ForceErrors, SuppressErrors, CriticalErrors, and scoped suppression.",
+    "body": "\n      <h2>Tailoring Error Behavior</h2>\n      <p>During automated testing or production telemetry, you might want to suppress non-fatal warnings while keeping critical memory errors active. VerScript provides four distinct tiers:</p>\n      <ul>\n        <li><code>ForceErrors</code>: Maximum strictness. All errors immediately halt.</li>\n        <li><code>CriticalErrors</code>: Only fatal system and syntax errors halt execution.</li>\n        <li><code>SuppressErrors</code>: Non-critical errors are silenced.</li>\n        <li><code>suppress: high</code>: Scoped suppression for a specific block of code.</li>\n      </ul>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch35_1",
+        "title": "suppression_demo.vrs",
+        "code": "CriticalErrors\n! Non-critical errors will be suppressed\nset unknown: 10\ndisplay \"System continuing smoothly.\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch35_1",
+        "title": "Challenge 35: Set Error Mode",
+        "prompt": "Activate <code>CriticalErrors</code> and display <code>\"Strict mode active\"</code> in green.",
+        "starterCode": "! Set CriticalErrors and display message\n",
+        "hint": "CriticalErrors\ndisplay \"Strict mode active\" ?color=green",
+        "solution": "CriticalErrors\ndisplay \"Strict mode active\" ?color=green",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch36-error-directory",
+    "number": 36,
+    "section": "Section 9: Error Handling & Diagnostics",
+    "subsection": "Resilient Code",
+    "title": "The Complete Error Directory",
+    "category": "Error Handling",
+    "readTime": "5 min read",
+    "summary": "Complete reference matrix of all 28 VerScript runtime errors, including OperationError, syntax codes, and criticality rankings.",
+    "body": "\n      <h2>The Error Directory & Criticality Matrix</h2>\n      <p>Every runtime error in VerScript has a clear, descriptive name and criticality ranking (1-10):</p>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Error Name</th><th>Points (1-10)</th><th>Typical Cause</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>OperationError</code></td><td>5 / Moderate</td><td>Inconsistent dimensions for matrix or vector arithmetic (+, -, *).</td></tr>\n          <tr><td><code>DivisionByZeroError</code></td><td>4 / Moderate</td><td>Dividing or modding by zero (e.g. <code>10 / 0</code>).</td></tr>\n          <tr><td><code>DataTypeError</code></td><td>6 / High</td><td>Assigning an incompatible value to a type-constrained variable.</td></tr>\n          <tr><td><code>UndefinedVariableError</code></td><td>3 / Low</td><td>Reading a variable that has not been declared.</td></tr>\n          <tr><td><code>SyntaxError</code></td><td>8 / High</td><td>Malformed expression or missing required keyword.</td></tr>\n          <tr><td><code>MemoryAllocationError</code></td><td>10 / Fatal</td><td>Out of native memory or allocator failure.</td></tr>\n        </tbody>\n      </table>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch36_1",
+        "title": "error_inspect.vrs",
+        "code": "do\n  ! Intentional dimension mismatch: 2D matrix * 3D vector\n  set m: [[1, 2], [3, 4]]\n  set v: [1, 2, 3]\n  set bad: m * v\nunless OperationError\n  display \"Intercepted OperationError!\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch36_1",
+        "title": "Challenge 36: Catch OperationError",
+        "prompt": "Catch an <code>OperationError</code> from <code>[1, 2] + [1, 2, 3]</code> inside <code>do ... unless err</code> and display <code>\"Caught: \" + err</code>.",
+        "starterCode": "! Catch OperationError\n",
+        "hint": "do\n  set x: [1, 2] + [1, 2, 3]\nunless err\n  display \"Caught: \" + err",
+        "solution": "do\n  set x: [1, 2] + [1, 2, 3]\nunless err\n  display \"Caught: \" + err",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch37-libraries",
+    "number": 37,
+    "section": "Section 10: Modules, Headers & Polyglot Engine",
+    "subsection": "Architecture & Extensibility",
+    "title": "Libraries (.lib.vrs) & Distribution",
+    "category": "Modular Architecture",
+    "readTime": "4 min read",
+    "summary": "Package reusable modules into .lib.vrs files, use 'load Lib', and understand zero-dependency distribution.",
+    "body": "\n      <h2>Sharing Code with Libraries</h2>\n      <p>A library in VerScript is defined with <code>lib Name ...</code> inside a file named <code>Name.lib.vrs</code>. When you want to use it in any other file, just write <code>load Name</code>!</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch37_1",
+        "title": "library_user.vrs",
+        "code": "load Math\ndisplay \"Math.sqrt(144) = \" + Math.sqrt(144) ?color=cyan"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch37_1",
+        "title": "Challenge 37: Load and Use a Library",
+        "prompt": "Load <code>Math</code> and display <code>Math.gcd(24, 36)</code>.",
+        "starterCode": "! Load Math and display gcd\n",
+        "hint": "load Math\ndisplay Math.gcd(24, 36)",
+        "solution": "load Math\ndisplay Math.gcd(24, 36)",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch38-headers",
     "number": 38,
-    "section": "Section 12: Native Data Processing & Security",
-    "title": "Native Json: Serialization, Parsing & Schema Verification",
-    "category": "Data Processing",
+    "section": "Section 10: Modules, Headers & Polyglot Engine",
+    "subsection": "Architecture & Extensibility",
+    "title": "VerScript Headers (.h.vrs)",
+    "category": "Modular Architecture",
     "readTime": "5 min read",
-    "summary": "Comprehensive guide to native Json serialization, parsing, and syntax validation.",
-    "body": "\n    <h2>The Native Json Module</h2>\n    <p>VerScript includes high-throughput JSON processing directly in the runtime. The <code>Json</code> library supports serialization of primitives and arrays, string unescaping, and structure verification without external dependencies.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Json.stringify(data)</code></td><td><code>any data</code></td><td><code>str</code></td><td>Serializes numbers, booleans, strings, and arrays into standard JSON.</td></tr>\n        <tr><td><code>Json.parse(jsonStr)</code></td><td><code>str jsonStr</code></td><td><code>str</code></td><td>Trims and unpacks formatted JSON payloads.</td></tr>\n        <tr><td><code>Json.isValid(jsonStr)</code></td><td><code>str jsonStr</code></td><td><code>bool</code></td><td>Validates whether a string has balanced JSON bracket envelopes.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "summary": "Separate interface declarations from implementations using .h.vrs header files. Test with dual-file interactive editors!",
+    "body": "\n      <h2>Separating Interfaces from Implementation</h2>\n      <p>Just like in professional C and C++ projects, VerScript allows you to declare functions, types, and constants in a <strong>header file</strong> (<code>.h.vrs</code>), keeping your main application file clean and focused on high-level logic!</p>\n\n      <h2>Interactive Dual-File Sandbox</h2>\n      <p>Use the tabs in the code sandbox below to switch between <code>geometry.h.vrs</code> and <code>main.vrs</code> and run both files together!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_json_1",
-        "title": "json_demo.vrs",
-        "code": "display \"=== Native Json Module ===\" ?color=#38bdf8\nset payload: Json.stringify([\"Telemetry\", 1024, true])\ndisplay \"Serialized: \" + payload\ndisplay \"Is Valid: \" + (Json.isValid(payload))"
+        "id": "cb_ch38_1",
+        "title": "dual_file_project",
+        "files": [
+          {
+            "name": "tests/geometry.h.vrs",
+            "code": "header Geometry\n  def func areaSquare side\n  def func areaRect w h"
+          },
+          {
+            "name": "main.vrs",
+            "code": "include \"tests/app_config.h.vrs\"\n\ndisplay \"Config Header Version: \" + APP_VERSION ?color=green\ndisplay \"Max Retries: \" + MAX_RETRIES ?color=cyan"
+          }
+        ]
       }
     ],
     "exercises": [
       {
-        "id": "ex_json_1",
-        "title": "Exercise: JSON Payload Serialization",
-        "prompt": "Serialize an array containing <code>[10, 20, 30]</code> using <code>Json.stringify</code> and display the serialized string.",
-        "starterCode": "! Serialize array to JSON\n",
-        "solution": "set items: [10, 20, 30]\ndisplay Json.stringify(items)",
-        "expectedMatch": {},
-        "hint": "Use Json.stringify([10, 20, 30])."
+        "id": "ex_ch38_1",
+        "title": "Challenge 38: Multi-File Header Project",
+        "prompt": "In <code>calc.h.vrs</code> declare <code>header Calc def func cube n</code>. In <code>main.vrs</code> implement <code>Calc.cube</code> as <code>n * n * n</code> and display <code>Calc.cube(3)</code>.",
+        "starterFiles": [
+          {
+            "name": "calc.h.vrs",
+            "code": "header Calc\n  def func cube n"
+          },
+          {
+            "name": "main.vrs",
+            "code": "load Calc\ndef func Calc.cube n reply n * n * n\n! TODO: Display Calc.cube(3)\n"
+          }
+        ],
+        "hint": "display Calc.cube(3)",
+        "solution": "display Calc.cube(3)",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-crypto",
+    "id": "ch39-namespaces",
     "number": 39,
-    "section": "Section 12: Native Data Processing & Security",
-    "title": "Native Crypto: SHA-256, MD5 & Base64 Encodings",
-    "category": "Security & Cryptography",
-    "readTime": "5 min read",
-    "summary": "Comprehensive guide to native cryptographic hash generation, checksums, and Base64 stream encodings.",
-    "body": "\n    <h2>The Native Crypto Module</h2>\n    <p>VerScript includes cryptographic utilities for tamper-proofing messages, generating deterministic message digests, and encoding binary buffers.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Crypto.sha256(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Generates a deterministic 256-bit hexadecimal digest of the input text.</td></tr>\n        <tr><td><code>Crypto.md5(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Generates a 128-bit MD5 hex checksum.</td></tr>\n        <tr><td><code>Crypto.base64Encode(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Encodes text into ASCII Base64 format.</td></tr>\n        <tr><td><code>Crypto.base64Decode(text)</code></td><td><code>str text</code></td><td><code>str</code></td><td>Decodes a Base64 string back to plaintext.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 10: Modules, Headers & Polyglot Engine",
+    "subsection": "Architecture & Extensibility",
+    "title": "Library Namespaces & Aliasing",
+    "category": "Modular Architecture",
+    "readTime": "3 min read",
+    "summary": "Prevent naming collisions by importing libraries under custom aliases using 'load Lib as L'.",
+    "body": "\n      <h2>Renaming Libraries with 'as'</h2>\n      <p>If two libraries have a function with the same name, or if you simply want a shorter name to type, use <code>load Library as Alias</code>:</p>\n      <pre><code>load Matrix as M\nset id: M.identity(3)</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_crypto_1",
-        "title": "crypto_demo.vrs",
-        "code": "display \"=== Native Crypto Module ===\" ?color=#38bdf8\ndisplay \"SHA256 Token: \" + (Crypto.sha256(\"auth_secret_token\"))\ndisplay \"MD5 Checksum: \" + (Crypto.md5(\"packet_payload\"))\ndisplay \"Base64 Encoded: \" + (Crypto.base64Encode(\"VerScript\"))"
+        "id": "cb_ch39_1",
+        "title": "alias_import.vrs",
+        "code": "load Matrix as M\nset grid: M.identity(2)\ndisplay \"2x2 Identity via alias M: \" + grid ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_crypto_1",
-        "title": "Exercise: Cryptographic Verification",
-        "prompt": "Encode <code>'security'</code> using <code>Crypto.base64Encode</code> and display the encoded token.",
-        "starterCode": "! Base64 encode string\n",
-        "solution": "display Crypto.base64Encode(\"security\")",
-        "expectedMatch": {},
-        "hint": "Call Crypto.base64Encode(\"security\")."
+        "id": "ex_ch39_1",
+        "title": "Challenge 39: Load as Alias",
+        "prompt": "Load <code>Vector as V</code>, call <code>V.zeros(3)</code>, and display the result.",
+        "starterCode": "! Load Vector as V and display V.zeros(3)\n",
+        "hint": "load Vector as V\ndisplay V.zeros(3)",
+        "solution": "load Vector as V\ndisplay V.zeros(3)",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-regex",
+    "id": "ch40-inject",
     "number": 40,
-    "section": "Section 12: Native Data Processing & Security",
-    "title": "Native Regex: Regular Expressions & Pattern Substitution",
-    "category": "Data Processing",
-    "readTime": "5 min read",
-    "summary": "Comprehensive reference for the native Regex pattern matching, test verification, and substitution routines.",
-    "body": "\n    <h2>The Native Regex Module</h2>\n    <p>VerScript incorporates an embedded regular expression engine for text validation, substring extraction, and global token replacement.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Regex.test(pattern, text)</code></td><td><code>str, str</code></td><td><code>bool</code></td><td>Returns true if text matches pattern.</td></tr>\n        <tr><td><code>Regex.match(pattern, text)</code></td><td><code>str, str</code></td><td><code>str</code></td><td>Extracts first matching substring or empty string.</td></tr>\n        <tr><td><code>Regex.replaceAll(pattern, text, repl)</code></td><td><code>str, str, str</code></td><td><code>str</code></td><td>Substitutes every occurrence of pattern in text with repl.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 10: Modules, Headers & Polyglot Engine",
+    "subsection": "Architecture & Extensibility",
+    "title": "Polyglot Code Injection",
+    "category": "Modular Architecture",
+    "readTime": "4 min read",
+    "summary": "Embed foreign code from 100+ languages directly inside your VerScript programs using 'inject'.",
+    "body": "\n      <h2>True Polyglot Power</h2>\n      <p>Sometimes you need an existing algorithm written in Python, C, or JavaScript. VerScript allows you to seamlessly inject foreign language blocks:</p>\n      <pre><code>inject python\n  print(\"Executed via embedded Python interpreter!\")</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_regex_1",
-        "title": "regex_demo.vrs",
-        "code": "display \"=== Native Regex Module ===\" ?color=#38bdf8\nset text: \"The quick brown fox jumps over the lazy dog\"\nset updated: Regex.replaceAll(\"brown\", text, \"crimson\")\ndisplay \"Updated: \" + updated\ndisplay \"Has fox: \" + (Regex.test(\"fox\", updated))"
+        "id": "cb_ch40_1",
+        "title": "inject_demo.vrs",
+        "code": "inject python\n  print(\"Python runtime active inside VerScript.\")\n\ndisplay \"VerScript execution resumed.\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_regex_1",
-        "title": "Exercise: String Replacement",
-        "prompt": "Use <code>Regex.replaceAll</code> to replace all occurrences of <code>'fail'</code> with <code>'pass'</code> in the string <code>'test_fail_status_fail'</code> and display the result.",
-        "starterCode": "! Replace fail with pass\n",
-        "solution": "set s: \"test_fail_status_fail\"\ndisplay Regex.replaceAll(\"fail\", s, \"pass\")",
-        "expectedMatch": {},
-        "hint": "Use Regex.replaceAll(\"fail\", s, \"pass\")."
+        "id": "ex_ch40_1",
+        "title": "Challenge 40: Inject a Python Print",
+        "prompt": "Use <code>inject python</code> to print <code>\"Polyglot Ready\"</code>, followed by display <code>\"Done\"</code> in green.",
+        "starterCode": "! Inject python print\n",
+        "hint": "inject python\n  print(\"Polyglot Ready\")\ndisplay \"Done\" ?color=green",
+        "solution": "inject python\n  print(\"Polyglot Ready\")\ndisplay \"Done\" ?color=green",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-stats",
+    "id": "ch41-alias-remapping",
     "number": 41,
-    "section": "Section 12: Native Data Processing & Security",
-    "title": "Native Stats: Descriptive Statistics & Variance Engine",
-    "category": "Data Processing",
-    "readTime": "5 min read",
-    "summary": "Compute sums, arithmetic means, ranges, and statistical variances on numerical datasets.",
-    "body": "\n    <h2>The Native Stats Module</h2>\n    <p>VerScript's <code>Stats</code> module provides essential statistical calculations for telemetry, data analysis, and mathematical modeling.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Stats.sum(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes the total sum of numerical elements.</td></tr>\n        <tr><td><code>Stats.mean(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes integer arithmetic mean (average).</td></tr>\n        <tr><td><code>Stats.range(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Difference between maximum and minimum values.</td></tr>\n        <tr><td><code>Stats.variance(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Computes population variance of the dataset.</td></tr>\n        <tr><td><code>Stats.stdDev(values)</code></td><td><code>arr values</code></td><td><code>int</code></td><td>Standard deviation (integer root of variance).</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 10: Modules, Headers & Polyglot Engine",
+    "subsection": "Architecture & Extensibility",
+    "title": "Command Aliasing & Custom Syntax",
+    "category": "Modular Architecture",
+    "readTime": "3 min read",
+    "summary": "Create custom language keywords and localized synonyms using 'alias: say: display'.",
+    "body": "\n      <h2>Customize Your Vocabulary</h2>\n      <p>VerScript lets you remap command keywords to match your native language or coding habits:</p>\n      <pre><code>alias: say: display\nsay \"Hello from custom keyword!\" ?color=cyan</code></pre>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_stats_1",
-        "title": "stats_demo.vrs",
-        "code": "display \"=== Native Stats Module ===\" ?color=#38bdf8\nset samples: [10, 20, 30, 40, 50]\ndisplay \"Sum: \" + (Stats.sum(samples))\ndisplay \"Mean: \" + (Stats.mean(samples))\ndisplay \"Range: \" + (Stats.range(samples))"
+        "id": "cb_ch41_1",
+        "title": "alias_demo.vrs",
+        "code": "alias display: print\nprint \"Custom alias 'print' operational.\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_stats_1",
-        "title": "Exercise: Metric Averages",
-        "prompt": "Compute and display the arithmetic mean of the scores <code>[80, 90, 100]</code> using <code>Stats.mean</code>.",
-        "starterCode": "! Compute mean of scores\n",
-        "solution": "set scores: [80, 90, 100]\ndisplay Stats.mean(scores)",
-        "expectedMatch": {},
-        "hint": "(80 + 90 + 100) / 3 = 90."
+        "id": "ex_ch41_1",
+        "title": "Challenge 41: Create an Alias",
+        "prompt": "Create <code>alias: log: display</code>, then use <code>log \"Active\"</code>.",
+        "starterCode": "! Create log alias and output Active\n",
+        "hint": "alias: log: display\nlog \"Active\"",
+        "solution": "alias: log: display\nlog \"Active\"",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-validate",
+    "id": "ch42-reactive-events",
     "number": 42,
-    "section": "Section 12: Native Data Processing & Security",
-    "title": "Native Validate: Domain Rules & Input Sanitization",
-    "category": "Data Processing",
-    "readTime": "5 min read",
-    "summary": "Comprehensive guide to native structural validators for email addresses, URLs, and bounded numeric ranges.",
-    "body": "\n    <h2>The Native Validate Module</h2>\n    <p>VerScript's <code>Validate</code> module enforces domain validation contracts on user inputs and network payloads.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Validate.isEmail(text)</code></td><td><code>str text</code></td><td><code>bool</code></td><td>Validates whether text matches standard email structure.</td></tr>\n        <tr><td><code>Validate.isUrl(text)</code></td><td><code>str text</code></td><td><code>bool</code></td><td>Validates if string begins with http:// or https://.</td></tr>\n        <tr><td><code>Validate.inRange(val, lower, upper)</code></td><td><code>int, int, int</code></td><td><code>bool</code></td><td>Validates if val is inclusively within lower and upper bounds.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "subsection": "Concurrency & Events",
+    "title": "Reactive Event Architecture",
+    "category": "Asynchronous",
+    "readTime": "4 min read",
+    "summary": "Emit and listen for system events with 'event', 'emit', and 'on' for reactive decoupled programming.",
+    "body": "\n      <h2>Decoupled Communication with Events</h2>\n      <p>Instead of components calling each other directly, they can broadcast <strong>events</strong>. Other parts of the system listen and react when the event fires!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_validate_1",
-        "title": "validate_demo.vrs",
-        "code": "display \"=== Native Validate Module ===\" ?color=#38bdf8\ndisplay \"Valid Email: \" + (Validate.isEmail(\"dev@verscript.org\"))\ndisplay \"Valid URL: \" + (Validate.isUrl(\"https://verscript.org\"))\ndisplay \"Score in Range: \" + (Validate.inRange(75, 1, 100))"
+        "id": "cb_ch42_1",
+        "title": "events_demo.vrs",
+        "code": "on \"sensor:trigger\" do\n  display \"Alarm sounding! Movement detected.\" ?color=red\n\ndisplay \"Armed. Emitting test event:\"\nemit \"sensor:trigger\""
       }
     ],
     "exercises": [
       {
-        "id": "ex_validate_1",
-        "title": "Exercise: Range Guard",
-        "prompt": "Verify if value <code>42</code> is between <code>0</code> and <code>100</code> with <code>Validate.inRange</code> and display the boolean result.",
-        "starterCode": "! Verify value in range\n",
-        "solution": "display Validate.inRange(42, 0, 100)",
-        "expectedMatch": {},
-        "hint": "Validate.inRange(42, 0, 100) returns true."
+        "id": "ex_ch42_1",
+        "title": "Challenge 42: Emit an Event",
+        "prompt": "Listen for <code>\"ping\"</code> with <code>on \"ping\" do display \"pong\"</code>, then <code>emit \"ping\"</code>.",
+        "starterCode": "! Set up listener and emit ping\n",
+        "hint": "on \"ping\" do\n  display \"pong\"\nemit \"ping\"",
+        "solution": "on \"ping\" do\n  display \"pong\"\nemit \"ping\"",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-fs",
+    "id": "ch43-async-routines",
     "number": 43,
-    "section": "Section 13: Native System, Filesystem & Network",
-    "title": "Native Fs: High-Integrity Filesystem I/O",
-    "category": "System & Network",
-    "readTime": "5 min read",
-    "summary": "Inspect file existence, verify script extensions, and manage file streams with the native Fs module.",
-    "body": "\n    <h2>The Native Fs Module</h2>\n    <p>VerScript includes built-in filesystem inspection capabilities for validating file descriptors, path safety, and extension contracts.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Fs.exists(filePath)</code></td><td><code>str filePath</code></td><td><code>bool</code></td><td>Checks if a file exists on the local filesystem.</td></tr>\n        <tr><td><code>Fs.isVrsFile(filePath)</code></td><td><code>str filePath</code></td><td><code>bool</code></td><td>Checks if the given file has a <code>.vrs</code> extension.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "subsection": "Concurrency & Events",
+    "title": "Asynchronous Routines & Promises",
+    "category": "Asynchronous",
+    "readTime": "4 min read",
+    "summary": "Launch non-blocking tasks with 'async', track background handles, and await results using 'sync'.",
+    "body": "\n      <h2>Non-Blocking Background Tasks</h2>\n      <p>When fetching data from a server or computing a huge prime number, you don't want your whole interface to freeze. The <code>async</code> keyword launches tasks in the background, and <code>sync</code> waits for the final result when you need it.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_fs_1",
-        "title": "fs_demo.vrs",
-        "code": "display \"=== Native Fs Module ===\" ?color=#38bdf8\ndisplay \"Is VRS File: \" + (Fs.isVrsFile(\"main.vrs\"))\ndisplay \"Is Config VRS: \" + (Fs.isVrsFile(\"config.json\"))"
+        "id": "cb_ch43_1",
+        "title": "async_demo.vrs",
+        "code": "async func fetchScore\n  reply 100\n\non complete\n  display \"Background task complete!\" ?color=green\n\ndisplay \"Completed result: \" + (sync fetchScore()) ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_fs_1",
-        "title": "Exercise: Script Extension Guard",
-        "prompt": "Verify whether <code>'service_worker.vrs'</code> is a valid VerScript file using <code>Fs.isVrsFile</code> and display the result.",
-        "starterCode": "! Check VRS file extension\n",
-        "solution": "display Fs.isVrsFile(\"service_worker.vrs\")",
-        "expectedMatch": {},
-        "hint": "Use Fs.isVrsFile(\"service_worker.vrs\")."
+        "id": "ex_ch43_1",
+        "title": "Challenge 43: Async Execution",
+        "prompt": "Define <code>def func getVal reply 42</code>, launch it with <code>async getVal()</code>, unwrap with <code>sync</code>, and display the result.",
+        "starterCode": "! Define getVal and await with sync\n",
+        "hint": "def func getVal\n  reply 42\nset h: async getVal()\nset v: sync h\ndisplay v",
+        "solution": "def func getVal\n  reply 42\nset h: async getVal()\nset v: sync h\ndisplay v",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-path",
+    "id": "ch44-channels",
     "number": 44,
-    "section": "Section 13: Native System, Filesystem & Network",
-    "title": "Native Path: Cross-Platform Path Resolution",
-    "category": "System & Network",
-    "readTime": "5 min read",
-    "summary": "Resolve directories, join path segments, and extract file extensions across platforms.",
-    "body": "\n    <h2>The Native Path Module</h2>\n    <p>VerScript's <code>Path</code> module normalizes filesystem paths across Windows and POSIX systems with consistent path delimiter handling.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Path.join(dir, file)</code></td><td><code>str dir, str file</code></td><td><code>str</code></td><td>Concatenates directory and filename with forward slashes.</td></tr>\n        <tr><td><code>Path.extname(path)</code></td><td><code>str path</code></td><td><code>str</code></td><td>Extracts the extension (e.g., .vrs, .json) including leading period.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 11: Asynchronous & Event-Driven Systems",
+    "subsection": "Concurrency & Events",
+    "title": "High-Throughput Channels",
+    "category": "Asynchronous",
+    "readTime": "4 min read",
+    "summary": "Safely stream messages between concurrent threads and routines using FIFO ring-buffer channels (send & recv).",
+    "body": "\n      <h2>Safe Communication Pipelines</h2>\n      <p>When multiple routines run simultaneously, sharing memory can cause race conditions. <strong>Channels</strong> provide safe, queue-based pipes: one routine puts data into the pipe with <code>send</code>, and another pulls it out with <code>recv</code>!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_path_1",
-        "title": "path_demo.vrs",
-        "code": "display \"=== Native Path Module ===\" ?color=#38bdf8\nset full: Path.join(\"src\", \"engine.vrs\")\ndisplay \"Joined Path: \" + full\ndisplay \"Extension: \" + (Path.extname(full))"
+        "id": "cb_ch44_1",
+        "title": "channels_demo.vrs",
+        "code": "chan stream\nsend stream \"packet_alpha\"\nsend stream \"packet_beta\"\n\ndisplay \"Received: \" + (recv stream) ?color=cyan\ndisplay \"Received: \" + (recv stream) ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_path_1",
-        "title": "Exercise: Path Composition",
-        "prompt": "Join directory <code>'modules'</code> and file <code>'kernel.vrs'</code> using <code>Path.join</code> and display the result.",
-        "starterCode": "! Join path segments\n",
-        "solution": "display Path.join(\"modules\", \"kernel.vrs\")",
-        "expectedMatch": {},
-        "hint": "Use Path.join(\"modules\", \"kernel.vrs\")."
+        "id": "ex_ch44_1",
+        "title": "Challenge 44: Send and Receive",
+        "prompt": "Create <code>channel q</code>, send <code>100</code> into <code>q</code>, receive it, and display the received value.",
+        "starterCode": "! Create channel q, send 100, recv and display\n",
+        "hint": "channel q\nsend q 100\ndisplay recv q",
+        "solution": "channel q\nsend q 100\ndisplay recv q",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-env",
+    "id": "ch45-math-lib",
     "number": 45,
-    "section": "Section 13: Native System, Filesystem & Network",
-    "title": "Native Env: Environment Inspection & Runtime Flags",
-    "category": "System & Network",
-    "readTime": "5 min read",
-    "summary": "Inspect operating system environment variables, execution modes, and fallback configurations.",
-    "body": "\n    <h2>The Native Env Module</h2>\n    <p>The <code>Env</code> module interfaces with host process variables and environmental flags to adjust runtime behavior dynamically.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Env.isDevelopment()</code></td><td><code>none</code></td><td><code>bool</code></td><td>Returns true when running in development environment.</td></tr>\n        <tr><td><code>Env.isProduction()</code></td><td><code>none</code></td><td><code>bool</code></td><td>Returns true when running in production environment.</td></tr>\n        <tr><td><code>Env.get(key, defaultVal)</code></td><td><code>str key, str defaultVal</code></td><td><code>str</code></td><td>Retrieves environment key or returns defaultVal fallback.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 12: Numerics & Linear Algebra Ecosystem",
+    "subsection": "Mathematical Engines",
+    "title": "The Math Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Perform advanced mathematics including trigonometry, rounding, absolute values, square roots, and clamps with 'load Math'.",
+    "body": "\n      <h2>Beyond Basic Arithmetic</h2>\n      <p>While VerScript provides built-in operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>^</code>, scientific calculations require functions like sine, cosine, roots, and rounding. These live in the <code>Math</code> standard library.</p>\n      \n      <h2>Loading the Math Library</h2>\n      <p>Import the module at the top of your program with:</p>\n      <pre><code>load Math</code></pre>\n      <p>Now all mathematical utilities are available under the <code>Math</code> namespace!</p>\n\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Function</th><th>Description</th><th>Example</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>Math.abs(x)</code></td><td>Distance from zero (always positive)</td><td><code>Math.abs(-42) -> 42</code></td></tr>\n          <tr><td><code>Math.sqrt(x)</code></td><td>Square root of a number</td><td><code>Math.sqrt(64) -> 8</code></td></tr>\n          <tr><td><code>Math.clamp(val, min, max)</code></td><td>Constrains value within bounds</td><td><code>Math.clamp(120, 0, 100) -> 100</code></td></tr>\n          <tr><td><code>Math.gcd(a, b)</code></td><td>Greatest common divisor</td><td><code>Math.gcd(24, 36) -> 12</code></td></tr>\n          <tr><td><code>Math.lcm(a, b)</code></td><td>Least common multiple</td><td><code>Math.lcm(4, 6) -> 12</code></td></tr>\n        </tbody>\n      </table>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_env_1",
-        "title": "env_demo.vrs",
-        "code": "display \"=== Native Env Module ===\" ?color=#38bdf8\ndisplay \"Development Mode: \" + (Env.isDevelopment())\ndisplay \"Port: \" + (Env.get(\"PORT\", \"8080\"))"
+        "id": "cb_ch45_1",
+        "title": "math_demo.vrs",
+        "code": "load Math\n\nset root: Math.sqrt(81)\nset bounded: Math.clamp(150, 0, 100)\nset divisor: Math.gcd(48, 64)\n\ndisplay \"Square root of 81: \" + root ?color=green\ndisplay \"Clamped value: \" + bounded ?color=yellow\ndisplay \"GCD of 48 and 64: \" + divisor ?color=cyan"
       }
     ],
     "exercises": [
       {
-        "id": "ex_env_1",
-        "title": "Exercise: Safe Variable Retrieval",
-        "prompt": "Retrieve the environment key <code>'DATABASE_URL'</code> with fallback default <code>'localhost:5432'</code> using <code>Env.get</code> and display it.",
-        "starterCode": "! Retrieve env key with fallback\n",
-        "solution": "display Env.get(\"DATABASE_URL\", \"localhost:5432\")",
-        "expectedMatch": {},
-        "hint": "Use Env.get(\"DATABASE_URL\", \"localhost:5432\")."
+        "id": "ex_ch45_1",
+        "title": "Challenge 45: Hypotenuse Calculation",
+        "prompt": "Load <code>Math</code>, compute <code>Math.sqrt(3^2 + 4^2)</code>, and display the resulting hypotenuse.",
+        "starterCode": "! Load Math and calculate hypotenuse\n",
+        "hint": "load Math\nset hyp: Math.sqrt(9 + 16)\ndisplay hyp",
+        "solution": "load Math\nset hyp: Math.sqrt(9 + 16)\ndisplay hyp",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-time",
+    "id": "ch46-matrix-lib",
     "number": 46,
-    "section": "Section 13: Native System, Filesystem & Network",
-    "title": "Native Time: Epoch Timestamps & Execution Clocks",
-    "category": "System & Network",
-    "readTime": "5 min read",
-    "summary": "Query system timestamps, measure execution delta milliseconds, and determine leap years.",
-    "body": "\n    <h2>The Native Time Module</h2>\n    <p>VerScript's <code>Time</code> module provides high-precision epoch clocks and calendar calculation routines.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Time.now()</code></td><td><code>none</code></td><td><code>int</code></td><td>Returns current calendar year.</td></tr>\n        <tr><td><code>Time.epochMs()</code></td><td><code>none</code></td><td><code>int</code></td><td>Returns current UNIX epoch milliseconds timestamp.</td></tr>\n        <tr><td><code>Time.diffMs(startMs, endMs)</code></td><td><code>int start, int end</code></td><td><code>int</code></td><td>Calculates absolute elapsed millisecond delta.</td></tr>\n        <tr><td><code>Time.isLeapYear(year)</code></td><td><code>int year</code></td><td><code>bool</code></td><td>Determines if year is a Gregorian leap year.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 12: Numerics & Linear Algebra Ecosystem",
+    "subsection": "Mathematical Engines",
+    "title": "Arbitrary-Dimension Matrices & Determinants",
+    "category": "Standard Libraries",
+    "readTime": "6 min read",
+    "summary": "Construct and manipulate arbitrary M x N dimensional matrices, compute traces, transpositions, and arbitrary N x N determinants with 'load Matrix'.",
+    "body": "\n      <h2>Working with 2D Grids of Numbers</h2>\n      <p>A <strong>Matrix</strong> is a rectangular grid of numbers organized into rows and columns. In machine learning, graphics, and physics simulations, matrices represent coordinates, rotations, and linear transformations.</p>\n      \n      <h2>Creating Matrices</h2>\n      <p>Import the library with <code>load Matrix</code>. In VerScript, nested arrays are naturally matrices, or you can generate zero/identity matrices:</p>\n      <pre><code>load Matrix\nset A: [[4, 7], [2, 6]]\nset id: Matrix.identity(3) ! 3x3 identity matrix</code></pre>\n\n      <h2>Arbitrary N x N Determinant</h2>\n      <p>Computing whether a system has a unique solution requires the <strong>determinant</strong>. In VerScript, you don't need fixed-size functions: <code>Matrix.determinant(mat)</code> automatically handles any square $N \times N$ matrix using recursive cofactor expansion!</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_time_1",
-        "title": "time_demo.vrs",
-        "code": "display \"=== Native Time Module ===\" ?color=#38bdf8\ndisplay \"Current Year: \" + (Time.now())\ndisplay \"2024 Leap Year: \" + (Time.isLeapYear(2024))\ndisplay \"2025 Leap Year: \" + (Time.isLeapYear(2025))\ndisplay \"Elapsed Delta: \" + (Time.diffMs(1000, 1450))"
+        "id": "cb_ch46_1",
+        "title": "matrix_demo.vrs",
+        "code": "load Matrix\n\nset A: [[4, 7], [2, 6]]\nset detA: Matrix.determinant(A)\nset trA: Matrix.trace(A)\n\ndisplay \"Matrix A determinant: \" + detA ?color=green\ndisplay \"Matrix A trace: \" + trA ?color=cyan\ndisplay \"Rows count: \" + Matrix.rows(A) ?color=yellow"
       }
     ],
     "exercises": [
       {
-        "id": "ex_time_1",
-        "title": "Exercise: Calendar Leap Verification",
-        "prompt": "Check whether year <code>2000</code> is a leap year using <code>Time.isLeapYear</code> and display the result.",
-        "starterCode": "! Check leap year\n",
-        "solution": "display Time.isLeapYear(2000)",
-        "expectedMatch": {},
-        "hint": "Year 2000 is divisible by 400, so Time.isLeapYear(2000) returns true."
+        "id": "ex_ch46_1",
+        "title": "Challenge 46: 3x3 Determinant",
+        "prompt": "Load <code>Matrix</code>, create a 3x3 diagonal matrix <code>[[1, 0, 0], [0, 2, 0], [0, 0, 3]]</code>, calculate its determinant, and display it.",
+        "starterCode": "! Load Matrix, create diagonal matrix, display determinant\n",
+        "hint": "load Matrix\nset M: [[1, 0, 0], [0, 2, 0], [0, 0, 3]]\ndisplay Matrix.determinant(M)",
+        "solution": "load Matrix\nset M: [[1, 0, 0], [0, 2, 0], [0, 0, 3]]\ndisplay Matrix.determinant(M)",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-http",
+    "id": "ch47-vector-lib",
     "number": 47,
-    "section": "Section 13: Native System, Filesystem & Network",
-    "title": "Native Http: Network Status Codes & Protocol Abstractions",
-    "category": "System & Network",
-    "readTime": "5 min read",
-    "summary": "Classify HTTP response codes, inspect client errors, server faults, and protocol statuses.",
-    "body": "\n    <h2>The Native Http Module</h2>\n    <p>VerScript's <code>Http</code> module classifies standard HTTP response status codes into canonical groups.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Http.isSuccess(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 2xx status codes (200-299).</td></tr>\n        <tr><td><code>Http.isClientError(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 4xx client errors (400-499).</td></tr>\n        <tr><td><code>Http.isServerError(statusCode)</code></td><td><code>int code</code></td><td><code>bool</code></td><td>Returns true for 5xx server errors (500-599).</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 12: Numerics & Linear Algebra Ecosystem",
+    "subsection": "Mathematical Engines",
+    "title": "Vectors & Symbolic Math Operations",
+    "category": "Standard Libraries",
+    "readTime": "6 min read",
+    "summary": "Native nD vectors, dot products, 3D cross products, and direct symbolic operators (+, -, *) between matrices and vectors with OperationError checks.",
+    "body": "\n      <h2>Native nD Vectors</h2>\n      <p>A <strong>Vector</strong> represents a magnitude and a direction in space. Whether working in 2D game mechanics, 3D physics, or 100-dimensional data science, the <code>Vector</code> library supports arbitrary dimensions.</p>\n\n      <h2>Direct Symbolic Operators</h2>\n      <p>Rather than writing verbose function chains like <code>Matrix.add(A, B)</code>, VerScript natively allows <strong>direct symbolic operators</strong>:</p>\n      <ul>\n        <li><code>mat + mat</code> &mdash; Element-wise matrix addition</li>\n        <li><code>mat - mat</code> &mdash; Element-wise matrix subtraction</li>\n        <li><code>mat * mat</code> &mdash; Standard algebraic matrix multiplication</li>\n        <li><code>mat * vec</code> &mdash; Matrix-vector transformation (yields a Vector)</li>\n        <li><code>vec * mat</code> &mdash; Vector-matrix row projection</li>\n        <li><code>vec + vec</code> / <code>vec - vec</code> &mdash; Vector translation</li>\n        <li><code>vec * vec</code> &mdash; Vector dot product (scalar result)</li>\n        <li><code>mat * 2</code> / <code>vec * 5</code> &mdash; Uniform scalar scaling</li>\n      </ul>\n\n      <div class=\"callout-box warning\">\n        <div class=\"callout-title\">⚠️ Dimension Consistency & OperationError</div>\n        <p>If you attempt to multiply a $2 \times 3$ matrix by a 4-dimensional vector, or add matrices of differing dimensions, VerScript immediately raises an <code>OperationError</code>!</p>\n      </div>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_http_1",
-        "title": "http_demo.vrs",
-        "code": "display \"=== Native Http Module ===\" ?color=#38bdf8\ndisplay \"HTTP 200 Success: \" + (Http.isSuccess(200))\ndisplay \"HTTP 404 Client Error: \" + (Http.isClientError(404))\ndisplay \"HTTP 503 Server Error: \" + (Http.isServerError(503))"
+        "id": "cb_ch47_1",
+        "title": "symbolic_vectors.vrs",
+        "code": "load Matrix\nload Vector\n\nset M: [[2, 0], [0, 3]]\nset v: [4, 5]\n\n! Direct symbolic operations!\nset transformed: M * v\nset scaledVec: v * 2\nset dotProduct: v * v\n\ndisplay \"Matrix * Vector = \" + transformed ?color=green\ndisplay \"Scaled Vector = \" + scaledVec ?color=cyan\ndisplay \"Dot Product = \" + dotProduct ?color=yellow"
       }
     ],
     "exercises": [
       {
-        "id": "ex_http_1",
-        "title": "Exercise: Response Status Classification",
-        "prompt": "Check if status code <code>201</code> is a success status using <code>Http.isSuccess</code> and display the result.",
-        "starterCode": "! Validate HTTP status\n",
-        "solution": "display Http.isSuccess(201)",
-        "expectedMatch": {},
-        "hint": "Use Http.isSuccess(201)."
+        "id": "ex_ch47_1",
+        "title": "Challenge 47: Symbolic Transformation",
+        "prompt": "Create matrix <code>M: [[1, 2], [3, 4]]</code> and vector <code>v: [1, 2]</code>. Multiply them directly with <code>set res: M * v</code> and display <code>res</code>.",
+        "starterCode": "! Compute and display M * v\n",
+        "hint": "set M: [[1, 2], [3, 4]]\nset v: [1, 2]\nset res: M * v\ndisplay res",
+        "solution": "set M: [[1, 2], [3, 4]]\nset v: [1, 2]\nset res: M * v\ndisplay res",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-log",
+    "id": "ch48-stats-lib",
     "number": 48,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Log: Structured ANSI Console Logging",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Format multi-level diagnostic logs with ANSI color formatting and severity prefixes.",
-    "body": "\n    <h2>The Native Log Module</h2>\n    <p>The <code>Log</code> module formats terminal output with standardized severity levels: info, success, warning, and error.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Log.info(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs informational message with cyan prefix.</td></tr>\n        <tr><td><code>Log.success(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs success message with green prefix.</td></tr>\n        <tr><td><code>Log.warn(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs warning message with yellow prefix.</td></tr>\n        <tr><td><code>Log.error(message)</code></td><td><code>str message</code></td><td><code>void</code></td><td>Outputs error message with red prefix.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 12: Numerics & Linear Algebra Ecosystem",
+    "subsection": "Mathematical Engines",
+    "title": "The Stats Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Compute mean, sum, minMax, and statistical aggregations over datasets with 'load Stats'.",
+    "body": "\n      <h2>Analyzing Datasets</h2>\n      <p>Data science begins with descriptive statistics. The <code>Stats</code> module offers high-speed statistical summaries over numeric arrays.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_log_1",
-        "title": "log_demo.vrs",
-        "code": "Log.info(\"Daemon initializing on port 8080\")\nLog.success(\"Cluster nodes handshake complete\")\nLog.warn(\"Buffer capacity at 85%\")\nLog.error(\"Heartbeat timeout on worker 3\")"
+        "id": "cb_ch48_1",
+        "title": "stats_demo.vrs",
+        "code": "load Stats\n\nset scores: [85, 92, 78, 95, 88, 92]\n\nset avg: Stats.mean(scores)\nset total: Stats.sum(scores)\nset bounds: Stats.minMax(scores)\n\ndisplay \"Average Score: \" + avg ?color=green\ndisplay \"Total Sum: \" + total ?color=cyan\ndisplay \"Min & Max: \" + bounds ?color=yellow"
       }
     ],
     "exercises": [
       {
-        "id": "ex_log_1",
-        "title": "Exercise: Emission of Diagnostic Log",
-        "prompt": "Emit a success log with message <code>'Pipeline online'</code> using <code>Log.success</code>.",
-        "starterCode": "! Emit success log\n",
-        "solution": "Log.success(\"Pipeline online\")",
-        "expectedMatch": {},
-        "hint": "Call Log.success(\"Pipeline online\")."
+        "id": "ex_ch48_1",
+        "title": "Challenge 48: Dataset Mean",
+        "prompt": "Load <code>Stats</code>, calculate the mean of <code>[10, 20, 30, 40]</code>, and display it.",
+        "starterCode": "! Load Stats and calculate mean\n",
+        "hint": "load Stats\nset m: Stats.mean([10, 20, 30, 40])\ndisplay m",
+        "solution": "load Stats\nset m: Stats.mean([10, 20, 30, 40])\ndisplay m",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-color",
+    "id": "ch49-pseudo-lib",
     "number": 49,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Color: Truecolor Hex & ANSI Terminal Styling",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Validate hexadecimal color strings, convert RGB values, and wrap strings in ANSI escape codes.",
-    "body": "\n    <h2>The Native Color Module</h2>\n    <p>The <code>Color</code> module provides palette utilities and terminal color formatting for CLI applications.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Color.isHexCode(hex)</code></td><td><code>str hex</code></td><td><code>bool</code></td><td>Validates whether a string is a 4-char or 7-char hexadecimal color code.</td></tr>\n        <tr><td><code>Color.rgbToHex(r, g, b)</code></td><td><code>int, int, int</code></td><td><code>str</code></td><td>Encodes RGB channel values into a hex string.</td></tr>\n        <tr><td><code>Color.ansiWrap(text, name)</code></td><td><code>str text, str name</code></td><td><code>str</code></td><td>Wraps text in ANSI terminal escape sequences.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 12: Numerics & Linear Algebra Ecosystem",
+    "subsection": "Mathematical Engines",
+    "title": "Pseudo-Random Number Generation",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Generate deterministic random sequences, dice rolls, list shuffling, and choices with 'Pseudo'.",
+    "body": "\n      <h2>Repeatable Randomness</h2>\n      <p>Games and simulations need randomness, but debugging needs <strong>reproducibility</strong>! The <code>Pseudo</code> engine implements high-quality PRNG algorithms with seed support.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_color_1",
-        "title": "color_demo.vrs",
-        "code": "display \"=== Native Color Module ===\" ?color=#38bdf8\ndisplay \"Valid Hex: \" + (Color.isHexCode(\"#00ffcc\"))\ndisplay \"Valid Short Hex: \" + (Color.isHexCode(\"#fff\"))\ndisplay \"Invalid Hex: \" + (Color.isHexCode(\"red\"))\ndisplay Color.ansiWrap(\"VerScript Truecolor\", \"green\")"
+        "id": "cb_ch49_1",
+        "title": "pseudo_demo.vrs",
+        "code": "Pseudo.seed 1337\nset roll: Pseudo.between 1, 6\nset picked: (choice [\"apple\", \"banana\", \"cherry\"])\n\ndisplay \"Dice roll: \" + roll ?color=yellow\ndisplay \"Random fruit: \" + picked ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_color_1",
-        "title": "Exercise: Hex Color Validation",
-        "prompt": "Validate whether <code>'#38bdf8'</code> is a valid hexadecimal code with <code>Color.isHexCode</code> and display the result.",
-        "starterCode": "! Validate hex code\n",
-        "solution": "display Color.isHexCode(\"#38bdf8\")",
-        "expectedMatch": {},
-        "hint": "Use Color.isHexCode(\"#38bdf8\")."
+        "id": "ex_ch49_1",
+        "title": "Challenge 49: Random Range",
+        "prompt": "Seed Pseudo with <code>42</code>, generate a random number between 1 and 10 with <code>Pseudo.between 1, 10</code>, and display it.",
+        "starterCode": "! Seed Pseudo and generate range\n",
+        "hint": "Pseudo.seed 42\ndisplay Pseudo.between 1, 10",
+        "solution": "Pseudo.seed 42\ndisplay Pseudo.between 1, 10",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-console",
+    "id": "ch50-arrays-lib",
     "number": 50,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Console: Screen Buffer & Terminal Streams",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Direct stream output across stdout and stderr channels with structured console functions.",
-    "body": "\n    <h2>The Native Console Module</h2>\n    <p>The <code>Console</code> module provides standard console stream logging mirroring modern runtime conventions.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Console.log(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Standard log output to console.</td></tr>\n        <tr><td><code>Console.info(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Informational notice to stdout.</td></tr>\n        <tr><td><code>Console.warn(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Warning output to console.</td></tr>\n        <tr><td><code>Console.error(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Error diagnostic stream output.</td></tr>\n        <tr><td><code>Console.success(msg)</code></td><td><code>str msg</code></td><td><code>void</code></td><td>Success status message output.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Arrays Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Array operations: push, pop, slice, join, reversing, containment checks, and index queries.",
+    "body": "\n      <h2>Native Array Transformations</h2>\n      <p>VerScript arrays provide built-in methods for dynamic additions, removals, joining, and manipulations.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_console_1",
-        "title": "console_demo.vrs",
-        "code": "Console.log(\"Standard output stream initialized\")\nConsole.info(\"Kernel telemetry active\")\nConsole.success(\"Compilation succeeded without warnings\")"
+        "id": "cb_ch50_1",
+        "title": "arrays_demo.vrs",
+        "code": "set raw: [10, 20, 30]\nraw.push(40)\nset joined: raw.join(\" - \")\nraw.reverse()\n\ndisplay \"Joined: \" + joined ?color=cyan\ndisplay \"Reversed items: \" + raw ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_console_1",
-        "title": "Exercise: Console Stream Output",
-        "prompt": "Log <code>'All systems operational'</code> to the console using <code>Console.success</code>.",
-        "starterCode": "! Log success to console\n",
-        "solution": "Console.success(\"All systems operational\")",
-        "expectedMatch": {},
-        "hint": "Call Console.success(\"All systems operational\")."
+        "id": "ex_ch50_1",
+        "title": "Challenge 50: Reverse an Array",
+        "prompt": "Create <code>set arr: [1, 2, 3, 4]</code>, call <code>arr.reverse()</code>, and display <code>arr</code>.",
+        "starterCode": "! Reverse [1, 2, 3, 4]\n",
+        "hint": "set arr: [1, 2, 3, 4]\narr.reverse()\ndisplay arr",
+        "solution": "set arr: [1, 2, 3, 4]\narr.reverse()\ndisplay arr",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-benchmark",
+    "id": "ch51-strings-lib",
     "number": 51,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Benchmark: Performance Profiling & Microbenchmarks",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Measure computational overhead, iterations per second, and generate benchmark reports.",
-    "body": "\n    <h2>The Native Benchmark Module</h2>\n    <p>The <code>Benchmark</code> module profiles routines, tracking execution time and throughput across iterations.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Benchmark.report(name, iters, elapsedMs)</code></td><td><code>str, int, int</code></td><td><code>str</code></td><td>Formats a structured benchmark summary report.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Strings Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Text manipulation utilities: splitting, trimming, casing transformations (toUpper/toLower), and padding.",
+    "body": "\n      <h2>Text Engineering</h2>\n      <p>Strings support rich operations including trimming whitespace, casing conversions, and delimiter splitting.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_benchmark_1",
-        "title": "benchmark_demo.vrs",
-        "code": "display \"=== Native Benchmark Module ===\" ?color=#38bdf8\ndisplay Benchmark.report(\"MatrixMultiplication\", 10000, 24)"
+        "id": "cb_ch51_1",
+        "title": "strings_demo.vrs",
+        "code": "set raw: \"  VerScript Engine  \"\nset cleaned: raw.trim()\nset upper: cleaned.toUpper()\n\ndisplay \"Trimmed: [\" + cleaned + \"]\" ?color=yellow\ndisplay \"Upper: \" + upper ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_benchmark_1",
-        "title": "Exercise: Benchmark Formatting",
-        "prompt": "Generate a benchmark report for test <code>'HashDigest'</code> running <code>5000</code> iterations in <code>12</code> ms using <code>Benchmark.report</code>, and display it.",
-        "starterCode": "! Generate benchmark report\n",
-        "solution": "display Benchmark.report(\"HashDigest\", 5000, 12)",
-        "expectedMatch": {},
-        "hint": "Use Benchmark.report(\"HashDigest\", 5000, 12)."
+        "id": "ex_ch51_1",
+        "title": "Challenge 51: String Uppercase",
+        "prompt": "Convert <code>'hello world'</code> to uppercase using <code>'hello world'.toUpper()</code>, and display it.",
+        "starterCode": "! Convert to uppercase\n",
+        "hint": "display 'hello world'.toUpper()",
+        "solution": "display 'hello world'.toUpper()",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-mock",
+    "id": "ch52-json-lib",
     "number": 52,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Mock: Synthetic Data Fixtures, Spies & Stubs",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Simulate service dependencies, record invocation counts, and create deterministic stubs.",
-    "body": "\n    <h2>The Native Mock Module</h2>\n    <p>The <code>Mock</code> module facilitates unit testing and isolation of external dependencies through lightweight test doubles.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Mock.stub(returnValue)</code></td><td><code>any val</code></td><td><code>any</code></td><td>Creates a deterministic stub returning specified value.</td></tr>\n        <tr><td><code>Mock.spy(name, calls)</code></td><td><code>str, int</code></td><td><code>str</code></td><td>Creates an invocation tracker recording routine invocations.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Json Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Serialize and parse JSON data structures between text strings and native VerScript objects with 'load Json'.",
+    "body": "\n      <h2>Universal Data Interchange</h2>\n      <p>JSON is the industry standard for exchanging data with web APIs, databases, and configuration files. VerScript provides high-speed parsing and serialization through <code>Json</code>.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_mock_1",
-        "title": "mock_demo.vrs",
-        "code": "display \"=== Native Mock Module ===\" ?color=#38bdf8\nset mockResponse: Mock.stub(\"200 OK\")\ndisplay \"Stub Output: \" + mockResponse\nset spyReport: Mock.spy(\"PaymentGateway\", 3)\ndisplay \"Spy Record: \" + spyReport"
+        "id": "cb_ch52_1",
+        "title": "json_demo.vrs",
+        "code": "load Json\n\nset payload: [1, 2, 3, 4]\nset jsonText: Json.stringify(payload)\n\ndisplay \"Serialized JSON: \" + jsonText ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_mock_1",
-        "title": "Exercise: Stub Return Value",
-        "prompt": "Create a test stub returning integer <code>99</code> using <code>Mock.stub</code> and display the stub output.",
-        "starterCode": "! Create stub returning 99\n",
-        "solution": "set s: Mock.stub(99)\ndisplay s",
-        "expectedMatch": {},
-        "hint": "Use Mock.stub(99)."
+        "id": "ex_ch52_1",
+        "title": "Challenge 52: JSON Stringify",
+        "prompt": "Load <code>Json</code>, stringify <code>[10, 20]</code>, and display the JSON text.",
+        "starterCode": "! Stringify array\n",
+        "hint": "load Json\ndisplay Json.stringify([10, 20])",
+        "solution": "load Json\ndisplay Json.stringify([10, 20])",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch-lib-assert",
+    "id": "ch53-validate-lib",
     "number": 53,
-    "section": "Section 14: Native Developer Tools, UI & Diagnostics",
-    "title": "Native Assert: Invariant Verification & Test Suites",
-    "category": "Developer Tools & Diagnostics",
-    "readTime": "5 min read",
-    "summary": "Verify invariants, equality conditions, and tolerance thresholds with native test assertions.",
-    "body": "\n    <h2>The Native Assert Module</h2>\n    <p>The <code>Assert</code> module establishes test boundaries and invariant contracts within VerScript test suites.</p>\n\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Routine</th><th>Parameters</th><th>Return Type</th><th>Description</th></tr>\n      </thead>\n      <tbody>\n        <tr><td><code>Assert.equal(actual, expected, msg)</code></td><td><code>any, any, str</code></td><td><code>void</code></td><td>Verifies strict equality between actual and expected values.</td></tr>\n        <tr><td><code>Assert.notEqual(actual, expected, msg)</code></td><td><code>any, any, str</code></td><td><code>void</code></td><td>Verifies that two values are not equal.</td></tr>\n        <tr><td><code>Assert.isTrue(cond, msg)</code></td><td><code>bool, str</code></td><td><code>void</code></td><td>Verifies that condition evaluates to true.</td></tr>\n        <tr><td><code>Assert.isFalse(cond, msg)</code></td><td><code>bool, str</code></td><td><code>void</code></td><td>Verifies that condition evaluates to false.</td></tr>\n      </tbody>\n    </table>\n  ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Validate Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "3 min read",
+    "summary": "Verify inputs, emails, URLs, alphanumeric characters, and length constraints with 'load Validate'.",
+    "body": "\n      <h2>Input Sanitization & Validation</h2>\n      <p>Prevent errors before processing data. The <code>Validate</code> library provides reliable predicates for user forms, configuration parameters, and network packets.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_assert_1",
-        "title": "assert_demo.vrs",
-        "code": "Assert.equal(10 * 5, 50, \"Multiplication invariant holds\")\nAssert.isTrue(100 > 25, \"100 is strictly greater than 25\")\nAssert.isFalse(0 = 1, \"0 must not equal 1\")\ndisplay \"All assertions verified successfully!\" ?color=#50fa7b"
+        "id": "cb_ch53_1",
+        "title": "validate_demo.vrs",
+        "code": "load Validate\n\nset userEmail: \"team@verscript.org\"\nset isValid: Validate.isEmail(userEmail)\n\nif isValid then\n  display \"Email is valid!\" ?color=green\nelse\n  display \"Invalid email address!\" ?color=red"
       }
     ],
     "exercises": [
       {
-        "id": "ex_assert_1",
-        "title": "Exercise: Invariant Equality Test",
-        "prompt": "Assert that <code>5 + 5</code> equals <code>10</code> with message <code>'Math invariant'</code> using <code>Assert.equal</code>, then display <code>'Verified'</code>.",
-        "starterCode": "! Verify assertion and display\n",
-        "solution": "Assert.equal(5 + 5, 10, \"Math invariant\")\ndisplay \"Verified\"",
-        "expectedMatch": {},
-        "hint": "Use Assert.equal(5 + 5, 10, \"Math invariant\")."
+        "id": "ex_ch53_1",
+        "title": "Challenge 53: Validate Email",
+        "prompt": "Load <code>Validate</code>, test if <code>'user@test.com'</code> is an email, and display the boolean result.",
+        "starterCode": "! Validate email address\n",
+        "hint": "load Validate\ndisplay Validate.isEmail('user@test.com')",
+        "solution": "load Validate\ndisplay Validate.isEmail('user@test.com')",
+        "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch54-headers-enums-ergonomics",
+    "id": "ch54-crypto-lib",
     "number": 54,
-    "section": "Section 9: Data Structures & Object Architecture",
-    "title": "VerScript Headers (.h.vrs), First-Class Enums & Modern Language Ergonomics",
-    "category": "Language Architecture",
-    "readTime": "7 min read",
-    "summary": "Master VerScript's dual-role header architecture (.h.vrs) for compiler configuration and prototypes, companion auto-resolution, first-class enums, typed structs, pipeline operator (|>) chaining, and ternary expressions.",
-    "body": "\n            <h2>Dual-Role VerScript Headers (.h.vrs)</h2>\n            <p><strong>VerScript Headers</strong> (files ending with <code>.h.vrs</code>) serve two vital roles in the VerScript ecosystem:</p>\n            <ol>\n                <li><strong>Compiler &amp; Runtime Configuration</strong>: Declaring <code>config:</code> blocks that set compiler flags (such as <code>strict_mode: true</code>, <code>error_mode: \"strict\"</code>, and <code>timeout_ms: 5000</code>).</li>\n                <li><strong>Public Interfaces &amp; Constants</strong>: Declaring shared global constants, enum types, struct definitions, and routine prototypes across multiple modules.</li>\n            </ol>\n\n            <div class=\"callout-box tip\">\n                <div class=\"callout-title\">💡 Zero-Boilerplate Companion Auto-Detection</div>\n                <p>When running any VerScript file (e.g. <code>verscript server.vrs</code>), the compiler automatically searches for a companion header with the same stem (<code>server.h.vrs</code>) in the same directory. If found, it preloads and executes the header before running the script—requiring zero <code>include</code> statements!</p>\n            </div>\n\n            <h2>Explicit Inclusion with <code>include</code></h2>\n            <p>You can also explicitly load any header or library file using the <code>include</code> statement:</p>\n            <pre><code class=\"language-verscript\">include \"config/app_config.h.vrs\"\ninclude \"shared/models.h.vrs\"\n\ndisplay APP_VERSION ?color=\"cyan\"</code></pre>\n\n            <h2>First-Class Enums (<code>enum</code>)</h2>\n            <p>VerScript enums define strongly typed enumeration constants. Under the hood, they are sealed entity instances that integrate seamlessly with dot-property access and pattern matching:</p>\n            <pre><code class=\"language-verscript\">! Block definition with auto-incrementing values (0, 1, 2)\nenum TaskStatus:\n    Pending\n    Active\n    Completed\n\n! Inline definition with explicit integer values\nenum HttpCode: OK = 200, NotFound = 404, ServerError = 500\n\ndisplay TaskStatus.Active ! outputs 1\ndisplay HttpCode.OK       ! outputs 200</code></pre>\n\n            <h2>Lightweight Typed Structs (<code>struct</code>)</h2>\n            <p>Structs provide lightweight record types with automatic constructor argument binding and declared type constraints:</p>\n            <pre><code class=\"language-verscript\">struct Point:\n    x: num\n    y: num\n\n! Automatic constructor instantiation\nset pt: Point(10, 25)\ndisplay pt.x ?color=\"green\"\ndisplay pt.y ?color=\"yellow\"</code></pre>\n\n            <h2>Ternary Expressions</h2>\n            <p>Ternary expressions allow inline conditional evaluations without cumbersome multi-line branch blocks:</p>\n            <pre><code class=\"language-verscript\">set status: if score >= 75 then \"Passed\" else \"Retry\"\nset clamped: if val > 100 then 100 else (if val < 0 then 0 else val)</code></pre>\n\n            <h2>The Pipeline Operator (<code>|></code>)</h2>\n            <p>The pipeline operator passes the result of the left-hand expression as the first argument to the right-hand function or library method, enabling clean functional chaining:</p>\n            <pre><code class=\"language-verscript\">def func double(x):\n    reply x * 2\n\ndef func add_five(x):\n    reply x + 5\n\nset result: 10 |> double |> add_five\ndisplay result ! outputs 25\n\nset formatted: \"verscript\" |> Strings.toUpper\ndisplay formatted ! outputs \"VERSCRIPT\"</code></pre>\n\n            <h2>Enhanced Pattern Matching with <code>case</code> &amp; Guards</h2>\n            <p>The <code>match</code> statement supports <code>case</code> keywords, wildcard <code>_</code> matching, and conditional guard clauses (<code>if condition</code>):</p>\n            <pre><code class=\"language-verscript\">match response_code:\n    case 200:\n        display \"Success\" ?color=\"green\"\n    case 404:\n        display \"Resource Missing\" ?color=\"yellow\"\n    case _ if response_code >= 500:\n        display \"Critical Server Outage\" ?color=\"red\"\n    else:\n        display \"Unknown Code\"</code></pre>\n  ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Crypto Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Cryptographic hashing, SHA-256, MD5, Base64 encoding/decoding, and HMAC authentication with 'load Crypto'.",
+    "body": "\n      <h2>Hashing and Encoding</h2>\n      <p>Protect passwords, verify file integrity, and encode binary streams with the <code>Crypto</code> library.</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch54_1",
-        "title": "service.h.vrs + service.vrs",
-        "files": [
-          {
-            "name": "service.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  service.h.vrs — Architectural Contract & Configuration Header\n! ═══════════════════════════════════════════════════════════════════\n\nconfig:\n    service_name: \"AuthTelemetry\"\n    log_level: \"VERBOSE\"\n    max_retries: 3\n\nenum ServiceStatus: Offline = 0, Booting = 1, Healthy = 2, Degraded = 3\n\nstruct ServiceNode:\n    node_id: num\n    cluster: str\n    status: num\n    latency_ms: num\n\ndef func evaluate_node_health(latency):\n    set status: if latency < 50 then ServiceStatus.Healthy else ServiceStatus.Degraded\n    reply status"
-          },
-          {
-            "name": "service.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  service.vrs — Runtime Node Telemetry Dispatcher\n! ═══════════════════════════════════════════════════════════════════\n\ndisplay \"=== Microservice Node Dispatcher ===\" ?color=\"cyan\"\n\nset node1: ServiceNode(101, \"us-east-1\", ServiceStatus.Booting, 42)\nset current_status: node1.latency_ms |> evaluate_node_health\n\nset status_text: if current_status == ServiceStatus.Healthy then \"HEALTHY\" else \"DEGRADED\"\n\ndisplay \"Node: \" + node1.node_id + \" [\" + node1.cluster + \"]\" ?color=\"white\"\ndisplay \"Latency: \" + node1.latency_ms + \"ms | Status: \" + status_text ?color=\"green\""
-          }
-        ]
+        "title": "crypto_demo.vrs",
+        "code": "load Crypto\n\nset hash: Crypto.sha256(\"verscript-secret-key\")\nset encoded: Crypto.base64Encode(\"Antigravity\")\n\ndisplay \"SHA-256 Hash: \" + hash ?color=yellow\ndisplay \"Base64 Encoded: \" + encoded ?color=cyan"
       }
     ],
     "exercises": [
       {
         "id": "ex_ch54_1",
-        "title": "Exercise 54.1: First-Class Enum & Ternary",
-        "prompt": "Declare an enum <code>AlertLevel</code> with <code>Normal = 1, Warning = 2, Critical = 3</code>. Set <code>temperature: 92</code> and use a ternary expression to assign <code>level: if temperature > 85 then AlertLevel.Critical else AlertLevel.Normal</code>. Display <code>\"Alert Level: \" + level</code> with <code>?color=\"yellow\"</code>.",
-        "starterCode": "! Exercise 54.1: First-Class Enum & Ternary\n! TODO: Declare enum AlertLevel and evaluate level using ternary\n",
-        "hint": "Use `enum AlertLevel: Normal = 1, Warning = 2, Critical = 3` and `if temperature > 85 then AlertLevel.Critical else AlertLevel.Normal`.",
-        "solution": "enum AlertLevel: Normal = 1, Warning = 2, Critical = 3\n\nset temperature: 92\nset level: if temperature > 85 then AlertLevel.Critical else AlertLevel.Normal\ndisplay \"Alert Level: \" + level ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch54_2",
-        "title": "Exercise 54.2: Pipeline Chaining with Structs",
-        "prompt": "Define a struct <code>Vector2D</code> with numeric fields <code>x</code> and <code>y</code>. Write a function <code>magnitude_sq(v)</code> that replies <code>(v.x * v.x) + (v.y * v.y)</code>. Instantiate <code>vec: Vector2D(3, 4)</code>, pipe it into <code>magnitude_sq</code> with <code>vec |> magnitude_sq</code>, and display <code>\"Magnitude Squared: \" + sq</code> with <code>?color=\"green\"</code>.",
-        "starterCode": "! Exercise 54.2: Pipeline Chaining with Structs\n! TODO: Define Vector2D, magnitude_sq, instantiate (3, 4), pipe, and display\n",
-        "hint": "Define `struct Vector2D: x: num, y: num`, function `def func magnitude_sq(v): ... reply mag`, pipe `set sq: vec |> magnitude_sq`.",
-        "solution": "struct Vector2D:\n    x: num\n    y: num\n\ndef func magnitude_sq(v):\n    set mag: (v.x * v.x) + (v.y * v.y)\n    reply mag\n\nset vec: Vector2D(3, 4)\nset sq: vec |> magnitude_sq\ndisplay \"Magnitude Squared: \" + sq ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_ch54_3",
-        "title": "Exercise 54.3: Dual-File Configuration & Implementation (.h.vrs + .vrs)",
-        "prompt": "In the dual-tab editor, configure <code>telemetry.h.vrs</code> with <code>enum DeviceState: Idle = 0, Active = 1, Fault = 2</code>, <code>struct Device: id: num, state: num</code>, and <code>evaluate_device(d)</code> replying <code>\"RUNNING\"</code> if active, else <code>\"HALTED\"</code>. In <code>telemetry.vrs</code>, instantiate <code>Device(99, DeviceState.Active)</code>, pipe it to <code>evaluate_device</code>, and display <code>\"Device Status: \" + status</code> in green.",
-        "starterFiles": [
-          {
-            "name": "telemetry.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  telemetry.h.vrs — Architectural Contract\n! ═══════════════════════════════════════════════════════════════════\n\nenum DeviceState: Idle = 0, Active = 1, Fault = 2\n\nstruct Device:\n    id: num\n    state: num\n\ndef func evaluate_device(d):\n    set res: if d.state == DeviceState.Active then \"RUNNING\" else \"HALTED\"\n    reply res"
-          },
-          {
-            "name": "telemetry.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  telemetry.vrs — Implementation Script\n! ═══════════════════════════════════════════════════════════════════\n\nset dev: Device(99, DeviceState.Active)\nset status: dev |> evaluate_device\ndisplay \"Device Status: \" + status ?color=\"green\""
-          }
-        ],
-        "hint": "Switch between tabs using the header buttons. Both files are automatically combined and executed when running or validating!",
-        "solution": "! telemetry.h.vrs\nenum DeviceState: Idle = 0, Active = 1, Fault = 2\n\nstruct Device:\n    id: num\n    state: num\n\ndef func evaluate_device(d):\n    set res: if d.state == DeviceState.Active then \"RUNNING\" else \"HALTED\"\n    reply res\n\n! telemetry.vrs\nset dev: Device(99, DeviceState.Active)\nset status: dev |> evaluate_device\ndisplay \"Device Status: \" + status ?color=\"green\"",
+        "title": "Challenge 54: Base64 Encode",
+        "prompt": "Load <code>Crypto</code>, base64-encode <code>'hello'</code>, and display the encoded string.",
+        "starterCode": "! Base64 encode hello\n",
+        "hint": "load Crypto\ndisplay Crypto.base64Encode('hello')",
+        "solution": "load Crypto\ndisplay Crypto.base64Encode('hello')",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch55-capstone-ii",
+    "id": "ch55-regex-lib",
     "number": 55,
-    "section": "Section 9: Capstone & Advanced Architecture",
-    "category": "Systems Engineering & Modern Idioms",
-    "readTime": "15 min read",
-    "title": "Grandmaster Capstone II: Modern Resilient Micro-Kernels, Headers & Functional Pipelines",
-    "summary": "Architect enterprise-grade resilient micro-kernels uniting .h.vrs configuration headers, first-class enums, typed structs, point-free pipeline operators, ternary decision branches, pattern guards, and fault-tolerant telemetry.",
-    "body": "\n        <h2>Executive Architectural Overview</h2>\n        <p>In high-throughput, mission-critical engineering, enterprise codebases demand rigorous architectural contracts, deterministic memory behavior, and readable data transformation pipelines. <strong>Grandmaster Capstone II</strong> synthesizes all contemporary VerScript paradigms introduced across the modern language specification:</p>\n\n        <div class=\"callout-box tip\">\n            <div class=\"callout-title\">🏛️ Pillars of Modern VerScript Systems Engineering</div>\n            <ul>\n                <li><strong>Dual-File Module Topology:</strong> Clean boundary separation where <code>.h.vrs</code> defines compile-time configurations, sealed enums, struct shapes, and function signatures, while <code>.vrs</code> implements reactive data dispatch.</li>\n                <li><strong>Zero-Cost Enum Serialization:</strong> First-class symbolic states compile directly into native integer tags without string parsing overhead.</li>\n                <li><strong>Typed Struct Blueprints:</strong> Guaranteed field typing for telemetry packets, preventing dynamic type drift across deep subsystems.</li>\n                <li><strong>Point-Free Forward Pipelines (<code>|&gt;</code>):</strong> Linear, left-to-right dataflow passing entity references directly into transformation routines without intermediary scratch variables.</li>\n                <li><strong>Branchless Inline Ternary:</strong> Deterministic <code>if &lt;cond&gt; then &lt;val&gt; else &lt;fallback&gt;</code> value resolution.</li>\n                <li><strong>Resilient Do-Unless Sandboxing:</strong> Graceful fault interception isolating localized hardware anomalies without engine panics.</li>\n            </ul>\n        </div>\n\n        <h2>Architectural Topology: Header vs. Implementation</h2>\n        <table class=\"doc-table\">\n            <thead>\n                <tr>\n                    <th>Domain</th>\n                    <th>Header File (<code>.h.vrs</code>)</th>\n                    <th>Implementation File (<code>.vrs</code>)</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr>\n                    <td><strong>Role</strong></td>\n                    <td>Architectural contract &amp; compile-time configuration</td>\n                    <td>Operational execution, state mutation &amp; event loop</td>\n                </tr>\n                <tr>\n                    <td><strong>Components</strong></td>\n                    <td><code>config:</code>, <code>enum</code>, <code>struct</code>, pure transformation procedures</td>\n                    <td>Instantiation, telemetry ingestion, pipeline routing, I/O display</td>\n                </tr>\n                <tr>\n                    <td><strong>Safety Invariant</strong></td>\n                    <td>Read-only interface declarations, zero side effects</td>\n                    <td>Encapsulated exception containment with <code>do ... unless</code></td>\n                </tr>\n            </tbody>\n        </table>\n\n        <h2>Multi-Stage Pipeline Dataflow Architecture</h2>\n        <p>Modern VerScript pipelines chain structured telemetry seamlessly:</p>\n        <pre class=\"terminal-card\"><code>Raw Telemetry Packet ───▶ [ .h.vrs Struct Ingestion ]\n                                  │\n                                  ▼\n                         [ |&gt; compute_subsystem_state ]\n                                  │\n                                  ▼\n                       [ |&gt; calculate_efficiency ]\n                                  │\n                                  ▼\n                      [ Branchless Ternary Grading ]\n                                  │\n                                  ▼\n                     [ do ... unless Fault Sentinel ] ───▶ Safe Failover Dispatch</code></pre>\n    ",
+    "section": "Section 13: Data & Formats Ecosystem",
+    "subsection": "Structures & Serialization",
+    "title": "The Regex Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Regular expression pattern matching, capture groups, testing, and substitutions with 'load Regex'.",
+    "body": "\n      <h2>Pattern Matching with Regular Expressions</h2>\n      <p>Match complex textual patterns, extract tokens, and perform regex substitutions with <code>Regex</code>.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_cap2_1",
-        "title": "microkernel.h.vrs + microkernel.vrs",
-        "files": [
-          {
-            "name": "microkernel.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  microkernel.h.vrs — Mission Critical Micro-Kernel Specification\n! ═══════════════════════════════════════════════════════════════════\n\nconfig:\n    kernel_version: \"2.4.0-alpha\"\n    telemetry_bus: \"ipc://edge-sentinel\"\n    watchdog_heartbeat_ms: 250\n\nenum SubsystemState: Halt = 0, Standby = 1, Active = 2, Overdrive = 3, Fault = 4\n\nstruct NodeTelemetry:\n    node_id: num\n    subsystem: str\n    temperature_c: num\n    load_pct: num\n    state: num\n\ndef func compute_subsystem_state(telemetry):\n    set derived_state: if telemetry.temperature_c > 85 then SubsystemState.Fault else SubsystemState.Active\n    reply derived_state\n\ndef func calculate_efficiency(utilization):\n    set score: if utilization < 80 then 92 else 65\n    reply score"
-          },
-          {
-            "name": "microkernel.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  microkernel.vrs — Resilient Micro-Kernel Runtime\n! ═══════════════════════════════════════════════════════════════════\n\ndisplay \"=== VerScript Grandmaster Capstone II: Edge Micro-Kernel ===\" ?color=\"cyan\"\n\nset t1: NodeTelemetry(401, \"CorePlasmaEngine\", 78, 65, SubsystemState.Standby)\n\n! Pipe through evaluation pipelines\nset target_state: t1 |> compute_subsystem_state\nset efficiency: t1.load_pct |> calculate_efficiency\n\nset alert_color: if target_state == SubsystemState.Fault then \"red\" else \"green\"\nset state_desc: if target_state == SubsystemState.Fault then \"FAULT DETECTED\" else \"ACTIVE NOMINAL\"\n\ndisplay \"Subsystem: \" + t1.subsystem + \" [ID: \" + t1.node_id + \"]\" ?color=\"white\"\ndisplay \"Temp: \" + t1.temperature_c + \"C | State: \" + state_desc ?color=alert_color\ndisplay \"Efficiency Score: \" + efficiency + \"%\" ?color=\"yellow\"\n\ndo\n    if target_state == SubsystemState.Fault then\n        throw SystemError\n    display \"Telemetry verification passed without kernel panic.\" ?color=\"green\"\nunless SystemError\n    display \"Watchdog triggered: Failover to auxiliary pod.\" ?color=\"red\""
-          }
-        ]
-      },
-      {
-        "id": "cb_cap2_2",
-        "title": "etl_pipeline.h.vrs + etl_pipeline.vrs",
-        "files": [
-          {
-            "name": "etl_pipeline.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  etl_pipeline.h.vrs — Streaming ETL Specification\n! ═══════════════════════════════════════════════════════════════════\n\nenum MetricType: Temperature = 1, Pressure = 2, Flux = 3\n\nstruct RawSample:\n    sensor_id: num\n    metric_type: num\n    raw_val: num\n\ndef func calibrate_sample(sample):\n    set scaled: if sample.metric_type == MetricType.Pressure then (sample.raw_val * 2) else sample.raw_val\n    reply scaled\n\ndef func filter_threshold(calibrated):\n    set approved: if calibrated >= 100 then 1 else 0\n    reply approved"
-          },
-          {
-            "name": "etl_pipeline.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  etl_pipeline.vrs — Ingestion Engine\n! ═══════════════════════════════════════════════════════════════════\n\ndisplay \"=== Streaming ETL Pipeline Active ===\" ?color=\"cyan\"\n\nset sample1: RawSample(8801, MetricType.Pressure, 75)\nset calibrated_val: sample1 |> calibrate_sample\nset is_passed: calibrated_val |> filter_threshold\n\nset status: if is_passed == 1 then \"PASSED\" else \"REJECTED\"\ndisplay \"Sample #8801 Calibrated Value: \" + calibrated_val + \" [\" + status + \"]\" ?color=\"green\""
-          }
-        ]
+        "id": "cb_ch55_1",
+        "title": "regex_demo.vrs",
+        "code": "load Regex\n\nset sentence: \"Contact support at help@company.org or sales@company.org\"\nset matches: Regex.match(\"[a-zA-Z0-9]+@[a-zA-Z0-9.]+\", sentence)\n\ndisplay \"Found email: \" + matches ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_cap2_1",
-        "title": "Challenge 55.1: Micro-Kernel Health Sentinel",
-        "prompt": "Define <code>enum SystemState: Offline = 0, Standby = 1, Nominal = 2, Critical = 3</code> and <code>struct HealthReport</code> with <code>system_id: num, cpu_temp: num, state: num</code>. Write a function <code>analyze_health(report)</code> that evaluates <code>report.cpu_temp &gt; 80</code> returning <code>SystemState.Critical</code>, otherwise <code>SystemState.Nominal</code>. Instantiate <code>report: HealthReport(77, 85, SystemState.Standby)</code>, pipe it to <code>analyze_health</code>, and display <code>\"System \" + report.system_id + \" State: \" + final_state</code>.",
-        "starterCode": "! Challenge 55.1: Micro-Kernel Health Sentinel\n! TODO: Implement enum, struct, analyze_health function, pipe report, and display\n",
-        "hint": "Use `report |> analyze_health` to evaluate the struct, and use ternary inside `analyze_health`.",
-        "solution": "enum SystemState: Offline = 0, Standby = 1, Nominal = 2, Critical = 3\n\nstruct HealthReport:\n    system_id: num\n    cpu_temp: num\n    state: num\n\ndef func analyze_health(report):\n    set s: if report.cpu_temp > 80 then SystemState.Critical else SystemState.Nominal\n    reply s\n\nset report: HealthReport(77, 85, SystemState.Standby)\nset final_state: report |> analyze_health\ndisplay \"System \" + report.system_id + \" State: \" + final_state ?color=\"yellow\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap2_2",
-        "title": "Challenge 55.2: Dual-File Configuration Ingestion",
-        "prompt": "In the dual-tab editor, configure <code>kernel_config.h.vrs</code> with <code>config: app_id: \"EdgeRouter\", max_hops: 10</code> and <code>enum RouteTier: Local = 1, Regional = 2, Global = 3</code>. In <code>router.vrs</code>, read <code>tier: RouteTier.Global</code>, map it using ternary to <code>tier_name: if tier == RouteTier.Global then \"GLOBAL\" else \"REGIONAL\"</code>, and display <code>\"Configured Route Tier: \" + tier_name</code>.",
-        "starterFiles": [
-          {
-            "name": "kernel_config.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  kernel_config.h.vrs — Architectural Declarations\n! ═══════════════════════════════════════════════════════════════════\n\nconfig:\n    app_id: \"EdgeRouter\"\n    max_hops: 10\n\nenum RouteTier: Local = 1, Regional = 2, Global = 3"
-          },
-          {
-            "name": "router.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  router.vrs — Runtime Router\n! ═══════════════════════════════════════════════════════════════════\n\n! TODO: Read RouteTier.Global, resolve tier_name, and display"
-          }
-        ],
-        "hint": "Assign `set tier: RouteTier.Global` and use ternary expression `if tier == RouteTier.Global then \"GLOBAL\" else \"REGIONAL\"`.",
-        "solution": "! kernel_config.h.vrs\nconfig:\n    app_id: \"EdgeRouter\"\n    max_hops: 10\n\nenum RouteTier: Local = 1, Regional = 2, Global = 3\n\n! router.vrs\nset tier: RouteTier.Global\nset tier_name: if tier == RouteTier.Global then \"GLOBAL\" else \"REGIONAL\"\ndisplay \"Configured Route Tier: \" + tier_name ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap2_3",
-        "title": "Challenge 55.3: Fault-Tolerant Transaction Processor",
-        "prompt": "Define <code>enum TxStatus: Pending = 1, Success = 2, Failed = 3</code> and function <code>process_amount(amt)</code> that replies <code>TxStatus.Success</code> if <code>amt &gt; 0</code> else <code>TxStatus.Failed</code>. Set <code>balance: -50</code>, pipe it to <code>process_amount</code>, and execute within a <code>do ... unless SystemError</code> block: if status is failed, throw <code>SystemError</code>, and in the unless block display <code>\"Transaction Intercepted: System Fallback Initiated\"</code>.",
-        "starterCode": "! Challenge 55.3: Fault-Tolerant Transaction Processor\n! TODO: Implement enum, process_amount, pipe balance, and handle with do-unless\n",
-        "hint": "Use `if status == TxStatus.Failed then throw SystemError` inside `do`, and catch with `unless SystemError`.",
-        "solution": "enum TxStatus: Pending = 1, Success = 2, Failed = 3\n\ndef func process_amount(amt):\n    set valid: if amt > 0 then TxStatus.Success else TxStatus.Failed\n    reply valid\n\nset balance: -50\nset status: balance |> process_amount\n\ndo\n    if status == TxStatus.Failed then\n        throw SystemError\n    display \"Transaction Processed Successfully\" ?color=\"green\"\nunless SystemError\n    display \"Transaction Intercepted: System Fallback Initiated\" ?color=\"red\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap2_4",
-        "title": "Challenge 55.4: Multi-Stage Telemetry Transformation Pipeline",
-        "prompt": "Create <code>struct Packet: bytes: num, compressed: num</code>. Write two pipeline functions: <code>compress_packet(p)</code> returning <code>p.bytes / 2</code>, and <code>calculate_bandwidth(bytes)</code> returning <code>bytes * 8</code>. Instantiate <code>p: Packet(1024, 0)</code>, pipe <code>p |&gt; compress_packet</code>, then pipe the result into <code>calculate_bandwidth</code>, and display <code>\"Final Bandwidth: \" + bits + \" bits\"</code>.",
-        "starterCode": "! Challenge 55.4: Multi-Stage Telemetry Transformation Pipeline\n! TODO: Define Packet struct, two transformation functions, pipe, and display\n",
-        "hint": "Pipe `set comp_bytes: p |> compress_packet` and `set bits: comp_bytes |> calculate_bandwidth`.",
-        "solution": "struct Packet:\n    bytes: num\n    compressed: num\n\ndef func compress_packet(p):\n    set c_bytes: p.bytes / 2\n    reply c_bytes\n\ndef func calculate_bandwidth(bytes):\n    set bw: bytes * 8\n    reply bw\n\nset p: Packet(1024, 0)\nset comp_bytes: p |> compress_packet\nset bits: comp_bytes |> calculate_bandwidth\n\ndisplay \"Final Bandwidth: \" + bits + \" bits\" ?color=\"green\"",
-        "expectedMatch": {}
-      },
-      {
-        "id": "ex_cap2_5",
-        "title": "Challenge 55.5: Grandmaster II Final Proof of Mastery",
-        "prompt": "In the dual-tab editor, implement <code>enterprise_kernel.h.vrs</code> with <code>enum SecurityTier: Public = 0, Confidential = 1, Restricted = 2</code>, <code>struct AuditRecord: actor_id: num, security_tier: num, risk_score: num</code>, and <code>assess_security_risk(record)</code> doubling the risk score if tier is Restricted. In <code>enterprise_kernel.vrs</code>, instantiate <code>AuditRecord(902, SecurityTier.Restricted, 45)</code>, pipe to <code>assess_security_risk</code>, evaluate <code>approved: if total_risk &lt; 100 then \"AUTHORIZED\" else \"FLAGGED\"</code>, and display <code>\"Audit Clearance: \" + approved</code> in green.",
-        "starterFiles": [
-          {
-            "name": "enterprise_kernel.h.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  enterprise_kernel.h.vrs — Architectural Security Contract\n! ═══════════════════════════════════════════════════════════════════\n\nenum SecurityTier: Public = 0, Confidential = 1, Restricted = 2\n\nstruct AuditRecord:\n    actor_id: num\n    security_tier: num\n    risk_score: num\n\ndef func assess_security_risk(record):\n    set risk: if record.security_tier == SecurityTier.Restricted then (record.risk_score * 2) else record.risk_score\n    reply risk"
-          },
-          {
-            "name": "enterprise_kernel.vrs",
-            "code": "! ═══════════════════════════════════════════════════════════════════\n!  enterprise_kernel.vrs — Runtime Clearance Dispatcher\n! ═══════════════════════════════════════════════════════════════════\n\nset rec: AuditRecord(902, SecurityTier.Restricted, 45)\nset total_risk: rec |> assess_security_risk\nset approved: if total_risk < 100 then \"AUTHORIZED\" else \"FLAGGED\"\n\ndisplay \"Audit Clearance: \" + approved ?color=\"green\""
-          }
-        ],
-        "hint": "The risk score 45 doubled equals 90, which is < 100, resulting in AUTHORIZED clearance.",
-        "solution": "! enterprise_kernel.h.vrs\nenum SecurityTier: Public = 0, Confidential = 1, Restricted = 2\n\nstruct AuditRecord:\n    actor_id: num\n    security_tier: num\n    risk_score: num\n\ndef func assess_security_risk(record):\n    set risk: if record.security_tier == SecurityTier.Restricted then (record.risk_score * 2) else record.risk_score\n    reply risk\n\n! enterprise_kernel.vrs\nset rec: AuditRecord(902, SecurityTier.Restricted, 45)\nset total_risk: rec |> assess_security_risk\nset approved: if total_risk < 100 then \"AUTHORIZED\" else \"FLAGGED\"\n\ndisplay \"Audit Clearance: \" + approved ?color=\"green\"",
+        "id": "ex_ch55_1",
+        "title": "Challenge 55: Regex Test",
+        "prompt": "Load <code>Regex</code>, test if <code>'abc123'</code> contains digits <code>'[0-9]+'</code>, and display the result.",
+        "starterCode": "! Test regex pattern\n",
+        "hint": "load Regex\ndisplay Regex.test('[0-9]+', 'abc123')",
+        "solution": "load Regex\ndisplay Regex.test('[0-9]+', 'abc123')",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch20-master-cheatsheet",
+    "id": "ch56-fs-lib",
     "number": 56,
-    "section": "Section 15: Reference & Complete Language Specification",
-    "title": "Master Language Specification & Complete Attribute Cheatsheet",
-    "category": "Quick Reference",
-    "readTime": "15 min read",
-    "summary": "Exhaustive rapid-reference manual cataloging all 56 Academy chapters, core command attributes, error taxonomy, modern .h.vrs headers, first-class enums, structs, and pipelines.",
-    "body": "\n            <h2>Complete Command &amp; Attribute Matrix Table</h2>\n            <p>Below is the complete, exhaustive reference matrix of all VerScript keywords, their supported attributes, data types, default behaviors, and usage examples:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Command / Keyword</th>\n                            <th>Supported Attributes &amp; Modifiers</th>\n                            <th>Accepted Types &amp; Formats</th>\n                            <th>Default Value</th>\n                            <th>Example Syntax</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>header</code></td>\n                            <td><code>&lt;Name&gt;:</code></td>\n                            <td>Header pragma and prototype declaration block in <code>.h.vrs</code> files</td>\n                            <td>N/A</td>\n                            <td><code>header AppConfig:<br>&nbsp;&nbsp;config:<br>&nbsp;&nbsp;&nbsp;&nbsp;strict_mode: true</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>config:</code></td>\n                            <td><code>strict_mode</code><br><code>error_mode</code><br><code>timeout_ms</code></td>\n                            <td>Compiler configuration pragma block inside headers</td>\n                            <td>N/A</td>\n                            <td><code>config:<br>&nbsp;&nbsp;strict_mode: true<br>&nbsp;&nbsp;timeout_ms: 5000</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>include</code></td>\n                            <td><code>\"path.h.vrs\"</code></td>\n                            <td>Explicit header and library file inclusion with include-guards</td>\n                            <td>N/A</td>\n                            <td><code>include \"config/app.h.vrs\"</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>enum</code></td>\n                            <td><code>&lt;Name&gt;: [v1, v2]</code><br><code>&lt;Name&gt;: v1 = N</code></td>\n                            <td>First-class sealed enumeration entity with dot access (<code>Status.Active</code>)</td>\n                            <td>N/A</td>\n                            <td><code>enum Status: Pending, Active, Done</code><br><code>enum Code: OK = 200, Err = 500</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>struct</code></td>\n                            <td><code>&lt;Name&gt;: f1: type, ...</code></td>\n                            <td>Lightweight typed record blueprint with auto-constructor</td>\n                            <td>N/A</td>\n                            <td><code>struct Point: x: num, y: num</code><br><code>set p: Point(10, 20)</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>case</code></td>\n                            <td><code>&lt;pat&gt; [if &lt;guard&gt;]:</code></td>\n                            <td>Pattern matching branch with optional conditional guard clause</td>\n                            <td>N/A</td>\n                            <td><code>case 200: display \"OK\"</code><br><code>case _ if x &gt; 50: reply true</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>|&gt;</code></td>\n                            <td><code>expr |&gt; func</code></td>\n                            <td>Forward pipeline chaining operator</td>\n                            <td>N/A</td>\n                            <td><code>val |&gt; double |&gt; display</code></td>\n                        </tr>\n  \n                        <tr>\n                            <td><code>display</code></td>\n                            <td><code>?color</code><br><code>?newline</code><br><code>?inline</code></td>\n                            <td>Named (<code>\"red\"</code>, <code>\"green\"</code>, <code>\"yellow\"</code>, <code>\"blue\"</code>, <code>\"purple\"</code>, <code>\"cyan\"</code>, <code>\"white\"</code>) or Hex (<code>#RRGGBB</code>, <code>#RGB</code>, quoted/unquoted)<br>Boolean (<code>true</code> / <code>false</code>)<br>Flag modifier</td>\n                            <td><code>white</code><br><code>true</code><br>N/A</td>\n                            <td><code>display \"Hi\" ?color=#00ffcc</code><br><code>display \"Loading: \" ?inline</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>prompt</code></td>\n                            <td><code>?default</code></td>\n                            <td>String / Number fallback value</td>\n                            <td><code>\"\"</code> (empty string)</td>\n                            <td><code>prompt user ?default=\"Guest\"</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>set</code></td>\n                            <td><code>var : val</code></td>\n                            <td>Explicit variable declaration and assignment statement</td>\n                            <td>N/A</td>\n                            <td><code>set max_buffer : 1024</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>loop</code></td>\n                            <td><code>step N</code></td>\n                            <td>Integer (&gt; 0) cadence multiplier</td>\n                            <td><code>1</code></td>\n                            <td><code>loop 10 step 2</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>iterate</code></td>\n                            <td><code>from X to Y</code><br><code>step S</code></td>\n                            <td>Integer bounds<br>Integer step cadence (&gt; 0)</td>\n                            <td>N/A<br><code>1</code></td>\n                            <td><code>iterate i from 1 to 50 step 5</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>while</code></td>\n                            <td><code>step N</code></td>\n                            <td>Conditional loop with integer step cadence</td>\n                            <td><code>1</code></td>\n                            <td><code>while count &lt; 10 step 2</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>until</code></td>\n                            <td><code>step N</code></td>\n                            <td>Inverted condition loop (halts when true)</td>\n                            <td><code>1</code></td>\n                            <td><code>until power &gt;= 100</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>if</code></td>\n                            <td><code>then</code></td>\n                            <td>Single-line conditional or indented block</td>\n                            <td>N/A</td>\n                            <td><code>if score &gt;= 90 then display \"Ace\"</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>do</code></td>\n                            <td>Guarded block starter</td>\n                            <td>Enclosing scope for <code>unless</code> exception interceptor</td>\n                            <td>N/A</td>\n                            <td><code>do<br>&nbsp;&nbsp;calc : 100 / 0<br>unless DivisionByZeroError</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>unless</code></td>\n                            <td><code>internal</code><br><code>external</code><br><code>&lt;ErrorName&gt;</code></td>\n                            <td>Reactive internal variable condition<br>External sensor/signal condition<br>Specific named exception trap</td>\n                            <td>Default generic error trap</td>\n                            <td><code>unless internal temp &gt; 100</code><br><code>unless external isLocked</code><br><code>unless DomainError</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>throw</code></td>\n                            <td><code>?msg</code></td>\n                            <td>String (custom error payload)</td>\n                            <td><code>\"User thrown error\"</code></td>\n                            <td><code>throw HardwareFault ?msg=\"Low Voltage\"</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>inject</code></td>\n                            <td><code>[language]</code><br><code>?color</code></td>\n                            <td>100+ Language Identifiers (<code>python</code>, <code>js</code>, <code>rust</code>, <code>c</code>, <code>verscript</code>)<br>Color string or hex code</td>\n                            <td>N/A<br><code>\"white\"</code></td>\n                            <td><code>inject python ?color=\"yellow\"</code><br><code>inject verscript</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>alias</code></td>\n                            <td><code>cmd1: cmd2</code><br><code>? orig=new</code><br><code>alias:</code> (block)</td>\n                            <td>Identifier remapping<br>Attribute mapping key-value pairs<br>Multi-line alias table</td>\n                            <td>N/A</td>\n                            <td><code>alias display: print</code><br><code>alias display: log ? color=tint</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>def</code></td>\n                            <td><code>func</code><br><code>method</code><br><code>inbound</code><br><code>outbound</code></td>\n                            <td>Routine type &amp; purity contract specifiers</td>\n                            <td><code>func</code> (inbound)<br><code>method</code> (outbound)</td>\n                            <td><code>def func add x y</code><br><code>def outbound method log_msg m</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>reply</code></td>\n                            <td><code>[expression]</code></td>\n                            <td>Return expression in functions; bare exit in methods</td>\n                            <td>N/A</td>\n                            <td><code>reply x + y</code><br><code>reply ! early exit</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>SuppressErrors</code></td>\n                            <td>None</td>\n                            <td>Block scope silencing Tiers 1–3 errors</td>\n                            <td>N/A</td>\n                            <td><code>SuppressErrors<br>&nbsp;&nbsp;bad_call : 10 / 0</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>CriticalErrors</code></td>\n                            <td>None</td>\n                            <td>Block scope silencing Tiers 1–2 errors</td>\n                            <td>N/A</td>\n                            <td><code>CriticalErrors<br>&nbsp;&nbsp;calc : sqrt(-1)</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>ForceErrors</code></td>\n                            <td>None</td>\n                            <td>Block scope zero-tolerance strict mode</td>\n                            <td>N/A</td>\n                            <td><code>ForceErrors<br>&nbsp;&nbsp;strict_test()</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>arr</code></td>\n                            <td><code>items: [v1, v2]</code><br><code>items[idx]</code></td>\n                            <td>Dynamic heterogeneous array declaration, indexing &amp; mutation</td>\n                            <td>Empty array</td>\n                            <td><code>arr list: [1, \"two\", true]<br>list[0]: 99</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>class</code></td>\n                            <td><code>(args...)</code><br><code>static:</code><br><code>dynamic:</code></td>\n                            <td>Entity blueprint; static immutable partition, dynamic mutable partition</td>\n                            <td>N/A</td>\n                            <td><code>class Hero(name)<br>&nbsp;&nbsp;dynamic: hp: 100</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>lib</code> / <code>library</code></td>\n                            <td><code>const:</code><br><code>dynamic:</code></td>\n                            <td>Pure functional static library; unqualified member access</td>\n                            <td>N/A</td>\n                            <td><code>lib MathLib<br>&nbsp;&nbsp;const: PI: 314</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>outscope</code></td>\n                            <td><code>var: val</code></td>\n                            <td>Target true global/outer scope from inside entity methods</td>\n                            <td>N/A</td>\n                            <td><code>outscope global_log: 1</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Native Mathematics &amp; Built-in Functions Reference</h2>\n            <p>VerScript provides a comprehensive, high-speed native mathematics suite built directly into the C virtual machine:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Operator / Function</th>\n                            <th>Category</th>\n                            <th>Description &amp; Behavior</th>\n                            <th>Syntax &amp; Example</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>^</code></td>\n                            <td>Power Operator</td>\n                            <td>Exponentiation (Right-to-Left associativity)</td>\n                            <td><code>2 ^ 8</code> &rarr; <code>256</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>//</code></td>\n                            <td>Integer Division</td>\n                            <td>Floor division yielding integer quotient</td>\n                            <td><code>17 // 5</code> &rarr; <code>3</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>%</code></td>\n                            <td>Modulo Operator</td>\n                            <td>Remainder of integer division</td>\n                            <td><code>17 % 5</code> &rarr; <code>2</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>|x|</code></td>\n                            <td>Absolute Value</td>\n                            <td>Enclosing pipe delimiter returning non-negative magnitude</td>\n                            <td><code>|-42|</code> &rarr; <code>42</code>, <code>|3 - 10|</code> &rarr; <code>7</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>x!</code></td>\n                            <td>Factorial Operator</td>\n                            <td>Postfix factorial operator (integer &gt;= 0)</td>\n                            <td><code>5!</code> &rarr; <code>120</code>, <code>0!</code> &rarr; <code>1</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>sqrt(x)</code></td>\n                            <td>Root Function</td>\n                            <td>Square root of non-negative number</td>\n                            <td><code>sqrt(144)</code> &rarr; <code>12</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>rt(x, r)</code></td>\n                            <td>Generalized Root</td>\n                            <td>r-th root of number x</td>\n                            <td><code>rt(27, 3)</code> &rarr; <code>3</code>, <code>rt(16, 4)</code> &rarr; <code>2</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>min(a, b)</code> / <code>max(a, b)</code></td>\n                            <td>Extremum</td>\n                            <td>Minimum or maximum of two numbers</td>\n                            <td><code>min(10, 4)</code> &rarr; <code>4</code>, <code>max(10, 4)</code> &rarr; <code>10</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>clamp(x, low, hi)</code></td>\n                            <td>Range Bounding</td>\n                            <td>Restricts value x within inclusive [low, hi] range</td>\n                            <td><code>clamp(150, 0, 100)</code> &rarr; <code>100</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>sign(x)</code> / <code>sgn(x)</code></td>\n                            <td>Signum</td>\n                            <td>Returns <code>1</code> if positive, <code>-1</code> if negative, <code>0</code> if zero</td>\n                            <td><code>sign(-25)</code> &rarr; <code>-1</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>isEven(n)</code> / <code>isOdd(n)</code></td>\n                            <td>Parity Check</td>\n                            <td>Integer parity predicates returning boolean <code>1</code> or <code>0</code></td>\n                            <td><code>isEven(42)</code> &rarr; <code>1</code>, <code>isOdd(42)</code> &rarr; <code>0</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>gcd(a, b)</code> / <code>lcm(a, b)</code></td>\n                            <td>Number Theory</td>\n                            <td>Greatest common divisor &amp; least common multiple</td>\n                            <td><code>gcd(24, 36)</code> &rarr; <code>12</code>, <code>lcm(4, 6)</code> &rarr; <code>12</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>floor(x)</code> / <code>ceil(x)</code> / <code>round(x)</code></td>\n                            <td>Rounding</td>\n                            <td>Standard floating-point rounding routines</td>\n                            <td><code>floor(3.8)</code> &rarr; <code>3</code>, <code>ceil(3.2)</code> &rarr; <code>4</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>lerp(a, b, t)</code></td>\n                            <td>Interpolation</td>\n                            <td>Linear interpolation: <code>a + (b - a) * t</code></td>\n                            <td><code>lerp(0, 100, 0.25)</code> &rarr; <code>25</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>divRem(a, b)</code></td>\n                            <td>Division / Remainder</td>\n                            <td>Dual division operation</td>\n                            <td><code>divRem(17, 5)</code> &rarr; <code>3</code> (remainder stored)</td>\n                        </tr>\n                        <tr>\n                            <td><code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code></td>\n                            <td>Trigonometry</td>\n                            <td>Standard circular trigonometric functions (radians)</td>\n                            <td><code>sin(0)</code> &rarr; <code>0</code>, <code>cos(0)</code> &rarr; <code>1</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code></td>\n                            <td>Inverse Trig</td>\n                            <td>Arc functions; domain of asin/acos restricted to <code>|x| &lt;= 1</code></td>\n                            <td><code>atan(1)</code> &rarr; <code>0.785398</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>atan2(y, x)</code></td>\n                            <td>Four-Quadrant Arc Trig</td>\n                            <td>Two-argument arc tangent with sign quadrant recovery</td>\n                            <td><code>atan2(1, 1)</code> &rarr; <code>0.785398</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>sinh(x)</code>, <code>cosh(x)</code>, <code>tanh(x)</code></td>\n                            <td>Hyperbolic</td>\n                            <td>Hyperbolic trigonometric functions</td>\n                            <td><code>sinh(0)</code> &rarr; <code>0</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>rad(deg)</code> / <code>deg(rad)</code></td>\n                            <td>Angle Conversion</td>\n                            <td>Convert between degrees and radians</td>\n                            <td><code>rad(180)</code> &rarr; <code>3.14159</code>, <code>deg(pi)</code> &rarr; <code>180</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>log(x)</code> / <code>log2(x)</code> / <code>log10(x)</code></td>\n                            <td>Logarithms</td>\n                            <td>Natural, base-2, and base-10 logarithms (requires <code>x &gt; 0</code>)</td>\n                            <td><code>log2(1024)</code> &rarr; <code>10</code>, <code>log10(1000)</code> &rarr; <code>3</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>pi</code>, <code>tau</code>, <code>phi</code>, <code>inf</code>, <code>e</code></td>\n                            <td>Constants</td>\n                            <td>Built-in mathematical constants</td>\n                            <td><code>pi</code> &rarr; <code>3.14159...</code>, <code>e</code> &rarr; <code>2.71828...</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Complete Boolean Logic Gates Specification</h2>\n            <p>VerScript provides a full family of binary logic gates with short-circuiting and boolean operators:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Gate Keyword / Symbol</th>\n                            <th>Logic Gate Name</th>\n                            <th>Truth Evaluation Semantics</th>\n                            <th>Example Expression</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>and</code>, <code>&amp;</code></td>\n                            <td>Logical AND</td>\n                            <td>True only when both operands evaluate to true.</td>\n                            <td><code>(x &gt; 0) and (y &lt; 10)</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>or</code></td>\n                            <td>Logical OR</td>\n                            <td>True when at least one operand evaluates to true.</td>\n                            <td><code>isReady or isOverride</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>nor</code></td>\n                            <td>Logical NOR</td>\n                            <td>True only when both operands evaluate to false.</td>\n                            <td><code>hasFault nor hasWarning</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>xor</code></td>\n                            <td>Exclusive OR (XOR)</td>\n                            <td>True when exactly one operand evaluates to true, false otherwise.</td>\n                            <td><code>manualMode xor autoMode</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>xnor</code></td>\n                            <td>Exclusive NOR (XNOR)</td>\n                            <td>True when both operands evaluate to identical truth values.</td>\n                            <td><code>stateA xnor stateB</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>xand</code>, <code>x&amp;</code></td>\n                            <td>Logical NAND</td>\n                            <td>False only when both operands evaluate to true; true otherwise.</td>\n                            <td><code>valveA xand valveB</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>!</code></td>\n                            <td>Logical NOT</td>\n                            <td>Inverts boolean truth value (true &rarr; false, false &rarr; true).</td>\n                            <td><code>!isCompleted</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Dynamic Arrays &amp; Collection Operations Cheatsheet</h2>\n            <p>Arrays in VerScript are heterogeneous, dynamic collections allocated on the heap:</p>\n            <ul>\n                <li><strong>Declaration</strong>: <code>arr telemetry: [120, 240, 360, 480]</code></li>\n                <li><strong>Indexing (0-based)</strong>: <code>first_val : telemetry[0]</code></li>\n                <li><strong>Mutation</strong>: <code>telemetry[2] : 999</code></li>\n                <li><strong>Dynamic Heterogeneity</strong>: <code>arr mixed: [\"OK\", 200, true, 3.1415]</code></li>\n                <li><strong>Iteration</strong>:\n                    <pre><code class=\"language-verscript\">arr sensors: [\"Temp\", \"Pressure\", \"Voltage\"]\niterate i from 0 to 2\n    display \"Sensor: \" + sensors[i] ?color=\"cyan\"</code></pre>\n                </li>\n            </ul>\n\n            \n            <h2>Native DataType Constraints &amp; Type Safety Reference</h2>\n            <p>VerScript supports both prefix and bare type declarations, parameter typing, and custom <code>DataType</code> blocks:</p>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Declaration Form</th>\n                            <th>Description</th>\n                            <th>Validation Semantics</th>\n                            <th>Example Syntax</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr><td><code>set &lt;type&gt; &lt;var&gt; : &lt;val&gt;</code></td><td>Explicit typed variable declaration</td><td>Validates value and locks variable type</td><td><code>set num limit : 100</code></td></tr>\n                        <tr><td><code>&lt;type&gt; &lt;var&gt; : &lt;val&gt;</code></td><td>Bare typed variable declaration</td><td>Validates value and locks variable type</td><td><code>port p : 8080</code></td></tr>\n                        <tr><td><code>def func(num a, str b)</code></td><td>Prefix parameter typing</td><td>Validates inbound arguments</td><td><code>def func calc(num x, num y)</code></td></tr>\n                        <tr><td><code>def func(a: num, b: str)</code></td><td>Postfix parameter typing</td><td>Validates inbound arguments</td><td><code>def func send(msg: str, id: num)</code></td></tr>\n                        <tr><td><code>DataType Name extends Base</code></td><td>Custom type definition</td><td>Chains boolean <code>it</code> rules via AND</td><td><code>DataType Port extends num<br>&nbsp;&nbsp;it &gt;= 1<br>&nbsp;&nbsp;it &lt;= 65535</code></td></tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Native Pseudo &amp; Random Generation Engine Reference</h2>\n            <p>Pseudo and Random are synonymous native virtual machine engines (no imports required):</p>\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Direct Invocation</th>\n                            <th>Dot Notation</th>\n                            <th>Return Type</th>\n                            <th>Behavior</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr><td><code>between min, max</code></td><td><code>Pseudo.between(min, max)</code></td><td><code>num</code></td><td>Random integer in inclusive range [min, max]</td></tr>\n                        <tr><td><code>random()</code> / <code>next()</code></td><td><code>Pseudo.random()</code></td><td><code>num</code></td><td>Random integer [0, 2147483647]</td></tr>\n                        <tr><td><code>choice arr</code></td><td><code>Pseudo.choice(arr)</code></td><td>Any</td><td>Random element selected from array</td></tr>\n                        <tr><td><code>shuffle arr</code></td><td><code>Pseudo.shuffle(arr)</code></td><td><code>arr</code></td><td>Returns a new shuffled copy of array</td></tr>\n                        <tr><td><code>sample arr, k</code></td><td><code>Pseudo.sample(arr, k)</code></td><td><code>arr</code></td><td>Sample k random elements from array</td></tr>\n                        <tr><td><code>boolean()</code></td><td><code>Pseudo.boolean()</code></td><td><code>bool</code></td><td>Random true or false</td></tr>\n                        <tr><td><code>uuid()</code></td><td><code>Pseudo.uuid()</code></td><td><code>str</code></td><td>RFC4122 v4 UUID string</td></tr>\n                        <tr><td><code>name()</code></td><td><code>Pseudo.name()</code></td><td><code>str</code></td><td>Realistic mock full name</td></tr>\n                        <tr><td><code>email()</code></td><td><code>Pseudo.email()</code></td><td><code>str</code></td><td>Realistic mock email address</td></tr>\n                        <tr><td><code>alphaNumeric len</code></td><td><code>Pseudo.alphaNumeric(len)</code></td><td><code>str</code></td><td>Random alphanumeric string</td></tr>\n                        <tr><td><code>seed s</code></td><td><code>Pseudo.seed(s)</code></td><td>Void</td><td>Set deterministic PRNG seed</td></tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Standard 8-Tier Operator Precedence Hierarchy</h2>\n            <p>Expressions are evaluated deterministically according to this standard 8-tier precedence hierarchy:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Precedence Tier</th>\n                            <th>Operators</th>\n                            <th>Description</th>\n                            <th>Associativity</th>\n                            <th>Example</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><strong>1 (Highest)</strong></td>\n                            <td><code>(...)</code>, <code>|x|</code>, <code>x!</code>, <code>arr[i]</code>, <code>obj.prop</code></td>\n                            <td>Grouping, Absolute value, Postfix factorial, Indexing, Member access</td>\n                            <td>Left-to-Right / Postfix</td>\n                            <td><code>|3 - 7|!</code> &rarr; <code>24</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>2</strong></td>\n                            <td><code>+</code>, <code>-</code> (unary), <code>!</code></td>\n                            <td>Unary identity, Unary negation, Logical NOT</td>\n                            <td>Right-to-Left</td>\n                            <td><code>-4</code>, <code>!isValid</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>3</strong></td>\n                            <td><code>^</code></td>\n                            <td>Exponentiation (Power)</td>\n                            <td>Right-to-Left</td>\n                            <td><code>2 ^ 3 ^ 2</code> &rarr; <code>512</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>4</strong></td>\n                            <td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></td>\n                            <td>Multiplication, Float division, Floor division, Modulo</td>\n                            <td>Left-to-Right</td>\n                            <td><code>10 * 3 // 4</code> &rarr; <code>7</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>5</strong></td>\n                            <td><code>+</code>, <code>-</code></td>\n                            <td>Addition, Subtraction, String concatenation</td>\n                            <td>Left-to-Right</td>\n                            <td><code>5 + 10 - 2</code> &rarr; <code>13</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>6</strong></td>\n                            <td><code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code></td>\n                            <td>Relational and Equality Comparisons</td>\n                            <td>Left-to-Right</td>\n                            <td><code>score &gt;= 75</code></td>\n                        </tr>\n                        \n                        <tr>\n                            <td><strong>7</strong></td>\n                            <td><code>|&gt;</code></td>\n                            <td>Forward Pipeline Chaining Operator</td>\n                            <td>Left-to-Right</td>\n                            <td><code>data |&gt; transform |&gt; send</code></td>\n                        </tr>\n  <tr>\n                            <td><strong>7</strong></td>\n                            <td><code>and</code>, <code>&amp;</code>, <code>or</code>, <code>nor</code>, <code>xor</code>, <code>xnor</code>, <code>xand</code></td>\n                            <td>Boolean Logic Gates</td>\n                            <td>Left-to-Right</td>\n                            <td><code>ready and !fault</code></td>\n                        </tr>\n                        <tr>\n                            <td><strong>8 (Lowest)</strong></td>\n                            <td><code>:</code>, <code>x=</code></td>\n                            <td>Variable assignment, In-place multiplication</td>\n                            <td>Right-to-Left</td>\n                            <td><code>power : 100</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Compiler CLI Flags &amp; Execution Pragmas Reference</h2>\n            <p>The VerScript binary (<code>verscript</code>) provides CLI flags for execution, introspection, and debugging:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>CLI Flag</th>\n                            <th>Description</th>\n                            <th>Usage Example</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td><code>verscript &lt;file.vrs&gt;</code></td>\n                            <td>Execute the target VerScript program</td>\n                            <td><code>verscript main.vrs</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>verscript -c &lt;file.vrs&gt;</code></td>\n                            <td>Syntax check and validate without executing</td>\n                            <td><code>verscript -c main.vrs</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>verscript --ast &lt;file.vrs&gt;</code></td>\n                            <td>Dump abstract syntax tree to stdout</td>\n                            <td><code>verscript --ast pipeline.vrs</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>verscript --tokens &lt;file.vrs&gt;</code></td>\n                            <td>Dump token stream from lexer</td>\n                            <td><code>verscript --tokens pipeline.vrs</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>verscript --repl</code></td>\n                            <td>Launch interactive read-eval-print loop</td>\n                            <td><code>verscript --repl</code></td>\n                        </tr>\n                        <tr>\n                            <td><code>verscript -v</code>, <code>--version</code></td>\n                            <td>Display compiler version &amp; build timestamp</td>\n                            <td><code>verscript --version</code></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <h2>Standard Library Ecosystem Directory (18 Release Modules)</h2>\n            <p>VerScript ships with 19 core libraries conforming to the <code>.lib.vrs</code> standard distribution:</p>\n\n            <div class=\"doc-table-wrapper\">\n                <table class=\"doc-table\">\n                    <thead>\n                        <tr>\n                            <th>Module File</th>\n                            <th>Common Aliases</th>\n                            <th>Primary Capabilities</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr><td><code>Console.lib.vrs</code></td><td><code>Console</code>, <code>Term</code></td><td>Formatted terminal I/O, cursor controls, clear screen, progress bars</td></tr>\n                        <tr><td><code>String.lib.vrs</code></td><td><code>String</code>, <code>Str</code></td><td>Padding, casing, trimming, substring, replacement, split</td></tr>\n                        <tr><td><code>Array.lib.vrs</code></td><td><code>Array</code>, <code>Arr</code></td><td>Reversal, slice, filtering, mapped collections, deduplication</td></tr>\n                        <tr><td><code>DateTime.lib.vrs</code></td><td><code>DateTime</code>, <code>Time</code></td><td>High-precision timestamps, format strings, timezone conversions</td></tr>\n                        <tr><td><code>File.lib.vrs</code></td><td><code>File</code>, <code>FS</code></td><td>File reading, appending, existence checks, directory operations</td></tr>\n                        <tr><td><code>Crypto.lib.vrs</code></td><td><code>Crypto</code>, <code>Hash</code></td><td>Cryptographic hashing, HMAC, encoding (Base64, Hex), UUIDs</td></tr>\n                        <tr><td><code>Color.lib.vrs</code></td><td><code>Color</code>, <code>Palette</code></td><td>ANSI escape colors, RGB-to-Hex converters, color theme palettes</td></tr>\n                        <tr><td><code>Benchmark.lib.vrs</code></td><td><code>Benchmark</code>, <code>Bench</code></td><td>Nanosecond execution timers, benchmark iterations, profiling</td></tr>\n                        <tr><td><code>Process.lib.vrs</code></td><td><code>Process</code>, <code>Proc</code></td><td>OS process spawn, PID retrieval, environment variable access</td></tr>\n                        <tr><td><code>Json.lib.vrs</code></td><td><code>Json</code></td><td>Lightweight JSON serialization, key extraction, parsing</td></tr>\n                        <tr><td><code>Path.lib.vrs</code></td><td><code>Path</code></td><td>Cross-platform path normalization, basename, dirname, joins</td></tr>\n                        <tr><td><code>Assert.lib.vrs</code></td><td><code>Assert</code></td><td>Test assertions: <code>equal</code>, <code>notEqual</code>, <code>true</code>, <code>throws</code></td></tr>\n                        <tr><td><code>Http.lib.vrs</code></td><td><code>Http</code>, <code>Fetch</code></td><td>HTTP GET/POST client requests, headers, status codes</td></tr>\n                        <tr><td><code>Regex.lib.vrs</code></td><td><code>Regex</code>, <code>Re</code></td><td>Pattern matching, regex test, text capture groups</td></tr>\n                                                <tr><td><code>Env.lib.vrs</code></td><td><code>Env</code></td><td>Environment variables: read, write, validate configurations</td></tr>\n                        <tr><td><code>Stats.lib.vrs</code></td><td><code>Stats</code></td><td>Mean, median, mode, variance, standard deviation, percentiles</td></tr>\n                        <tr><td><code>Geometry.lib.vrs</code></td><td><code>Geometry</code>, <code>Geo</code></td><td>2D/3D Euclidean distance, vector dot product, perimeter, area</td></tr>\n                        <tr><td><code>Async.lib.vrs</code></td><td><code>Async</code>, <code>Task</code></td><td>Asynchronous task scheduling, simulated sleep, promise chains</td></tr>\n                    </tbody>\n                </table>\n            </div>\n",
+    "section": "Section 14: System & I/O Ecosystem",
+    "subsection": "Operating System & Network",
+    "title": "The Fs Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "File system operations: file verification, path inspections, and formats with 'load Fs'.",
+    "body": "\n      <h2>Persistent File Verification</h2>\n      <p>Inspect files and directory structures safely using the <code>Fs</code> library.</p>\n    ",
     "codeBlocks": [
       {
-        "id": "cb_spec_1",
-        "title": "master_reference.vrs",
-        "code": "! Complete VerScript Language Feature Demonstration\nheader MasterSuite:\n    config:\n        strict_mode: true\n\nenum Status: Pending = 0, Active = 1, Complete = 2\n\nstruct Job:\n    id: num\n    status: num\n\ndef func double(x):\n    reply x * 2\n\nset current_job: Job(101, Status.Active)\nset is_done: if current_job.status == Status.Complete then \"DONE\" else \"IN_PROGRESS\"\n\ndisplay \"Job #\" + current_job.id + \" State: \" + is_done ?color=\"cyan\"\n\nset score: 5 |> double\nmatch score:\n    case 10:\n        display \"Score verified via pipeline!\" ?color=\"green\"\n    case _ if score > 10:\n        display \"High score\" ?color=\"yellow\"\n    else:\n        display \"Standard score\""
+        "id": "cb_ch56_1",
+        "title": "fs_demo.vrs",
+        "code": "load Fs\n\nset isVrs: Fs.isVrsFile(\"main.vrs\")\ndisplay \"Is .vrs file: \" + isVrs ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_spec_1",
-        "title": "Exercise 20.1: Complete Syntax Verification",
-        "prompt": "Using the cheatsheet table as reference, write a program that uses <code>alias display: out ? color=col</code>, runs <code>loop 2</code>, and prints <code>\"Reference Verified\"</code> in unquoted hex <code>?col=#00ffcc</code>.",
-        "starterCode": "! TODO: Write program according to Exercise 20.1\n",
-        "hint": "Use `alias display: out ? color=col`, `loop 2`, and `out \"Reference Verified\" ?col=#00ffcc`.",
-        "solution": "alias display: out ? color=col\nloop 2\n    out \"Reference Verified\" ?col=#00ffcc",
+        "id": "ex_ch56_1",
+        "title": "Challenge 56: Check VRS File",
+        "prompt": "Load <code>Fs</code> and display whether <code>'test.vrs'</code> is a VerScript file.",
+        "starterCode": "! Check VRS file extension\n",
+        "hint": "load Fs\ndisplay Fs.isVrsFile('test.vrs')",
+        "solution": "load Fs\ndisplay Fs.isVrsFile('test.vrs')",
         "expectedMatch": {}
-      },
+      }
+    ]
+  },
+  {
+    "id": "ch57-path-lib",
+    "number": 57,
+    "section": "Section 14: System & I/O Ecosystem",
+    "subsection": "Operating System & Network",
+    "title": "The Path Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "3 min read",
+    "summary": "Cross-platform filesystem path joins and extension parsing with 'load Path'.",
+    "body": "\n      <h2>Cross-Platform File Paths</h2>\n      <p>Different operating systems use different separators. The <code>Path</code> library handles cross-platform path normalization automatically.</p>\n    ",
+    "codeBlocks": [
       {
-        "id": "ex_spec_2",
-        "title": "Exercise 20.2: Comprehensive Attribute Validation",
-        "prompt": "Write a program combining <code>prompt client ?default=\"Admin\"</code> and <code>display \"Verified: \" + client ?color=#50fa7b</code>.",
-        "starterCode": "! TODO: Combine prompt with default and display with hex color\n",
-        "hint": "Use `prompt client ?default=\"Admin\"`.",
-        "solution": "prompt client ?default=\"Admin\"\ndisplay \"Verified: \" + client ?color=#50fa7b",
+        "id": "cb_ch57_1",
+        "title": "path_demo.vrs",
+        "code": "load Path\n\nset fullPath: Path.join(\"data\", \"settings.json\")\nset ext: Path.extname(fullPath)\n\ndisplay \"Joined Path: \" + fullPath ?color=cyan\ndisplay \"Extension: \" + ext ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch57_1",
+        "title": "Challenge 57: Path Extension",
+        "prompt": "Load <code>Path</code>, get the file extension of <code>'script.vrs'</code>, and display it.",
+        "starterCode": "! Get file extension\n",
+        "hint": "load Path\ndisplay Path.extname('script.vrs')",
+        "solution": "load Path\ndisplay Path.extname('script.vrs')",
         "expectedMatch": {}
-      },
+      }
+    ]
+  },
+  {
+    "id": "ch58-env-lib",
+    "number": 58,
+    "section": "Section 14: System & I/O Ecosystem",
+    "subsection": "Operating System & Network",
+    "title": "The Env Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "3 min read",
+    "summary": "Inspect and manage environment variables and runtime flags with 'load Env'.",
+    "body": "\n      <h2>Accessing System Environment</h2>\n      <p>Applications frequently read configuration values (like <code>PORT</code> or <code>API_KEY</code>) from the operating system environment. The <code>Env</code> library provides access with fallback defaults.</p>\n    ",
+    "codeBlocks": [
       {
-        "id": "ex_spec_3",
-        "title": "Exercise 20.3: Native Math & Logic Gate Integration",
-        "prompt": "Write a program that calculates <code>res : |-50| + (2 ^ 4) // 5</code> and tests <code>if (res > 50) and (!false) then</code> to display <code>\"Math Gate Certified\"</code> in green.",
-        "starterCode": "! TODO: Implement Exercise 20.3\n",
-        "hint": "Compute `res : |-50| + (2 ^ 4) // 5` and use `if (res > 50) and (!false) then display \"Math Gate Certified\" ?color=\"green\"`.",
-        "solution": "res : |-50| + (2 ^ 4) // 5\nif (res > 50) & (not false) then\n    display \"Math Gate Certified\" ?color=\"green\"",
+        "id": "cb_ch58_1",
+        "title": "env_demo.vrs",
+        "code": "load Env\n\nset isDev: Env.isDevelopment()\nset envMode: Env.get(\"MODE\", \"production\")\n\ndisplay \"Development mode: \" + isDev ?color=green\ndisplay \"Environment mode: \" + envMode ?color=cyan"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch58_1",
+        "title": "Challenge 58: Env Fallback",
+        "prompt": "Load <code>Env</code>, retrieve <code>'MODE'</code> with default <code>'development'</code>, and display it.",
+        "starterCode": "! Get env variable with fallback\n",
+        "hint": "load Env\ndisplay Env.get('MODE', 'development')",
+        "solution": "load Env\ndisplay Env.get('MODE', 'development')",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch59-time-lib",
+    "number": 59,
+    "section": "Section 14: System & I/O Ecosystem",
+    "subsection": "Operating System & Network",
+    "title": "The Time Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "3 min read",
+    "summary": "High-precision timestamps, epoch milliseconds, and leap year calculations with 'load Time'.",
+    "body": "\n      <h2>Handling Dates & Durations</h2>\n      <p>Measure benchmark elapsed time or query calendar arithmetic with the <code>Time</code> module.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch59_1",
+        "title": "time_demo.vrs",
+        "code": "load Time\n\nset t0: Time.epochMs()\nset leap: Time.isLeapYear(2028)\n\ndisplay \"Current Epoch MS: \" + t0 ?color=cyan\ndisplay \"2028 is leap year: \" + leap ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch59_1",
+        "title": "Challenge 59: Current Time",
+        "prompt": "Load <code>Time</code>, get current epoch ms with <code>Time.epochMs()</code>, and display whether it is greater than 0.",
+        "starterCode": "! Check current time\n",
+        "hint": "load Time\nset t: Time.epochMs()\ndisplay t > 0",
+        "solution": "load Time\nset t: Time.epochMs()\ndisplay t > 0",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch60-http-lib",
+    "number": 60,
+    "section": "Section 14: System & I/O Ecosystem",
+    "subsection": "Operating System & Network",
+    "title": "The Http Standard Library",
+    "category": "Standard Libraries",
+    "readTime": "4 min read",
+    "summary": "Inspect HTTP status codes, client/server errors, and network responses with 'load Http'.",
+    "body": "\n      <h2>Network & Web Requests</h2>\n      <p>Validate response codes and handle HTTP network logic seamlessly using the <code>Http</code> library.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch60_1",
+        "title": "http_demo.vrs",
+        "code": "load Http\n\nset ok: Http.isSuccess(200)\nset clientErr: Http.isClientError(404)\n\ndisplay \"200 is success: \" + ok ?color=green\ndisplay \"404 is client error: \" + clientErr ?color=yellow"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch60_1",
+        "title": "Challenge 60: HTTP Response Check",
+        "prompt": "Load <code>Http</code>, test if <code>200</code> is success using <code>Http.isSuccess(200)</code>, and display the result.",
+        "starterCode": "! Check HTTP success\n",
+        "hint": "load Http\ndisplay Http.isSuccess(200)",
+        "solution": "load Http\ndisplay Http.isSuccess(200)",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch61-log-lib",
+    "number": 61,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Log Standard Library",
+    "category": "Developer Tools",
+    "readTime": "3 min read",
+    "summary": "Structured log levels (info, warn, error, debug) with timestamps and subsystem tags with 'load Log'.",
+    "body": "\n      <h2>Structured Logging</h2>\n      <p>When running servers and complex apps, plain print statements get messy. The <code>Log</code> library adds automatic timestamps, log severity tags, and formatting.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch61_1",
+        "title": "log_demo.vrs",
+        "code": "load Log\n\nLog.info(\"Database connection established\")\nLog.warn(\"Memory consumption over 80%\")\nLog.error(\"Failed to reach payment gateway\")"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch61_1",
+        "title": "Challenge 61: Log Info",
+        "prompt": "Load <code>Log</code> and emit an info log: <code>Log.info('System online')</code>.",
+        "starterCode": "! Emit info log\n",
+        "hint": "load Log\nLog.info('System online')",
+        "solution": "load Log\nLog.info('System online')",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch62-color-lib",
+    "number": 62,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Color Standard Library",
+    "category": "Developer Tools",
+    "readTime": "3 min read",
+    "summary": "Terminal styling with ANSI colors, hex colors, and RGB conversion with 'load Color'.",
+    "body": "\n      <h2>Terminal Aesthetics</h2>\n      <p>Format terminal output with colors and custom RGB styles using <code>Color</code>.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch62_1",
+        "title": "color_demo.vrs",
+        "code": "load Color\n\nset hex: Color.rgbToHex(56, 189, 248)\nset wrapped: Color.ansiWrap(\"Success\", \"green\")\n\ndisplay \"Hex code: \" + hex ?color=yellow\ndisplay wrapped"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch62_1",
+        "title": "Challenge 62: RGB to Hex",
+        "prompt": "Load <code>Color</code> and convert RGB <code>255, 0, 0</code> to Hex using <code>Color.rgbToHex(255, 0, 0)</code>.",
+        "starterCode": "! Convert RGB to hex\n",
+        "hint": "load Color\ndisplay Color.rgbToHex(255, 0, 0)",
+        "solution": "load Color\ndisplay Color.rgbToHex(255, 0, 0)",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch63-console-lib",
+    "number": 63,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Console Standard Library",
+    "category": "Developer Tools",
+    "readTime": "3 min read",
+    "summary": "Interactive console messages, warnings, errors, and success notifications with 'load Console'.",
+    "body": "\n      <h2>Terminal User Interfaces</h2>\n      <p>Build beautiful CLI applications with structured console helpers using <code>Console</code>.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch63_1",
+        "title": "console_demo.vrs",
+        "code": "load Console\n\nConsole.info(\"Initializing system...\")\nConsole.success(\"Services started successfully!\")"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch63_1",
+        "title": "Challenge 63: Console Success",
+        "prompt": "Load <code>Console</code> and emit <code>Console.success('Ready!')</code>.",
+        "starterCode": "! Emit console success\n",
+        "hint": "load Console\nConsole.success('Ready!')",
+        "solution": "load Console\nConsole.success('Ready!')",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch64-benchmark-lib",
+    "number": 64,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Benchmark Standard Library",
+    "category": "Developer Tools",
+    "readTime": "4 min read",
+    "summary": "Generate execution reports, measure iterations, and track performance with 'load Benchmark'.",
+    "body": "\n      <h2>Measuring Code Speed</h2>\n      <p>Never guess whether an optimization worked. The <code>Benchmark</code> library formats execution reports.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch64_1",
+        "title": "benchmark_demo.vrs",
+        "code": "load Benchmark\n\nBenchmark.report(\"Array Push Loop\", 1000, 15)\ndisplay \"Benchmark report generated\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch64_1",
+        "title": "Challenge 64: Simple Benchmark",
+        "prompt": "Load <code>Benchmark</code> and generate a report with <code>Benchmark.report('Task', 100, 5)</code>.",
+        "starterCode": "! Generate benchmark report\n",
+        "hint": "load Benchmark\nBenchmark.report('Task', 100, 5)",
+        "solution": "load Benchmark\nBenchmark.report('Task', 100, 5)",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch65-mock-lib",
+    "number": 65,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Mock Standard Library",
+    "category": "Developer Tools",
+    "readTime": "3 min read",
+    "summary": "Mock return values, create test spies, and stub dependencies with 'load Mock'.",
+    "body": "\n      <h2>Isolated Unit Testing</h2>\n      <p>Test your business logic in isolation without making real network or database calls by replacing dependencies with <strong>Mocks</strong> and <strong>Spies</strong>.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch65_1",
+        "title": "mock_demo.vrs",
+        "code": "load Mock\n\nset stubVal: Mock.stub(\"mock_reply\")\nset s: Mock.spy(\"mailer\", 3)\n\ndisplay \"Stub value: \" + stubVal ?color=green\ndisplay \"Spy call tracker created\" ?color=cyan"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch65_1",
+        "title": "Challenge 65: Mock Stub",
+        "prompt": "Load <code>Mock</code>, create a stub with <code>Mock.stub(42)</code>, and display the stub value.",
+        "starterCode": "! Create stub\n",
+        "hint": "load Mock\nset s: Mock.stub(42)\ndisplay s",
+        "solution": "load Mock\nset s: Mock.stub(42)\ndisplay s",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch66-assert-lib",
+    "number": 66,
+    "section": "Section 15: Developer Tools & Diagnostics",
+    "subsection": "Tooling & Quality Assurance",
+    "title": "The Assert Standard Library",
+    "category": "Developer Tools",
+    "readTime": "3 min read",
+    "summary": "Strict test assertions: equal, notEqual, isTrue, isFalse, and tolerance checks with 'load Assert'.",
+    "body": "\n      <h2>Automated Verification</h2>\n      <p>Build reliable test suites that fail fast if an expectation is broken. The <code>Assert</code> library throws clear assertion errors when expectations fail.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch66_1",
+        "title": "assert_demo.vrs",
+        "code": "load Assert\n\nAssert.isTrue(10 > 5, \"10 must be greater than 5\")\nAssert.equal(2 + 2, 4, \"Arithmetic check\")\n\ndisplay \"All assertions passed successfully!\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch66_1",
+        "title": "Challenge 66: Assert Equal",
+        "prompt": "Load <code>Assert</code>, assert that <code>5 * 5 == 25</code>, and display 'Passed'.",
+        "starterCode": "! Assert equality\n",
+        "hint": "load Assert\nAssert.equal(5 * 5, 25, 'Math valid')\ndisplay 'Passed'",
+        "solution": "load Assert\nAssert.equal(5 * 5, 25, 'Math valid')\ndisplay 'Passed'",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch67-capstone-telemetry",
+    "number": 67,
+    "section": "Section 16: Grandmaster Systems Capstones",
+    "subsection": "Integrated Real-World Systems",
+    "title": "Capstone I: Telemetry Engine & Watchdog Supervisor",
+    "category": "Capstones",
+    "readTime": "8 min read",
+    "summary": "Build an industrial telemetry ingest engine combining channels, custom types, and logging supervisors.",
+    "body": "\n      <h2>The Mission: Resilient IoT Telemetry</h2>\n      <p>In this capstone, you construct a production-grade telemetry pipeline. Sensors stream metrics into an asynchronous queue, validation filters bad packets, and a supervisor catches anomalies!</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch67_1",
+        "title": "telemetry_engine.vrs",
+        "code": "load Log\n\nchan metricQueue\nsend metricQueue \"PACKET_101: 42C\"\nsend metricQueue \"PACKET_102: 88C\"\n\nLog.info(\"Received metric: \" + (recv metricQueue))\nLog.warn(\"Overheating detected: \" + (recv metricQueue))"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch67_1",
+        "title": "Capstone I Challenge: Packet Processor",
+        "prompt": "Create <code>chan q</code>, send <code>'METRIC_OK'</code> into <code>q</code>, receive it, and display the packet with color green.",
+        "starterCode": "! Build channel queue and receive packet\n",
+        "hint": "chan q\nsend q 'METRIC_OK'\nset msg: recv q\ndisplay msg ?color=green",
+        "solution": "chan q\nsend q 'METRIC_OK'\nset msg: recv q\ndisplay msg ?color=green",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch68-capstone-physics",
+    "number": 68,
+    "section": "Section 16: Grandmaster Systems Capstones",
+    "subsection": "Integrated Real-World Systems",
+    "title": "Capstone II: Physics Kernel & Symbolic Matrix Pipelines",
+    "category": "Capstones",
+    "readTime": "8 min read",
+    "summary": "Engineer a high-speed physics simulation kernel using native nD vectors, symbolic transformations (mat * vec), and event triggers.",
+    "body": "\n      <h2>The Mission: 2D/3D Kinematics Kernel</h2>\n      <p>Simulating movement in space requires continuous vector updates: acceleration modifies velocity, and velocity updates position. In this capstone, you will use VerScript's native symbolic matrix-vector operations to build a kinematics engine!</p>\n\n      <h2>Symbolic Linear Pipeline</h2>\n      <p>Instead of manually updating coordinates, you transform entities using direct arithmetic:</p>\n      <pre><code>set nextPos: position + (velocity * dt)\nset transformed: rotationMatrix * nextPos</code></pre>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch68_1",
+        "title": "physics_kernel.vrs",
+        "code": "load Matrix\nload Vector\n\n! 2D Rotation Matrix (90 degrees counterclockwise)\nset Rot90: [[0, -1], [1, 0]]\n\n! Particle state: Position and Velocity vectors\nset pos: [10, 0]\nset vel: [0, 5]\n\n! Apply 1 tick of kinematics: pos + vel\nset updatedPos: pos + vel\n\n! Rotate particle direction\nset rotated: Rot90 * updatedPos\n\ndisplay \"Updated Position: \" + updatedPos ?color=cyan\ndisplay \"Rotated State: \" + rotated ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch68_1",
+        "title": "Capstone II Challenge: Vector Translation",
+        "prompt": "Declare vectors <code>pos: [5, 10]</code> and <code>delta: [2, 3]</code>. Translate position by adding them <code>pos + delta</code> and display the result.",
+        "starterCode": "! Compute pos + delta\n",
+        "hint": "set pos: [5, 10]\nset delta: [2, 3]\ndisplay pos + delta",
+        "solution": "set pos: [5, 10]\nset delta: [2, 3]\ndisplay pos + delta",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch69-master-cheatsheet",
+    "number": 69,
+    "section": "Section 17: Complete Reference",
+    "subsection": "Language Reference",
+    "title": "Master Language Specification & Complete Cheatsheet",
+    "category": "Reference",
+    "readTime": "10 min read",
+    "summary": "The definitive reference manual: complete syntax grammar, operator precedence, all 28 error types, 21 stdlib modules, and compiler flags.",
+    "body": "\n      <h2>VerScript Complete Grammar & Reference</h2>\n      <p>This master reference catalogs the entire VerScript language specification for quick reference during development.</p>\n\n      <h2>Core Keywords</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Keyword Category</th><th>Keywords</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><strong>Declarations</strong></td><td><code>set</code>, <code>def</code>, <code>func</code>, <code>struct</code>, <code>DataType</code>, <code>enum</code>, <code>class</code>, <code>entity</code></td></tr>\n          <tr><td><strong>Control Flow</strong></td><td><code>if</code>, <code>then</code>, <code>else</code>, <code>while</code>, <code>loop</code>, <code>to</code>, <code>as</code>, <code>step</code>, <code>do</code></td></tr>\n          <tr><td><strong>Execution</strong></td><td><code>display</code>, <code>reply</code>, <code>break</code>, <code>continue</code>, <code>pass</code>, <code>exit</code></td></tr>\n          <tr><td><strong>Error Handling</strong></td><td><code>try</code>, <code>catch</code>, <code>finally</code>, <code>raise</code>, <code>on error goto</code></td></tr>\n          <tr><td><strong>Concurrency</strong></td><td><code>async</code>, <code>await</code>, <code>chan</code>, <code>send</code>, <code>recv</code>, <code>event</code>, <code>emit</code></td></tr>\n          <tr><td><strong>Modules & Modular</strong></td><td><code>load</code>, <code>import</code>, <code>export</code>, <code>from</code>, <code>header</code>, <code>interface</code></td></tr>\n        </tbody>\n      </table>\n\n      <h2>Standard Error Hierarchy (All 28 Error Types)</h2>\n      <p>VerScript categorizes runtime issues into strictly named error domains:</p>\n      <p><code>Error</code>, <code>TypeError</code>, <code>ValueError</code>, <code>KeyError</code>, <code>IndexError</code>, <code>AttributeError</code>, <code>SyntaxError</code>, <code>NameError</code>, <code>ZeroDivisionError</code>, <code>IOError</code>, <code>FileNotFoundError</code>, <code>ImportError</code>, <code>RuntimeError</code>, <code>TimeoutError</code>, <code>AssertionError</code>, <code>ChannelError</code>, <code>EventError</code>, <code>ConstraintError</code>, <code>InterfaceError</code>, <code>ContractError</code>, <code>PurityError</code>, <code>ImmutabilityError</code>, <code>ConstError</code>, <code>HeaderMismatchError</code>, <code>StructFieldCountError</code>, <code>InvalidHeaderError</code>, <code>RangeError</code>, <code>OperationError</code>.</p>\n\n      <h2>The 21 Native Standard Libraries</h2>\n      <p>All included out-of-the-box with zero third-party dependencies:</p>\n      <p><code>Math</code>, <code>Matrix</code>, <code>Vector</code>, <code>Stats</code>, <code>Pseudo</code>, <code>Arrays</code>, <code>Strings</code>, <code>Json</code>, <code>Validate</code>, <code>Crypto</code>, <code>Regex</code>, <code>Fs</code>, <code>Path</code>, <code>Env</code>, <code>Time</code>, <code>Http</code>, <code>Log</code>, <code>Color</code>, <code>Console</code>, <code>Benchmark</code>, <code>Mock</code>, <code>Assert</code>.</p>\n    ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch69_1",
+        "title": "master_reference_sample.vrs",
+        "code": "load Math\nload Vector\n\nDataType Positive extends num\n  it > 0\n\nset v1: [3, 4]\nset v2: [1, 2]\nset combined: v1 + v2\n\ndisplay \"Vector Sum: \" + combined ?color=green\ndisplay \"Square Root of 25: \" + Math.sqrt(25) ?color=cyan"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch69_1",
+        "title": "Master Reference Capstone Check",
+        "prompt": "Display <code>'VerScript Master Certification Complete'</code> with color green.",
+        "starterCode": "! Display graduation message\n",
+        "hint": "display 'VerScript Master Certification Complete' ?color=green",
+        "solution": "display 'VerScript Master Certification Complete' ?color=green",
         "expectedMatch": {}
       }
     ]
@@ -2026,5 +2024,5 @@ const ARTICLES = [
 ];
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ARTICLES };
+  module.exports = articlesData;
 }

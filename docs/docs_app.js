@@ -40,16 +40,26 @@ function initDocsApp() {
 function renderSidebarList(articlesToRender) {
     articleListEl.innerHTML = '';
     let currentSection = null;
+    let currentSubsection = null;
 
     articlesToRender.forEach((article) => {
         const originalIndex = ARTICLES.findIndex(a => a.id === article.id);
 
         if (article.section && article.section !== currentSection) {
             currentSection = article.section;
+            currentSubsection = null;
             const sectionDivider = document.createElement('li');
             sectionDivider.className = 'sidebar-section-divider';
             sectionDivider.innerHTML = `<span>${escapeHTML(currentSection)}</span>`;
             articleListEl.appendChild(sectionDivider);
+        }
+
+        if (article.subsection && article.subsection !== currentSubsection) {
+            currentSubsection = article.subsection;
+            const subDivider = document.createElement('li');
+            subDivider.className = 'sidebar-subsection-divider';
+            subDivider.innerHTML = `<span>↳ ${escapeHTML(currentSubsection)}</span>`;
+            articleListEl.appendChild(subDivider);
         }
 
         const li = document.createElement('li');
@@ -731,6 +741,11 @@ function evalSimpleExpr(expr, vars) {
     });
 
     try {
+        // Chained & nested ternary expressions: if cond then val1 else if cond2 then val2 else val3
+        while (/\bif\s+([^\n\r]+?)\s+then\s+([^\n\r]+?)\s+else\b/i.test(result)) {
+            result = result.replace(/\bif\s+([^\n\r]+?)\s+then\s+([^\n\r]+?)\s+else\b/g, '($1) ? ($2) : ');
+        }
+
         // Native Mathematical Constants
         result = result.replace(/\b(pi|π)\b/g, '3.141592653589793');
         result = result.replace(/\b(tau|τ)\b/g, '6.283185307179586');
@@ -891,15 +906,13 @@ function evalSimpleExpr(expr, vars) {
             };
 
             const Matrix = {
-                identity: (n) => {
-                    const res = [];
-                    for (let r = 0; r < n; r++) {
-                        const row = [];
-                        for (let c = 0; c < n; c++) row.push(r === c ? 1 : 0);
-                        res.push(row);
-                    }
-                    return res;
-                },
+                create: (r, c, v) => Array.from({length: r}, () => Array(c).fill(v)),
+                zeros: (r, c) => Array.from({length: r}, () => Array(c).fill(0)),
+                ones: (r, c) => Array.from({length: r}, () => Array(c).fill(1)),
+                identity: (n) => Array.from({length: n}, (_, r) => Array.from({length: n}, (_, c) => r === c ? 1 : 0)),
+                shape: (m) => Array.isArray(m) && m.length ? [m.length, Array.isArray(m[0]) ? m[0].length : 0] : [0, 0],
+                rows: (m) => Array.isArray(m) ? m.length : 0,
+                cols: (m) => Array.isArray(m) && m.length && Array.isArray(m[0]) ? m[0].length : 0,
                 transpose: (m) => {
                     if (!Array.isArray(m) || !m.length) return [];
                     const rows = m.length, cols = m[0].length;
@@ -911,7 +924,70 @@ function evalSimpleExpr(expr, vars) {
                     }
                     return res;
                 },
-                determinant2x2: (m) => (m[0][0] * m[1][1]) - (m[0][1] * m[1][0])
+                add: (a, b) => a.map((r, i) => r.map((val, j) => val + b[i][j])),
+                subtract: (a, b) => a.map((r, i) => r.map((val, j) => val - b[i][j])),
+                scale: (m, s) => m.map(r => r.map(val => val * s)),
+                multiply: (a, b) => {
+                    const r1 = a.length, c1 = a[0].length, c2 = b[0].length;
+                    const res = Array.from({length: r1}, () => Array(c2).fill(0));
+                    for (let r = 0; r < r1; r++) {
+                        for (let c = 0; c < c2; c++) {
+                            let sum = 0;
+                            for (let k = 0; k < c1; k++) sum += a[r][k] * b[k][c];
+                            res[r][c] = sum;
+                        }
+                    }
+                    return res;
+                },
+                trace: (m) => m.reduce((acc, r, i) => acc + (r[i] || 0), 0),
+                submatrix: (m, sr, sc) => m.filter((_, r) => r !== sr).map(row => row.filter((_, c) => c !== sc)),
+                determinant: function det(m) {
+                    if (!Array.isArray(m) || !m.length) return 0;
+                    if (m.length === 1) return m[0][0];
+                    if (m.length === 2) return (m[0][0] * m[1][1]) - (m[0][1] * m[1][0]);
+                    let total = 0, sign = 1;
+                    for (let c = 0; c < m.length; c++) {
+                        total += sign * m[0][c] * det(Matrix.submatrix(m, 0, c));
+                        sign *= -1;
+                    }
+                    return total;
+                },
+                determinant2x2: (m) => (m[0][0] * m[1][1]) - (m[0][1] * m[1][0]),
+                flatten: (m) => m.flat(),
+                equals: (a, b) => JSON.stringify(a) === JSON.stringify(b),
+                multiplyVector: (m, v) => m.map(r => r.reduce((acc, val, c) => acc + val * v[c], 0)),
+                fromRows: (v) => v.map(row => [...row]),
+                fromCols: (v) => {
+                    const cols = v.length, rows = v[0].length;
+                    return Array.from({length: rows}, (_, r) => Array.from({length: cols}, (_, c) => v[c][r]));
+                },
+                toRows: (m) => m,
+                toCols: (m) => Matrix.transpose(m)
+            };
+
+            const Vector = {
+                create: (d, v) => Array(d).fill(v),
+                zeros: (d) => Array(d).fill(0),
+                ones: (d) => Array(d).fill(1),
+                dim: (v) => Array.isArray(v) ? v.length : 0,
+                length: (v) => Array.isArray(v) ? v.length : 0,
+                add: (u, v) => u.map((x, i) => x + v[i]),
+                subtract: (u, v) => u.map((x, i) => x - v[i]),
+                scale: (v, s) => v.map(x => x * s),
+                dot: (u, v) => u.reduce((acc, x, i) => acc + x * v[i], 0),
+                magnitudeSq: (v) => v.reduce((acc, x) => acc + x * x, 0),
+                magnitude: (v) => Math.sqrt(v.reduce((acc, x) => acc + x * x, 0)),
+                norm: (v) => Math.sqrt(v.reduce((acc, x) => acc + x * x, 0)),
+                distance: (u, v) => Math.sqrt(u.reduce((acc, x, i) => acc + (x - v[i]) ** 2, 0)),
+                cross: (u, v) => [
+                    (u[1] * v[2]) - (u[2] * v[1]),
+                    (u[2] * v[0]) - (u[0] * v[2]),
+                    (u[0] * v[1]) - (u[1] * v[0])
+                ],
+                equals: (u, v) => JSON.stringify(u) === JSON.stringify(v),
+                toMatrix: (v, asCol = true) => asCol ? v.map(x => [x]) : [[...v]],
+                fromMatrix: (m) => m.length === 1 ? [...m[0]] : m.map(r => r[0]),
+                transform: (v, m) => Matrix.multiplyVector(m, v)
             };
 
             const Json = {
