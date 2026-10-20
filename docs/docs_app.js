@@ -313,6 +313,18 @@ function renderExerciseCard(ex, indexNum) {
 
 // ─── CODE EXECUTION ENGINE (CLOUD + SIMULATOR FALLBACK) ────────────
 async function executeCode(code, files = null) {
+    // Scan for prompt commands and collect user input interactively
+    let stdinPayload = '';
+    const promptMatches = [...code.matchAll(/prompt\s+([a-zA-Z0-9_]+)(?:\s+\?default="([^"]*)")?/g)];
+    if (promptMatches.length > 0 && typeof window !== 'undefined' && window.prompt) {
+        for (const pm of promptMatches) {
+            const vname = pm[1];
+            const defVal = pm[2] || '';
+            const entered = window.prompt(`[VerScript Academy] Enter value for prompt '${vname}':`, defVal);
+            stdinPayload += (entered !== null ? entered : defVal) + '\n';
+        }
+    }
+
     // 1. Try PolyServer remote C binary execution
     try {
         const controller = new AbortController();
@@ -320,7 +332,7 @@ async function executeCode(code, files = null) {
         const res = await fetch(`${POLYSERVER_API}/run`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code, files }),
+            body: JSON.stringify({ code, files, stdin: stdinPayload }),
             signal: controller.signal
         });
         clearTimeout(timeoutId);
@@ -544,7 +556,13 @@ function simulateVerScript(code) {
                 let rest = line.substring(7).trim();
                 const vname = rest.split(' ')[0];
                 let defMatch = rest.match(/\?default="([^"]*)"/);
-                vars[vname] = defMatch ? defMatch[1] : 'SampleInput';
+                const defaultVal = defMatch ? defMatch[1] : '';
+                let answer = defaultVal;
+                if (typeof window !== 'undefined' && window.prompt) {
+                    const res = window.prompt(`[VerScript Simulator] Enter value for '${vname}':`, defaultVal);
+                    if (res !== null) answer = res;
+                }
+                vars[vname] = (!isNaN(answer) && answer !== '') ? Number(answer) : answer;
                 i++;
             }
             // Header / Config / Enum / Struct / DataType definition blocks, pragmas, export, includes

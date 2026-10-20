@@ -1621,14 +1621,15 @@ display Benchmark.report("ChannelThroughput", 50000, 12) ?color=#00ffcc`,
 
         // Bottom Chamber: Pure VerScript Transmuted Output
         const verscriptSnippets = [
-            'display "Online" ?color=#00ffcc', 'alias display: print ? color=tint',
-            'iterate idx from 1 to 50 step 5', 'do ... unless internal temp > 100',
-            'SuppressErrors', 'loop 10 step 2', 'inject python ?color="yellow"',
-            'prompt user ?default="Admin"', 'power : 9000', 'score : score + 10',
-            'arr list: [1, "two", true]', 'class Hero(name) { dynamic: hp: 100 }',
-            'lib MathUtils { const: PI: 3.14 }', 'hero.take_damage 25',
-            'status x= 0', '?inline', 'throw HardwareFault ?msg="Low V"',
-            'CriticalErrors', '!! ... !!', '! active watchdog guard', 'print "Core: 64-bit C VM" ?tint=#50fa7b'
+            'header MathContract: func add(a, b)', 'include "matrix.h.vrs"',
+            'pragma strict', 'pragma once', 'export func solve(v: arr) ?pure=true',
+            'display "Online" ?color=#00ffcc ?newline=false', 'prompt user ?default="Admin"',
+            'func compute(x, y) ?pure=true ?memoize=true', 'iterate idx from 1 to 50 by 2',
+            'set v: [1, 2, 3] + [4, 5, 6]', 'set M: Matrix.det([[1, 2], [3, 4]])',
+            'guard status == true else reply 0', 'chan pipeline', 'send pipeline, 42',
+            'arr list: [1, "two", true]', 'DataType posNum: it > 0',
+            'class Hero(name): dynamic: hp: 100', 'lib MathUtils: const: PI: 3',
+            'expr |> Math.sqrt() |> display', 'print "Core: 64-bit C VM" ?tint=#50fa7b'
         ];
 
         const foreignColors = ['#6272a4', '#8be9fd', '#bd93f9', '#ffb86c', '#ff79c6', '#e06c75', '#abb2bf'];
