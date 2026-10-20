@@ -1,7 +1,7 @@
 // VerScript Academy Official Curriculum: 69 Distinct, Focused Chapters
 // Generated automatically with complete Section -> Subsection -> Chapter taxonomy
 
-const articlesData = [
+var ARTICLES = [
   {
     "id": "ch1-intro",
     "number": 1,
@@ -2022,7 +2022,18 @@ const articlesData = [
     ]
   }
 ];
+var articlesData = ARTICLES;
+
+if (typeof window !== 'undefined') {
+  window.ARTICLES = ARTICLES;
+  window.articlesData = ARTICLES;
+}
+
+if (typeof global !== 'undefined') {
+  global.ARTICLES = ARTICLES;
+  global.articlesData = ARTICLES;
+}
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = articlesData;
+  module.exports = ARTICLES;
 }
