@@ -312,19 +312,7 @@ function renderExerciseCard(ex, indexNum) {
 }
 
 // ─── CODE EXECUTION ENGINE (CLOUD + SIMULATOR FALLBACK) ────────────
-async function executeCode(code, files = null) {
-    // Scan for prompt commands and collect user input interactively
-    let stdinPayload = '';
-    const promptMatches = [...code.matchAll(/prompt\s+([a-zA-Z0-9_]+)(?:\s+\?default="([^"]*)")?/g)];
-    if (promptMatches.length > 0 && typeof window !== 'undefined' && window.prompt) {
-        for (const pm of promptMatches) {
-            const vname = pm[1];
-            const defVal = pm[2] || '';
-            const entered = window.prompt(`[VerScript Academy] Enter value for prompt '${vname}':`, defVal);
-            stdinPayload += (entered !== null ? entered : defVal) + '\n';
-        }
-    }
-
+async function executeCode(code, files = null, stdinPayload = '') {
     // 1. Try PolyServer remote C binary execution
     try {
         const controller = new AbortController();
@@ -351,7 +339,7 @@ async function executeCode(code, files = null) {
     }
 
     // 2. Client-side VerScript Simulator
-    return simulateVerScript(code, files);
+    return simulateVerScript(code, files, stdinPayload);
 }
 
 // ─── ANSI TO HTML CONVERTER ─────────────────────────────────────────
@@ -474,12 +462,13 @@ function resolveLineAlias(line, aliases) {
     return line;
 }
 
-function simulateVerScript(code) {
+function simulateVerScript(code, files = null, stdin = '') {
     const lines = code.split('\n');
     let output = '';
     let error = '';
     const vars = {};
     const aliases = {};
+    const stdinLines = (typeof stdin === 'string' && stdin.length > 0) ? stdin.split(/\r?\n/) : [];
 
     try {
         let i = 0;
@@ -557,11 +546,7 @@ function simulateVerScript(code) {
                 const vname = rest.split(' ')[0];
                 let defMatch = rest.match(/\?default="([^"]*)"/);
                 const defaultVal = defMatch ? defMatch[1] : '';
-                let answer = defaultVal;
-                if (typeof window !== 'undefined' && window.prompt) {
-                    const res = window.prompt(`[VerScript Simulator] Enter value for '${vname}':`, defaultVal);
-                    if (res !== null) answer = res;
-                }
+                let answer = (stdinLines.length > 0 && stdinLines[0] !== '') ? stdinLines.shift() : defaultVal;
                 vars[vname] = (!isNaN(answer) && answer !== '') ? Number(answer) : answer;
                 i++;
             }
@@ -1072,7 +1057,7 @@ function evalSimpleExpr(expr, vars) {
             };
 
             const Path = {
-                join: (d, f) => (String(d).replace(/\\/g, "/").replace(/\/$/, "") + "/" + String(f).replace(/\\/g, "/").replace(/^\//, "")),
+                join: (d, f) => (String(d).split('\\\\').join('/').replace(/\\/+$/, '') + '/' + String(f).split('\\\\').join('/').replace(/^\\/+/, '')),
                 extname: (p) => { const dot = String(p).lastIndexOf("."); return dot >= 0 ? p.slice(dot) : ""; }
             };
 
@@ -1098,7 +1083,7 @@ function evalSimpleExpr(expr, vars) {
             const Color = {
                 isHexCode: (h) => typeof h === "string" && h.startsWith("#") && (h.length === 7 || h.length === 4),
                 rgbToHex: (r, g, b) => "#00ffcc",
-                ansiWrap: (t, c) => "\\033[32m" + t + "\\033[0m"
+                ansiWrap: (t, c) => "\\x1b[32m" + t + "\\x1b[0m"
             };
 
             const Benchmark = {
@@ -1126,7 +1111,7 @@ function evalSimpleExpr(expr, vars) {
 }
 
 // ─── UI ACTION HANDLERS ────────────────────────────────────────────
-window.executeRunBox = async function(id, isJS = false) {
+window.executeRunBox = async function(id, isJS = false, options = null) {
     const outputEl = document.getElementById(`output_${id}`);
     const statEl = document.getElementById(`stat_${id}`);
     const runBtn = document.getElementById(`runbtn_${id}`);
@@ -1150,6 +1135,59 @@ window.executeRunBox = async function(id, isJS = false) {
         const textarea = document.getElementById(`textarea_${id}`);
         if (!textarea) return;
         code = textarea.value;
+    }
+
+    // Check for interactive prompt commands if stdin is not already supplied
+    const promptMatches = [...code.matchAll(/prompt\s+([a-zA-Z0-9_]+)(?:\s+\?default="([^"]*)")?/g)];
+    if (!isJS && promptMatches.length > 0 && (!options || !options.stdin)) {
+        outputEl.className = "console-output";
+        outputEl.innerHTML = `
+            <div class="in-console-prompt-box">
+                <div class="in-console-prompt-title">⌨️ Interactive Console Input:</div>
+                ${promptMatches.map((pm, pidx) => `
+                    <div class="in-console-prompt-row">
+                        <span class="in-console-prompt-lbl">[?] ${pm[1]}:</span>
+                        <input type="text" id="in_console_input_${id}_${pidx}" class="in-console-input-field" value="${pm[2] || ''}" placeholder="${pm[2] ? `Default: ${pm[2]}` : 'Enter value...'}" />
+                    </div>
+                `).join('')}
+                <button type="button" id="in_console_submit_${id}" class="in-console-submit-btn">Submit &amp; Run &crarr;</button>
+            </div>
+        `;
+        statEl.textContent = "⌨️ Awaiting Input";
+        runBtn.disabled = false;
+
+        const firstInput = document.getElementById(`in_console_input_${id}_0`);
+        if (firstInput) {
+            firstInput.focus();
+            firstInput.select();
+        }
+
+        const submitHandler = () => {
+            const inputs = [];
+            promptMatches.forEach((pm, pidx) => {
+                const inp = document.getElementById(`in_console_input_${id}_${pidx}`);
+                const val = inp ? (inp.value || pm[2] || '') : (pm[2] || '');
+                inputs.push(val);
+            });
+            const gatheredStdin = inputs.join('\n') + '\n';
+            window.executeRunBox(id, isJS, { stdin: gatheredStdin, promptValues: inputs });
+        };
+
+        const submitBtn = document.getElementById(`in_console_submit_${id}`);
+        if (submitBtn) submitBtn.onclick = submitHandler;
+
+        promptMatches.forEach((_, pidx) => {
+            const inp = document.getElementById(`in_console_input_${id}_${pidx}`);
+            if (inp) {
+                inp.onkeydown = (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitHandler();
+                    }
+                };
+            }
+        });
+        return;
     }
 
     statEl.textContent = "⏳ Running...";
@@ -1183,9 +1221,10 @@ window.executeRunBox = async function(id, isJS = false) {
                 console.error = originalError;
             }
         } else {
-            const res = await executeCode(code, filesPayload);
+            const stdinPayload = options && options.stdin ? options.stdin : '';
+            const res = await executeCode(code, filesPayload, stdinPayload);
             outputEl.className = "console-output" + (res.error ? " error" : " success");
-            const fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
+            let fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
             outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
             statEl.textContent = res.source === 'cloud' ? "✅ Cloud VM" : "⚡ Instant VM";
         }

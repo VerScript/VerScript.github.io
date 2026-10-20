@@ -671,6 +671,68 @@
         .console-output.success { color: #48BB78; }
         .console-output.error { color: #F56565; }
 
+        .in-console-prompt-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(0, 255, 204, 0.05);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin: 4px 0 8px 0;
+            font-family: 'Fira Code', monospace;
+        }
+        .in-console-prompt-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #00FFCC;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .in-console-prompt-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .in-console-prompt-lbl {
+            color: #FFD166;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+        .in-console-input-field {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            color: #FFFFFF;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            padding: 4px 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .in-console-input-field:focus {
+            border-color: #00FFCC;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+        }
+        .in-console-submit-btn {
+            align-self: flex-start;
+            background: #00FFCC;
+            color: #07070a;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .in-console-submit-btn:hover {
+            background: #50FA7B;
+            transform: translateY(-1px);
+        }
+
         /* EXERCISES SECTION */
         .exercises-wrapper {
             margin-top: 50px;
