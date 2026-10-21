@@ -296,12 +296,188 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
+           MOBILE APP ANNOUNCEMENT BANNER
+        ═══════════════════════════════════════════════════════════ */
+        .mobile-app-banner {
+            position: relative;
+            z-index: 90;
+            margin-top: 68px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(12, 74, 110, 0.95), rgba(15, 23, 42, 0.95));
+            border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 4px 25px rgba(56, 189, 248, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+        }
+        .banner-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 260px;
+        }
+        .banner-tag {
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: #030712;
+            font-size: 0.72rem;
+            font-weight: 900;
+            padding: 3px 9px;
+            border-radius: 20px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+            white-space: nowrap;
+        }
+        .banner-msg {
+            font-size: 0.92rem;
+            color: #e0f2fe;
+            line-height: 1.4;
+        }
+        .banner-msg strong {
+            color: #ffffff;
+        }
+        .banner-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .banner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #38bdf8;
+            font-size: 0.86rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .banner-cta:hover {
+            background: #38bdf8;
+            color: #030712;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+            transform: translateY(-1px);
+        }
+        .banner-close-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+        .banner-close-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           ANTIGRAVITY.GOOGLE-STYLE TYPING ANIMATION
+        ═══════════════════════════════════════════════════════════ */
+        .hero-typing-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(18, 18, 26, 0.85);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 204, 0.1);
+            border-radius: 14px;
+            padding: 12px 20px;
+            margin: 0 auto 34px;
+            max-width: 680px;
+            width: 100%;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Fira Code', monospace;
+            text-align: left;
+        }
+        .typing-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 20px;
+            padding: 3px 9px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+            animation: pulseDot 1.5s infinite;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .typing-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            font-size: 0.95rem;
+            color: #ffffff;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .typing-prefix {
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 8px;
+            user-select: none;
+        }
+        .typing-text {
+            color: #ffffff;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.15em;
+            background: var(--primary);
+            margin-left: 2px;
+            box-shadow: 0 0 8px var(--primary);
+            animation: blinkCaret 0.8s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blinkCaret {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
            CONTAINER & HERO
         ═══════════════════════════════════════════════════════════ */
         .container {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 120px 24px 80px;
+            padding: 40px 24px 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -906,12 +1082,29 @@
             <a href="docs/index.html" class="nav-link">Documentation (69 Ch)</a>
             <a href="docs/libs/index.html" class="nav-link" style="color: #c084fc;">📦 Community Packages</a>
             <a href="https://github.com/VerScript/verscript-studio-desktop/releases/latest" target="_blank" rel="noopener noreferrer" class="nav-link" style="color: #00e5ff; font-weight: 700;">💻 Desktop Studio</a>
+            <a href="https://github.com/VerScript/verscript-studio-android/releases/latest" target="_blank" rel="noopener noreferrer" class="nav-link" style="color: #38bdf8; font-weight: 700;">📱 Android App</a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-link nav-btn-highlight">Open Web IDE</a>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
     </nav>
+
+    <!-- ══════════════ MOBILE APP ANNOUNCEMENT BANNER ══════════════ -->
+    <div class="mobile-app-banner" id="mobileAppBanner">
+        <div class="banner-inner">
+            <div class="banner-left">
+                <span class="banner-tag">NEW RELEASE</span>
+                <span class="banner-msg">📱 <strong>VerScript Studio for Android</strong> is now live! Write and execute VerScript natively on your phone offline.</span>
+            </div>
+            <div class="banner-right">
+                <a href="https://github.com/VerScript/verscript-studio-android/releases/latest" target="_blank" rel="noopener noreferrer" class="banner-cta">
+                    <span>Download Android APK</span> &rarr;
+                </a>
+                <button class="banner-close-btn" id="bannerCloseBtn" aria-label="Dismiss Announcement">&times;</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Mobile Drawer (GitHub Mobile Style) -->
     <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
@@ -930,12 +1123,19 @@
                 </span>
                 <span class="menu-item-arrow">›</span>
             </a>
+            <a href="https://github.com/VerScript/verscript-studio-android/releases/latest" target="_blank" rel="noopener noreferrer" class="mobile-menu-item" style="border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.08); color: #38bdf8;">
+                <span class="menu-item-left">
+                    <span class="menu-item-icon">📱</span>
+                    <span class="menu-item-text">VerScript Studio for Android</span>
+                </span>
+                <span class="menu-item-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">APK v1.0</span>
+            </a>
             <a href="docs/index.html" class="mobile-menu-item">
                 <span class="menu-item-left">
                     <span class="menu-item-icon">📚</span>
                     <span class="menu-item-text">Documentation Academy</span>
                 </span>
-                <span class="menu-item-badge">56 Ch</span>
+                <span class="menu-item-badge">69 Ch</span>
             </a>
             <a href="docs/libs/index.html" class="mobile-menu-item">
                 <span class="menu-item-left">
@@ -943,6 +1143,13 @@
                     <span class="menu-item-text">Community Packages Hub</span>
                 </span>
                 <span class="menu-item-badge" style="background: rgba(157, 0, 255, 0.2); color: #c084fc; border: 1px solid rgba(157, 0, 255, 0.4);">Ecosystem</span>
+            </a>
+            <a href="https://github.com/VerScript/verscript-studio-desktop/releases/latest" target="_blank" rel="noopener noreferrer" class="mobile-menu-item">
+                <span class="menu-item-left">
+                    <span class="menu-item-icon">💻</span>
+                    <span class="menu-item-text">Desktop Studio</span>
+                </span>
+                <span class="menu-item-arrow">↗</span>
             </a>
             <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="mobile-menu-item highlight">
                 <span class="menu-item-left">
@@ -974,6 +1181,20 @@
             <h1 class="hero-title">
                 The Minimalist <span class="gradient-text">Polyglot</span> Scripting Language
             </h1>
+
+            <!-- Antigravity-Style Dynamic Typing Terminal Box -->
+            <div class="hero-typing-box" aria-label="VerScript interactive capabilities">
+                <div class="typing-pill">
+                    <span class="typing-dot"></span>
+                    <span>RUNTIME</span>
+                </div>
+                <div class="typing-content">
+                    <span class="typing-prefix">&gt;</span>
+                    <span class="typing-text" id="typingHeroText"></span>
+                    <span class="typing-cursor" id="typingHeroCursor"></span>
+                </div>
+            </div>
+
             <p class="hero-tagline">
                 Seamlessly blending the raw determinism and speed of native C with modern ergonomics: pure functions &amp; methods, reactive watchguards, Truecolor ANSI escape styling, command aliases, and 100+ language code injection.
             </p>
@@ -985,7 +1206,10 @@
                     <span>Launch Web IDE</span> 🚀
                 </a>
                 <a href="https://github.com/VerScript/verscript-studio-desktop/releases/latest" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaDesktop" style="border-color: #00e5ff; color: #00e5ff; background: rgba(0, 229, 255, 0.08);">
-                    <span>💻 Download VerScript Studio</span>
+                    <span>💻 Desktop Studio</span>
+                </a>
+                <a href="https://github.com/VerScript/verscript-studio-android/releases/latest" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn-secondary" id="ctaAndroid" style="border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.08);">
+                    <span>📱 Android App (APK)</span>
                 </a>
             </div>
         </div>
@@ -1774,6 +1998,74 @@ display Benchmark.report("ChannelThroughput", 50000, 12) ?color=#00ffcc`,
         }
 
         animateHourglass();
+
+        // ═══════════════════════════════════════════════════════════
+        // MOBILE APP BANNER DISMISSAL
+        // ═══════════════════════════════════════════════════════════
+        const appBanner = document.getElementById('mobileAppBanner');
+        const bannerClose = document.getElementById('bannerCloseBtn');
+        if (appBanner && bannerClose) {
+            if (sessionStorage.getItem('vs_android_banner_dismissed') === 'true') {
+                appBanner.style.display = 'none';
+            }
+            bannerClose.addEventListener('click', () => {
+                appBanner.style.opacity = '0';
+                appBanner.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    appBanner.style.display = 'none';
+                    sessionStorage.setItem('vs_android_banner_dismissed', 'true');
+                }, 250);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        // ANTIGRAVITY.GOOGLE-STYLE TYPING ANIMATION
+        // ═══════════════════════════════════════════════════════════
+        (function initTypingAnimation() {
+            const typingEl = document.getElementById('typingHeroText');
+            if (!typingEl) return;
+
+            const phrases = [
+                'display "Hello Polyglot!" ?color=#00FFCC ?inline',
+                'matrix = Matrix.identity 4 -> Matrix.det matrix',
+                'watchdog memory_guard: alert "Safe Threshold"',
+                'load Matrix, load Crypto, load Math, load Stats',
+                'inject python: import numpy as np; print(np.pi)',
+                'VerScript Studio on Android: 100% Offline execution',
+                'Pure C99 determinism with zero external dependencies'
+            ];
+
+            let pIdx = 0;
+            let cIdx = 0;
+            let deleting = false;
+
+            function runType() {
+                const current = phrases[pIdx];
+
+                if (deleting) {
+                    typingEl.textContent = current.substring(0, cIdx - 1);
+                    cIdx--;
+                } else {
+                    typingEl.textContent = current.substring(0, cIdx + 1);
+                    cIdx++;
+                }
+
+                let speed = deleting ? 26 : 60 + Math.random() * 30;
+
+                if (!deleting && cIdx === current.length) {
+                    speed = 2200; // Pause when phrase finishes typing
+                    deleting = true;
+                } else if (deleting && cIdx === 0) {
+                    deleting = false;
+                    pIdx = (pIdx + 1) % phrases.length;
+                    speed = 450; // Pause before starting next phrase
+                }
+
+                setTimeout(runType, speed);
+            }
+
+            setTimeout(runType, 600);
+        })();
     </script>
 </body>
 </html>
