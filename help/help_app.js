@@ -26,6 +26,8 @@
       all: db.length,
       keyword: db.filter(i => i.category === 'keyword').length,
       library: db.filter(i => i.category === 'library').length,
+      datatype: db.filter(i => i.category === 'datatype').length,
+      operator: db.filter(i => i.category === 'operator').length,
       error: db.filter(i => i.category === 'error').length,
       functionality: db.filter(i => i.category === 'functionality').length
     };
