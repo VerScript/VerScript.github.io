@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VerScript Help & Keyword Knowledge Base</title>
+  <meta name="description" content="Comprehensive interactive search and documentation for all VerScript keywords, standard libraries, error codes, and programming functionalities.">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="help_style.css">
+</head>
+<body>
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav class="help-nav">
+    <a href="../index.html" class="nav-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512 512" fill="none" style="vertical-align: middle;">
+        <defs>
+          <linearGradient id="navVLeft" x1="0%" y1="0%" x2="70%" y2="100%">
+            <stop offset="0%" stop-color="#00FFCC"/>
+            <stop offset="100%" stop-color="#0077fe"/>
+          </linearGradient>
+          <linearGradient id="navVRight" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0abfc"/>
+            <stop offset="100%" stop-color="#7928CA"/>
+          </linearGradient>
+        </defs>
+        <rect x="-48" y="-180" width="96" height="360" rx="48" transform="translate(194, 255) rotate(-24.5)" fill="url(#navVLeft)" />
+        <rect x="-48" y="-180" width="96" height="360" rx="48" transform="translate(318, 255) rotate(24.5)" fill="url(#navVRight)" opacity="0.94" style="mix-blend-mode: screen;" />
+        <path d="M 256 312 L 298 392 L 256 438 L 214 392 Z" fill="#7928CA" opacity="0.85" />
+      </svg>
+      <span class="nav-logo-text">VerScript Help</span>
+      <span class="nav-badge">Knowledge Base</span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../docs/index.html" class="nav-link">Academy (69 Ch)</a>
+      <a href="../docs/libs/index.html" class="nav-link">Packages</a>
+      <a href="https://github.com/VerScript/help" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub Repo</a>
+      <a href="https://verscript.github.io/IDE/" target="_blank" rel="noopener noreferrer" class="nav-btn">Launch Web IDE 🚀</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════ HERO & SEARCH ══════════════ -->
+  <header class="help-hero">
+    <h1 class="help-title">VerScript Keyword & Topic Help</h1>
+    <p class="help-subtitle">Instant interactive documentation for all 48+ keywords, 17 standard libraries, 26 error exceptions, and common programming tasks.</p>
+
+    <div class="search-wrapper">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="helpSearchInput" 
+          class="search-input" 
+          placeholder="Search by keyword, library, error name, or what you want to do (e.g. 'print', 'matrix', 'exception', 'loop')..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button id="searchClearBtn" class="search-clear-btn" aria-label="Clear Search">✕</button>
+        <span class="search-shortcut-hint">Ctrl+H or /</span>
+      </div>
+
+      <!-- Autocomplete Dropdown -->
+      <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
+    </div>
+  </header>
+
+  <!-- ══════════════ FILTER TABS ══════════════ -->
+  <div class="tabs-container" id="filterTabsContainer">
+    <button class="filter-tab active" data-category="all">
+      <span>All Topics</span>
+      <span class="tab-count">109</span>
+    </button>
+    <button class="filter-tab" data-category="keyword">
+      <span>Keywords</span>
+      <span class="tab-count">48</span>
+    </button>
+    <button class="filter-tab" data-category="library">
+      <span>Standard Libraries</span>
+      <span class="tab-count">17</span>
+    </button>
+    <button class="filter-tab" data-category="error">
+      <span>Errors & Exceptions</span>
+      <span class="tab-count">26</span>
+    </button>
+    <button class="filter-tab" data-category="functionality">
+      <span>By Functionality</span>
+      <span class="tab-count">6</span>
+    </button>
+  </div>
+
+  <!-- ══════════════ RESULTS ══════════════ -->
+  <main class="results-container">
+    <div class="results-meta">
+      <span id="resultsCount">Loading topics...</span>
+      <span style="font-size: 0.82rem; color: #64748b;">Click any card for full syntax, multi-use cases & runnable code</span>
+    </div>
+
+    <div id="resultsGrid" class="results-grid"></div>
+  </main>
+
+  <!-- ══════════════ DETAILED MODAL ══════════════ -->
+  <div id="helpModal" class="modal-backdrop">
+    <div class="modal-dialog" id="modalContent"></div>
+  </div>
+
+  <!-- Load Database and Application Scripts -->
+  <script src="help_db.js"></script>
+  <script src="help_app.js"></script>
+
+</body>
+</html>
