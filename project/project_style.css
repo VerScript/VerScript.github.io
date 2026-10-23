@@ -98,7 +98,7 @@ body {
 }
 
 .brand-divider {
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 300;
 }
 
@@ -254,7 +254,7 @@ body {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 600;
     margin-bottom: 4px;
 }
@@ -317,7 +317,7 @@ body {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .search-box input {
@@ -344,7 +344,7 @@ body {
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 18px;
     cursor: pointer;
     display: none;
@@ -393,7 +393,7 @@ body {
     background: none;
     border: none;
     border-radius: 4px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -569,7 +569,7 @@ body {
     align-items: center;
     gap: 5px;
     font-size: 11px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .card-bottom-row {
@@ -583,7 +583,7 @@ body {
 .issue-number {
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .card-tags {
@@ -706,7 +706,7 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 /* ---------------- LIST TABLE VIEW ---------------- */
@@ -730,7 +730,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -814,14 +814,14 @@ body {
 
 .modal-issue-num {
     font-family: var(--font-mono);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 13px;
 }
 
 .modal-close-btn {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 24px;
     cursor: pointer;
     line-height: 1;
@@ -848,7 +848,7 @@ body {
     margin-bottom: 16px;
     border-bottom: 1px solid var(--border-subtle);
     font-size: 13px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .modal-field-val {
@@ -882,7 +882,7 @@ body {
 
 .modal-date {
     font-size: 12px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .btn-open-gh {
