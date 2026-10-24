@@ -2021,6 +2021,152 @@ var ARTICLES = [
       }
     ]
   }
+,
+  {
+  "id": "ch70-ffi-extern",
+  "number": 70,
+  "section": "Section 18: System Integration & Graphics",
+  "subsection": "Native System Interop",
+  "title": "Foreign Function Interface (FFI) & Win32 Native Integration",
+  "category": "Systems",
+  "readTime": "5 min read",
+  "summary": "Directly link and execute native C functions and Win32 system libraries at runtime using the dynamic 'extern' keyword without C compilation.",
+  "body": "\n      <h2>Dynamic Foreign Function Interface (FFI)</h2>\n      <p>VerScript 2.0 introduces the powerful <code>extern</code> keyword, enabling scripts to dynamically bind and execute native shared library functions (such as <code>.dll</code> on Windows or <code>.so</code> on Linux) with zero overhead.</p>\n\n      <h2>Syntax & Declaration</h2>\n      <p>Declare external symbols with the library path and function signature:</p>\n      <pre><code>extern \"kernel32.dll\" GetCurrentProcessId()</code></pre>\n      <p>Once declared, the symbol is immediately callable as a first-class function anywhere in your script.</p>\n\n      <div class=\"callout-box tip\">\n        <div class=\"callout-title\">💡 Zero-Compilation Native Interop</div>\n        <p>No headers or C compilers required. The VerScript VM automatically resolves exported symbol addresses and marshals native arguments seamlessly.</p>\n      </div>\n    ",
+  "codeBlocks": [
+    {
+      "id": "cb_ch70_1",
+      "title": "win32_pid_demo.vrs",
+      "code": "! Query the native Windows kernel for process info\nextern \"kernel32.dll\" GetCurrentProcessId()\n\nset pid: GetCurrentProcessId()\ndisplay \"Active Process ID: \" + pid ?color=cyan\ndisplay \"Native FFI operational!\" ?color=green"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex_ch70_1",
+      "title": "FFI Challenge: Win32 Process ID",
+      "prompt": "Declare <code>extern \"kernel32.dll\" GetCurrentProcessId()</code>, call it into a variable <code>pid</code>, and display <code>\"PID: \" + pid</code>.",
+      "starterCode": "! Declare and invoke GetCurrentProcessId\n",
+      "hint": "extern \"kernel32.dll\" GetCurrentProcessId()\nset pid: GetCurrentProcessId()\ndisplay \"PID: \" + pid",
+      "solution": "extern \"kernel32.dll\" GetCurrentProcessId()\nset pid: GetCurrentProcessId()\ndisplay \"PID: \" + pid",
+      "expectedMatch": {}
+    }
+  ]
+},
+  {
+  "id": "ch71-loop-stride-unpack",
+  "number": 71,
+  "section": "Section 18: System Integration & Graphics",
+  "subsection": "Advanced Flow & Data",
+  "title": "Range Strides ('step') & Destructuring ('unpack')",
+  "category": "Syntax",
+  "readTime": "4 min read",
+  "summary": "Master custom loop stepping strides with the 'step' keyword and decompose arrays and tuples cleanly with 'unpack'.",
+  "body": "\n      <h2>Range Strides with <code>step</code></h2>\n      <p>When iterating through ranges using <code>for ... in</code>, you can customize the step increment using the <code>step</code> keyword:</p>\n      <pre><code>for i in 0 .. 10 step 2:\n    display i</code></pre>\n      <p>This allows clean skipping of indices, countdown strides, and sampling sequences without manual counter increments.</p>\n\n      <h2>Structured Destructuring with <code>unpack</code></h2>\n      <p>The <code>unpack</code> statement unpacks elements from arrays or tuples directly into individual variables in a single expressive line:</p>\n      <pre><code>unpack [x, y] : coords</code></pre>\n    ",
+  "codeBlocks": [
+    {
+      "id": "cb_ch71_1",
+      "title": "step_and_unpack.vrs",
+      "code": "! 1. Iterating with step 2\ndisplay \"Even numbers from 0 to 10:\" ?color=cyan\nfor i in 0 .. 10 step 2:\n    display \"Step: \" + i ?color=green\n\n! 2. Destructuring coordinates\nset point: [400, 300]\nunpack [x, y] : point\ndisplay \"Point X: \" + x + \", Y: \" + y ?color=yellow"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex_ch71_1",
+      "title": "Step Challenge: Step 3 Loop",
+      "prompt": "Write a loop from <code>0 .. 9 step 3</code> that displays each number.",
+      "starterCode": "! Loop with step 3\n",
+      "hint": "for i in 0 .. 9 step 3:\n    display i",
+      "solution": "for i in 0 .. 9 step 3:\n    display i",
+      "expectedMatch": {}
+    }
+  ]
+},
+  {
+  "id": "ch72-complex-and-math",
+  "number": 72,
+  "section": "Section 18: System Integration & Graphics",
+  "subsection": "Mathematics",
+  "title": "Complex Numbers & Advanced Transcendental Math",
+  "category": "Math",
+  "readTime": "6 min read",
+  "summary": "Perform complex arithmetic ($a + bi$), extract real and imaginary parts, and leverage built-in lerp, clamp, hypot, gcd, and lcm functions.",
+  "body": "\n      <h2>First-Class Complex Numbers</h2>\n      <p>VerScript natively supports complex arithmetic. Construct complex numbers using <code>complex(real, imag)</code> or literals with imaginary suffix <code>i</code>:</p>\n      <pre><code>set z: complex(3, 4)\nset r: real(z)    ! 3\nset im: imag(z)   ! 4\nset c: conj(z)    ! 3 - 4i</code></pre>\n\n      <h2>Built-in Math Primitives</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>\n        <tbody>\n          <tr><td><code>lerp(a, b, t)</code></td><td>Linear interpolation</td><td><code>lerp(0, 100, 0.5) = 50</code></td></tr>\n          <tr><td><code>clamp(val, min, max)</code></td><td>Boundary constraint</td><td><code>clamp(150, 0, 100) = 100</code></td></tr>\n          <tr><td><code>hypot(x, y)</code></td><td>Euclidean distance</td><td><code>hypot(3, 4) = 5</code></td></tr>\n          <tr><td><code>gcd(a, b)</code> / <code>lcm(a, b)</code></td><td>Divisors and multiples</td><td><code>gcd(12, 18) = 6</code></td></tr>\n        </tbody>\n      </table>\n    ",
+  "codeBlocks": [
+    {
+      "id": "cb_ch72_1",
+      "title": "complex_math_demo.vrs",
+      "code": "! Complex Number Analysis\nset z: complex(5, 12)\ndisplay \"Real: \" + real(z) ?color=cyan\ndisplay \"Imag: \" + imag(z) ?color=yellow\ndisplay \"Magnitude (hypot): \" + hypot(real(z), imag(z)) ?color=green\n\n! Interpolation\nset mid: lerp(10, 50, 0.5)\ndisplay \"Lerp Midpoint: \" + mid ?color=purple"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex_ch72_1",
+      "title": "Math Challenge: Euclidean Hypotenuse",
+      "prompt": "Calculate <code>hypot(6, 8)</code> and display the result.",
+      "starterCode": "! Compute hypot(6, 8)\n",
+      "hint": "display hypot(6, 8)",
+      "solution": "display hypot(6, 8)",
+      "expectedMatch": {}
+    }
+  ]
+},
+  {
+  "id": "ch73-terminal-subsystem",
+  "number": 73,
+  "section": "Section 18: System Integration & Graphics",
+  "subsection": "I/O & Architecture",
+  "title": "Terminal Subsystem & Advanced Console Control",
+  "category": "Terminal",
+  "readTime": "4 min read",
+  "summary": "Configure terminal window titles, clear screen buffers, manage output flushing, and handle split viewports.",
+  "body": "\n      <h2>The <code>terminal</code> Controller</h2>\n      <p>VerScript includes native keywords for controlling the console environment directly from code:</p>\n      <ul>\n        <li><code>terminal.title(str)</code>: Updates application window and terminal tab titles.</li>\n        <li><code>terminal.clear()</code>: Clears the terminal screen buffer.</li>\n        <li><code>flush()</code>: Immediately forces pending stream buffers to be written.</li>\n        <li><code>focus(pane)</code>: Directs keyboard focus to the active pane.</li>\n      </ul>\n    ",
+  "codeBlocks": [
+    {
+      "id": "cb_ch73_1",
+      "title": "terminal_controller.vrs",
+      "code": "terminal.title(\"VerScript Live Mission Control\")\nterminal.clear()\n\ndisplay \"════════════════════════════════\" ?color=cyan\ndisplay \"   MISSION CONTROL ONLINE       \" ?color=green\ndisplay \"════════════════════════════════\" ?color=cyan\nflush()"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex_ch73_1",
+      "title": "Terminal Challenge: Set Title and Flush",
+      "prompt": "Set terminal title to <code>\"Studio\"</code> and display <code>\"Ready\"</code>.",
+      "starterCode": "! Set title and display Ready\n",
+      "hint": "terminal.title(\"Studio\")\ndisplay \"Ready\"",
+      "solution": "terminal.title(\"Studio\")\ndisplay \"Ready\"",
+      "expectedMatch": {}
+    }
+  ]
+},
+  {
+  "id": "ch74-graphics-rendering",
+  "number": 74,
+  "section": "Section 18: System Integration & Graphics",
+  "subsection": "Visual Computing",
+  "title": "2D/3D Rendering & Game Graphics Engine",
+  "category": "Graphics",
+  "readTime": "7 min read",
+  "summary": "Create screens, 3D worlds, geometric shapes (rect, circle, box, sphere), cameras, lights, and render passes with delta-time animation frames.",
+  "body": "\n      <h2>VerScript Graphics & Game Architecture</h2>\n      <p>VerScript provides high-level keywords for real-time 2D drawing and 3D scene rendering:</p>\n      <ul>\n        <li><code>screen(w, h, title)</code>: Configures the display canvas surface.</li>\n        <li><code>draw shape ?fill=#hex ?stroke=#hex</code>: Renders immediate 2D shapes (<code>rect</code>, <code>circle</code>, <code>line</code>).</li>\n        <li><code>world(gravity)</code>, <code>scene()</code>, <code>camera()</code>, <code>light()</code>: 3D scene graph setup.</li>\n        <li><code>render(scene, camera)</code>: Executes frame rasterization pass.</li>\n        <li><code>on frame(dt)</code>: Event hook receiving delta time ($Delta t$) for 60fps animations.</li>\n      </ul>\n    ",
+  "codeBlocks": [
+    {
+      "id": "cb_ch74_1",
+      "title": "scene_rendering.vrs",
+      "code": "! 1. Initialize screen canvas\nscreen(800, 600, \"VerScript 2D Canvas\")\n\n! 2. Draw 2D Shapes\ndraw rect(100, 100, 200, 150) ?fill=#00FFCC ?stroke=#0077FE\ndraw circle(400, 300, 50) ?fill=#BD00FF\n\n! 3. 3D Scene Graph\nset scn: scene()\nset cam: camera(60, 16/9, 0.1, 1000)\nset sun: light(\"sun\", #FFFFFF, 1.0)\nscn.add(sun)\n\nrender(scn, cam)\ndisplay \"Frame Render Complete!\" ?color=green"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex_ch74_1",
+      "title": "Graphics Challenge: Screen Initialization",
+      "prompt": "Initialize a screen canvas <code>screen(640, 480, \"My Game\")</code> and display <code>\"Canvas initialized\"</code>.",
+      "starterCode": "! Initialize screen\n",
+      "hint": "screen(640, 480, \"My Game\")\ndisplay \"Canvas initialized\"",
+      "solution": "screen(640, 480, \"My Game\")\ndisplay \"Canvas initialized\"",
+      "expectedMatch": {}
+    }
+  ]
+}
 ];
 var articlesData = ARTICLES;
 
