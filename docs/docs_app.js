@@ -499,14 +499,21 @@ function simulateVerScript(code, files = null, stdin = '') {
             // Resolve aliased command and attributes
             line = resolveLineAlias(line, aliases);
 
-            // Display with full ANSI colors (named + unquoted/quoted hex)
-            if (line.startsWith('display ') || line === 'display') {
+            // 1. Output commands: display, print, println, echo, log
+            if (line.startsWith('display ') || line === 'display' || line.startsWith('println ') || line === 'println' || line.startsWith('print ') || line.startsWith('echo ') || line.startsWith('log ') || line.startsWith('Log.info(')) {
+                let isPrint = line.startsWith('print ');
+                let isLog = line.startsWith('log ') || line.startsWith('Log.');
+                let cmdLen = line.indexOf(' ');
+                if (cmdLen === -1) cmdLen = line.length;
                 let colMatch = line.match(/\?color=(?:#([0-9a-fA-F]{3,8})|"([^"]*)"|'([^']*)'|([a-zA-Z0-9_#]+))/);
                 let colorVal = colMatch ? (colMatch[1] ? ('#' + colMatch[1]) : (colMatch[2] || colMatch[3] || colMatch[4])) : null;
-                let isInline = line.includes('?inline') || /\?newline=(?:false|0|"false")/.test(line);
-                let expr = line.length > 8 ? line.substring(8).trim() : '';
+                let isInline = isPrint || line.includes('?inline') || /\?newline=(?:false|0|"false")/.test(line);
+                let expr = line.substring(cmdLen).trim();
                 expr = expr.replace(/\?[a-zA-Z_]+(?:=(?:"[^"]*"|'[^']*'|[^\s]+))?/g, '').trim();
+                if (expr.startsWith('(') && expr.endsWith(')')) expr = expr.slice(1, -1).trim();
                 let evaluated = evalSimpleExpr(expr, vars);
+                if (Array.isArray(evaluated)) evaluated = JSON.stringify(evaluated);
+                if (isLog) evaluated = `[INFO] ${evaluated}`;
 
                 if (colorVal) {
                     if (colorVal.startsWith('#')) {
@@ -524,13 +531,8 @@ function simulateVerScript(code, files = null, stdin = '') {
                         output += `\x1b[38;2;${r};${g};${b}m${evaluated}\x1b[0m` + (isInline ? '' : '\n');
                     } else {
                         const namedCodes = {
-                            'red': '31',
-                            'green': '32',
-                            'yellow': '33',
-                            'blue': '34',
-                            'purple': '35',
-                            'cyan': '36',
-                            'white': '37'
+                            'red': '31', 'green': '32', 'yellow': '33', 'blue': '34',
+                            'purple': '35', 'cyan': '36', 'white': '37'
                         };
                         let code = namedCodes[colorVal.toLowerCase()] || '37';
                         output += `\x1b[${code}m${evaluated}\x1b[0m` + (isInline ? '' : '\n');
@@ -540,9 +542,19 @@ function simulateVerScript(code, files = null, stdin = '') {
                 }
                 i++;
             }
-            // Prompt
-            else if (line.startsWith('prompt ')) {
-                let rest = line.substring(7).trim();
+            // 2. Assert command
+            else if (line.startsWith('assert ') || line.startsWith('assert(')) {
+                let expr = line.substring(6).trim();
+                if (expr.startsWith('(') && expr.endsWith(')')) expr = expr.slice(1, -1).trim();
+                let res = evalSimpleExpr(expr, vars);
+                if (!res || res === 'false' || res === 0) {
+                    output += `\x1b[31m[AssertionError] Assertion failed: ${expr}\x1b[0m\n`;
+                }
+                i++;
+            }
+            // 3. Prompt
+            else if (line.startsWith('prompt ') || line.startsWith('input ')) {
+                let rest = line.replace(/^(prompt|input)\s+/, '').trim();
                 const vname = rest.split(' ')[0];
                 let defMatch = rest.match(/\?default="([^"]*)"/);
                 const defaultVal = defMatch ? defMatch[1] : '';
@@ -550,14 +562,144 @@ function simulateVerScript(code, files = null, stdin = '') {
                 vars[vname] = (!isNaN(answer) && answer !== '') ? Number(answer) : answer;
                 i++;
             }
-            // Header / Config / Enum / Struct / DataType definition blocks, pragmas, export, includes
+            // 4. Extern FFI binding
+            else if (line.startsWith('extern ')) {
+                const match = line.match(/extern\s+(?:"([^"]+)"\s+)?([a-zA-Z_]\w*)\s*\(([^)]*)\)/);
+                if (match) {
+                    const lib = match[1] || 'kernel32.dll';
+                    const fnName = match[2];
+                    vars[fnName] = () => (fnName.includes('ProcessId') ? 14280 : 0);
+                    output += `\x1b[36m[FFI] Successfully bound native external symbol '${fnName}' from ${lib}\x1b[0m\n`;
+                }
+                i++;
+            }
+            // 5. Unpack destructuring
+            else if (line.startsWith('unpack ')) {
+                const match = line.match(/unpack\s+\[([^\]]+)\]\s*:\s*(.+)/);
+                if (match) {
+                    const targetVars = match[1].split(',').map(s => s.trim());
+                    const srcExpr = match[2].trim();
+                    let srcVal = vars[srcExpr] !== undefined ? vars[srcExpr] : evalSimpleExpr(srcExpr, vars);
+                    if (typeof srcVal === 'string' && srcVal.startsWith('[') && srcVal.endsWith(']')) {
+                        try { srcVal = JSON.parse(srcVal); } catch (_) {}
+                    } else if (typeof srcVal === 'string' && srcVal.includes(',')) {
+                        srcVal = srcVal.split(',').map(s => isNaN(Number(s.trim())) ? s.trim() : Number(s.trim()));
+                    }
+                    if (Array.isArray(srcVal)) {
+                        targetVars.forEach((tv, idx) => {
+                            if (tv) vars[tv] = srcVal[idx];
+                        });
+                    }
+                }
+                i++;
+            }
+            // 6. Terminal subsystem: terminal.title, terminal.clear, flush, focus, title, split
+            else if (line.startsWith('terminal.') || line.startsWith('terminal ') || line === 'terminal' || line.startsWith('flush') || line.startsWith('focus') || line.startsWith('title ')) {
+                if (line.includes('title')) {
+                    const m = line.match(/title\s*(?:\(\s*["']([^"']+)["']\s*\)|["']([^"']+)["'])/);
+                    const titleText = m ? (m[1] || m[2]) : 'VerScript Terminal';
+                    output += `\x1b[36m[Terminal] Window title set to: "${titleText}"\x1b[0m\n`;
+                } else if (line.includes('clear')) {
+                    output += `\x1b[2J\x1b[H[Terminal Screen Cleared]\n`;
+                } else if (line.includes('split')) {
+                    output += `\x1b[36m[Terminal] Split view pane initialized\x1b[0m\n`;
+                } else if (line.startsWith('flush')) {
+                    output += `\x1b[32m[Terminal] Buffer stream flushed\x1b[0m\n`;
+                } else if (line.startsWith('focus')) {
+                    output += `\x1b[36m[Terminal] Input focus acquired\x1b[0m\n`;
+                }
+                i++;
+            }
+            // 7. Graphics & 2D/3D Game Engine: screen, world, render, draw, camera, light, scene, spawn
+            else if (line.startsWith('screen(') || line.startsWith('screen ') || line.startsWith('world(') || line.startsWith('world ') || line.startsWith('draw ') || line.startsWith('render(') || line.startsWith('render ') || line.startsWith('spawn ')) {
+                if (line.startsWith('screen')) {
+                    output += `\x1b[36m[Graphics Engine] Surface canvas initialized.\x1b[0m\n`;
+                } else if (line.startsWith('world')) {
+                    output += `\x1b[35m[Physics 3D] World space configured.\x1b[0m\n`;
+                } else if (line.startsWith('draw ')) {
+                    const shapeMatch = line.match(/draw\s+([a-zA-Z_]\w*)/);
+                    const shape = shapeMatch ? shapeMatch[1] : 'shape';
+                    output += `\x1b[32m[Render2D] Rasterized shape: ${shape}\x1b[0m\n`;
+                } else if (line.startsWith('render')) {
+                    output += `\x1b[34m[RenderEngine] Frame pass completed successfully.\x1b[0m\n`;
+                } else if (line.startsWith('spawn ')) {
+                    const entity = line.substring(6).trim();
+                    output += `\x1b[33m[SceneGraph] Entity spawned: ${entity}\x1b[0m\n`;
+                }
+                i++;
+            }
+            // 8. For ... in ... (step ...)
+            else if (line.startsWith('for ')) {
+                const rangeMatch = line.match(/for\s+([a-zA-Z_]\w*)\s+in\s+(\d+)\s*\.\.\s*(\d+)(?:\s+step\s+(\d+))?\s*:/);
+                const eachMatch = line.match(/for\s+([a-zA-Z_]\w*)\s+in\s+([a-zA-Z_]\w*)\s*:/);
+
+                i++;
+                let block = [];
+                while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                    block.push(lines[i].trim());
+                    i++;
+                }
+
+                if (rangeMatch) {
+                    const varName = rangeMatch[1];
+                    const start = parseInt(rangeMatch[2]);
+                    const end = parseInt(rangeMatch[3]);
+                    const step = rangeMatch[4] ? parseInt(rangeMatch[4]) : 1;
+
+                    for (let val = start; val <= end; val += step) {
+                        vars[varName] = val;
+                        let subCode = block.map(bLine => bLine.replace(new RegExp(`\\b${varName}\\b`, 'g'), val)).join('\n');
+                        const res = simulateVerScript(subCode);
+                        output += res.output;
+                    }
+                } else if (eachMatch) {
+                    const varName = eachMatch[1];
+                    const arrName = eachMatch[2];
+                    const arr = vars[arrName];
+                    if (Array.isArray(arr)) {
+                        for (let val of arr) {
+                            vars[varName] = val;
+                            let subCode = block.map(bLine => bLine.replace(new RegExp(`\\b${varName}\\b`, 'g'), val)).join('\n');
+                            const res = simulateVerScript(subCode);
+                            output += res.output;
+                        }
+                    }
+                }
+            }
+            // 9. While cond:
+            else if (line.startsWith('while ')) {
+                const condExpr = line.substring(6).replace(/:$/, '').trim();
+                i++;
+                let block = [];
+                while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                    block.push(lines[i].trim());
+                    i++;
+                }
+                let safety = 0;
+                while (evalSimpleExpr(condExpr, vars) && safety++ < 1000) {
+                    const res = simulateVerScript(block.join('\n'));
+                    output += res.output;
+                }
+            }
+            // 10. Channel and concurrency: chan, channel, send, recv
+            else if (line.startsWith('chan ') || line.startsWith('channel ')) {
+                const chName = line.replace(/^(chan|channel)\s+/, '').trim();
+                vars[chName] = [];
+                output += `\x1b[36m[Channel] Initialized FIFO buffer '${chName}'\x1b[0m\n`;
+                i++;
+            }
+            else if (line.startsWith('send ')) {
+                const parts = line.substring(5).split(',');
+                const chName = parts[0].trim();
+                const val = evalSimpleExpr(parts.slice(1).join(',').trim(), vars);
+                if (vars[chName] && Array.isArray(vars[chName])) vars[chName].push(val);
+                i++;
+            }
+            // 11. Declarations (Pragma, Header, Struct, Enum, DataType)
             else if (line.startsWith('pragma ') || line.startsWith('include ') || line.startsWith('export ') || line.startsWith('DataType ') || line.startsWith('config:') || line.startsWith('struct:') || line.startsWith('struct ') || line.startsWith('header ')) {
                 if (line.startsWith('pragma ') || line.startsWith('include ')) {
                     i++;
                     continue;
-                }
-                if (line.startsWith('export ')) {
-                    line = line.substring(7).trim();
                 }
                 i++;
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
@@ -565,7 +707,7 @@ function simulateVerScript(code, files = null, stdin = '') {
                 }
                 continue;
             }
-            // First-class Enum declaration
+            // 12. Enum declaration
             else if (line.startsWith('enum ') || line.startsWith('enum:')) {
                 if (line.includes(':')) {
                     const colonIdx = line.indexOf(':');
@@ -583,38 +725,21 @@ function simulateVerScript(code, files = null, stdin = '') {
                 }
                 continue;
             }
-            // Variable assignment & type constraint
+            // 13. Variable assignment & declarations: set, let, var, const, or "name : val"
             else if (line.includes(':') && !line.startsWith('loop') && !line.startsWith('iterate')) {
                 const parts = line.split(':');
                 let vname = parts[0].trim();
-                let declaredType = null;
+                vname = vname.replace(/^(set|let|var|const)\s+/, '').trim();
+                const tokens = vname.split(/\s+/);
+                if (tokens.length >= 2) vname = tokens[tokens.length - 1];
 
-                if (vname.startsWith('set ')) {
-                    const tokens = vname.substring(4).trim().split(/\s+/);
-                    if (tokens.length >= 2) {
-                        declaredType = tokens[0];
-                        vname = tokens[1];
-                    } else {
-                        vname = tokens[0];
-                    }
-                } else {
-                    const tokens = vname.split(/\s+/);
-                    if (tokens.length >= 2 && ['num', 'bool', 'str', 'arr', 'entity', 'int', 'posNum', 'nonNegNum', 'byte', 'port', 'nonEmptyStr', 'char', 'nonEmptyArr'].includes(tokens[0])) {
-                        declaredType = tokens[0];
-                        vname = tokens[1];
-                    }
+                if (/^[a-zA-Z_]\w*$/.test(vname)) {
+                    const vexpr = parts.slice(1).join(':').trim();
+                    vars[vname] = evalSimpleExpr(vexpr, vars);
                 }
-
-                if (!/^[a-zA-Z_]\w*$/.test(vname)) { i++; continue; }
-                const vexpr = parts.slice(1).join(':').trim();
-                const val = evalSimpleExpr(vexpr, vars);
-                if (declaredType === 'num' && isNaN(Number(val))) {
-                    vars['__lastError'] = 'DataTypeError';
-                }
-                vars[vname] = val;
                 i++;
             }
-            // Loop count
+            // 14. Loop count
             else if (line.startsWith('loop ')) {
                 const count = parseInt(line.substring(5).trim()) || 1;
                 i++;
@@ -628,7 +753,7 @@ function simulateVerScript(code, files = null, stdin = '') {
                     output += res.output;
                 }
             }
-            // Iterate
+            // 15. Iterate
             else if (line.startsWith('iterate ')) {
                 const match = line.match(/iterate\s+([a-zA-Z_]\w*)\s+from\s+(\d+)\s+to\s+(\d+)(\s+step\s+(\d+))?/);
                 if (match) {
@@ -652,7 +777,7 @@ function simulateVerScript(code, files = null, stdin = '') {
                     i++;
                 }
             }
-            // Inject
+            // 16. Inject
             else if (line.startsWith('inject ')) {
                 const lang = line.substring(7).trim();
                 i++;
@@ -668,18 +793,18 @@ function simulateVerScript(code, files = null, stdin = '') {
                     output += `[Inject:${lang}] Evaluated ${block.length} code line(s) cleanly.\n`;
                 }
             }
-            // Do-Unless
-            else if (line === 'do') {
+            // 17. Do-Unless & Try-Catch
+            else if (line === 'do' || line === 'try') {
                 i++;
                 let doBlock = [];
-                while (i < lines.length && !lines[i].trim().startsWith('unless')) {
+                while (i < lines.length && !lines[i].trim().startsWith('unless') && !lines[i].trim().startsWith('catch')) {
                     doBlock.push(lines[i].trim());
                     i++;
                 }
                 let caught = false;
-                if (i < lines.length && lines[i].trim().startsWith('unless')) {
+                if (i < lines.length && (lines[i].trim().startsWith('unless') || lines[i].trim().startsWith('catch'))) {
                     const unlessLine = lines[i].trim();
-                    const unlessTarget = unlessLine.substring(6).trim();
+                    const unlessTarget = unlessLine.replace(/^(unless|catch)\s*/, '').trim();
                     i++;
                     let unlessBlock = [];
                     while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
@@ -687,23 +812,11 @@ function simulateVerScript(code, files = null, stdin = '') {
                         i++;
                     }
 
-                    // Detect errors from doBlock
                     let thrownErr = null;
                     const doText = doBlock.join('\n');
-                    const throwMatch = doText.match(/throw\s+([a-zA-Z_]\w*)/);
-                    if (throwMatch) {
-                        thrownErr = throwMatch[1];
-                    } else if (/\/\s*0\b/.test(doText)) {
-                        thrownErr = 'DivisionByZeroError';
-                    } else if (/sqrt\s*\(\s*-\d+/.test(doText) || /sqrt\s+-\d+/.test(doText)) {
-                        thrownErr = 'DomainError';
-                    } else if (/num\s+[a-zA-Z_]\w*\s*:\s*"[^"]*"/.test(doText) || /bad_assignment|badAssignment|DataTypeError/i.test(doText)) {
-                        thrownErr = 'DataTypeError';
-                    } else if (/modify_threshold|inbound|inspect_purity/i.test(doText)) {
-                        thrownErr = 'ScopeViolationError';
-                    } else if (/step\s+10/i.test(doText)) {
-                        thrownErr = 'LoopStepError';
-                    }
+                    const throwMatch = doText.match(/(?:throw|panic)\s+([a-zA-Z_]\w*)/);
+                    if (throwMatch) thrownErr = throwMatch[1];
+                    else if (/\/\s*0\b/.test(doText)) thrownErr = 'DivisionByZeroError';
 
                     if (thrownErr && (!unlessTarget || unlessTarget === 'error' || unlessTarget === thrownErr)) {
                         vars['error'] = thrownErr;
@@ -757,6 +870,30 @@ function evalSimpleExpr(expr, vars) {
         }
 
         // Native Mathematical Constants
+        result = result.replace(/\b(pi|π)\b/g, '3.141592653589793');
+        result = result.replace(/\b(tau|τ)\b/g, '6.283185307179586');
+        result = result.replace(/\bphi\b/g, '1.618033988749895');
+        result = result.replace(/\b(inf|infinity)\b/g, 'Infinity');
+        result = result.replace(/\bnan\b/g, 'NaN');
+
+        // Complex numbers functions: complex(r, i), real(z), imag(z), conj(z)
+        result = result.replace(/\bcomplex\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '(__complex($1, $2))');
+        result = result.replace(/\breal\s*\(\s*([^)]+)\s*\)/g, '(__real($1))');
+        result = result.replace(/\bimag\s*\(\s*([^)]+)\s*\)/g, '(__imag($1))');
+        result = result.replace(/\bconj\s*\(\s*([^)]+)\s*\)/g, '(__conj($1))');
+
+        // Roots & Trigonometry additions
+        result = result.replace(/(?<!\.)(?:sqrt|√)\s*([0-9a-zA-Z_.()]+)/g, 'Math.sqrt($1)');
+        result = result.replace(/(?<!\.)\bcbrt\s*([0-9a-zA-Z_.()]+)/g, 'Math.cbrt($1)');
+        result = result.replace(/(?<!\.)\brt\s+([0-9a-zA-Z_.()]+)\s+([0-9a-zA-Z_.()]+)/g, 'Math.pow($2, 1 / ($1))');
+        result = result.replace(/(?<!\.)\bhypot\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, 'Math.hypot($1, $2)');
+        result = result.replace(/(?<!\.)\bhypot\s+([^\s]+)\s+([^\s]+)/g, 'Math.hypot($1, $2)');
+        result = result.replace(/(?<!\.)\bgcd\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '(__gcd($1, $2))');
+        result = result.replace(/(?<!\.)\blcm\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '(__lcm($1, $2))');
+        result = result.replace(/(?<!\.)\basin\s*\(\s*([^)]+)\s*\)/g, 'Math.asin($1)');
+        result = result.replace(/(?<!\.)\bacos\s*\(\s*([^)]+)\s*\)/g, 'Math.acos($1)');
+        result = result.replace(/(?<!\.)\batan2\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, 'Math.atan2($1, $2)');
+        result = result.replace(/(?<!\.)\batan\s*\(\s*([^)]+)\s*\)/g, 'Math.atan($1)');
         result = result.replace(/\b(pi|π)\b/g, '3.141592653589793');
         result = result.replace(/\b(tau|τ)\b/g, '6.283185307179586');
         result = result.replace(/\bphi\b/g, '1.618033988749895');
@@ -864,6 +1001,12 @@ function evalSimpleExpr(expr, vars) {
         // Evaluate safe arithmetic and boolean expressions
         const clean = result.replace(/[^0-9a-zA-Z_\s\+\-\*\/\(\)\[\]\"\'\.\,\:\=\>\<\!\&\|\%]/g, '');
         const factHelper = `
+            function __gcd(a, b){ a=Math.abs(Math.round(a)); b=Math.abs(Math.round(b)); while(b){ let t=b; b=a%b; a=t; } return a; }
+            function __lcm(a, b){ if(!a||!b) return 0; return Math.abs(Math.round(a*b))/__gcd(a,b); }
+            function __complex(r, i){ return { __type: 'complex', re: Number(r), im: Number(i), toString(){ return this.re + (this.im >= 0 ? "+" : "") + this.im + "i"; } }; }
+            function __real(z){ if(z && typeof z === 'object' && z.__type === 'complex') return z.re; if(typeof z === 'string' && z.includes('+')){ return parseFloat(z.split('+')[0]) || 0; } return Number(z) || 0; }
+            function __imag(z){ if(z && typeof z === 'object' && z.__type === 'complex') return z.im; if(typeof z === 'string' && z.includes('i')){ const p = z.replace('i','').split(/[+-]/); return parseFloat(p[p.length-1]) || 0; } return 0; }
+            function __conj(z){ if(z && typeof z === 'object' && z.__type === 'complex') return { __type: 'complex', re: z.re, im: -z.im, toString(){ return this.re + (this.im >= 0 ? "+" : "") + this.im + "i"; } }; return z; }
             function __fact(n){ let r=1; for(let i=2;i<=n;i++)r*=i; return r; }
             function __setSeed(s){ __seedState = Number(s) || 1; return 0; }
             function __rng(){ __seedState = (__seedState * 1103515245 + 12345) & 0x7fffffff; return __seedState; }
