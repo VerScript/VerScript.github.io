@@ -1,6 +1,3 @@
-// VerScript Academy Official Curriculum: 75 Distinct, Focused Chapters
-// Generated automatically with complete Section -> Subsection -> Chapter taxonomy
-
 var ARTICLES = [
   {
     "id": "ch1-intro",
@@ -1098,7 +1095,8 @@ var ARTICLES = [
             "name": "main.vrs",
             "code": "include \"geometry.h.vrs\"\n\nfunc areaSquare(side):\n    reply side * side\n\nfunc areaRect(w, h):\n    reply w * h\n\nset pt: Point(10, 20)\ndisplay \"Square Area: \" + areaSquare(pt.x) ?color=green\ndisplay \"Rectangle Area: \" + areaRect(pt.x, pt.y) ?color=cyan"
           }
-        ]
+        ],
+        "code": "include \"geometry.h.vrs\"\n\nfunc areaSquare(side):\n    reply side * side\n\nfunc areaRect(w, h):\n    reply w * h\n\nset pt: Point(10, 20)\ndisplay \"Square Area: \" + areaSquare(pt.x) ?color=green\ndisplay \"Rectangle Area: \" + areaRect(pt.x, pt.y) ?color=cyan"
       }
     ],
     "exercises": [
@@ -2024,13 +2022,13 @@ var ARTICLES = [
   {
     "id": "ch70-ffi-extern",
     "number": 70,
-    "section": "Section 18: System Integration & Graphics",
-    "subsection": "Native System Interop",
+    "section": "Section 18: System Integration & Graphics Engines",
+    "subsection": "Native System Interop & Mock OS",
     "title": "Foreign Function Interface (FFI) & Win32 Native Integration",
     "category": "Systems",
-    "readTime": "9 min read",
-    "summary": "Directly link and execute native C functions, dynamic shared libraries (.dll, .so), and Win32 system APIs at runtime using the 'extern' keyword with zero overhead and automatic argument marshaling.",
-    "body": "\n      <h2>Dynamic Foreign Function Interface (FFI)</h2>\n      <p>VerScript 2.0 introduces the first-class <code>extern</code> keyword, enabling scripts to dynamically bind, marshal, and execute native compiled shared library functions with zero overhead. There is no need for external C header files, bridge wrappers, or pre-compilation steps.</p>\n\n      <h2>Architecture: Zero-Compilation Native Binding</h2>\n      <p>When the VerScript VM encounters an <code>extern</code> declaration, it invokes OS dynamic loader primitives (<code>LoadLibraryA</code> / <code>GetProcAddress</code> on Windows, and <code>dlopen</code> / <code>dlsym</code> on POSIX Linux/macOS) in real time. The resulting function pointer is cached in the routine symbol table and wrapped with automatic parameter marshaling.</p>\n\n      <div class=\"callout-box tip\">\n        <div class=\"callout-title\">💡 Why Native FFI Matters</div>\n        <p>You can instantly leverage decades of high-performance native libraries: Win32 APIs, graphics drivers (DirectX, OpenGL, Vulkan), audio DSP (PortAudio, OpenAL), and cryptographic hardware acceleration directly from VerScript.</p>\n      </div>\n\n      <h2>Syntax & Declaration Anatomy</h2>\n      <pre><code>extern \"library_name\" FunctionName(param1, param2, ...)</code></pre>\n      <ul>\n        <li><code>library_name</code>: Quoted string specifying the shared object (e.g. <code>\"kernel32.dll\"</code>, <code>\"user32.dll\"</code>, <code>\"msvcrt.dll\"</code>, or <code>\"libc.so.6\"</code>).</li>\n        <li><code>FunctionName</code>: Exact exported C symbol name.</li>\n        <li><code>(params...)</code>: Formal argument signatures for runtime marshaling.</li>\n      </ul>\n\n      <h2>Supported Parameter Marshaling Types</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>VerScript Type</th><th>C / Win32 Equivalent</th><th>Marshaling Direction</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>int</code> / <code>num</code></td><td><code>int32_t</code>, <code>DWORD</code>, <code>LONG</code></td><td>Value Copy</td><td>Passed directly in integer registers (RCX, RDX, R8, R9).</td></tr>\n          <tr><td><code>float</code></td><td><code>double</code>, <code>float</code></td><td>Value Copy</td><td>Passed in SIMD registers (XMM0–XMM3).</td></tr>\n          <tr><td><code>str</code></td><td><code>const char*</code>, <code>LPCSTR</code></td><td>Pointer Reference</td><td>Null-terminated UTF-8 byte pointer with automatic string lifetime tracking.</td></tr>\n          <tr><td><code>bool</code></td><td><code>BOOL</code>, <code>int</code></td><td>Value Copy</td><td>Normalized to <code>1</code> (true) or <code>0</code> (false).</td></tr>\n          <tr><td><code>arr</code></td><td><code>void*</code>, <code>int*</code></td><td>Contiguous Buffer</td><td>Underlying native array pointer passed for in-place buffer mutation.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Real-World Win32 Interop Examples</h2>\n      <h3>1. System Process & Telemetry Information</h3>\n      <pre><code>extern \"kernel32.dll\" GetCurrentProcessId()\nextern \"kernel32.dll\" GetTickCount()\n\npid : GetCurrentProcessId()\nuptime : GetTickCount()\ndisplay \"Active Process ID: \" + pid ?color=cyan\ndisplay \"System Uptime (ms): \" + uptime ?color=green</code></pre>\n\n      <h3>2. Native Desktop Dialogs & Beeps</h3>\n      <pre><code>extern \"kernel32.dll\" Beep(freq, duration)\nextern \"user32.dll\" MessageBoxA(hwnd, text, caption, utype)\n\n! Emit audio tone (750Hz for 300ms)\nBeep(750, 300)\n\n! Launch native Windows message box\nMessageBoxA(0, \"System Initialization Completed Cleanly.\", \"VerScript Engine\", 0)</code></pre>\n\n      <h2>Resilience & Error Handling</h2>\n      <p>If a requested DLL is missing or a symbol cannot be resolved, VerScript throws a catchable <code>SystemError</code> or <code>FileError</code>:</p>\n      <pre><code>do\n    extern \"non_existent.dll\" CustomKernelHook()\n    CustomKernelHook()\nunless SystemError\n    Log.warn(\"Native library unavailable; utilizing software fallback mode.\")</code></pre>\n    ",
+    "readTime": "12 min read",
+    "summary": "Directly link and execute native C, C++, Rust, Zig, and VerScript shared libraries (.dll, .so) and Win32 system APIs at runtime using the 'extern' keyword and the integrated Mock Windows OS Workbench.",
+    "body": "\n      <h2>Dynamic Foreign Function Interface (FFI)</h2>\n      <p>VerScript 2.0 introduces the first-class <code>extern</code> keyword, enabling scripts to dynamically bind, marshal, and execute native compiled shared library functions with zero overhead. There is no need for external C header files, bridge wrappers, or pre-compilation steps.</p>\n\n      <h2>Architecture: Zero-Compilation Native Binding</h2>\n      <p>When the VerScript VM encounters an <code>extern</code> declaration, it invokes OS dynamic loader primitives (<code>LoadLibraryA</code> / <code>GetProcAddress</code> on Windows, and <code>dlopen</code> / <code>dlsym</code> on POSIX Linux/macOS) in real time. The resulting function pointer is cached in the routine symbol table and wrapped with automatic parameter marshaling.</p>\n\n      <div class=\"callout-box tip\">\n        <div class=\"callout-title\">💡 Why Native FFI Matters</div>\n        <p>You can instantly leverage decades of high-performance native libraries: Win32 APIs, graphics drivers (DirectX, OpenGL, Vulkan), audio DSP (PortAudio, OpenAL), and cryptographic hardware acceleration directly from VerScript.</p>\n      </div>\n\n      <h2>Syntax & Declaration Anatomy</h2>\n      <pre><code>extern \"library_name\" FunctionName(param1, param2, ...)</code></pre>\n      <ul>\n        <li><code>library_name</code>: Quoted string specifying the shared object (e.g. <code>\"kernel32.dll\"</code>, <code>\"user32.dll\"</code>, <code>\"mymath.dll\"</code>, or <code>\"libc.so.6\"</code>).</li>\n        <li><code>FunctionName</code>: Exact exported C/C++/Rust/Zig/VerScript symbol name.</li>\n        <li><code>(params...)</code>: Formal argument signatures for runtime marshaling.</li>\n      </ul>\n\n      <h2>Supported Parameter Marshaling Types</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>VerScript Type</th><th>C / Win32 Equivalent</th><th>Marshaling Direction</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>int</code> / <code>num</code></td><td><code>int32_t</code>, <code>DWORD</code>, <code>LONG</code></td><td>Value Copy</td><td>Passed directly in integer registers (RCX, RDX, R8, R9).</td></tr>\n          <tr><td><code>float</code></td><td><code>double</code>, <code>float</code></td><td>Value Copy</td><td>Passed in SIMD registers (XMM0–XMM3).</td></tr>\n          <tr><td><code>str</code></td><td><code>const char*</code>, <code>LPCSTR</code></td><td>Pointer Reference</td><td>Null-terminated UTF-8 byte pointer with automatic string lifetime tracking.</td></tr>\n          <tr><td><code>bool</code></td><td><code>BOOL</code>, <code>int</code></td><td>Value Copy</td><td>Normalized to <code>1</code> (true) or <code>0</code> (false).</td></tr>\n          <tr><td><code>arr</code></td><td><code>void*</code>, <code>int*</code></td><td>Contiguous Buffer</td><td>Underlying native array pointer passed for in-place buffer mutation.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Interactive Mock Windows OS & Multi-Language DLL Workbench</h2>\n      <p>Explore the full PE64 dynamic linker subsystem below! You can switch between <strong>C</strong>, <strong>C++</strong>, <strong>Rust</strong>, <strong>Zig</strong>, and <strong>VerScript DLL Export</strong> modes, inspect exported PE symbol tables, and register custom DLLs into the virtual Windows kernel to execute them immediately from VerScript.</p>\n\n      <div id=\"mock_os_workbench_mount\"></div>\n\n      <h2>VerScript Exporting DLLs: The <code>export dll</code> Primitive</h2>\n      <p>Not only can VerScript import native DLLs, but you can also write shared libraries directly in VerScript and export them with standard C-ABI symbols using <code>export dll</code>:</p>\n      <pre><code>export dll func add(a: int, b: int) -> int:\n    reply a + b\n\nexport dll func fast_multiply(x: int, factor: int) -> int:\n    reply x * factor</code></pre>\n      <p>The compiler produces standard Windows <code>.dll</code> and Linux <code>.so</code> binaries consumable by C++, Python (<code>ctypes</code>), Rust, C#, or Go with zero glue code!</p>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch70_1",
@@ -2039,8 +2037,8 @@ var ARTICLES = [
       },
       {
         "id": "cb_ch70_2",
-        "title": "audio_beep_ffi.vrs",
-        "code": "! Emit hardware audio alert via Win32 Beep API\nextern \"kernel32.dll\" Beep(frequency, duration)\n\ndisplay \"Generating audio notification...\" ?color=cyan\nBeep(880, 200)  ! 880 Hz (A5 tone) for 200ms\nBeep(1174, 250) ! 1174 Hz (D6 tone) for 250ms\ndisplay \"Audio chime complete.\" ?color=green"
+        "title": "custom_dll_invocation.vrs",
+        "code": "! Link and invoke custom DLL registered in Mock Windows OS\nextern \"mymath.dll\" add(a, b)\nextern \"mymath.dll\" fast_multiply(x, factor)\n\nset sumResult: add(40, 2)\nset multResult: fast_multiply(12, 10)\n\ndisplay \"=== Custom Dynamic Library Invocation ===\" ?color=cyan\ndisplay \"Exported C/Rust 'add(40, 2)': \" + sumResult ?color=green\ndisplay \"Exported 'fast_multiply(12, 10)': \" + multResult ?color=yellow\ndisplay \"VerScript <-> Native DLL interop successful!\" ?color=green"
       }
     ],
     "exercises": [
@@ -2055,11 +2053,11 @@ var ARTICLES = [
       },
       {
         "id": "ex_ch70_2",
-        "title": "FFI Challenge: System Tick Counter",
-        "prompt": "Declare <code>extern \"kernel32.dll\" GetTickCount()</code> and display the returned milliseconds.",
-        "starterCode": "! Declare and call GetTickCount\n",
-        "hint": "extern \"kernel32.dll\" GetTickCount()\nset t: GetTickCount()\ndisplay \"Uptime: \" + t",
-        "solution": "extern \"kernel32.dll\" GetTickCount()\nset t: GetTickCount()\ndisplay \"Uptime: \" + t",
+        "title": "FFI Challenge: Custom DLL Invocation",
+        "prompt": "Declare <code>extern \"mymath.dll\" add(a, b)</code>, compute <code>set res: add(10, 20)</code>, and display <code>\"Result: \" + res</code>.",
+        "starterCode": "! Link custom dll and call add\n",
+        "hint": "extern \"mymath.dll\" add(a, b)\nset res: add(10, 20)\ndisplay \"Result: \" + res",
+        "solution": "extern \"mymath.dll\" add(a, b)\nset res: add(10, 20)\ndisplay \"Result: \" + res",
         "expectedMatch": {}
       }
     ]
@@ -2067,13 +2065,13 @@ var ARTICLES = [
   {
     "id": "ch71-loop-stride-unpack",
     "number": 71,
-    "section": "Section 18: System Integration & Graphics",
+    "section": "Section 18: System Integration & Graphics Engines",
     "subsection": "Advanced Flow & Data",
     "title": "Range Strides ('step') & Destructuring ('unpack')",
     "category": "Syntax",
     "readTime": "8 min read",
     "summary": "Master custom loop stepping strides with the 'step' keyword and decompose arrays and tuples cleanly with 'unpack'.",
-    "body": "\n      <h2>Range Strides with <code>step</code></h2>\n      <p>When iterating through ranges using <code>for ... in</code>, you can customize the step increment using the <code>step</code> keyword:</p>\n      <pre><code>for i in 0 .. 10 step 2:\n    display i</code></pre>\n      <p>The <code>step</code> keyword gives you fine-grained control over loop progression without the boilerplate of manual index increments (<code>i = i + step</code>).</p>\n\n      <h2>Loop Progression Variations</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Syntax Pattern</th><th>Interval & Step</th><th>Sequence Produced</th><th>Use Case</th></tr></thead>\n        <tbody>\n          <tr><td><code>for i in 0 .. 10:</code></td><td>Default unit step (1)</td><td>0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</td><td>Standard sequential counting.</td></tr>\n          <tr><td><code>for i in 0 .. 10 step 2:</code></td><td>Even stride (+2)</td><td>0, 2, 4, 6, 8, 10</td><td>Even indices, alternate items.</td></tr>\n          <tr><td><code>for i in 1 .. 9 step 2:</code></td><td>Odd stride (+2)</td><td>1, 3, 5, 7, 9</td><td>Odd numbering, parity strides.</td></tr>\n          <tr><td><code>for i in 100 .. 0 step -10:</code></td><td>Countdown stride (-10)</td><td>100, 90, 80, 70, ..., 0</td><td>Timers, reverse buffers, downsampling.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Structured Destructuring with <code>unpack</code></h2>\n      <p>The <code>unpack</code> statement unpacks elements from arrays or tuples directly into individual variables in a single expressive line:</p>\n      <pre><code>unpack [x, y, z] : vector3D</code></pre>\n\n      <div class=\"callout-box note\">\n        <div class=\"callout-title\">📦 Pattern Matching & Multiple Returns</div>\n        <p>Functions returning composite vectors, RGB color channels, or database rows can be instantly decomposed into named variables without index lookup overhead (<code>v[0]</code>, <code>v[1]</code>).</p>\n      </div>\n\n      <h2>Advanced Destructuring Patterns</h2>\n      <pre><code>! 1. 2D Coordinate unpacking\nset point: [1920, 1080]\nunpack [width, height] : point\ndisplay \"Display Resolution: \" + width + \"x\" + height ?color=cyan\n\n! 2. RGB Color component unpacking\nset color_triplet: [255, 128, 0]\nunpack [r, g, b] : color_triplet\ndisplay \"Red: \" + r + \" Green: \" + g + \" Blue: \" + b ?color=yellow</code></pre>\n    ",
+    "body": "\n      <h2>Range Strides with <code>step</code></h2>\n      <p>When iterating through ranges using <code>for ... in</code>, you can customize the step increment using the <code>step</code> keyword:</p>\n      <pre><code>for i in 0 .. 10 step 2:\n    display i</code></pre>\n      <p>The <code>step</code> keyword gives you fine-grained control over loop progression without the boilerplate of manual index increments (<code>i = i + step</code>).</p>\n\n      <h2>Loop Progression Variations</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Syntax Pattern</th><th>Interval & Step</th><th>Sequence Produced</th><th>Use Case</th></tr></thead>\n        <tbody>\n          <tr><td><code>for i in 0 .. 10:</code></td><td>Default unit step (1)</td><td>0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</td><td>Standard sequential counting.</td></tr>\n          <tr><td><code>for i in 0 .. 10 step 2:</code></td><td>Even stride (+2)</td><td>0, 2, 4, 6, 8, 10</td><td>Even indices, alternate items.</td></tr>\n          <tr><td><code>for i in 1 .. 9 step 2:</code></td><td>Odd stride (+2)</td><td>1, 3, 5, 7, 9</td><td>Odd numbering, parity strides.</td></tr>\n          <tr><td><code>for i in 100 .. 0 step -10:</code></td><td>Countdown stride (-10)</td><td>100, 90, 80, 70, ..., 0</td><td>Timers, reverse buffers, downsampling.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Structured Destructuring with <code>unpack</code></h2>\n      <p>The <code>unpack</code> statement unpacks elements from arrays or tuples directly into individual variables in a single expressive line:</p>\n      <pre><code>unpack [x, y, z] : vector3D</code></pre>\n\n      <div class=\"callout-box note\">\n        <div class=\"callout-title\">📦 Pattern Matching & Multiple Returns</div>\n        <p>Functions returning composite vectors, RGB color channels, or database rows can be instantly decomposed into named variables without index lookup overhead (<code>v[0]</code>, <code>v[1]</code>).</p>\n      </div>\n\n      <h2>Advanced Destructuring Patterns</h2>\n      <pre><code>! 1. 2D Coordinate unpacking\nset point: [1920, 1080]\nunpack [width, height] : point\ndisplay \"Display Resolution: \" + width + \"x\" + height ?color=cyan\n\n! 2. RGB Color component unpacking\nset color_triplet: [255, 128, 0]\nunpack [r, g, b] : color_triplet\ndisplay \"Red: \" + r + \" Green: \" + g + \" Blue: \" + b ?color=yellow</code></pre>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch71_1",
@@ -2110,13 +2108,13 @@ var ARTICLES = [
   {
     "id": "ch72-complex-and-math",
     "number": 72,
-    "section": "Section 18: System Integration & Graphics",
+    "section": "Section 18: System Integration & Graphics Engines",
     "subsection": "Mathematics",
     "title": "Complex Numbers & Advanced Transcendental Math",
     "category": "Math",
     "readTime": "10 min read",
     "summary": "Perform complex arithmetic ($a + bi$), extract real and imaginary parts, and leverage built-in lerp, clamp, hypot, gcd, and lcm functions.",
-    "body": "\n      <h2>First-Class Complex Numbers</h2>\n      <p>VerScript natively supports complex arithmetic. Construct complex numbers using <code>complex(real, imag)</code>:</p>\n      <pre><code>set z: complex(3, 4)\nset r: real(z)    ! 3\nset im: imag(z)   ! 4\nset c: conj(z)    ! 3 - 4i</code></pre>\n\n      <h2>Mathematical Foundations: Cartesian & Polar</h2>\n      <p>In Cartesian form, a complex number $z = x + iy$ represents a coordinate $(x, y)$ in the 2D complex plane. The magnitude $|z|$ is calculated using Euclidean hypotenuse: $|z| = \\sqrt{x^2 + y^2} = \\text{hypot}(x, y)$.</p>\n\n      <h2>Built-in Math Primitives Reference</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Function</th><th>Mathematical Definition</th><th>Example Call</th><th>Returned Result</th></tr></thead>\n        <tbody>\n          <tr><td><code>complex(r, i)</code></td><td>$z = r + i$</td><td><code>complex(3.0, 4.0)</code></td><td><code>3+4i</code></td></tr>\n          <tr><td><code>real(z)</code></td><td>$\\text{Re}(z)$</td><td><code>real(complex(3, 4))</code></td><td><code>3</code></td></tr>\n          <tr><td><code>imag(z)</code></td><td>$\\text{Im}(z)$</td><td><code>imag(complex(3, 4))</code></td><td><code>4</code></td></tr>\n          <tr><td><code>conj(z)</code></td><td>$z^* = x - iy$</td><td><code>conj(complex(3, 4))</code></td><td><code>3-4i</code></td></tr>\n          <tr><td><code>hypot(x, y)</code></td><td>$\\sqrt{x^2 + y^2}$</td><td><code>hypot(3, 4)</code></td><td><code>5</code></td></tr>\n          <tr><td><code>lerp(a, b, t)</code></td><td>$a + (b - a) \\cdot t$</td><td><code>lerp(0, 100, 0.25)</code></td><td><code>25</code></td></tr>\n          <tr><td><code>clamp(v, min, max)</code></td><td>$\\max(\\min(v, max), min)$</td><td><code>clamp(150, 0, 100)</code></td><td><code>100</code></td></tr>\n          <tr><td><code>gcd(a, b)</code></td><td>$\\gcd(a, b)$</td><td><code>gcd(24, 36)</code></td><td><code>12</code></td></tr>\n          <tr><td><code>lcm(a, b)</code></td><td>$\\text{lcm}(a, b)$</td><td><code>lcm(4, 6)</code></td><td><code>12</code></td></tr>\n          <tr><td><code>cbrt(x)</code></td><td>$\\sqrt[3]{x}$</td><td><code>cbrt(27)</code></td><td><code>3</code></td></tr>\n          <tr><td><code>atan2(y, x)</code></td><td>$\\text{atan2}(y, x)$</td><td><code>atan2(1, 1)</code></td><td><code>0.785398 rad</code></td></tr>\n        </tbody>\n      </table>\n\n      <h2>DSP & Quantum Computing Applications</h2>\n      <p>Complex numbers are essential for signal processing (Fast Fourier Transforms) and quantum computing state vectors (qubit superposition):</p>\n      <pre><code>! Simulating a single-qubit quantum state: |psi> = alpha |0> + beta |1>\nset alpha: complex(1 / sqrt(2), 0)\nset beta:  complex(0, 1 / sqrt(2))\n\n! Probability of measuring |1> = |beta|^2\nset prob1: hypot(real(beta), imag(beta))^2\ndisplay \"Qubit |1> State Probability: \" + prob1 ?color=cyan</code></pre>\n    ",
+    "body": "\n      <h2>First-Class Complex Numbers</h2>\n      <p>VerScript natively supports complex arithmetic. Construct complex numbers using <code>complex(real, imag)</code>:</p>\n      <pre><code>set z: complex(3, 4)\nset r: real(z)    ! 3\nset im: imag(z)   ! 4\nset c: conj(z)    ! 3 - 4i</code></pre>\n\n      <h2>Mathematical Foundations: Cartesian & Polar</h2>\n      <p>In Cartesian form, a complex number $z = x + iy$ represents a coordinate $(x, y)$ in the 2D complex plane. The magnitude $|z|$ is calculated using Euclidean hypotenuse: $|z| = \\sqrt{x^2 + y^2} = \\text{hypot}(x, y)$.</p>\n\n      <h2>Built-in Math Primitives Reference</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Function</th><th>Mathematical Definition</th><th>Example Call</th><th>Returned Result</th></tr></thead>\n        <tbody>\n          <tr><td><code>complex(r, i)</code></td><td>$z = r + i$</td><td><code>complex(3.0, 4.0)</code></td><td><code>3+4i</code></td></tr>\n          <tr><td><code>real(z)</code></td><td>$\\text{Re}(z)$</td><td><code>real(complex(3, 4))</code></td><td><code>3</code></td></tr>\n          <tr><td><code>imag(z)</code></td><td>$\\text{Im}(z)$</td><td><code>imag(complex(3, 4))</code></td><td><code>4</code></td></tr>\n          <tr><td><code>conj(z)</code></td><td>$z^* = x - iy$</td><td><code>conj(complex(3, 4))</code></td><td><code>3-4i</code></td></tr>\n          <tr><td><code>hypot(x, y)</code></td><td>$\\sqrt{x^2 + y^2}$</td><td><code>hypot(3, 4)</code></td><td><code>5</code></td></tr>\n          <tr><td><code>lerp(a, b, t)</code></td><td>$a + (b - a) \\cdot t$</td><td><code>lerp(0, 100, 0.25)</code></td><td><code>25</code></td></tr>\n          <tr><td><code>clamp(v, min, max)</code></td><td>$\\max(\\min(v, max), min)$</td><td><code>clamp(150, 0, 100)</code></td><td><code>100</code></td></tr>\n          <tr><td><code>gcd(a, b)</code></td><td>$\\gcd(a, b)$</td><td><code>gcd(24, 36)</code></td><td><code>12</code></td></tr>\n          <tr><td><code>lcm(a, b)</code></td><td>$\\text{lcm}(a, b)$</td><td><code>lcm(4, 6)</code></td><td><code>12</code></td></tr>\n          <tr><td><code>cbrt(x)</code></td><td>$\\sqrt[3]{x}$</td><td><code>cbrt(27)</code></td><td><code>3</code></td></tr>\n          <tr><td><code>atan2(y, x)</code></td><td>$\\text{atan2}(y, x)$</td><td><code>atan2(1, 1)</code></td><td><code>0.785398 rad</code></td></tr>\n        </tbody>\n      </table>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch72_1",
@@ -2153,13 +2151,13 @@ var ARTICLES = [
   {
     "id": "ch73-terminal-subsystem",
     "number": 73,
-    "section": "Section 18: System Integration & Graphics",
+    "section": "Section 18: System Integration & Graphics Engines",
     "subsection": "I/O & Architecture",
     "title": "Terminal Subsystem & Advanced Console Control",
     "category": "Terminal",
     "readTime": "9 min read",
     "summary": "Configure terminal window titles, clear screen buffers, manage output flushing, and handle split viewports.",
-    "body": "\n      <h2>The <code>terminal</code> Controller Subsystem</h2>\n      <p>VerScript includes dedicated keywords for controlling the console environment directly from code, enabling sophisticated Terminal User Interfaces (TUIs), multi-pane dashboards, and real-time ANSI terminal control.</p>\n\n      <h2>Subsystem API & Primitives</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Command / Keyword</th><th>Scope</th><th>ANSI / Host Action</th><th>Description</th></tr></thead>\n        <tbody>\n          <tr><td><code>terminal.title(str)</code></td><td>Host Window</td><td>OS Titlebar API</td><td>Dynamically updates terminal tab and OS application title.</td></tr>\n          <tr><td><code>terminal.clear()</code></td><td>Display Buffer</td><td><code>\\x1b[2J\\x1b[H</code></td><td>Clears the terminal canvas and homes cursor to row 1, col 1.</td></tr>\n          <tr><td><code>terminal.split(dir)</code></td><td>TUI Layout</td><td>Split-Pane Viewport</td><td>Divides terminal into vertical or horizontal viewports.</td></tr>\n          <tr><td><code>flush()</code></td><td>I/O Stream</td><td><code>fflush(stdout)</code></td><td>Immediately writes pending byte buffers to console.</td></tr>\n          <tr><td><code>focus(pane)</code></td><td>User Input</td><td>Event Loop Routing</td><td>Transfers keyboard focus to specified active panel.</td></tr>\n          <tr><td><code>title \"text\"</code></td><td>Host Window</td><td>Titlebar Shortcut</td><td>Direct title setter.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Color & Styling Primitives</h2>\n      <p>Combine terminal commands with 24-bit Truecolor hex attributes:</p>\n      <ul>\n        <li><code>display \"Message\" ?color=#00FFCC</code>: 24-bit RGB foreground coloring.</li>\n        <li><code>display \"Warning\" ?color=yellow ?inline</code>: Inline printing without trailing newline.</li>\n        <li><code>display \"Critical\" ?bg=#FF0055 ?color=#FFFFFF</code>: Background fill tinting.</li>\n      </ul>\n\n      <h2>Building a Real-Time TUI Dashboard</h2>\n      <pre><code>terminal.title(\"VerScript System Telemetry\")\nterminal.clear()\n\ndisplay \"═══════════════════════════════════════════\" ?color=cyan\ndisplay \"    VERSCRIPT LIVE TELEMETRY DASHBOARD     \" ?color=green\ndisplay \"═══════════════════════════════════════════\" ?color=cyan\ndisplay \"CPU Load:     [████████░░░░] 64%\" ?color=yellow\ndisplay \"Memory Usage: [██████████░░] 82%\" ?color=cyan\ndisplay \"Network I/O:  [████████████] 1.2 GB/s\" ?color=green\ndisplay \"═══════════════════════════════════════════\" ?color=cyan\nflush()</code></pre>\n    ",
+    "body": "\n      <h2>The <code>terminal</code> Controller Subsystem</h2>\n      <p>VerScript includes dedicated keywords for controlling the console environment directly from code, enabling sophisticated Terminal User Interfaces (TUIs), multi-pane dashboards, and real-time ANSI terminal control.</p>\n\n      <h2>Subsystem API & Primitives</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Command / Keyword</th><th>Scope</th><th>ANSI / Host Action</th><th>Description</th></tr></thead>\n        <tbody>\n          <tr><td><code>terminal.title(str)</code></td><td>Host Window</td><td>OS Titlebar API</td><td>Dynamically updates terminal tab and OS application title.</td></tr>\n          <tr><td><code>terminal.clear()</code></td><td>Display Buffer</td><td><code>\\x1b[2J\\x1b[H</code></td><td>Clears the terminal canvas and homes cursor to row 1, col 1.</td></tr>\n          <tr><td><code>terminal.split(dir)</code></td><td>TUI Layout</td><td>Split-Pane Viewport</td><td>Divides terminal into vertical or horizontal viewports.</td></tr>\n          <tr><td><code>flush()</code></td><td>I/O Stream</td><td><code>fflush(stdout)</code></td><td>Immediately writes pending byte buffers to console.</td></tr>\n          <tr><td><code>focus(pane)</code></td><td>User Input</td><td>Event Loop Routing</td><td>Transfers keyboard focus to specified active panel.</td></tr>\n          <tr><td><code>title \"text\"</code></td><td>Host Window</td><td>Titlebar Shortcut</td><td>Direct title setter.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Color & Styling Primitives</h2>\n      <p>Combine terminal commands with 24-bit Truecolor hex attributes:</p>\n      <ul>\n        <li><code>display \"Message\" ?color=#00FFCC</code>: 24-bit RGB foreground coloring.</li>\n        <li><code>display \"Warning\" ?color=yellow ?inline</code>: Inline printing without trailing newline.</li>\n        <li><code>display \"Critical\" ?bg=#FF0055 ?color=#FFFFFF</code>: Background fill tinting.</li>\n      </ul>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch73_1",
@@ -2194,68 +2192,154 @@ var ARTICLES = [
     ]
   },
   {
-    "id": "ch74-graphics-rendering",
+    "id": "ch74-2d-canvas-engine",
     "number": 74,
-    "section": "Section 18: System Integration & Graphics",
-    "subsection": "Visual Computing",
-    "title": "2D/3D Rendering & Game Graphics Engine",
+    "section": "Section 18: System Integration & Graphics Engines",
+    "subsection": "2D Visual Computing",
+    "title": "2D Immediate Canvas & Procedural Graphics Engine",
     "category": "Graphics",
-    "readTime": "11 min read",
-    "summary": "Create screens, 3D worlds, geometric shapes (rect, circle, box, sphere), cameras, lights, and render passes with delta-time animation frames.",
-    "body": "\n      <h2>VerScript Graphics & Game Architecture</h2>\n      <p>VerScript provides high-level keywords for real-time 2D drawing and 3D scene rendering, unifying immediate-mode 2D drawing and retained-mode 3D spatial scene graphs into a coherent declarative engine.</p>\n\n      <h2>Rendering Pipeline Keywords</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Keyword</th><th>Dimension</th><th>Role</th><th>Syntax Example</th></tr></thead>\n        <tbody>\n          <tr><td><code>screen</code></td><td>2D / 3D</td><td>Canvas viewport surface</td><td><code>screen(800, 600, \"Game\")</code></td></tr>\n          <tr><td><code>world</code></td><td>3D</td><td>Physics simulation space</td><td><code>world(gravity: [0, -9.8, 0])</code></td></tr>\n          <tr><td><code>draw</code></td><td>2D</td><td>Immediate-mode rasterizer</td><td><code>draw rect(x, y, w, h) ?fill=#hex</code></td></tr>\n          <tr><td><code>scene</code></td><td>3D</td><td>Retained scene graph container</td><td><code>set scn: scene()</code></td></tr>\n          <tr><td><code>camera</code></td><td>3D</td><td>Perspective or orthographic camera</td><td><code>set cam: camera(60, 16/9, 0.1, 1000)</code></td></tr>\n          <tr><td><code>light</code></td><td>3D</td><td>Illumination source</td><td><code>set sun: light(\"directional\", #FFF, 1.0)</code></td></tr>\n          <tr><td><code>spawn</code></td><td>2D / 3D</td><td>Entity instantiation</td><td><code>spawn Player(100, 200)</code></td></tr>\n          <tr><td><code>render</code></td><td>2D / 3D</td><td>Hardware rasterization pass</td><td><code>render(scn, cam)</code></td></tr>\n        </tbody>\n      </table>\n\n      <h2>Immediate 2D Geometry Primitives</h2>\n      <pre><code>! 1. Draw solid and stroked rectangles\ndraw rect(50, 50, 200, 120) ?fill=#00FFCC ?stroke=#0077FE\n\n! 2. Draw circular particles\ndraw circle(400, 300, 45) ?fill=#BD00FF\n\n! 3. Draw lines and points\ndraw line(0, 0, 800, 600) ?stroke=#FFFFFF</code></pre>\n\n      <h2>Retained 3D Scene Graph Assembly</h2>\n      <pre><code>set scn: scene()\nset cam: camera(fov: 75, aspect: 16/9, near: 0.1, far: 1000)\nset dirLight: light(\"sun\", #FFFFFF, 1.2)\nscn.add(dirLight)\n\n! 3D Geometry primitives: box, sphere, mesh\nset heroBox: box(width: 2, height: 2, depth: 2) ?color=#00FFCC\nheroBox.position = [0, 1, -5]\nscn.add(heroBox)\n\nrender(scn, cam)</code></pre>\n    ",
+    "readTime": "12 min read",
+    "summary": "Initialize 2D canvas surfaces, render procedural geometric shapes (rectangles, circles, lines, polygons), blit textured sprites, apply 24-bit Truecolor alpha blending, and visualize interactive 2D graphics directly in your browser.",
+    "body": "\n      <h2>The VerScript 2D Immediate Graphics Architecture</h2>\n      <p>VerScript includes a high-speed, lightweight immediate-mode 2D graphics engine designed for procedural simulations, particle effects, HUD overlays, and high-framerate 2D games. With immediate-mode rendering, your script draws shapes sequentially each frame without retaining heavy object trees in memory.</p>\n\n      <h2>Surface Initialization: <code>screen</code></h2>\n      <p>Create a drawing viewport using <code>screen(width, height, title)</code>:</p>\n      <pre><code>screen(800, 600, \"Quantum Starfield 2D\")</code></pre>\n\n      <h2>2D Drawing Primitives Reference</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Command / Syntax</th><th>Parameters</th><th>Visual Output</th><th>Attributes</th></tr></thead>\n        <tbody>\n          <tr><td><code>draw rect(x, y, w, h)</code></td><td>Top-left $(x,y)$, dimensions</td><td>Outlined / Filled Box</td><td><code>?fill=#hex</code>, <code>?stroke=#hex</code>, <code>?radius=r</code></td></tr>\n          <tr><td><code>draw circle(x, y, radius)</code></td><td>Center $(x,y)$, radius</td><td>Circular Disc or Ring</td><td><code>?fill=#hex</code>, <code>?stroke=#hex</code></td></tr>\n          <tr><td><code>draw line(x1, y1, x2, y2)</code></td><td>Start and end points</td><td>Vector Segment</td><td><code>?stroke=#hex</code>, <code>?width=px</code></td></tr>\n          <tr><td><code>draw text(str, x, y, size)</code></td><td>Content, anchor, size</td><td>Crisp Vector Typography</td><td><code>?color=#hex</code>, <code>?font=\"name\"</code></td></tr>\n          <tr><td><code>draw point(x, y)</code></td><td>Pixel coordinate</td><td>Individual Subpixel</td><td><code>?color=#hex</code></td></tr>\n          <tr><td><code>draw sprite(id, x, y, rot)</code></td><td>Texture asset ID, rotation</td><td>Blitted Texture Image</td><td><code>?alpha=0.85</code>, <code>?scale=2.0</code></td></tr>\n        </tbody>\n      </table>\n\n      <h2>Truecolor Neon Styling & Alpha Blending</h2>\n      <p>VerScript supports standard hex colors (<code>#00FFCC</code>, <code>#BD00FF</code>, <code>#FFB800</code>) and 8-digit RGBA hex codes with opacity (e.g. <code>#00FFCC88</code> for 50% translucent neon cyan).</p>\n\n      <h2>Interactive Dual-Output Viewport</h2>\n      <p>When you click <strong>Run Code</strong> on any 2D graphics snippet below, the script outputs text telemetry to the terminal and simultaneously draws live graphics onto the interactive HTML5 2D Canvas viewport embedded below the console!</p>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch74_1",
-        "title": "scene_rendering.vrs",
-        "code": "! 1. Initialize screen canvas\nscreen(800, 600, \"VerScript 2D Canvas\")\n\n! 2. Draw 2D Shapes\ndraw rect(100, 100, 200, 150) ?fill=#00FFCC ?stroke=#0077FE\ndraw circle(400, 300, 50) ?fill=#BD00FF\n\n! 3. 3D Scene Graph\nset scn: scene()\nset cam: camera(60, 16/9, 0.1, 1000)\nset sun: light(\"sun\", #FFFFFF, 1.0)\nscn.add(sun)\n\nrender(scn, cam)\ndisplay \"Frame Render Complete!\" ?color=green"
+        "title": "neon_canvas_2d.vrs",
+        "code": "! Initialize 2D Canvas surface\nscreen(800, 600, \"VerScript 2D Neon Canvas\")\n\n! 1. Draw glowing background grid and panels\ndraw rect(40, 40, 720, 520) ?fill=#0B0E14 ?stroke=#00FFCC\ndraw rect(60, 60, 320, 200) ?fill=#161B22 ?stroke=#0077FE\n\n! 2. Draw procedural radar circles\ndraw circle(560, 160, 90) ?stroke=#00FFCC\ndraw circle(560, 160, 60) ?stroke=#00FFCC88\ndraw circle(560, 160, 30) ?stroke=#00FFCC44\ndraw circle(560, 160, 6) ?fill=#FF5555\n\n! 3. Draw crosshairs and vector scan line\ndraw line(460, 160, 660, 160) ?stroke=#00FFCC44\ndraw line(560, 60, 560, 260) ?stroke=#00FFCC44\ndraw line(560, 160, 625, 95) ?stroke=#00FFCC\n\n! 4. Draw HUD telemetry typography\ndraw text(\"RADAR ACTIVE - 1 TARGET DETECTED\", 80, 100, 18) ?color=#00FFCC\ndraw text(\"Range: 42.8 km | Azimuth: 045 deg\", 80, 130, 14) ?color=#FFFFFF\ndraw text(\"Lock Status: STABLE\", 80, 160, 14) ?color=#50FA7B\n\ndisplay \"2D Immediate Canvas rendered cleanly at 60 FPS!\" ?color=green"
       },
       {
         "id": "cb_ch74_2",
-        "title": "space_particle_sim.vrs",
-        "code": "! Space particle simulation loop\nscreen(1280, 720, \"Quantum Starfield\")\nrender: 2D\n\nfor i in 0 .. 50 step 5:\n    set px: i * 20\n    set py: 360 + sin(i) * 50\n    draw circle(px, py, 6) ?fill=#00FFCC\n\ndisplay \"Starfield particles rasterized!\" ?color=green"
+        "title": "procedural_starfield.vrs",
+        "code": "! Procedural particle starfield\nscreen(800, 600, \"Starfield Generator\")\n\nfor i in 0 .. 30 step 3:\n    set px: 100 + i * 20\n    set py: 200 + sin(i) * 60\n    draw circle(px, py, 5) ?fill=#BD00FF\n    draw line(px, py, px + 10, py + 10) ?stroke=#00FFCC\n\ndisplay \"Starfield simulation complete!\" ?color=green"
       }
     ],
     "exercises": [
       {
         "id": "ex_ch74_1",
-        "title": "Graphics Challenge: Screen Initialization",
-        "prompt": "Initialize a screen canvas <code>screen(640, 480, \"My Game\")</code> and display <code>\"Canvas initialized\"</code>.",
+        "title": "2D Canvas Challenge: Initialize Screen",
+        "prompt": "Initialize a 2D screen surface using <code>screen(800, 600, \"Neon 2D\")</code> and display <code>\"Screen ready\"</code>.",
         "starterCode": "! Initialize screen\n",
-        "hint": "screen(640, 480, \"My Game\")\ndisplay \"Canvas initialized\"",
-        "solution": "screen(640, 480, \"My Game\")\ndisplay \"Canvas initialized\"",
+        "hint": "screen(800, 600, \"Neon 2D\")\ndisplay \"Screen ready\"",
+        "solution": "screen(800, 600, \"Neon 2D\")\ndisplay \"Screen ready\"",
         "expectedMatch": {}
       },
       {
         "id": "ex_ch74_2",
-        "title": "Graphics Challenge: Draw Rectangle",
-        "prompt": "Draw a rectangle at <code>draw rect(50, 50, 100, 100) ?fill=#00FFCC</code> and display <code>\"Drawn\"</code>.",
-        "starterCode": "! Draw rect\n",
-        "hint": "draw rect(50, 50, 100, 100) ?fill=#00FFCC\ndisplay \"Drawn\"",
-        "solution": "draw rect(50, 50, 100, 100) ?fill=#00FFCC\ndisplay \"Drawn\"",
+        "title": "2D Canvas Challenge: Draw Rect and Circle",
+        "prompt": "Draw a rectangle <code>draw rect(50, 50, 200, 100) ?fill=#00FFCC</code> and a circle <code>draw circle(400, 200, 50) ?fill=#BD00FF</code>.",
+        "starterCode": "! Draw 2D primitives\n",
+        "hint": "draw rect(50, 50, 200, 100) ?fill=#00FFCC\ndraw circle(400, 200, 50) ?fill=#BD00FF",
+        "solution": "draw rect(50, 50, 200, 100) ?fill=#00FFCC\ndraw circle(400, 200, 50) ?fill=#BD00FF",
         "expectedMatch": {}
       }
     ]
   },
   {
-    "id": "ch75-error-tiers-defer-panic",
+    "id": "ch75-3d-scene-mesh-engine",
     "number": 75,
-    "section": "Section 18: System Integration & Graphics",
-    "subsection": "Fault Tolerance & Resilience",
-    "title": "Advanced Error Suppression Tiers, 'defer' & 'panic'",
-    "category": "Error Handling",
-    "readTime": "8 min read",
-    "summary": "Master multi-tier error suppression (SuppressErrors, CriticalErrors, ForceErrors), deterministic resource cleanup with 'defer', and unrecoverable faults with 'panic'.",
-    "body": "\n      <h2>The VerScript Resilience Architecture</h2>\n      <p>Modern distributed systems and game engines cannot afford to crash from transient non-fatal errors. VerScript provides a structured, tiered error suppression and recovery model:</p>\n      <ul>\n        <li><code>SuppressErrors</code>: Downgrades non-critical errors into logged warnings without halting execution.</li>\n        <li><code>CriticalErrors</code>: Halts only when data corruption or hardware memory exhaustion is detected.</li>\n        <li><code>ForceErrors</code>: Strict development mode where every warning or violation immediately triggers an exception.</li>\n      </ul>\n\n      <h2>Deterministic Resource Cleanup: <code>defer</code></h2>\n      <p>The <code>defer</code> keyword schedules a statement or routine to execute right before the enclosing scope exits, regardless of whether it returned normally or threw an exception. This guarantees zero resource leaks for files, sockets, and Win32 handles.</p>\n      <pre><code>func process_flight_data(filepath):\n    set fd: Fs.open(filepath, \"r\")\n    defer Fs.close(fd)  ! Guaranteed to run upon exit\n\n    ! Process file safely...\n    reply Fs.read(fd)</code></pre>\n\n      <h2>Unrecoverable Faults: <code>panic</code></h2>\n      <p>When an unrecoverable invariant failure occurs (e.g. state machine corruption or security breach), use <code>panic</code> to immediately halt execution and output an actionable post-mortem stack trace:</p>\n      <pre><code>if authenticated == false:\n    panic \"SecurityViolation: Unauthorized state access\"</code></pre>\n    ",
+    "section": "Section 18: System Integration & Graphics Engines",
+    "subsection": "3D Spatial Computing",
+    "title": "3D Spatial Scene Graph & Mesh Rendering Engine",
+    "category": "Graphics",
+    "readTime": "13 min read",
+    "summary": "Construct retained-mode 3D spatial scene graphs, configure perspective cameras and directional illumination, assemble geometric meshes (cubes, spheres, cylinders), apply matrix rotations, and interact with live 3D orbital viewports.",
+    "body": "\n      <h2>Retained-Mode 3D Spatial Scene Graph</h2>\n      <p>While 2D immediate mode rasterizes frames directly, 3D graphics require spatial scene trees, perspective depth projection, polygon normal vectors, and illumination shaders. VerScript introduces a clean declarative 3D scene graph API.</p>\n\n      <h2>Core 3D Engine Architecture</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Object / Function</th><th>Role</th><th>Parameters / Signature</th><th>Description</th></tr></thead>\n        <tbody>\n          <tr><td><code>world(fov, near, far)</code></td><td>Physics & Simulation Container</td><td><code>world(fov: 60, sky: #0B0E14)</code></td><td>Initializes the global 3D space, physics bounding box, and skybox.</td></tr>\n          <tr><td><code>scene()</code></td><td>Spatial Scene Graph</td><td><code>set scn: scene()</code></td><td>Hierarchical container holding meshes, lights, and cameras.</td></tr>\n          <tr><td><code>camera(eye, target, up)</code></td><td>Perspective Viewport</td><td><code>camera(fov: 75, aspect: 16/9)</code></td><td>Defines the observer position and view projection matrix.</td></tr>\n          <tr><td><code>light(type, dir, color)</code></td><td>Illumination Source</td><td><code>light(\"directional\", [1, 2, 1], #FFF)</code></td><td>Casts diffuse and specular shading across 3D polygon surfaces.</td></tr>\n          <tr><td><code>mesh.box(w, h, d)</code></td><td>3D Cuboid Geometry</td><td>Width, height, depth</td><td>Generates a 6-faced, 12-triangle 3D bounding mesh.</td></tr>\n          <tr><td><code>mesh.sphere(r, segs)</code></td><td>3D Spherical Geometry</td><td>Radius, latitude/longitude segments</td><td>Generates tessellated parametric UV sphere.</td></tr>\n          <tr><td><code>mesh.cylinder(r, h)</code></td><td>3D Cylindrical Geometry</td><td>Radius, height, radial caps</td><td>Generates cylinder or conical mesh.</td></tr>\n          <tr><td><code>render(scn, cam)</code></td><td>Hardware Rasterizer Pass</td><td>Scene container, active camera</td><td>Executes depth-buffer sort, vertex shading, and rasterization.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Spatial Transformations: Position & Rotation</h2>\n      <p>Meshes expose intuitive 3D spatial properties:</p>\n      <pre><code>set cube: mesh.box(2, 2, 2) ?color=#00FFCC\ncube.position = [0, 1.5, -6]\ncube.rotation = [15, 45, 0]  ! Pitch, yaw, roll in degrees\nscn.add(cube)</code></pre>\n\n      <h2>Interactive 3D Orbital Viewport</h2>\n      <p>Running the code block below renders the 3D scene into the embedded interactive 3D WebGL / Canvas viewport. You can <strong>click and drag with your mouse to orbit the camera</strong> in 3D space!</p>\n  ",
     "codeBlocks": [
       {
         "id": "cb_ch75_1",
+        "title": "spatial_scene_3d.vrs",
+        "code": "! 1. Initialize 3D World and Scene Graph\nset scn: scene()\nset cam: camera(fov: 65, eye: [0, 3, 8], target: [0, 0, 0])\nset sun: light(\"directional\", dir: [1, 2, 1], color: #FFFFFF, intensity: 1.2)\nscn.add(sun)\n\n! 2. Create 3D Geometric Meshes\nset mainCube: mesh.box(2.2, 2.2, 2.2) ?color=#00FFCC ?wireframe=false\nmainCube.position = [-2.0, 0.0, 0.0]\nmainCube.rotation = [25, 35, 10]\nscn.add(mainCube)\n\nset orb: mesh.sphere(radius: 1.4, segments: 24) ?color=#BD00FF\norb.position = [2.2, 0.2, 0.0]\nscn.add(orb)\n\n! 3. Ground plane grid\nset ground: mesh.plane(width: 14, depth: 14) ?color=#161B22 ?wireframe=true\nground.position = [0.0, -1.8, 0.0]\nscn.add(ground)\n\n! 4. Hardware Render Pass\nrender(scn, cam)\ndisplay \"3D Spatial Scene graph rendered successfully with 2 active meshes!\" ?color=green"
+      },
+      {
+        "id": "cb_ch75_2",
+        "title": "rotating_cube_animation.vrs",
+        "code": "! Animated rotating cube in 3D space\nset scn: scene()\nset cam: camera(fov: 60, eye: [0, 2, 6], target: [0, 0, 0])\nset cube: mesh.box(2, 2, 2) ?color=#FFB800 ?wireframe=true\n\nfor angle in 0 .. 90 step 15:\n    cube.rotation = [angle, angle * 1.5, 0]\n    render(scn, cam)\n\ndisplay \"Rotational trajectory computed across 7 keyframes!\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch75_1",
+        "title": "3D Challenge: Create Scene and Camera",
+        "prompt": "Instantiate a scene <code>set scn: scene()</code> and camera <code>set cam: camera(fov: 60)</code>, then display <code>\"Scene ready\"</code>.",
+        "starterCode": "! Create scene and camera\n",
+        "hint": "set scn: scene()\nset cam: camera(fov: 60)\ndisplay \"Scene ready\"",
+        "solution": "set scn: scene()\nset cam: camera(fov: 60)\ndisplay \"Scene ready\"",
+        "expectedMatch": {}
+      },
+      {
+        "id": "ex_ch75_2",
+        "title": "3D Challenge: Create Box Mesh",
+        "prompt": "Create a 3D box mesh <code>set b: mesh.box(2, 2, 2) ?color=#00FFCC</code> and display <code>\"Box created\"</code>.",
+        "starterCode": "! Create 3D box\n",
+        "hint": "set b: mesh.box(2, 2, 2) ?color=#00FFCC\ndisplay \"Box created\"",
+        "solution": "set b: mesh.box(2, 2, 2) ?color=#00FFCC\ndisplay \"Box created\"",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch76-gameloop-physics-engine",
+    "number": 76,
+    "section": "Section 18: System Integration & Graphics Engines",
+    "subsection": "Game Architecture & Physics",
+    "title": "Real-Time Game Loop, Delta-Time & Physics Engine",
+    "category": "Game Engine",
+    "readTime": "11 min read",
+    "summary": "Architect fixed-timestep physics updates, capture frame delta-time ($dt$), implement velocity and gravity integration, and detect 3D AABB bounding box collisions.",
+    "body": "\n      <h2>The Game Loop Architecture</h2>\n      <p>Interactive games and physical simulations require a continuous heartbeat cycle known as the <strong>Game Loop</strong>. The loop consists of three phases executed every frame:</p>\n      <ol>\n        <li><strong>Input:</strong> Poll keyboard, mouse, and game controller input states.</li>\n        <li><strong>Update ($dt$):</strong> Advance physics, update particle trajectories, and compute collisions based on elapsed delta-time.</li>\n        <li><strong>Render:</strong> Rasterize the updated world state to the screen surface.</li>\n      </ol>\n\n      <h2>Why Delta-Time ($dt$) is Vital</h2>\n      <p>If you move an entity by fixed pixels per frame (<code>pos += 5</code>), the character moves twice as fast on a 120Hz gaming monitor as on a 60Hz display! Multiplying speed by $dt$ (elapsed seconds per frame) ensures identical physical velocity on all hardware:</p>\n      <pre><code>velocity = speed * dt</code></pre>\n\n      <h2>Physics & Collision Primitives</h2>\n      <table class=\"doc-table\">\n        <thead><tr><th>Primitive / Keyword</th><th>Scope</th><th>Mathematical Model</th><th>Description</th></tr></thead>\n        <tbody>\n          <tr><td><code>on frame(dt):</code></td><td>Engine Loop</td><td>Frame Callback</td><td>Executes every animation frame with high-precision delta-time.</td></tr>\n          <tr><td><code>physics.tick(delta)</code></td><td>Physics Subsystem</td><td>Verlet / Euler Integration</td><td>Advances velocities, angular momentum, and gravity acceleration.</td></tr>\n          <tr><td><code>collide.aabb(boxA, boxB)</code></td><td>Collision Detection</td><td>Axis-Aligned Bounding Box</td><td>Returns <code>true</code> if two 3D spatial boxes overlap.</td></tr>\n          <tr><td><code>spawn Entity(x, y, z)</code></td><td>Entity Subsystem</td><td>Instance Allocation</td><td>Spawns active game actor into physics simulation world.</td></tr>\n          <tr><td><code>raycast(origin, dir)</code></td><td>Spatial Query</td><td>Ray-Geometry Intersection</td><td>Casts vector ray to detect line-of-sight or floor contact.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>AABB Bounding Box Collision Theorem</h2>\n      <p>Two bounding boxes overlap if and only if their intervals overlap along all three Cartesian axes ($X$, $Y$, and $Z$):</p>\n      <pre><code>overlapX = (a.minX &lt;= b.maxX) &amp; (a.maxX &gt;= b.minX)\noverlapY = (a.minY &lt;= b.maxY) &amp; (a.maxY &gt;= b.minY)\noverlapZ = (a.minZ &lt;= b.maxZ) &amp; (a.maxZ &gt;= b.minZ)\nisColliding = overlapX &amp; overlapY &amp; overlapZ</code></pre>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch76_1",
+        "title": "game_physics_simulation.vrs",
+        "code": "! Real-Time Physics & Collision Simulation\nset gravity: [0.0, -9.81, 0.0]\nset pos: [0.0, 10.0, 0.0]  ! Starting altitude: 10m\nset vel: [2.0, 0.0, 0.0]   ! Forward velocity: 2m/s\nset dt: 0.01667            ! 60 FPS delta-time (16.67ms)\n\ndisplay \"=== Starting 60FPS Physics Simulation ===\" ?color=cyan\n\nloop 5:\n    ! Integrate Euler kinematics: v += a * dt, p += v * dt\n    set vel[1]: vel[1] + gravity[1] * dt\n    set pos[0]: pos[0] + vel[0] * dt\n    set pos[1]: pos[1] + vel[1] * dt\n    \n    ! Floor collision check\n    if pos[1] <= 0.0:\n        set pos[1]: 0.0\n        set vel[1]: -vel[1] * 0.7  ! Inelastic bounce with 30% energy loss\n        display \"[Collision] Ground contact! Rebounded velocity Y: \" + vel[1] ?color=yellow\n    else:\n        display \"Frame Step -> Position: (\" + pos[0] + \", \" + pos[1] + \")\" ?color=green\n\ndisplay \"Physics integration completed smoothly!\" ?color=green"
+      },
+      {
+        "id": "cb_ch76_2",
+        "title": "aabb_collision_detection.vrs",
+        "code": "! AABB Collision Detection between Player and Hazard\nset playerBox: [10, 10, 30, 30]   ! [x, y, w, h]\nset hazardBox: [25, 20, 40, 40]\n\n! Check 2D AABB overlap\nset pMaxX: playerBox[0] + playerBox[2]\nset pMaxY: playerBox[1] + playerBox[3]\nset hMaxX: hazardBox[0] + hazardBox[2]\nset hMaxY: hazardBox[1] + hazardBox[3]\n\nset overlapX: (playerBox[0] <= hMaxX) & (pMaxX >= hazardBox[0])\nset overlapY: (playerBox[1] <= hMaxY) & (pMaxY >= hazardBox[1])\n\nif overlapX & overlapY:\n    display \"[CRITICAL HIT] Player collided with Hazard Box!\" ?color=red\nelse:\n    display \"[CLEAR] Paths are clear.\" ?color=green"
+      }
+    ],
+    "exercises": [
+      {
+        "id": "ex_ch76_1",
+        "title": "Physics Challenge: Delta-Time Position",
+        "prompt": "Given <code>set speed: 100</code> and <code>set dt: 0.016</code>, compute <code>set dx: speed * dt</code> and display <code>\"Distance: \" + dx</code>.",
+        "starterCode": "set speed: 100\nset dt: 0.016\n! Calculate dx and display\n",
+        "hint": "set speed: 100\nset dt: 0.016\nset dx: speed * dt\ndisplay \"Distance: \" + dx",
+        "solution": "set speed: 100\nset dt: 0.016\nset dx: speed * dt\ndisplay \"Distance: \" + dx",
+        "expectedMatch": {}
+      },
+      {
+        "id": "ex_ch76_2",
+        "title": "Physics Challenge: Gravity Step",
+        "prompt": "Apply gravity: <code>set vy: -9.8 * 0.5</code> and display <code>\"Velocity: \" + vy</code>.",
+        "starterCode": "! Compute vy\n",
+        "hint": "set vy: -9.8 * 0.5\ndisplay \"Velocity: \" + vy",
+        "solution": "set vy: -9.8 * 0.5\ndisplay \"Velocity: \" + vy",
+        "expectedMatch": {}
+      }
+    ]
+  },
+  {
+    "id": "ch77-error-tiers-defer-panic",
+    "number": 77,
+    "section": "Section 18: System Integration & Graphics Engines",
+    "subsection": "Fault Tolerance & Resilience",
+    "title": "Advanced Error Suppression Tiers, 'defer' & 'panic'",
+    "category": "Error Handling",
+    "readTime": "9 min read",
+    "summary": "Master multi-tier error suppression (SuppressErrors, CriticalErrors, ForceErrors), deterministic resource cleanup with 'defer', and unrecoverable faults with 'panic'.",
+    "body": "\n      <h2>The VerScript Resilience Architecture</h2>\n      <p>Modern distributed systems and game engines cannot afford to crash from transient non-fatal errors. VerScript provides a structured, tiered error suppression and recovery model:</p>\n      <ul>\n        <li><code>SuppressErrors</code>: Downgrades non-critical errors into logged warnings without halting execution.</li>\n        <li><code>CriticalErrors</code>: Halts only when data corruption or hardware memory exhaustion is detected.</li>\n        <li><code>ForceErrors</code>: Strict development mode where every warning or violation immediately triggers an exception.</li>\n      </ul>\n\n      <h2>Deterministic Resource Cleanup: <code>defer</code></h2>\n      <p>The <code>defer</code> keyword schedules a statement or routine to execute right before the enclosing scope exits, regardless of whether it returned normally or threw an exception. This guarantees zero resource leaks for files, sockets, and Win32 handles.</p>\n      <pre><code>func process_flight_data(filepath):\n    set fd: Fs.open(filepath, \"r\")\n    defer Fs.close(fd)  ! Guaranteed to run upon exit\n\n    ! Process file safely...\n    reply Fs.read(fd)</code></pre>\n\n      <h2>Unrecoverable Faults: <code>panic</code></h2>\n      <p>When an unrecoverable invariant failure occurs (e.g. state machine corruption or security breach), use <code>panic</code> to immediately halt execution and output an actionable post-mortem stack trace:</p>\n      <pre><code>if authenticated == false:\n    panic \"SecurityViolation: Unauthorized state access\"</code></pre>\n  ",
+    "codeBlocks": [
+      {
+        "id": "cb_ch77_1",
         "title": "defer_and_panic.vrs",
         "code": "! Safe resource lifecycle management with defer\ndef func process_mission_log:\n    display \"[1] Acquiring resource handle...\" ?color=cyan\n    defer display \"[3] Resource handle released cleanly via defer!\" ?color=green\n    \n    display \"[2] Writing mission coordinates...\" ?color=yellow\n    reply \"Success\"\n\nprocess_mission_log()\ndisplay \"Workflow completed safely.\" ?color=green"
       }
     ],
     "exercises": [
       {
-        "id": "ex_ch75_1",
+        "id": "ex_ch77_1",
         "title": "Resilience Challenge: Defer Cleanup",
         "prompt": "Write a statement <code>defer display \"Cleaned\"</code> followed by <code>display \"Running\"</code>.",
         "starterCode": "! Defer cleanup\n",
@@ -2267,17 +2351,6 @@ var ARTICLES = [
   }
 ];
 var articlesData = ARTICLES;
-
-if (typeof window !== 'undefined') {
-  window.ARTICLES = ARTICLES;
-  window.articlesData = ARTICLES;
-}
-
-if (typeof global !== 'undefined') {
-  global.ARTICLES = ARTICLES;
-  global.articlesData = ARTICLES;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ARTICLES;
-}
+if (typeof window !== 'undefined') { window.ARTICLES = ARTICLES; window.articlesData = ARTICLES; }
+if (typeof global !== 'undefined') { global.ARTICLES = ARTICLES; global.articlesData = ARTICLES; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = ARTICLES; }

@@ -1,3 +1,650 @@
+
+// ═══════════════════════════════════════════════════════════════════
+//  MOCK WINDOWS OS (PE64) & DYNAMIC LINKER (DLL) RUNTIME SUBSYSTEM
+// ═══════════════════════════════════════════════════════════════════
+
+window.MOCK_WINDOWS_OS = window.MOCK_WINDOWS_OS || {
+    kernelVersion: "Microsoft Windows [Version 10.0.22631.3007] x64",
+    peLoaderStatus: "Active",
+    loadedDllsCount: 4,
+    activeTab: "c",
+    dlls: {
+        "kernel32.dll": {
+            GetCurrentProcessId: () => 14280,
+            GetTickCount: () => Math.floor((typeof performance !== 'undefined' ? performance.now() : Date.now()) + 524100),
+            Sleep: (ms) => 0,
+            Beep: (freq, dur) => {
+                window.showToast?.(`🔔 Win32 Beep: ${freq}Hz for ${dur}ms`, "info");
+                return 1;
+            }
+        },
+        "user32.dll": {
+            MessageBoxA: (hwnd, text, caption, type) => {
+                alert(`[Windows MessageBox - ${caption}]\n${text}`);
+                return 1;
+            },
+            GetCursorPos: () => [520, 340],
+            SetWindowTextA: () => 1
+        },
+        "gdi32.dll": {
+            CreateSolidBrush: () => 0x00FFCC,
+            TextOutA: () => 1
+        },
+        "mymath.dll": {
+            add: (a, b) => Number(a) + Number(b),
+            fast_multiply: (x, f) => Number(x) * Number(f),
+            hypot_dist: (x, y) => Math.hypot(Number(x), Number(y))
+        }
+    },
+    templates: {
+        c: `// mymath.c - C Dynamic Link Library
+#include <windows.h>
+#include <math.h>
+
+__declspec(dllexport) int __stdcall add(int a, int b) {
+    return a + b;
+}
+
+__declspec(dllexport) int __stdcall fast_multiply(int x, int factor) {
+    return x * factor;
+}
+
+__declspec(dllexport) double __stdcall hypot_dist(double x, double y) {
+    return sqrt(x * x + y * y);
+}`,
+        cpp: `// vector_math.cpp - C++ Dynamic Link Library
+#include <cmath>
+
+extern "C" {
+    __declspec(dllexport) int add(int a, int b) {
+        return a + b;
+    }
+
+    __declspec(dllexport) int fast_multiply(int x, int factor) {
+        return x * factor;
+    }
+
+    __declspec(dllexport) double hypot_dist(double x, double y) {
+        return std::sqrt(x * x + y * y);
+    }
+}`,
+        rust: `// lib.rs - Rust Dynamic Shared Library (cdylib)
+#[no_mangle]
+pub extern "C" fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+#[no_mangle]
+pub extern "C" fn fast_multiply(x: i32, factor: i32) -> i32 {
+    x * factor
+}
+
+#[no_mangle]
+pub extern "C" fn hypot_dist(x: f64, y: f64) -> f64 {
+    (x * x + y * y).sqrt()
+}`,
+        zig: `// native.zig - Zig Dynamic Shared Library
+const std = @import("std");
+
+export fn add(a: i32, b: i32) i32 {
+    return a + b;
+}
+
+export fn fast_multiply(x: i32, factor: i32) i32 {
+    return x * factor;
+}
+
+export fn hypot_dist(x: f64, y: f64) f64 {
+    return std.math.hypot(f64, x, y);
+}`,
+        verscript: `! native_export.vrs - VerScript Native DLL Export Specification
+export dll func add(a: int, b: int) -> int {
+    reply a + b
+}
+
+export dll func fast_multiply(x: int, factor: int) -> int {
+    reply x * factor
+}
+
+export dll func hypot_dist(x: float, y: float) -> float {
+    reply Math.hypot(x, y)
+}`
+    }
+};
+
+window.renderMockWindowsWorkbench = function() {
+    const mount = document.getElementById('mock_os_workbench_mount');
+    if (!mount) return;
+
+    const os = window.MOCK_WINDOWS_OS;
+    const currentCode = os.templates[os.activeTab] || os.templates.c;
+
+    mount.innerHTML = `
+        <div class="mock-os-container" id="mock_os_window">
+            <div class="mock-os-titlebar">
+                <div class="mock-os-title">
+                    <span class="mock-os-win-logo">🪟</span>
+                    <span>Windows Dynamic Linker &amp; Multi-Language DLL Subsystem (Mock OS PE64)</span>
+                </div>
+                <div class="mock-os-controls">
+                    <span class="mock-os-btn-ctrl" title="Minimize">─</span>
+                    <span class="mock-os-btn-ctrl" title="Maximize">□</span>
+                    <span class="mock-os-btn-ctrl close" title="Close">✕</span>
+                </div>
+            </div>
+            <div class="mock-os-subbar">
+                <span class="mock-os-status-pill"><span class="mock-os-status-dot"></span> Kernel PE32+ Loader: ONLINE</span>
+                <span>Target: x86_64-pc-windows-msvc | Active DLLs: ${Object.keys(os.dlls).length} (kernel32, user32, gdi32, mymath)</span>
+            </div>
+            <div class="mock-os-tabs-bar">
+                <button class="mock-os-tab ${os.activeTab === 'sys' ? 'active' : ''}" onclick="switchMockOsTab('sys')">📁 System DLLs</button>
+                <button class="mock-os-tab ${os.activeTab === 'c' ? 'active' : ''}" onclick="switchMockOsTab('c')">🇨 C (mymath.c)</button>
+                <button class="mock-os-tab ${os.activeTab === 'cpp' ? 'active' : ''}" onclick="switchMockOsTab('cpp')">⚡ C++ (vector_math.cpp)</button>
+                <button class="mock-os-tab ${os.activeTab === 'rust' ? 'active' : ''}" onclick="switchMockOsTab('rust')">🦀 Rust (lib.rs)</button>
+                <button class="mock-os-tab ${os.activeTab === 'zig' ? 'active' : ''}" onclick="switchMockOsTab('zig')">⚡ Zig (native.zig)</button>
+                <button class="mock-os-tab ${os.activeTab === 'verscript' ? 'active' : ''}" onclick="switchMockOsTab('verscript')">💎 VerScript DLL Export</button>
+            </div>
+            <div class="mock-os-editor-area">
+                ${os.activeTab === 'sys' ? `
+                    <div style="padding: 16px; font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #9CA3AF; line-height: 1.6; height: 160px; overflow-y: auto;">
+                        <div style="color: #00FFCC; font-weight: bold; margin-bottom: 8px;">🗂️ Host PE64 Export Table Inspector:</div>
+                        <div>• <strong style="color:#FFF;">kernel32.dll</strong> [Base: 0x7FFB52A00000] &rarr; GetCurrentProcessId(), GetTickCount(), Sleep(ms), Beep(freq, dur)</div>
+                        <div>• <strong style="color:#FFF;">user32.dll</strong>   [Base: 0x7FFB53100000] &rarr; MessageBoxA(hwnd, text, title, type), GetCursorPos(), SetWindowTextA()</div>
+                        <div>• <strong style="color:#FFF;">gdi32.dll</strong>    [Base: 0x7FFB51800000] &rarr; CreateSolidBrush(color), TextOutA(hdc, x, y, str, len)</div>
+                        <div>• <strong style="color:#00FFCC;">mymath.dll</strong>   [Base: 0x7FFB34920000] &rarr; add(a, b), fast_multiply(x, factor), hypot_dist(x, y)</div>
+                    </div>
+                ` : `
+                    <textarea class="mock-os-textarea" id="mock_os_code_area" spellcheck="false">${escapeHTML(currentCode)}</textarea>
+                `}
+            </div>
+            <div class="mock-os-actions-bar">
+                <div style="display:flex; gap:8px;">
+                    ${os.activeTab !== 'sys' ? `
+                        <button class="mock-os-btn-compile" onclick="compileAndRegisterMockDll()">🔨 Compile &amp; Register DLL in Mock OS</button>
+                        <button class="mock-os-btn-secondary" onclick="copyVerScriptExternSyntax()">📋 Copy VerScript extern Syntax</button>
+                    ` : `
+                        <button class="mock-os-btn-compile" onclick="switchMockOsTab('c')">🛠️ Open C DLL Editor</button>
+                    `}
+                </div>
+                <button class="mock-os-btn-secondary" onclick="resetMockOsTemplate()">↺ Reset Code</button>
+            </div>
+            <div class="mock-os-terminal" id="mock_os_log">
+[Mock OS PE64 Linker] Ready. Select a language tab above, modify native exported primitives, and click "Compile &amp; Register DLL" to load into memory.
+            </div>
+        </div>
+    `;
+};
+
+window.switchMockOsTab = function(tabName) {
+    window.MOCK_WINDOWS_OS.activeTab = tabName;
+    window.renderMockWindowsWorkbench();
+};
+
+window.resetMockOsTemplate = function() {
+    const os = window.MOCK_WINDOWS_OS;
+    const tab = os.activeTab;
+    const original = {
+        c: `// mymath.c - C Dynamic Link Library
+#include <windows.h>
+#include <math.h>
+
+__declspec(dllexport) int __stdcall add(int a, int b) {
+    return a + b;
+}
+
+__declspec(dllexport) int __stdcall fast_multiply(int x, int factor) {
+    return x * factor;
+}
+
+__declspec(dllexport) double __stdcall hypot_dist(double x, double y) {
+    return sqrt(x * x + y * y);
+}`,
+        cpp: `// vector_math.cpp - C++ Dynamic Link Library
+#include <cmath>
+
+extern "C" {
+    __declspec(dllexport) int add(int a, int b) {
+        return a + b;
+    }
+
+    __declspec(dllexport) int fast_multiply(int x, int factor) {
+        return x * factor;
+    }
+
+    __declspec(dllexport) double hypot_dist(double x, double y) {
+        return std::sqrt(x * x + y * y);
+    }
+}`,
+        rust: `// lib.rs - Rust Dynamic Shared Library (cdylib)
+#[no_mangle]
+pub extern "C" fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+#[no_mangle]
+pub extern "C" fn fast_multiply(x: i32, factor: i32) -> i32 {
+    x * factor
+}
+
+#[no_mangle]
+pub extern "C" fn hypot_dist(x: f64, y: f64) -> f64 {
+    (x * x + y * y).sqrt()
+}`,
+        zig: `// native.zig - Zig Dynamic Shared Library
+const std = @import("std");
+
+export fn add(a: i32, b: i32) i32 {
+    return a + b;
+}
+
+export fn fast_multiply(x: i32, factor: i32) i32 {
+    return x * factor;
+}
+
+export fn hypot_dist(x: f64, y: f64) f64 {
+    return std.math.hypot(f64, x, y);
+}`,
+        verscript: `! native_export.vrs - VerScript Native DLL Export Specification
+export dll func add(a: int, b: int) -> int {
+    reply a + b
+}
+
+export dll func fast_multiply(x: int, factor: int) -> int {
+    reply x * factor
+}
+
+export dll func hypot_dist(x: float, y: float) -> float {
+    reply Math.hypot(x, y)
+}`
+    };
+    if (original[tab]) {
+        os.templates[tab] = original[tab];
+        window.renderMockWindowsWorkbench();
+        window.showToast("↺ Reset DLL code to default template", "info");
+    }
+};
+
+window.copyVerScriptExternSyntax = function() {
+    const syntax = `extern "mymath.dll" add(a, b)\nextern "mymath.dll" fast_multiply(x, factor)\n\nset sum: add(40, 2)\nset mult: fast_multiply(12, 10)\ndisplay "Result from custom DLL: " + sum ?color=green`;
+    navigator.clipboard?.writeText(syntax);
+    window.showToast("📋 Copied VerScript extern declaration syntax!", "info");
+};
+
+window.compileAndRegisterMockDll = function() {
+    const ta = document.getElementById('mock_os_code_area');
+    const logEl = document.getElementById('mock_os_log');
+    if (!ta || !logEl) return;
+
+    const code = ta.value;
+    const tab = window.MOCK_WINDOWS_OS.activeTab;
+    const langNames = { c: 'C (MSVC)', cpp: 'C++ (Clang)', rust: 'Rust (rustc cdylib)', zig: 'Zig (zig build-lib)', verscript: 'VerScript 2.0 (export dll)' };
+    const lang = langNames[tab] || 'Native Compiler';
+
+    logEl.textContent = `[PE/COFF Linker] Compiling ${lang} source into dynamic library 'mymath.dll'...
+[Architecture] Target ABI: x86_64-pc-windows-msvc (PE32+ Executable / DLL)
+[Parser] Scanning exported C-ABI function symbols...
+`;
+
+    setTimeout(() => {
+        // Register functions dynamically
+        window.MOCK_WINDOWS_OS.dlls["mymath.dll"] = {
+            add: (a, b) => Number(a) + Number(b),
+            fast_multiply: (x, f) => Number(x) * Number(f),
+            hypot_dist: (x, y) => Math.hypot(Number(x), Number(y))
+        };
+
+        logEl.textContent += `[Export Directory] .edata section compiled cleanly with 3 symbols:
+  • RVA 0x00001020: add(i32, i32) -> i32 (Ordinal 1)
+  • RVA 0x00001080: fast_multiply(i32, i32) -> i32 (Ordinal 2)
+  • RVA 0x00001140: hypot_dist(f64, f64) -> f64 (Ordinal 3)
+[Mock Windows OS] LoadLibraryA("mymath.dll") -> HMODULE 0x00007FFB34920000
+[Mock Windows OS] Dynamic binding active! VerScript 'extern "mymath.dll"' calls will now link directly to this library.
+`;
+        logEl.scrollTop = logEl.scrollHeight;
+        window.showToast("🔨 'mymath.dll' compiled and registered in Mock Windows OS!", "success");
+    }, 250);
+};
+
+
+// ═══════════════════════════════════════════════════════════════════
+//  INTERACTIVE 2D CANVAS & 3D SPATIAL SCENE GRAPH VIEWPORT ENGINE
+// ═══════════════════════════════════════════════════════════════════
+
+window.renderVisualViewport = function(id, code) {
+    const box = document.getElementById(`canvas_box_${id}`);
+    const canvas = document.getElementById(`canvas_${id}`);
+    const title = document.getElementById(`canvas_title_${id}`);
+    const badge = document.getElementById(`canvas_badge_${id}`);
+    const hint = document.getElementById(`canvas_hint_${id}`);
+
+    if (!box || !canvas || !code) return;
+
+    const is2D = code.includes('screen(') || code.includes('draw ') || id.includes('ch74');
+    const is3D = code.includes('scene(') || code.includes('world(') || code.includes('mesh.') || code.includes('camera(') || id.includes('ch75');
+
+    if (!is2D && !is3D) {
+        box.style.display = 'none';
+        return;
+    }
+
+    box.style.display = 'block';
+
+    if (is2D) {
+        title.innerHTML = '🖥️ 2D Immediate Canvas Viewport';
+        badge.textContent = '2D Immediate Mode (60 FPS)';
+        badge.style.color = '#00FFCC';
+        badge.style.borderColor = 'rgba(0, 255, 204, 0.3)';
+        hint.innerHTML = '<span>✨ Real-time rasterization surface</span><span>Canvas: 600x280 (Hi-DPI)</span>';
+        canvas.classList.remove('drag-orbit');
+        render2DImmediateCanvas(canvas, code);
+    } else if (is3D) {
+        title.innerHTML = '🌐 3D Spatial Scene Graph Viewport';
+        badge.textContent = '3D Spatial Engine (Orbit Active)';
+        badge.style.color = '#BD00FF';
+        badge.style.borderColor = 'rgba(189, 0, 255, 0.3)';
+        hint.innerHTML = '<span>🖱️ Click &amp; Drag with mouse to orbit 3D camera</span><span>Depth &amp; Lighting: Active</span>';
+        canvas.classList.add('drag-orbit');
+        render3DSpatialViewport(canvas, code);
+    }
+};
+
+function render2DImmediateCanvas(canvas, code) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // Reset transform & clear
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    // Deep cosmic background
+    ctx.fillStyle = '#05070C';
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle coordinate grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < w; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+    }
+    for (let y = 0; y < h; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+    }
+
+    // Scale down from virtual 800x600 space to canvas 600x280
+    const scaleX = w / 800;
+    const scaleY = h / 600;
+    ctx.scale(scaleX, scaleY);
+
+    const lines = code.split('\n');
+    lines.forEach(line => {
+        line = line.trim();
+        if (!line || line.startsWith('!')) return;
+
+        // draw rect(x, y, w, h)
+        if (line.startsWith('draw rect')) {
+            const m = line.match(/draw rect\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const rx = parseFloat(m[1]), ry = parseFloat(m[2]), rw = parseFloat(m[3]), rh = parseFloat(m[4]);
+                const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+
+                if (fillMatch) {
+                    ctx.fillStyle = fillMatch[1];
+                    ctx.shadowColor = 'transparent';
+                    ctx.fillRect(rx, ry, rw, rh);
+                }
+                if (strokeMatch) {
+                    ctx.strokeStyle = strokeMatch[1];
+                    ctx.lineWidth = 2;
+                    ctx.shadowColor = strokeMatch[1];
+                    ctx.shadowBlur = 8;
+                    ctx.strokeRect(rx, ry, rw, rh);
+                    ctx.shadowBlur = 0;
+                }
+            }
+        }
+        // draw circle(x, y, r)
+        else if (line.startsWith('draw circle')) {
+            const m = line.match(/draw circle\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const cx = parseFloat(m[1]), cy = parseFloat(m[2]), cr = parseFloat(m[3]);
+                const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+
+                if (fillMatch) {
+                    ctx.fillStyle = fillMatch[1];
+                    ctx.shadowColor = fillMatch[1];
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+                if (strokeMatch) {
+                    ctx.strokeStyle = strokeMatch[1];
+                    ctx.lineWidth = 2;
+                    ctx.shadowColor = strokeMatch[1];
+                    ctx.shadowBlur = 8;
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+            }
+        }
+        // draw line(x1, y1, x2, y2)
+        else if (line.startsWith('draw line')) {
+            const m = line.match(/draw line\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const x1 = parseFloat(m[1]), y1 = parseFloat(m[2]), x2 = parseFloat(m[3]), y2 = parseFloat(m[4]);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = strokeMatch ? strokeMatch[1] : '#00FFCC';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+        // draw text(str, x, y, size)
+        else if (line.startsWith('draw text')) {
+            const m = line.match(/draw text\s*\(\s*["']([^"']+)["']\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const str = m[1], tx = parseFloat(m[2]), ty = parseFloat(m[3]), tsize = parseFloat(m[4]) || 14;
+                const colMatch = line.match(/\?color=([#a-zA-Z0-9]+)/);
+                ctx.font = `bold ${tsize * 1.2}px 'Fira Code', monospace`;
+                ctx.fillStyle = colMatch ? colMatch[1] : '#00FFCC';
+                ctx.fillText(str, tx, ty);
+            }
+        }
+    });
+
+    // Watermark tag
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.font = "10px 'Fira Code', monospace";
+    ctx.fillStyle = "rgba(0, 255, 204, 0.4)";
+    ctx.fillText("VERSCRIPT 2D IMM_CANVAS", 12, h - 10);
+}
+
+function render3DSpatialViewport(canvas, code) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // Camera orbit angles stored on canvas element
+    canvas.__orbit = canvas.__orbit || { pitch: 22, yaw: 35, isDragging: false, lastX: 0, lastY: 0 };
+    const orbit = canvas.__orbit;
+
+    // Attach mouse drag listeners once
+    if (!canvas.__hasOrbitEvents) {
+        canvas.__hasOrbitEvents = true;
+        canvas.addEventListener('mousedown', (e) => {
+            orbit.isDragging = true;
+            orbit.lastX = e.clientX;
+            orbit.lastY = e.clientY;
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!orbit.isDragging) return;
+            const dx = e.clientX - orbit.lastX;
+            const dy = e.clientY - orbit.lastY;
+            orbit.yaw += dx * 0.5;
+            orbit.pitch = Math.max(-80, Math.min(80, orbit.pitch - dy * 0.5));
+            orbit.lastX = e.clientX;
+            orbit.lastY = e.clientY;
+            render3DFrame(canvas, code);
+        });
+        window.addEventListener('mouseup', () => {
+            orbit.isDragging = false;
+        });
+    }
+
+    render3DFrame(canvas, code);
+}
+
+function render3DFrame(canvas, code) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    const orbit = canvas.__orbit;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Deep space gradient
+    const bgGrad = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w / 2);
+    bgGrad.addColorStop(0, '#0D111A');
+    bgGrad.addColorStop(1, '#05070A');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // 3D Perspective Projection parameters
+    const cx = w / 2;
+    const cy = h / 2 + 30;
+    const fov = 340;
+    const radYaw = (orbit.yaw * Math.PI) / 180;
+    const radPitch = (orbit.pitch * Math.PI) / 180;
+
+    function project3D(x, y, z) {
+        // Rotate around Y axis (yaw)
+        let x1 = x * Math.cos(radYaw) + z * Math.sin(radYaw);
+        let z1 = -x * Math.sin(radYaw) + z * Math.cos(radYaw);
+        let y1 = y;
+
+        // Rotate around X axis (pitch)
+        let y2 = y1 * Math.cos(radPitch) - z1 * Math.sin(radPitch);
+        let z2 = y1 * Math.sin(radPitch) + z1 * Math.cos(radPitch);
+        let x2 = x1;
+
+        // Translate camera back
+        const camDist = 9.0;
+        const finalZ = z2 + camDist;
+        if (finalZ <= 0.1) return null;
+
+        const scale = fov / finalZ;
+        return {
+            px: cx + x2 * scale,
+            py: cy - y2 * scale,
+            depth: finalZ
+        };
+    }
+
+    // 1. Render Ground Plane Grid (-6 to 6)
+    ctx.strokeStyle = 'rgba(0, 255, 204, 0.15)';
+    ctx.lineWidth = 1;
+    for (let i = -5; i <= 5; i += 1.0) {
+        // Lines along X
+        const p1 = project3D(-5, -2, i);
+        const p2 = project3D(5, -2, i);
+        if (p1 && p2) {
+            ctx.beginPath();
+            ctx.moveTo(p1.px, p1.py);
+            ctx.lineTo(p2.px, p2.py);
+            ctx.stroke();
+        }
+        // Lines along Z
+        const p3 = project3D(i, -2, -5);
+        const p4 = project3D(i, -2, 5);
+        if (p3 && p4) {
+            ctx.beginPath();
+            ctx.moveTo(p3.px, p3.py);
+            ctx.lineTo(p4.px, p4.py);
+            ctx.stroke();
+        }
+    }
+
+    // 2. Render 3D Cube (mesh.box)
+    const cubeCenter = [-1.8, 0.2, 0];
+    const s = 1.1; // half-size
+    const vertices = [
+        [-s, -s, -s], [s, -s, -s], [s, s, -s], [-s, s, -s],
+        [-s, -s,  s], [s, -s,  s], [s, s,  s], [-s, s,  s]
+    ].map(v => [v[0] + cubeCenter[0], v[1] + cubeCenter[1], v[2] + cubeCenter[2]]);
+
+    const faces = [
+        { indices: [0, 1, 2, 3], col: 'rgba(0, 255, 204, 0.25)', edge: '#00FFCC' }, // Front
+        { indices: [5, 4, 7, 6], col: 'rgba(0, 180, 216, 0.25)', edge: '#00B4D8' }, // Back
+        { indices: [4, 0, 3, 7], col: 'rgba(0, 119, 254, 0.25)', edge: '#0077FE' }, // Left
+        { indices: [1, 5, 6, 2], col: 'rgba(56, 189, 248, 0.25)', edge: '#38BDF8' }, // Right
+        { indices: [3, 2, 6, 7], col: 'rgba(0, 255, 204, 0.40)', edge: '#00FFCC' }, // Top
+        { indices: [4, 5, 1, 0], col: 'rgba(11, 14, 20, 0.40)', edge: '#1F2937' }   // Bottom
+    ];
+
+    faces.forEach(f => {
+        const pts = f.indices.map(idx => project3D(vertices[idx][0], vertices[idx][1], vertices[idx][2]));
+        if (pts.every(p => p !== null)) {
+            ctx.beginPath();
+            ctx.moveTo(pts[0].px, pts[0].py);
+            for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].px, pts[i].py);
+            ctx.closePath();
+            ctx.fillStyle = f.col;
+            ctx.fill();
+            ctx.strokeStyle = f.edge;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+    });
+
+    // 3. Render 3D Sphere (mesh.sphere)
+    const sphereCenter = [2.0, 0.3, 0];
+    const sRad = 1.3;
+    const rings = 8;
+    ctx.strokeStyle = '#BD00FF';
+    ctx.lineWidth = 1.5;
+
+    for (let r = 0; r < rings; r++) {
+        const theta = (r / rings) * Math.PI;
+        const yOffset = Math.cos(theta) * sRad;
+        const ringRad = Math.sin(theta) * sRad;
+        ctx.beginPath();
+        let first = true;
+        for (let a = 0; a <= 20; a++) {
+            const phi = (a / 20) * Math.PI * 2;
+            const sx = sphereCenter[0] + Math.cos(phi) * ringRad;
+            const sy = sphereCenter[1] + yOffset;
+            const sz = sphereCenter[2] + Math.sin(phi) * ringRad;
+            const pt = project3D(sx, sy, sz);
+            if (pt) {
+                if (first) { ctx.moveTo(pt.px, pt.py); first = false; }
+                else { ctx.lineTo(pt.px, pt.py); }
+            }
+        }
+        ctx.stroke();
+    }
+
+    // 4. Onscreen HUD Telemetry
+    ctx.font = "11px 'Fira Code', monospace";
+    ctx.fillStyle = "#00FFCC";
+    ctx.fillText(`Orbit Pitch: ${Math.round(orbit.pitch)}° | Yaw: ${Math.round(orbit.yaw)}°`, 12, 20);
+    ctx.fillStyle = "#6B7280";
+    ctx.fillText("Active Meshes: [Box3D, Sphere3D, PlaneGrid] | Shader: Realtime Phong", 12, 36);
+    ctx.fillText("CLICK & DRAG TO ORBIT 3D VIEWPORT", 12, h - 10);
+}
+
 // ═══════════════════════════════════════════════════════════════════
 //  VerScript Academy — SPA Interactive Application Controller
 // ═══════════════════════════════════════════════════════════════════
@@ -192,6 +839,7 @@ function loadArticle(index) {
             </article>
         </div>
     `;
+    if (article.number === 70) { setTimeout(() => window.renderMockWindowsWorkbench?.(), 50); }
 }
 window.loadArticle = loadArticle;
 
@@ -261,6 +909,16 @@ function renderRunBox(id, title, initialCode, files) {
                     <span id="stat_${id}">Ready</span>
                 </div>
                 <pre class="console-output" id="output_${id}">Click "${isJS ? 'Run JS' : 'Run Code'}" to execute...</pre>
+                </div>
+            <div class="runbox-canvas-container" id="canvas_box_${id}" style="display: none;">
+                <div class="canvas-header">
+                    <span class="canvas-title" id="canvas_title_${id}">🖥️ Visual Viewport</span>
+                    <span class="canvas-badge" id="canvas_badge_${id}">Interactive Viewport</span>
+                </div>
+                <div class="canvas-viewport-wrapper">
+                    <canvas id="canvas_${id}" width="600" height="280" class="interactive-viewport-canvas"></canvas>
+                </div>
+                <div class="canvas-hint" id="canvas_hint_${id}"></div>
             </div>
         </div>
     `;
@@ -463,6 +1121,11 @@ function resolveLineAlias(line, aliases) {
 }
 
 function simulateVerScript(code, files = null, stdin = '') {
+    if ((!code || typeof code !== 'string') && Array.isArray(files) && files.length > 0) {
+        const entry = files.find(f => f.name && !f.name.endsWith('.h.vrs')) || files[files.length - 1] || files[0];
+        code = (entry && (entry.code || entry.content)) || '';
+    }
+    code = typeof code === 'string' ? code : String(code || '');
     const lines = code.split('\n');
     let output = '';
     let error = '';
@@ -568,7 +1231,24 @@ function simulateVerScript(code, files = null, stdin = '') {
                 if (match) {
                     const lib = match[1] || 'kernel32.dll';
                     const fnName = match[2];
-                    vars[fnName] = () => (fnName.includes('ProcessId') ? 14280 : 0);
+                    const mockOS = typeof window !== 'undefined' ? window.MOCK_WINDOWS_OS : (typeof global !== 'undefined' ? global.MOCK_WINDOWS_OS : null);
+                    if (mockOS && mockOS.dlls && mockOS.dlls[lib] && typeof mockOS.dlls[lib][fnName] === 'function') {
+                        vars[fnName] = mockOS.dlls[lib][fnName];
+                    } else if (fnName === 'GetCurrentProcessId') {
+                        vars[fnName] = () => 14280;
+                    } else if (fnName === 'GetTickCount') {
+                        vars[fnName] = () => 524100;
+                    } else if (fnName === 'add') {
+                        vars[fnName] = (a, b) => Number(a) + Number(b);
+                    } else if (fnName === 'fast_multiply') {
+                        vars[fnName] = (x, f) => Number(x) * Number(f);
+                    } else if (fnName === 'hypot_dist') {
+                        vars[fnName] = (x, y) => Math.hypot(Number(x), Number(y));
+                    } else if (fnName === 'Beep') {
+                        vars[fnName] = (freq, dur) => 1;
+                    } else {
+                        vars[fnName] = () => 42;
+                    }
                     output += `\x1b[36m[FFI] Successfully bound native external symbol '${fnName}' from ${lib}\x1b[0m\n`;
                 }
                 i++;
@@ -1369,6 +2049,9 @@ window.executeRunBox = async function(id, isJS = false, options = null) {
             outputEl.className = "console-output" + (res.error ? " error" : " success");
             let fullOutput = (res.output || "") + (res.error ? "\nERROR: " + res.error : "");
             outputEl.innerHTML = ansiToHtml(fullOutput) || '<em>(No output)</em>';
+            if (typeof window.renderVisualViewport === 'function') {
+                window.renderVisualViewport(id, code);
+            }
             statEl.textContent = res.source === 'cloud' ? "✅ Cloud VM" : "⚡ Instant VM";
         }
     } catch (err) {

@@ -1351,7 +1351,271 @@
             border-radius: 4px;
             pointer-events: none;
         }
-    </style>
+    
+        /* ═══════════════════════════════════════════════════════════
+           MOCK WINDOWS OS & MULTI-LANGUAGE DLL WORKBENCH (CH 70)
+           ═══════════════════════════════════════════════════════════ */
+        .mock-os-container {
+            background: #0B0E14;
+            border: 1px solid #1F2937;
+            border-radius: 12px;
+            margin: 28px 0;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .mock-os-titlebar {
+            background: #111827;
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1F2937;
+            user-select: none;
+        }
+        .mock-os-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #E5E7EB;
+        }
+        .mock-os-win-logo {
+            font-size: 1rem;
+            color: #00A4EF;
+        }
+        .mock-os-controls {
+            display: flex;
+            gap: 10px;
+            font-size: 0.78rem;
+            color: #9CA3AF;
+        }
+        .mock-os-btn-ctrl {
+            width: 26px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .mock-os-btn-ctrl:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+        .mock-os-btn-ctrl.close:hover {
+            background: #EF4444;
+            color: #FFFFFF;
+        }
+        .mock-os-subbar {
+            background: #0D1117;
+            padding: 6px 14px;
+            border-bottom: 1px solid #1F2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: #6B7280;
+            font-family: 'Fira Code', monospace;
+        }
+        .mock-os-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #10B981;
+            font-weight: 600;
+        }
+        .mock-os-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 8px #10B981;
+        }
+        .mock-os-tabs-bar {
+            background: #161F2E;
+            padding: 6px 12px 0;
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid #1F2937;
+            overflow-x: auto;
+        }
+        .mock-os-tab {
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-family: 'Fira Code', monospace;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            border: 1px solid transparent;
+            border-bottom: none;
+            color: #9CA3AF;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .mock-os-tab:hover {
+            color: #F3F4F6;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .mock-os-tab.active {
+            color: #00FFCC;
+            background: #0B0E14;
+            border-color: #1F2937;
+            border-bottom-color: #0B0E14;
+            font-weight: 600;
+        }
+        .mock-os-editor-area {
+            position: relative;
+            background: #0B0E14;
+        }
+        .mock-os-textarea {
+            width: 100%;
+            height: 160px;
+            background: transparent;
+            color: #E5E7EB;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            padding: 14px;
+            border: none;
+            outline: none;
+            resize: vertical;
+            white-space: pre;
+            tab-size: 4;
+        }
+        .mock-os-actions-bar {
+            background: #111827;
+            padding: 8px 14px;
+            border-top: 1px solid #1F2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .mock-os-btn-compile {
+            background: linear-gradient(90deg, #00A4EF, #00FFCC);
+            color: #050B14;
+            font-weight: 700;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 12px rgba(0, 164, 239, 0.35);
+            transition: all 0.15s;
+        }
+        .mock-os-btn-compile:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 18px rgba(0, 255, 204, 0.5);
+        }
+        .mock-os-btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #374151;
+            color: #D1D5DB;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .mock-os-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+        .mock-os-terminal {
+            background: #05080E;
+            border-top: 1px solid #1F2937;
+            padding: 10px 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.76rem;
+            color: #9CA3AF;
+            max-height: 120px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           INTERACTIVE 2D & 3D VISUAL VIEWPORT (CH 74 & 75)
+           ═══════════════════════════════════════════════════════════ */
+        .runbox-canvas-container {
+            background: #080A10;
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+            animation: fadeInViewport 0.3s ease-out;
+        }
+        @keyframes fadeInViewport {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .canvas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .canvas-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            color: #00FFCC;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .canvas-badge {
+            font-size: 0.68rem;
+            background: rgba(0, 255, 204, 0.1);
+            color: #00FFCC;
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+        }
+        .canvas-viewport-wrapper {
+            position: relative;
+            background: #040508;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+        .interactive-viewport-canvas {
+            display: block;
+            width: 100%;
+            max-width: 680px;
+            height: 280px;
+            background: #05070C;
+            cursor: crosshair;
+        }
+        .interactive-viewport-canvas.drag-orbit {
+            cursor: grab;
+        }
+        .interactive-viewport-canvas.drag-orbit:active {
+            cursor: grabbing;
+        }
+        .canvas-hint {
+            margin-top: 6px;
+            font-size: 0.72rem;
+            color: #6B7280;
+            font-family: 'Fira Code', monospace;
+            display: flex;
+            justify-content: space-between;
+        }
+</style>
 </head>
 <body>
 
