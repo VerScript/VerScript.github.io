@@ -1,3 +1,6 @@
+// VerScript Academy Official Curriculum: 77 Distinct, Focused Chapters
+// Generated automatically with complete Section -> Subsection -> Chapter taxonomy
+
 var ARTICLES = [
   {
     "id": "ch1-intro",
@@ -1995,11 +1998,11 @@ var ARTICLES = [
     "number": 69,
     "section": "Section 17: Complete Reference",
     "subsection": "Language Reference",
-    "title": "Master Language Specification & Complete Directory",
+    "title": "Language Criteria, Multi-Platform Transpilation & Architecture",
     "category": "Reference",
     "readTime": "10 min read",
-    "summary": "The definitive reference manual: complete syntax grammar, operator precedence, all 29 error types, 21 stdlib modules, and compiler directives in full directory table form.",
-    "body": "\n      <h2>Master Language Specification & Exhaustive Directory</h2>\n      <p>This master specification unifies the entire VerScript language design into comprehensive reference directory tables.</p>\n\n      <h2>Directory 1: Complete Keyword Directory</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Keyword</th><th>Category</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>display</code></td><td>I/O Statement</td><td>Prints formatted text, expressions, or data structures with ANSI styling.</td></tr>\n          <tr><td><code>prompt</code></td><td>I/O Statement</td><td>Reads interactive user input or falls back to <code>?default</code>.</td></tr>\n          <tr><td><code>set</code></td><td>Assignment</td><td>Declares and assigns standard variables.</td></tr>\n          <tr><td><code>temp</code></td><td>Storage Lifetime</td><td>Declares temporary variable destroyed upon routine or block exit.</td></tr>\n          <tr><td><code>inst</code></td><td>Storage Lifetime</td><td>Declares invocation-scoped variable bound to current stack frame.</td></tr>\n          <tr><td><code>del</code></td><td>Memory Statement</td><td>Explicitly deletes and deallocates a declared variable.</td></tr>\n          <tr><td><code>outscope</code></td><td>Scope Directive</td><td>Hoists variable assignment to parent enclosing scope.</td></tr>\n          <tr><td><code>if</code>, <code>then</code>, <code>else</code></td><td>Conditional</td><td>Standard branching and inline ternary expression syntax.</td></tr>\n          <tr><td><code>guard</code></td><td>Assertion</td><td>Enforces invariant: <code>guard cond else reply/throw</code>.</td></tr>\n          <tr><td><code>loop</code></td><td>Counted Loop</td><td>Executes block N times: <code>loop N:</code>.</td></tr>\n          <tr><td><code>iterate</code>, <code>from</code>, <code>to</code>, <code>by</code></td><td>Ranged Loop</td><td>Range iteration: <code>iterate i from 1 to 10 by 2:</code>.</td></tr>\n          <tr><td><code>while</code>, <code>until</code></td><td>Condition Loops</td><td>Repeats while condition is true, or until condition becomes true.</td></tr>\n          <tr><td><code>def</code>, <code>func</code>, <code>method</code></td><td>Routines</td><td>Declares callable routines, pure functions, and mutating methods.</td></tr>\n          <tr><td><code>inbound</code>, <code>outbound</code></td><td>Purity Specifier</td><td>Declares explicit data-flow and mutation constraints on routines.</td></tr>\n          <tr><td><code>reply</code></td><td>Routine Control</td><td>Returns computed values from functions and methods.</td></tr>\n          <tr><td><code>header</code>, <code>include</code>, <code>export</code></td><td>Architecture</td><td>Header contract definitions (<code>.h.vrs</code>), imports, and symbol exports.</td></tr>\n          <tr><td><code>pragma</code></td><td>Compiler Control</td><td>Directives: <code>pragma once</code>, <code>pragma strict</code>.</td></tr>\n          <tr><td><code>config:</code></td><td>Configuration</td><td>Header compilation block: <code>strict_mode</code>, <code>error_mode</code>, <code>timeout_ms</code>, <code>target_version</code>, <code>log_level</code>.</td></tr>\n          <tr><td><code>enum</code>, <code>struct</code></td><td>Type Definition</td><td>First-class named enumerations and typed data structures.</td></tr>\n          <tr><td><code>class</code>, <code>entity</code></td><td>Object-Oriented</td><td>OOP class definitions and dynamic entity instance creation.</td></tr>\n          <tr><td><code>DataType</code>, <code>extends</code>, <code>it</code></td><td>Type Constraint</td><td>Custom data type definitions with predicate verification using <code>it</code>.</td></tr>\n          <tr><td><code>throw</code></td><td>Error Handling</td><td>Throws runtime error: <code>throw ErrorType \"message\"</code>.</td></tr>\n          <tr><td><code>load</code>, <code>lib</code>, <code>library</code></td><td>Libraries</td><td>Loads standard modules and declares library packages.</td></tr>\n          <tr><td><code>from</code>, <code>import</code>, <code>as</code></td><td>Imports</td><td>Module and sub-library imports: <code>from Lib import Sub as Alias</code>.</td></tr>\n          <tr><td><code>alias</code></td><td>Syntax Aliasing</td><td>Aliases commands or functions to custom keywords.</td></tr>\n          <tr><td><code>inject</code></td><td>Polyglot</td><td>Injects external script execution.</td></tr>\n          <tr><td><code>match</code>, <code>with</code>, <code>case</code></td><td>Pattern Matching</td><td>Structural pattern matching across values and variants.</td></tr>\n          <tr><td><code>async</code>, <code>sync</code></td><td>Asynchronous</td><td>Declares asynchronous routine and awaits async handle value.</td></tr>\n          <tr><td><code>chan</code>, <code>send</code>, <code>recv</code></td><td>Concurrency</td><td>Thread-safe ring-buffer communication channels.</td></tr>\n          <tr><td><code>on</code>, <code>when</code>, <code>emit</code></td><td>Reactive Events</td><td>Event bus subscription and dispatch architecture.</td></tr>\n          <tr><td><code>typeof</code></td><td>Introspection</td><td>Returns type name string (<code>\"num\"</code>, <code>\"str\"</code>, <code>\"bool\"</code>, etc.).</td></tr>\n          <tr><td><code>is</code>, <code>even</code>, <code>odd</code></td><td>Parity Predicate</td><td>Tests numeric parity: <code>x is even</code>, <code>x is odd</code>.</td></tr>\n          <tr><td><code>sqrt</code>, <code>rt</code>, <code>clamp</code>, <code>divRem</code></td><td>Math Built-ins</td><td>Square root, n-th root, interval clamping, quotient & remainder.</td></tr>\n          <tr><td><code>sign</code>, <code>sgn</code>, <code>lerp</code></td><td>Math Built-ins</td><td>Signum function, linear interpolation between endpoints.</td></tr>\n          <tr><td><code>gcd</code>, <code>hcf</code>, <code>lcm</code></td><td>Math Built-ins</td><td>Greatest common divisor and least common multiple.</td></tr>\n          <tr><td><code>sin</code>, <code>cos</code>, <code>tan</code>, <code>hypot</code></td><td>Trigonometry</td><td>Standard trigonometric and Euclidean distance functions.</td></tr>\n          <tr><td><code>sinDeg</code>, <code>cosDeg</code></td><td>Degree Trig</td><td>Degree-based trigonometry.</td></tr>\n          <tr><td><code>degToRad</code>, <code>radToDeg</code></td><td>Angle Conversion</td><td>Degrees to radians and radians to degrees.</td></tr>\n          <tr><td><code>ln</code>, <code>log</code>, <code>log2</code>, <code>exp</code></td><td>Logarithms & Exp</td><td>Natural log, base-N log, base-2 log, and natural exponentiation.</td></tr>\n          <tr><td><code>pi</code>, <code>tau</code>, <code>phi</code>, <code>inf</code></td><td>Math Constants</td><td>Mathematical constants: 3, 6, 16180, 2147483647.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Directory 2: Operators & Precedence</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Precedence</th><th>Operator</th><th>Name / Syntax</th><th>Associativity</th><th>Description</th></tr>\n        </thead>\n        <tbody>\n          <tr><td>1 (Highest)</td><td><code>()</code>, <code>[]</code>, <code>.</code></td><td>Grouping, Indexing, Member Access</td><td>Left-to-Right</td><td>Parentheses, array subscripting, and dot method invocation.</td></tr>\n          <tr><td>2</td><td><code>?</code></td><td>Attribute Operator</td><td>Left-to-Right</td><td>Attaches metadata attributes to functions, methods, display, and prompt.</td></tr>\n          <tr><td>3</td><td><code>!</code>, <code>not</code>, <code>-</code> (unary)</td><td>Logical NOT, Negation</td><td>Right-to-Left</td><td>Inverts boolean truth or negates numeric value.</td></tr>\n          <tr><td>4</td><td><code>^</code></td><td>Exponentiation</td><td>Right-to-Left</td><td>Raises base to power: <code>2 ^ 8 = 256</code>.</td></tr>\n          <tr><td>5</td><td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></td><td>Multiplication, Division, Modulo</td><td>Left-to-Right</td><td>High-speed native integer arithmetic.</td></tr>\n          <tr><td>6</td><td><code>+</code>, <code>-</code></td><td>Addition, Subtraction</td><td>Left-to-Right</td><td>Addition / string concatenation and subtraction.</td></tr>\n          <tr><td>7</td><td><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></td><td>Relational Comparisons</td><td>Left-to-Right</td><td>Equality and ordering comparisons.</td></tr>\n          <tr><td>8</td><td><code>is even</code>, <code>is odd</code></td><td>Parity Predicates</td><td>Left-to-Right</td><td>Tests integer parity.</td></tr>\n          <tr><td>9</td><td><code>&amp;</code></td><td>Logical AND</td><td>Left-to-Right</td><td>True if both operands are true.</td></tr>\n          <tr><td>10</td><td><code>and</code> / <code>nand</code></td><td>Negated AND (NAND)</td><td>Left-to-Right</td><td>True unless both operands are true.</td></tr>\n          <tr><td>11</td><td><code>or</code></td><td>Logical OR</td><td>Left-to-Right</td><td>True if either operand is true.</td></tr>\n          <tr><td>12</td><td><code>nor</code></td><td>Negated OR (NOR)</td><td>Left-to-Right</td><td>True only if both operands are false.</td></tr>\n          <tr><td>13</td><td><code>xor</code></td><td>Exclusive OR (XOR)</td><td>Left-to-Right</td><td>True if exactly one operand is true.</td></tr>\n          <tr><td>14</td><td><code>xnor</code> / <code>xand</code></td><td>Equivalence (XNOR)</td><td>Left-to-Right</td><td>True if operands have identical truth values.</td></tr>\n          <tr><td>15</td><td><code>|&gt;</code></td><td>Forward Pipeline</td><td>Left-to-Right</td><td>Pipes expression into function/method argument.</td></tr>\n          <tr><td>16 (Lowest)</td><td><code>if ... then ... else</code></td><td>Inline Ternary Expression</td><td>Right-to-Left</td><td>Conditional value selection.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Directory 3: All 29 Runtime & Compiler Error Types</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Error Name</th><th>Severity (1-10)</th><th>Category</th><th>Root Cause</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>HeaderMismatchError</code></td><td>10</td><td>Contract</td><td>Mismatch in parameter count, type, or kind between header declaration and implementation.</td></tr>\n          <tr><td><code>InvalidHeaderError</code></td><td>9</td><td>Architecture</td><td>Malformed header declaration, illegal statement inside header, or missing companion header.</td></tr>\n          <tr><td><code>MemoryAllocationError</code></td><td>10</td><td>System</td><td>Native memory allocation via malloc/realloc failed on host OS.</td></tr>\n          <tr><td><code>SystemError</code></td><td>9</td><td>System</td><td>Maximum recursion depth, routine registry, or call stack limits exceeded.</td></tr>\n          <tr><td><code>RuntimeError</code></td><td>8</td><td>Runtime</td><td>General execution error or unhandled fault condition.</td></tr>\n          <tr><td><code>SyntaxError</code></td><td>9</td><td>Compiler</td><td>Invalid token, unclosed parenthesis, or malformed statement grammar.</td></tr>\n          <tr><td><code>IndentationError</code></td><td>8</td><td>Compiler</td><td>Inconsistent indentation levels across block hierarchy.</td></tr>\n          <tr><td><code>DataTypeError</code></td><td>8</td><td>Type System</td><td>Type constraint violated for num, str, bool, arr, entity, posNum, byte, port, char, etc.</td></tr>\n          <tr><td><code>UndefinedVariableError</code></td><td>8</td><td>Scope</td><td>Attempted access of variable not declared in current or parent scopes.</td></tr>\n          <tr><td><code>UnassignedVariableError</code></td><td>7</td><td>Scope</td><td>Variable referenced before initialization.</td></tr>\n          <tr><td><code>ScopeViolationError</code></td><td>8</td><td>Scope</td><td>Direct access of private, entity-encapsulated, or out-of-scope symbol.</td></tr>\n          <tr><td><code>VisibilityError</code></td><td>8</td><td>Security</td><td>Calling a private routine outside its containing entity or library.</td></tr>\n          <tr><td><code>DivisionByZeroError</code></td><td>8</td><td>Math</td><td>Division, modulo, or divRem with zero divisor.</td></tr>\n          <tr><td><code>DomainError</code></td><td>7</td><td>Math</td><td>Mathematical argument outside valid domain (e.g. log of negative number).</td></tr>\n          <tr><td><code>IndexOutOfBoundsError</code></td><td>8</td><td>Collection</td><td>Array index is negative or &gt;= array length.</td></tr>\n          <tr><td><code>ImmutableError</code></td><td>8</td><td>Mutability</td><td>Attempted modification of a symbol declared with <code>const</code>.</td></tr>\n          <tr><td><code>FileError</code></td><td>8</td><td>I/O</td><td>File not found, permission denied, or disk write failure.</td></tr>\n          <tr><td><code>ChannelError</code></td><td>8</td><td>Concurrency</td><td>Channel full on send, or channel empty on recv.</td></tr>\n          <tr><td><code>AsyncError</code></td><td>7</td><td>Async</td><td>Failure inside asynchronous task or unresolved promise.</td></tr>\n          <tr><td><code>MatchError</code></td><td>7</td><td>Flow</td><td>Pattern match evaluation found no matching branch and no default.</td></tr>\n          <tr><td><code>EntityError</code></td><td>8</td><td>OOP</td><td>Attempted method call or field access on invalid entity reference.</td></tr>\n          <tr><td><code>LoopLimitError</code></td><td>7</td><td>Loop</td><td>Loop iteration count exceeded compiler-configured maximum limit.</td></tr>\n          <tr><td><code>LoopDirectionError</code></td><td>7</td><td>Loop</td><td>Iterate loop range step direction contradicts start and end boundaries.</td></tr>\n          <tr><td><code>LoopStepError</code></td><td>7</td><td>Loop</td><td>Loop step increment is zero or invalid.</td></tr>\n          <tr><td><code>LoopIterationError</code></td><td>7</td><td>Loop</td><td>Corrupted loop counter state during iteration.</td></tr>\n          <tr><td><code>InvalidOperandError</code></td><td>7</td><td>Type System</td><td>Operator applied to incompatible data types.</td></tr>\n          <tr><td><code>InvalidErrorNameError</code></td><td>8</td><td>Error System</td><td>Throwing an unregistered or unknown error name.</td></tr>\n          <tr><td><code>AssertError</code></td><td>7</td><td>Testing</td><td>Assertion expression evaluated to false.</td></tr>\n          <tr><td><code>AssertionError</code></td><td>7</td><td>Testing</td><td>Alias for AssertError thrown by testing framework.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Directory 4: All 21 Standard Libraries</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Library Name</th><th>Function Count</th><th>Domain</th><th>Key Capabilities</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>Math</code></td><td>17</td><td>Numeric &amp; Trig</td><td>Trigonometry, logarithms, clamping, round, floor, ceil, power, lerp.</td></tr>\n          <tr><td><code>Matrix</code></td><td>12</td><td>Linear Algebra</td><td>Arbitrary dimensions, determinant, inverse, transpose, dot product, trace.</td></tr>\n          <tr><td><code>Vector</code></td><td>11</td><td>Spatial Vector</td><td>Dot, cross, norm, angle, projection, unit vector, distance, lerp.</td></tr>\n          <tr><td><code>Stats</code></td><td>12</td><td>Statistics</td><td>Mean, median, mode, variance, standard deviation, percentile, correlation.</td></tr>\n          <tr><td><code>Pseudo</code></td><td>10</td><td>Random &amp; Mock</td><td>PRNG seed, range sampling, uuid, shuffle, choice, boolean generation.</td></tr>\n          <tr><td><code>Arrays</code></td><td>14</td><td>Collections</td><td>Chunking, flattening, deduplication, sorting, filtering, zip, intersection.</td></tr>\n          <tr><td><code>Strings</code></td><td>15</td><td>Text Processing</td><td>Padding, case transformation, slicing, regex splitting, trimming.</td></tr>\n          <tr><td><code>Json</code></td><td>8</td><td>Serialization</td><td>Parsing JSON strings into entities/arrays and stringifying structures.</td></tr>\n          <tr><td><code>Validate</code></td><td>11</td><td>Validation</td><td>Email, URL, IP, UUID, alphanumeric, and schema verification.</td></tr>\n          <tr><td><code>Crypto</code></td><td>9</td><td>Cryptography</td><td>SHA-256, HMAC, MD5, base64 encoding/decoding, secure tokens.</td></tr>\n          <tr><td><code>Regex</code></td><td>8</td><td>Pattern Matching</td><td>Regular expression testing, extraction, replacement, and splitting.</td></tr>\n          <tr><td><code>Fs</code></td><td>12</td><td>File System</td><td>File read, write, append, delete, directory listing, file stats.</td></tr>\n          <tr><td><code>Path</code></td><td>10</td><td>File Paths</td><td>Join, resolve, basename, dirname, extname, path normalization.</td></tr>\n          <tr><td><code>Env</code></td><td>6</td><td>Environment</td><td>Reading/writing system environment variables, platform detection.</td></tr>\n          <tr><td><code>Time</code></td><td>10</td><td>Clock &amp; Timing</td><td>Epoch timestamps, formatting, monotonic timers, delays, intervals.</td></tr>\n          <tr><td><code>Http</code></td><td>8</td><td>Networking</td><td>HTTP GET, POST, PUT, DELETE with headers, query parameters, bodies.</td></tr>\n          <tr><td><code>Log</code></td><td>8</td><td>Diagnostics</td><td>Structured logging with levels (DEBUG, INFO, WARN, ERROR) and timestamps.</td></tr>\n          <tr><td><code>Color</code></td><td>8</td><td>Terminal Color</td><td>ANSI color escape sequences (RGB, hex, 16-color, bold, underline).</td></tr>\n          <tr><td><code>Console</code></td><td>8</td><td>Terminal I/O</td><td>Interactive tables, progress bars, spinners, clear screen, prompts.</td></tr>\n          <tr><td><code>Benchmark</code></td><td>6</td><td>Performance</td><td>High-precision nanosecond execution timing and throughput profiling.</td></tr>\n          <tr><td><code>Mock</code> / <code>Assert</code></td><td>12</td><td>Test Automation</td><td>Spies, stubs, mock responses, equality assertions, exception testing.</td></tr>\n        </tbody>\n      </table>\n\n      <h2>Directory 5: Pragmas, Compiler Directives & Attributes</h2>\n      <table class=\"doc-table\">\n        <thead>\n          <tr><th>Directive / Attribute</th><th>Syntax Example</th><th>Target Context</th><th>Effect</th></tr>\n        </thead>\n        <tbody>\n          <tr><td><code>?</code> Attribute Operator</td><td><code>func f() ?pure=true ?memoize=true</code></td><td>Routines &amp; Statements</td><td>Attaches optional execution metadata (purity, memoization, timeout, retry, color).</td></tr>\n          <tr><td><code>pragma once</code></td><td><code>pragma once</code></td><td>Headers &amp; Files</td><td>Ensures file is parsed and included at most once per compilation unit.</td></tr>\n          <tr><td><code>pragma strict</code></td><td><code>pragma strict</code></td><td>Headers &amp; Files</td><td>Enforces strict contract mode: all symbols and types must have explicit contracts.</td></tr>\n          <tr><td><code>export</code></td><td><code>export func add(a, b)</code></td><td>Declarations</td><td>Marks routines, structs, or types as public exported symbols.</td></tr>\n          <tr><td><code>config:</code></td><td><code>config:\n    strict_mode: true</code></td><td>Headers (<code>.h.vrs</code>)</td><td>Configures compilation directives: strict_mode, error_mode, timeout_ms, target_version, log_level.</td></tr>\n        </tbody>\n      </table>\n  ",
+    "summary": "Master the design criteria of modern languages: multi-target transpilation (JS/TS, C99), strict null avoidance via union types (T | null), side-by-side multi-version package loading (pkg@1.0.0), cooperative non-preemptive concurrency, structural typing, and whitespace independence.",
+    "body": "\n      <h2>The VerScript Language Architecture & Philosophy</h2>\n      <p>Modern software engineering requires a programming language that eliminates historical traps (such as Java's classpath conflicts, C++'s pre-emptive race conditions, and Python's brittle significant whitespace) while maximizing developer velocity, cross-platform portability, and safety.</p>\n\n      <h2>1. Multi-Target Transpilation & Cross-Platform Runtime</h2>\n      <p>VerScript is designed from the AST level to compile and transpile seamlessly across platforms:</p>\n      <ul>\n        <li><strong>Transpilation to JavaScript / TypeScript:</strong> Compiles down to clean, readable ES6/TypeScript for execution in web browsers, Node.js, and serverless edge runtimes.</li>\n        <li><strong>Compilation to Native C99:</strong> Compiles directly to ANSI C for extreme performance on embedded systems, Linux servers, and Windows executables.</li>\n        <li><strong>Instant Scripting VM:</strong> Instant client-side VM allows fast script execution during development without requiring ahead-of-time compilation for every run.</li>\n      </ul>\n\n      <h2>2. Strict Null Safety & Union Types (<code>T | null</code>)</h2>\n      <p>To eliminate the billion-dollar mistake of null/nil pointer dereference exceptions, VerScript types are <strong>non-nullable by default</strong>. If a routine can return an absent value, it must explicitly declare a union type:</p>\n      <pre><code>func find_user(id: int) -> User | null:\n    if id == 0:\n        reply null\n    reply User(id, \"Ada\")</code></pre>\n      <p>The compiler strictly enforces that any caller must perform a null-check guard before accessing properties on the returned value:</p>\n      <pre><code>set user: find_user(101)\nguard user != null else reply \"User not found\"\ndisplay user.name  ! Safe: user is narrowed to non-null User</code></pre>\n\n      <h2>3. Side-by-Side Multi-Version Package Loading</h2>\n      <p>VerScript solves classpath and dependency hell by supporting multiple concurrent versions of the same library in the same process:</p>\n      <pre><code>load \"cryptolib@1.2.0\" as CryptoV1\nload \"cryptolib@2.4.0\" as CryptoV2\n\nset legacyHash: CryptoV1.md5(\"secret\")\nset modernHash: CryptoV2.sha256(\"secret\")</code></pre>\n      <p>Each version is completely sandboxed in its own namespace without global symbol collisions.</p>\n\n      <h2>4. Cooperative Concurrency without Thread Pre-emption</h2>\n      <p>Pre-emptive thread scheduling causes hard-to-debug data races and forces developers to litter locks across their codebase. Following the proven concurrency model of Node.js and Erlang, VerScript uses <strong>cooperative event loops and actor message queues</strong>:</p>\n      <ul>\n        <li>Routines run cooperatively until an explicit suspension point (<code>sync</code>, <code>recv</code>, <code>await</code>, or <code>yield</code>).</li>\n        <li>Threads never preemptively interrupt running code with unexpected writes.</li>\n        <li>Data exchange occurs cleanly across FIFO channels (<code>chan</code>, <code>send</code>, <code>recv</code>).</li>\n      </ul>\n\n      <h2>5. Structural & Inferred Typing</h2>\n      <p>VerScript employs <strong>structural typing</strong> (like TypeScript, Go, and OCaml) rather than rigid nominal typing. If an entity has the required fields, it satisfies the type:</p>\n      <pre><code>struct Point2D:\n    x: num\n    y: num\n\nfunc distance_from_origin(p: Point2D) -> num:\n    reply hypot(p.x, p.y)\n\n! Any object with x and y satisfies Point2D without nominal inheritance!\nset particle: { x: 3.0, y: 4.0, velocity: 12.5 }\ndisplay distance_from_origin(particle)  ! 5.0</code></pre>\n\n      <h2>6. Whitespace Independence (No Offside Rule)</h2>\n      <p>VerScript is free from the fragile \"offside rule\" (mandatory significant whitespace). Code blocks can be defined with clean indentation or explicit braces <code>{ ... }</code>, ensuring copy-pasting code between IDEs never corrupts program logic.</p>\n\n      <h2>7. Soft Real-Time GC & Method Overloading</h2>\n      <p>VerScript avoids the complexity of hard real-time preemption, focusing on high-throughput, predictable <strong>soft real-time performance</strong> with automatic memory management. Furthermore, routines support <strong>method overloading</strong> based on parameter arity and types without the vanity of operator overloading.</p>\n    ",
     "codeBlocks": [
       {
         "id": "cb_ch69_1",
@@ -2049,7 +2052,9 @@ var ARTICLES = [
         "starterCode": "! Declare and invoke GetCurrentProcessId\n",
         "hint": "extern \"kernel32.dll\" GetCurrentProcessId()\nset pid: GetCurrentProcessId()\ndisplay \"PID: \" + pid",
         "solution": "extern \"kernel32.dll\" GetCurrentProcessId()\nset pid: GetCurrentProcessId()\ndisplay \"PID: \" + pid",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "PID:\\s*\\d+"
+        }
       },
       {
         "id": "ex_ch70_2",
@@ -2058,7 +2063,9 @@ var ARTICLES = [
         "starterCode": "! Link custom dll and call add\n",
         "hint": "extern \"mymath.dll\" add(a, b)\nset res: add(10, 20)\ndisplay \"Result: \" + res",
         "solution": "extern \"mymath.dll\" add(a, b)\nset res: add(10, 20)\ndisplay \"Result: \" + res",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Result:\\s*30"
+        }
       }
     ]
   },
@@ -2092,7 +2099,9 @@ var ARTICLES = [
         "starterCode": "! Loop with step 3\n",
         "hint": "for i in 0 .. 9 step 3:\n    display i",
         "solution": "for i in 0 .. 9 step 3:\n    display i",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "0[\\s\\S]*3[\\s\\S]*6[\\s\\S]*9"
+        }
       },
       {
         "id": "ex_ch71_2",
@@ -2101,7 +2110,9 @@ var ARTICLES = [
         "starterCode": "set rgb: [255, 128, 64]\n! Unpack and display R\n",
         "hint": "unpack [r, g, b] : rgb\ndisplay \"R: \" + r",
         "solution": "set rgb: [255, 128, 64]\nunpack [r, g, b] : rgb\ndisplay \"R: \" + r",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "R:\\s*255"
+        }
       }
     ]
   },
@@ -2135,7 +2146,9 @@ var ARTICLES = [
         "starterCode": "! Compute hypot(6, 8)\n",
         "hint": "display hypot(6, 8)",
         "solution": "display hypot(6, 8)",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "10"
+        }
       },
       {
         "id": "ex_ch72_2",
@@ -2144,7 +2157,9 @@ var ARTICLES = [
         "starterCode": "! Compute lerp(20, 80, 0.5)\n",
         "hint": "display lerp(20, 80, 0.5)",
         "solution": "display lerp(20, 80, 0.5)",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "50"
+        }
       }
     ]
   },
@@ -2178,7 +2193,9 @@ var ARTICLES = [
         "starterCode": "! Set title and display Ready\n",
         "hint": "terminal.title(\"Studio\")\ndisplay \"Ready\"",
         "solution": "terminal.title(\"Studio\")\ndisplay \"Ready\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Ready"
+        }
       },
       {
         "id": "ex_ch73_2",
@@ -2187,7 +2204,9 @@ var ARTICLES = [
         "starterCode": "! Split terminal\n",
         "hint": "terminal.split(\"vertical\")\ndisplay \"Split ready\"",
         "solution": "terminal.split(\"vertical\")\ndisplay \"Split ready\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Split ready"
+        }
       }
     ]
   },
@@ -2221,7 +2240,9 @@ var ARTICLES = [
         "starterCode": "! Initialize screen\n",
         "hint": "screen(800, 600, \"Neon 2D\")\ndisplay \"Screen ready\"",
         "solution": "screen(800, 600, \"Neon 2D\")\ndisplay \"Screen ready\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Screen ready"
+        }
       },
       {
         "id": "ex_ch74_2",
@@ -2230,7 +2251,9 @@ var ARTICLES = [
         "starterCode": "! Draw 2D primitives\n",
         "hint": "draw rect(50, 50, 200, 100) ?fill=#00FFCC\ndraw circle(400, 200, 50) ?fill=#BD00FF",
         "solution": "draw rect(50, 50, 200, 100) ?fill=#00FFCC\ndraw circle(400, 200, 50) ?fill=#BD00FF",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "(?:Rasterized|draw|circle|rect)"
+        }
       }
     ]
   },
@@ -2264,7 +2287,9 @@ var ARTICLES = [
         "starterCode": "! Create scene and camera\n",
         "hint": "set scn: scene()\nset cam: camera(fov: 60)\ndisplay \"Scene ready\"",
         "solution": "set scn: scene()\nset cam: camera(fov: 60)\ndisplay \"Scene ready\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Scene ready"
+        }
       },
       {
         "id": "ex_ch75_2",
@@ -2273,7 +2298,9 @@ var ARTICLES = [
         "starterCode": "! Create 3D box\n",
         "hint": "set b: mesh.box(2, 2, 2) ?color=#00FFCC\ndisplay \"Box created\"",
         "solution": "set b: mesh.box(2, 2, 2) ?color=#00FFCC\ndisplay \"Box created\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Box created"
+        }
       }
     ]
   },
@@ -2307,7 +2334,9 @@ var ARTICLES = [
         "starterCode": "set speed: 100\nset dt: 0.016\n! Calculate dx and display\n",
         "hint": "set speed: 100\nset dt: 0.016\nset dx: speed * dt\ndisplay \"Distance: \" + dx",
         "solution": "set speed: 100\nset dt: 0.016\nset dx: speed * dt\ndisplay \"Distance: \" + dx",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Distance:\\s*1\\.6"
+        }
       },
       {
         "id": "ex_ch76_2",
@@ -2316,7 +2345,9 @@ var ARTICLES = [
         "starterCode": "! Compute vy\n",
         "hint": "set vy: -9.8 * 0.5\ndisplay \"Velocity: \" + vy",
         "solution": "set vy: -9.8 * 0.5\ndisplay \"Velocity: \" + vy",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Velocity:\\s*-4\\.9"
+        }
       }
     ]
   },
@@ -2345,12 +2376,25 @@ var ARTICLES = [
         "starterCode": "! Defer cleanup\n",
         "hint": "defer display \"Cleaned\"\ndisplay \"Running\"",
         "solution": "defer display \"Cleaned\"\ndisplay \"Running\"",
-        "expectedMatch": {}
+        "expectedMatch": {
+          "source": "Running[\\s\\S]*Cleaned"
+        }
       }
     ]
   }
 ];
 var articlesData = ARTICLES;
-if (typeof window !== 'undefined') { window.ARTICLES = ARTICLES; window.articlesData = ARTICLES; }
-if (typeof global !== 'undefined') { global.ARTICLES = ARTICLES; global.articlesData = ARTICLES; }
-if (typeof module !== 'undefined' && module.exports) { module.exports = ARTICLES; }
+
+if (typeof window !== 'undefined') {
+  window.ARTICLES = ARTICLES;
+  window.articlesData = ARTICLES;
+}
+
+if (typeof global !== 'undefined') {
+  global.ARTICLES = ARTICLES;
+  global.articlesData = ARTICLES;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ARTICLES;
+}

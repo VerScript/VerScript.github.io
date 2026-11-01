@@ -1132,6 +1132,7 @@ function simulateVerScript(code, files = null, stdin = '') {
     const vars = {};
     const aliases = {};
     const stdinLines = (typeof stdin === 'string' && stdin.length > 0) ? stdin.split(/\r?\n/) : [];
+    const deferredActions = [];
 
     try {
         let i = 0;
@@ -1510,12 +1511,26 @@ function simulateVerScript(code, files = null, stdin = '') {
                     output += res.output;
                 }
             }
+            // 15. Defer statements (LIFO cleanup)
+            else if (line.startsWith('defer ')) {
+                const deferAction = line.substring(6).trim();
+                deferredActions.unshift(deferAction);
+                i++;
+            }
             else {
                 i++;
             }
         }
     } catch (err) {
         error = err.message;
+    }
+
+        // Flush deferred actions in LIFO order
+    if (deferredActions.length > 0) {
+        for (const defCmd of deferredActions) {
+            const defRes = simulateVerScript(defCmd, null, stdin);
+            output += defRes.output;
+        }
     }
 
     return { output, error, source: 'simulator' };
@@ -1529,11 +1544,34 @@ function evalSimpleExpr(expr, vars) {
         try { return JSON.parse(result); } catch (e) { return result.slice(1, -1); }
     }
 
-    // Replace variable names
+    // 1. Invoke function variables matching k(args) or k()
     Object.keys(vars).forEach(k => {
-        const regex = new RegExp(`\\b${k}\\b`, 'g');
-        const val = typeof vars[k] === 'string' ? `"${vars[k]}"` : vars[k];
-        result = result.replace(regex, val);
+        if (typeof vars[k] === 'function') {
+            const fnCallRegex = new RegExp(`\\b${k}\\s*\\(([^)]*)\\)`, 'g');
+            result = result.replace(fnCallRegex, (m, argsStr) => {
+                const rawArgs = argsStr ? argsStr.split(',').map(s => s.trim()) : [];
+                const evaledArgs = rawArgs.map(arg => {
+                    if (!arg) return undefined;
+                    const ev = evalSimpleExpr(arg, vars);
+                    return isNaN(Number(ev)) ? ev : Number(ev);
+                }).filter(x => x !== undefined);
+                try {
+                    const ret = vars[k](...evaledArgs);
+                    return (typeof ret === 'string') ? `"${ret}"` : String(ret);
+                } catch (e) {
+                    return '0';
+                }
+            });
+        }
+    });
+
+    // 2. Replace non-function variables
+    Object.keys(vars).forEach(k => {
+        if (typeof vars[k] !== 'function') {
+            const regex = new RegExp(`\\b${k}\\b`, 'g');
+            const val = typeof vars[k] === 'string' ? `"${vars[k]}"` : vars[k];
+            result = result.replace(regex, () => val);
+        }
     });
 
     // Mask string literals to protect exclamation marks and operators inside text
@@ -1602,6 +1640,7 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/(?<!\.)\bmax\s+([^\s]+)\s+([^\s]+)/g, 'Math.max($1, $2)');
 
         // Interpolation
+        result = result.replace(/(?<!\.)\blerp\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, '(($1) + (($2) - ($1)) * ($3))');
         result = result.replace(/(?<!\.)\blerp\s+from\s+([^\s]+)\s+to\s+([^\s]+)\s+by\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
         result = result.replace(/(?<!\.)\blerp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, '(($1) + (($2) - ($1)) * ($3))');
 
