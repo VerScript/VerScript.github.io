@@ -1120,7 +1120,37 @@ function resolveLineAlias(line, aliases) {
     return line;
 }
 
-function simulateVerScript(code, files = null, stdin = '') {
+
+function stripVerScriptComment(str) {
+    let inQuotes = false;
+    let quoteChar = null;
+    for (let idx = 0; idx < str.length; idx++) {
+        const ch = str[idx];
+        if (!inQuotes && (ch === '"' || ch === "'")) {
+            inQuotes = true;
+            quoteChar = ch;
+        } else if (inQuotes && ch === quoteChar && str[idx - 1] !== '\\') {
+            inQuotes = false;
+        } else if (!inQuotes && ch === '!') {
+            return str.substring(0, idx).trim();
+        }
+    }
+    return str.trim();
+}
+
+function unindentLines(blockLines) {
+    let minIndent = Infinity;
+    for (const l of blockLines) {
+        if (!l.trim()) continue;
+        const m = l.match(/^(\s+)/);
+        const indentLen = m ? m[1].length : 0;
+        if (indentLen < minIndent) minIndent = indentLen;
+    }
+    if (minIndent === Infinity || minIndent === 0) return blockLines;
+    return blockLines.map(l => l.length >= minIndent ? l.substring(minIndent) : l);
+}
+
+function simulateVerScript(code, files = null, stdin = '', inheritedVars = null) {
     if ((!code || typeof code !== 'string') && Array.isArray(files) && files.length > 0) {
         const entry = files.find(f => f.name && !f.name.endsWith('.h.vrs')) || files[files.length - 1] || files[0];
         code = (entry && (entry.code || entry.content)) || '';
@@ -1129,7 +1159,7 @@ function simulateVerScript(code, files = null, stdin = '') {
     const lines = code.split('\n');
     let output = '';
     let error = '';
-    const vars = {};
+    const vars = inheritedVars || {};
     const aliases = {};
     const stdinLines = (typeof stdin === 'string' && stdin.length > 0) ? stdin.split(/\r?\n/) : [];
     const deferredActions = [];
@@ -1137,8 +1167,8 @@ function simulateVerScript(code, files = null, stdin = '') {
     try {
         let i = 0;
         while (i < lines.length) {
-            let line = lines[i].trim();
-            if (!line || line.startsWith('!')) {
+            let line = stripVerScriptComment(lines[i]);
+            if (!line) {
                 i++;
                 continue;
             }
@@ -1311,26 +1341,29 @@ function simulateVerScript(code, files = null, stdin = '') {
             }
             // 8. For ... in ... (step ...)
             else if (line.startsWith('for ')) {
-                const rangeMatch = line.match(/for\s+([a-zA-Z_]\w*)\s+in\s+(\d+)\s*\.\.\s*(\d+)(?:\s+step\s+(\d+))?\s*:/);
+                const rangeMatch = line.match(/for\s+([a-zA-Z_]\w*)\s+in\s+(-?\d+)\s*\.\.\s*(-?\d+)(?:\s+step\s+(-?\d+))?\s*:/);
                 const eachMatch = line.match(/for\s+([a-zA-Z_]\w*)\s+in\s+([a-zA-Z_]\w*)\s*:/);
 
                 i++;
-                let block = [];
+                let rawBlock = [];
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
-                    block.push(lines[i].trim());
+                    rawBlock.push(lines[i]);
                     i++;
                 }
+                const block = unindentLines(rawBlock);
 
                 if (rangeMatch) {
                     const varName = rangeMatch[1];
                     const start = parseInt(rangeMatch[2]);
                     const end = parseInt(rangeMatch[3]);
-                    const step = rangeMatch[4] ? parseInt(rangeMatch[4]) : 1;
+                    let step = rangeMatch[4] ? parseInt(rangeMatch[4]) : (start <= end ? 1 : -1);
+                    if (step === 0) step = 1;
+                    const cond = (v) => step > 0 ? v <= end : v >= end;
 
-                    for (let val = start; val <= end; val += step) {
+                    for (let val = start; cond(val); val += step) {
                         vars[varName] = val;
                         let subCode = block.map(bLine => bLine.replace(new RegExp(`\\b${varName}\\b`, 'g'), val)).join('\n');
-                        const res = simulateVerScript(subCode);
+                        const res = simulateVerScript(subCode, null, stdin, vars);
                         output += res.output;
                     }
                 } else if (eachMatch) {
@@ -1341,7 +1374,7 @@ function simulateVerScript(code, files = null, stdin = '') {
                         for (let val of arr) {
                             vars[varName] = val;
                             let subCode = block.map(bLine => bLine.replace(new RegExp(`\\b${varName}\\b`, 'g'), val)).join('\n');
-                            const res = simulateVerScript(subCode);
+                            const res = simulateVerScript(subCode, null, stdin, vars);
                             output += res.output;
                         }
                     }
@@ -1406,17 +1439,73 @@ function simulateVerScript(code, files = null, stdin = '') {
                 }
                 continue;
             }
-            // 13. Variable assignment & declarations: set, let, var, const, or "name : val"
-            else if (line.includes(':') && !line.startsWith('loop') && !line.startsWith('iterate')) {
-                const parts = line.split(':');
-                let vname = parts[0].trim();
-                vname = vname.replace(/^(set|let|var|const)\s+/, '').trim();
-                const tokens = vname.split(/\s+/);
-                if (tokens.length >= 2) vname = tokens[tokens.length - 1];
+            // If conditional block: if cond: or if cond then:
+            else if (line.startsWith('if ') || line.startsWith('if(')) {
+                let condExpr = line.replace(/^if\s*/, '').replace(/:$/, '').trim();
+                if (condExpr.endsWith(' then')) condExpr = condExpr.slice(0, -5).trim();
+                if (condExpr.startsWith('(') && condExpr.endsWith(')')) condExpr = condExpr.slice(1, -1).trim();
 
-                if (/^[a-zA-Z_]\w*$/.test(vname)) {
-                    const vexpr = parts.slice(1).join(':').trim();
-                    vars[vname] = evalSimpleExpr(vexpr, vars);
+                i++;
+                let rawThen = [];
+                while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                    rawThen.push(lines[i]);
+                    i++;
+                }
+                const thenBlock = unindentLines(rawThen);
+
+                let rawElse = [];
+                if (i < lines.length && (lines[i].trim().startsWith('else:') || lines[i].trim() === 'else')) {
+                    i++;
+                    while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
+                        rawElse.push(lines[i]);
+                        i++;
+                    }
+                }
+                const elseBlock = unindentLines(rawElse);
+
+                const condVal = evalSimpleExpr(condExpr, vars);
+                let isTruthy = false;
+                if (typeof condVal === 'boolean') isTruthy = condVal;
+                else if (typeof condVal === 'number') isTruthy = condVal !== 0;
+                else if (typeof condVal === 'string') isTruthy = condVal === 'true' || (condVal !== 'false' && condVal !== '0' && condVal.length > 0);
+                else isTruthy = Boolean(condVal);
+
+                if (isTruthy) {
+                    if (thenBlock.length > 0) {
+                        const res = simulateVerScript(thenBlock.join('\n'), null, stdin, vars);
+                        output += res.output;
+                    }
+                } else {
+                    if (elseBlock.length > 0) {
+                        const res = simulateVerScript(elseBlock.join('\n'), null, stdin, vars);
+                        output += res.output;
+                    }
+                }
+                continue;
+            }
+            // 13. Variable assignment & declarations: set, let, var, const, or "name : val"
+            else if (line.includes(':') && !line.startsWith('loop') && !line.startsWith('iterate') && !line.startsWith('else')) {
+                const colonIdx = line.indexOf(':');
+                let lhs = line.substring(0, colonIdx).trim();
+                lhs = lhs.replace(/^(set|let|var|const)\s+/, '').trim();
+                const rhs = line.substring(colonIdx + 1).trim();
+
+                const arrMatch = lhs.match(/^([a-zA-Z_]\w*)\s*\[\s*(\d+)\s*\]$/);
+                if (arrMatch) {
+                    const arrName = arrMatch[1];
+                    const idx = parseInt(arrMatch[2]);
+                    const evaled = evalSimpleExpr(rhs, vars);
+                    if (!vars[arrName] || !Array.isArray(vars[arrName])) {
+                        vars[arrName] = [];
+                    }
+                    vars[arrName][idx] = isNaN(Number(evaled)) ? evaled : Number(evaled);
+                } else {
+                    const tokens = lhs.split(/\s+/);
+                    if (tokens.length >= 2) lhs = tokens[tokens.length - 1];
+                    if (/^[a-zA-Z_]\w*$/.test(lhs)) {
+                        let evaled = evalSimpleExpr(rhs, vars);
+                        vars[lhs] = evaled;
+                    }
                 }
                 i++;
             }
@@ -1424,13 +1513,14 @@ function simulateVerScript(code, files = null, stdin = '') {
             else if (line.startsWith('loop ')) {
                 const count = parseInt(line.substring(5).trim()) || 1;
                 i++;
-                let block = [];
+                let rawBlock = [];
                 while (i < lines.length && (lines[i].startsWith('    ') || lines[i].startsWith('\t') || lines[i].startsWith('  '))) {
-                    block.push(lines[i].trim());
+                    rawBlock.push(lines[i]);
                     i++;
                 }
+                const block = unindentLines(rawBlock);
                 for (let c = 0; c < count; c++) {
-                    const res = simulateVerScript(block.join('\n'));
+                    const res = simulateVerScript(block.join('\n'), null, stdin, vars);
                     output += res.output;
                 }
             }
@@ -1544,6 +1634,13 @@ function evalSimpleExpr(expr, vars) {
         try { return JSON.parse(result); } catch (e) { return result.slice(1, -1); }
     }
 
+    // Mask string literals FIRST to protect string contents from variable and operator replacements
+    const maskedStrings = [];
+    result = result.replace(/"(?:[^"\\]|\\.)*"/g, (match) => {
+        maskedStrings.push(match);
+        return `__STR_${maskedStrings.length - 1}__`;
+    });
+
     // 1. Invoke function variables matching k(args) or k()
     Object.keys(vars).forEach(k => {
         if (typeof vars[k] === 'function') {
@@ -1565,20 +1662,24 @@ function evalSimpleExpr(expr, vars) {
         }
     });
 
-    // 2. Replace non-function variables
+    // 2. Replace array elements matching k[idx]
     Object.keys(vars).forEach(k => {
-        if (typeof vars[k] !== 'function') {
-            const regex = new RegExp(`\\b${k}\\b`, 'g');
-            const val = typeof vars[k] === 'string' ? `"${vars[k]}"` : vars[k];
-            result = result.replace(regex, () => val);
+        if (Array.isArray(vars[k])) {
+            const idxRegex = new RegExp(`\\b${k}\\s*\\[\\s*(\\d+)\\s*\\]`, 'g');
+            result = result.replace(idxRegex, (m, idx) => {
+                const item = vars[k][parseInt(idx)];
+                return item !== undefined ? (typeof item === 'string' ? `"${item}"` : item) : '0';
+            });
         }
     });
 
-    // Mask string literals to protect exclamation marks and operators inside text
-    const maskedStrings = [];
-    result = result.replace(/"(?:[^"\\]|\\.)*"/g, (match) => {
-        maskedStrings.push(match);
-        return `__STR_${maskedStrings.length - 1}__`;
+    // 2b. Replace non-function variables
+    Object.keys(vars).forEach(k => {
+        if (typeof vars[k] !== 'function') {
+            const regex = new RegExp(`\\b${k}\\b`, 'g');
+            const val = typeof vars[k] === 'string' ? `"${vars[k]}"` : (Array.isArray(vars[k]) ? JSON.stringify(vars[k]) : vars[k]);
+            result = result.replace(regex, () => val);
+        }
     });
 
     try {
@@ -1634,6 +1735,7 @@ function evalSimpleExpr(expr, vars) {
         result = result.replace(/(?<!\.)\brt\s+([0-9a-zA-Z_\.\(\)]+)\s+([0-9a-zA-Z_\.\(\)]+)/g, 'Math.pow($2, 1 / ($1))');
 
         // Min, Max, Clamping
+        result = result.replace(/(?<!\.)\bclamp\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/g, 'Math.min(Math.max($1, $2), $3)');
         result = result.replace(/(?<!\.)\bclamp\s+([^\s]+)\s+from\s+([^\s]+)\s+to\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
         result = result.replace(/(?<!\.)\bclamp\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/g, 'Math.min(Math.max($1, $2), $3)');
         result = result.replace(/(?<!\.)\bmin\s+([^\s]+)\s+([^\s]+)/g, 'Math.min($1, $2)');
@@ -1966,6 +2068,7 @@ function evalSimpleExpr(expr, vars) {
         `;
         // eslint-disable-next-line no-eval
         const evaluated = Function(`"use strict"; ${factHelper} return (${clean})`)();
+        if (Array.isArray(evaluated)) return evaluated;
         return evaluated !== undefined ? String(evaluated) : '';
     } catch (e) {
         return expr.replace(/^"|"$/g, '');
