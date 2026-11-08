@@ -319,8 +319,8 @@ window.renderVisualViewport = function(id, code) {
 
     if (!box || !canvas || !code) return;
 
-    const is2D = code.includes('screen(') || code.includes('draw ') || id.includes('ch74');
-    const is3D = code.includes('scene(') || code.includes('world(') || code.includes('mesh.') || code.includes('camera(') || id.includes('ch75');
+    const is2D = code.includes('screen(') || code.includes('screen ') || code.includes('draw ') || code.includes('canvas.') || id.includes('ch74');
+    const is3D = code.includes('scene(') || code.includes('scene ') || code.includes('world(') || code.includes('world ') || code.includes('mesh.') || code.includes('camera(') || code.includes('cylinder') || code.includes('cone') || code.includes('torus') || id.includes('ch75');
 
     if (!is2D && !is3D) {
         box.style.display = 'none';
@@ -462,6 +462,79 @@ function render2DImmediateCanvas(canvas, code) {
                 ctx.fillStyle = colMatch ? colMatch[1] : '#00FFCC';
                 ctx.fillText(str, tx, ty);
             }
+        }
+        // draw roundedRect(x, y, w, h, r)
+        else if (line.startsWith('draw roundedRect')) {
+            const m = line.match(/draw roundedRect\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const rx = parseFloat(m[1]), ry = parseFloat(m[2]), rw = parseFloat(m[3]), rh = parseFloat(m[4]), rr = parseFloat(m[5]) || 8;
+                const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+                ctx.beginPath();
+                if (ctx.roundRect) ctx.roundRect(rx, ry, rw, rh, rr); else ctx.rect(rx, ry, rw, rh);
+                if (fillMatch) { ctx.fillStyle = fillMatch[1]; ctx.fill(); }
+                if (strokeMatch) { ctx.strokeStyle = strokeMatch[1]; ctx.lineWidth = 2; ctx.stroke(); }
+            }
+        }
+        // draw ellipse(x, y, rx, ry)
+        else if (line.startsWith('draw ellipse')) {
+            const m = line.match(/draw ellipse\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const ex = parseFloat(m[1]), ey = parseFloat(m[2]), erx = parseFloat(m[3]), ery = parseFloat(m[4]);
+                const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+                ctx.beginPath();
+                ctx.ellipse(ex, ey, erx, ery, 0, 0, Math.PI * 2);
+                if (fillMatch) { ctx.fillStyle = fillMatch[1]; ctx.fill(); }
+                if (strokeMatch) { ctx.strokeStyle = strokeMatch[1]; ctx.lineWidth = 2; ctx.stroke(); }
+            }
+        }
+        // draw triangle(x1, y1, x2, y2, x3, y3)
+        else if (line.startsWith('draw triangle')) {
+            const m = line.match(/draw triangle\s*\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) {
+                const x1 = parseFloat(m[1]), y1 = parseFloat(m[2]), x2 = parseFloat(m[3]), y2 = parseFloat(m[4]), x3 = parseFloat(m[5]), y3 = parseFloat(m[6]);
+                const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+                ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.closePath();
+                if (fillMatch) { ctx.fillStyle = fillMatch[1]; ctx.fill(); }
+                if (strokeMatch) { ctx.strokeStyle = strokeMatch[1]; ctx.lineWidth = 2; ctx.stroke(); }
+            }
+        }
+        // draw polygon([x1, y1, ...])
+        else if (line.startsWith('draw polygon')) {
+            const m = line.match(/draw polygon\s*\(\s*\[([^\]]+)\]\s*\)/);
+            if (m) {
+                const nums = m[1].split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+                if (nums.length >= 6) {
+                    const fillMatch = line.match(/\?fill=([#a-zA-Z0-9]+)/);
+                    const strokeMatch = line.match(/\?stroke=([#a-zA-Z0-9]+)/);
+                    ctx.beginPath(); ctx.moveTo(nums[0], nums[1]);
+                    for (let p = 2; p < nums.length; p += 2) ctx.lineTo(nums[p], nums[p + 1]);
+                    ctx.closePath();
+                    if (fillMatch) { ctx.fillStyle = fillMatch[1]; ctx.fill(); }
+                    if (strokeMatch) { ctx.strokeStyle = strokeMatch[1]; ctx.lineWidth = 2; ctx.stroke(); }
+                }
+            }
+        }
+        // canvas matrix transforms
+        else if (line.startsWith('canvas.push')) {
+            ctx.save();
+        }
+        else if (line.startsWith('canvas.pop')) {
+            ctx.restore();
+        }
+        else if (line.startsWith('canvas.translate')) {
+            const m = line.match(/canvas\.translate\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) ctx.translate(parseFloat(m[1]), parseFloat(m[2]));
+        }
+        else if (line.startsWith('canvas.rotate')) {
+            const m = line.match(/canvas\.rotate\s*\(\s*([^)]+)\s*\)/);
+            if (m) ctx.rotate((parseFloat(m[1]) * Math.PI) / 180);
+        }
+        else if (line.startsWith('canvas.scale')) {
+            const m = line.match(/canvas\.scale\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/);
+            if (m) ctx.scale(parseFloat(m[1]), parseFloat(m[2]));
         }
     });
 
@@ -636,7 +709,90 @@ function render3DFrame(canvas, code) {
         ctx.stroke();
     }
 
-    // 4. Onscreen HUD Telemetry
+    // 4. Render 3D Cylinder (mesh.cylinder)
+    if (code.includes('cylinder')) {
+        const cylCenter = [0.0, 0.0, 0.0];
+        const rad = 1.0;
+        const height = 2.2;
+        const segs = 16;
+        ctx.strokeStyle = '#00FFCC';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        for (let a = 0; a <= segs; a++) {
+            const phi = (a / segs) * Math.PI * 2;
+            const pt = project3D(cylCenter[0] + Math.cos(phi) * rad, cylCenter[1] + height / 2, cylCenter[2] + Math.sin(phi) * rad);
+            if (pt) { if (a === 0) ctx.moveTo(pt.px, pt.py); else ctx.lineTo(pt.px, pt.py); }
+        }
+        ctx.stroke();
+        ctx.beginPath();
+        for (let a = 0; a <= segs; a++) {
+            const phi = (a / segs) * Math.PI * 2;
+            const pt = project3D(cylCenter[0] + Math.cos(phi) * rad, cylCenter[1] - height / 2, cylCenter[2] + Math.sin(phi) * rad);
+            if (pt) { if (a === 0) ctx.moveTo(pt.px, pt.py); else ctx.lineTo(pt.px, pt.py); }
+        }
+        ctx.stroke();
+        for (let a = 0; a < segs; a += 4) {
+            const phi = (a / segs) * Math.PI * 2;
+            const pTop = project3D(cylCenter[0] + Math.cos(phi) * rad, cylCenter[1] + height / 2, cylCenter[2] + Math.sin(phi) * rad);
+            const pBot = project3D(cylCenter[0] + Math.cos(phi) * rad, cylCenter[1] - height / 2, cylCenter[2] + Math.sin(phi) * rad);
+            if (pTop && pBot) { ctx.beginPath(); ctx.moveTo(pTop.px, pTop.py); ctx.lineTo(pBot.px, pBot.py); ctx.stroke(); }
+        }
+    }
+
+    // 5. Render 3D Cone (mesh.cone)
+    if (code.includes('cone')) {
+        const coneCenter = [2.2, 0.0, -1.0];
+        const rad = 1.1;
+        const height = 2.4;
+        const segs = 16;
+        const apex = project3D(coneCenter[0], coneCenter[1] + height / 2, coneCenter[2]);
+        ctx.strokeStyle = '#FFB800';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        for (let a = 0; a <= segs; a++) {
+            const phi = (a / segs) * Math.PI * 2;
+            const pt = project3D(coneCenter[0] + Math.cos(phi) * rad, coneCenter[1] - height / 2, coneCenter[2] + Math.sin(phi) * rad);
+            if (pt) { if (a === 0) ctx.moveTo(pt.px, pt.py); else ctx.lineTo(pt.px, pt.py); }
+        }
+        ctx.stroke();
+        if (apex) {
+            for (let a = 0; a < segs; a += 4) {
+                const phi = (a / segs) * Math.PI * 2;
+                const pBase = project3D(coneCenter[0] + Math.cos(phi) * rad, coneCenter[1] - height / 2, coneCenter[2] + Math.sin(phi) * rad);
+                if (pBase) { ctx.beginPath(); ctx.moveTo(apex.px, apex.py); ctx.lineTo(pBase.px, pBase.py); ctx.stroke(); }
+            }
+        }
+    }
+
+    // 6. Render 3D Torus (mesh.torus)
+    if (code.includes('torus')) {
+        const torusCenter = [-2.2, 0.5, 0.8];
+        const R = 1.2;
+        const r = 0.4;
+        const numR = 10;
+        const numT = 12;
+        ctx.strokeStyle = '#38BDF8';
+        ctx.lineWidth = 1.2;
+        for (let i = 0; i < numR; i++) {
+            const u = (i / numR) * Math.PI * 2;
+            ctx.beginPath();
+            let first = true;
+            for (let j = 0; j <= numT; j++) {
+                const v = (j / numT) * Math.PI * 2;
+                const x = torusCenter[0] + (R + r * Math.cos(v)) * Math.cos(u);
+                const y = torusCenter[1] + r * Math.sin(v);
+                const z = torusCenter[2] + (R + r * Math.cos(v)) * Math.sin(u);
+                const pt = project3D(x, y, z);
+                if (pt) {
+                    if (first) { ctx.moveTo(pt.px, pt.py); first = false; }
+                    else { ctx.lineTo(pt.px, pt.py); }
+                }
+            }
+            ctx.stroke();
+        }
+    }
+
+    // 7. Onscreen HUD Telemetry
     ctx.font = "11px 'Fira Code', monospace";
     ctx.fillStyle = "#00FFCC";
     ctx.fillText(`Orbit Pitch: ${Math.round(orbit.pitch)}° | Yaw: ${Math.round(orbit.yaw)}°`, 12, 20);
@@ -1304,12 +1460,23 @@ function simulateVerScript(code, files = null, stdin = '', inheritedVars = null)
                 }
                 i++;
             }
-            // 6. Terminal subsystem: terminal.title, terminal.clear, flush, focus, title, split
+            // 6. Terminal subsystem: terminal.title, terminal.clear, cursor, progress, box, flush, focus, split
             else if (line.startsWith('terminal.') || line.startsWith('terminal ') || line === 'terminal' || line.startsWith('flush') || line.startsWith('focus') || line.startsWith('title ')) {
                 if (line.includes('title')) {
                     const m = line.match(/title\s*(?:\(\s*["']([^"']+)["']\s*\)|["']([^"']+)["'])/);
                     const titleText = m ? (m[1] || m[2]) : 'VerScript Terminal';
                     output += `\x1b[36m[Terminal] Window title set to: "${titleText}"\x1b[0m\n`;
+                } else if (line.includes('cursor')) {
+                    const m = line.match(/cursor\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)/);
+                    output += `\x1b[36m[Terminal] Cursor moved to (${m ? m[1] : 1}, ${m ? m[2] : 1})\x1b[0m\n`;
+                } else if (line.includes('progress')) {
+                    const m = line.match(/progress\s*\(\s*(\d+)(?:\s*,\s*(\d+))?\s*\)/);
+                    const pct = m ? parseInt(m[1]) : 50;
+                    const width = m && m[2] ? parseInt(m[2]) : 20;
+                    const filled = Math.round((pct * width) / 100);
+                    output += `[${'='.repeat(filled)}>${' '.repeat(Math.max(0, width - filled - 1))}] ${pct}%\n`;
+                } else if (line.includes('box')) {
+                    output += `+----------------------+\n| Terminal Box Widget  |\n+----------------------+\n`;
                 } else if (line.includes('clear')) {
                     output += `\x1b[2J\x1b[H[Terminal Screen Cleared]\n`;
                 } else if (line.includes('split')) {
@@ -1319,6 +1486,10 @@ function simulateVerScript(code, files = null, stdin = '', inheritedVars = null)
                 } else if (line.startsWith('focus')) {
                     output += `\x1b[36m[Terminal] Input focus acquired\x1b[0m\n`;
                 }
+                i++;
+            }
+            // 6b. Canvas matrix stack in simulation
+            else if (line.startsWith('canvas.') || line.startsWith('canvas ')) {
                 i++;
             }
             // 7. Graphics & 2D/3D Game Engine: screen, world, render, draw, camera, light, scene, spawn
