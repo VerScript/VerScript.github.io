@@ -1162,7 +1162,10 @@ function ansiToHtml(str) {
     let text = str
         .replace(/\\033\[/g, '\x1b[')
         .replace(/\\x1b\[/gi, '\x1b[')
-        .replace(/\\u001b\[/gi, '\x1b[');
+        .replace(/\\u001b\[/gi, '\x1b[')
+        // Strip non-SGR VT100 / ANSI escape sequences (cursor positions, clear screen, cursor show/hide, line clear, etc.)
+        .replace(/\x1b\[[0-9;?]*[A-LN-Za-ln-z]/g, '')
+        .replace(/\r/g, '');
 
     const standardColors = {
         '30': '#6272a4',
@@ -1478,7 +1481,7 @@ function simulateVerScript(code, files = null, stdin = '', inheritedVars = null)
                 } else if (line.includes('box')) {
                     output += `+----------------------+\n| Terminal Box Widget  |\n+----------------------+\n`;
                 } else if (line.includes('clear')) {
-                    output += `\x1b[2J\x1b[H[Terminal Screen Cleared]\n`;
+                    output += '[Terminal Screen Cleared]\n';
                 } else if (line.includes('split')) {
                     output += `\x1b[36m[Terminal] Split view pane initialized\x1b[0m\n`;
                 } else if (line.startsWith('flush')) {
